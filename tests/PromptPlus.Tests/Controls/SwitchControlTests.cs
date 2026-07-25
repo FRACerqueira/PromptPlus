@@ -13,7 +13,7 @@ namespace PromptPlus.Tests.Controls
 {
     // Grupo 1 (FASE2-CONTROLS-PLAN.md) — SwitchContrrol, sem ModeView. Confirmado por leitura:
     // cancelamento já seta ResultCtrl corretamente (linha 220-224) — não é o bug #8 do InputControl.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class SwitchControlTests : IDisposable
     {
         private const string HistoryFile = "switch-history-tests";

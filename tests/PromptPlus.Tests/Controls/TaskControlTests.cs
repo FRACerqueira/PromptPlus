@@ -40,7 +40,7 @@ namespace PromptPlus.Tests.Controls
     // control's screen area and skips FinishTemplate entirely, even though TryResult's own
     // press.IsCancelled branch DOES populate ResultCtrl with real state (ElapsedTime, etc.) first —
     // so result.Content is meaningful even though nothing is left on screen.
-    [Collection(BackgroundTimingCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class TaskControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

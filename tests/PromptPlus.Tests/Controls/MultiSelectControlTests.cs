@@ -21,7 +21,7 @@ namespace PromptPlus.Tests.Controls
     // segurança), MultiSelect sempre retorna Content=[] (array vazio) — não preserva os itens
     // marcados até aquele momento, diferente do Select (que preserva o item destacado). Ver
     // MultiSelectControl.cs:573/585 (`ResultCtrl = new ResultPrompt<T[]>([], true)`).
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiSelectControlTests : IDisposable
     {
         private const string HistoryFile = "multiselect-history-tests";

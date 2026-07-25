@@ -11,15 +11,28 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // FileHistory.FileSystem is a static field shared by the whole test assembly. xUnit runs
-    // different test CLASSES in parallel by default, so any two classes that swap this same static
-    // (this one and Unit.FileHistoryTests) must be forced into the same collection to run
-    // sequentially relative to each other — otherwise one class's constructor/Dispose swap races
-    // the other's mid-test. See the [Collection] usage below and on FileHistoryTests.
+    // This collection serializes two unrelated-but-both-global-state concerns against each other,
+    // because xUnit only allows a test class to belong to ONE collection:
+    //
+    // 1. FileHistory.FileSystem is a static field shared by the whole test assembly. Any two
+    //    classes that swap this same static must run sequentially relative to each other —
+    //    otherwise one class's constructor/Dispose swap races the other's mid-test.
+    // 2. Classes that spawn a real background Task and rely on real wall-clock margins
+    //    (ManualResetEventSlim handshakes, fixed TestContext.Current.CancellationToken.WaitHandle.
+    //    WaitOne waits — ProgressBar/TaskExec/MultiTasks's caller-supplied handler, MultiFile's/
+    //    MultiFileControlRealFilesystemTests' background wildcard folder check, or a resize
+    //    relayout's real render tick) were confirmed flaky under the full suite's ~600-test
+    //    parallel load: thread-pool contention from dozens of OTHER classes running at the same
+    //    time occasionally pushed those margins past their limit. Serializing them here relative
+    //    to EACH OTHER (not the whole suite — that's not needed) removes the contention.
+    //
+    // Concern 2 was originally a separate `BackgroundTimingCollection` (merged in here 2026-07-24
+    // once MultiFileControlTests — already here for concern 1 — was found to share the same
+    // background-Task-timing risk as concern 2's members, and a class can't join both).
     [CollectionDefinition(Name, DisableParallelization = true)]
-    public class FileHistoryCollection
+    public class SerializedGlobalStateCollection
     {
-        public const string Name = "FileHistory global state";
+        public const string Name = "FileHistory global state & background task timing";
     }
 
     // Camada 2 (render + estado via VirtualTerminal) — piloto Fase 1, controle Input, modo `History`
@@ -30,7 +43,7 @@ namespace PromptPlus.Tests.Controls
     // FileHistoryTests.cs), pra nunca tocar o perfil real do usuário e ser determinístico em
     // Windows/Linux. InitControl (chamado dentro de Run()) é quem lê o histórico do disco, então
     // basta trocar o FileSystem e popular o arquivo ANTES de chamar Run().
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class InputControlHistoryModeTests : IDisposable
     {
         private const string HistoryFile = "input-history-tests";

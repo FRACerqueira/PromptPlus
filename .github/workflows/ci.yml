@@ -11,11 +11,15 @@ permissions:
   contents: read
 
 jobs:
-  # Runs on every push/PR: single OS, single TFM. Covers the common case fast;
-  # the full OS x TFM matrix below only runs before landing on main.
-  build-and-test-fast:
-    name: Build & Test (fast, ubuntu, net10.0)
-    runs-on: ubuntu-latest
+  # Single job, OS matrix only (net10.0 tests, not the full net8/9/10 TFM axis).
+  build-and-test:
+    name: Build & Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,65 +57,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results-fast
-          path: "**/TestResults/**/*.trx"
-          retention-days: 7
-
-      - name: Upload coverage reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: coverage-fast
-          path: "**/TestResults/**/coverage.cobertura.xml"
-          retention-days: 7
-
-  # Full OS x TFM matrix: only before landing on main, or on demand.
-  build-and-test-full:
-    name: Build & Test (${{ matrix.os }})
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-    needs: build-and-test-fast
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
-            10.0.x
-
-      - name: Cache NuGet packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Build library (Release)
-        run: dotnet build src/PromptPlus.csproj --configuration Release
-
-      - name: Test
-        run: >
-          dotnet test tests/PromptPlus.Tests/PromptPlus.Tests.csproj
-          --configuration Debug
-          --verbosity normal
-          --logger "trx;LogFileName=test-results.trx"
-          --collect:"XPlat Code Coverage"
-          --results-directory TestResults
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
           name: test-results-${{ matrix.os }}
           path: "**/TestResults/**/*.trx"
           retention-days: 7
@@ -123,4 +68,3 @@ jobs:
           name: coverage-${{ matrix.os }}
           path: "**/TestResults/**/coverage.cobertura.xml"
           retention-days: 7
-

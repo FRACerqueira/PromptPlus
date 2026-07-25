@@ -38,7 +38,7 @@ namespace PromptPlus.Tests.Controls
     //   ever reaching the per-control code that would otherwise populate a real elapsed snapshot,
     //   so (unlike what earlier notes for TaskExec/MultiTasks assumed) Content is NOT a meaningful
     //   "elapsed at cancellation time" value here — just confirmed IsAborted=true and a blank frame.
-    [Collection(BackgroundTimingCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class TimeControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

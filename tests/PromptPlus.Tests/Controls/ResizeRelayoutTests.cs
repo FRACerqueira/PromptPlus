@@ -18,9 +18,10 @@ namespace PromptPlus.Tests.Controls
     // relayout machinery itself lives entirely in the base class.
     // Relies on fixed wall-clock waits (WaitUntilAllKeysConsumed, WaitUntilRenderSettles) to observe
     // the resize/relayout in flight deterministically — the same category of timing dependency
-    // BackgroundTimingCollection was introduced for. Sharing that collection serializes it against
-    // the other timing-sensitive classes instead of competing with them for thread-pool slots.
-    [Collection(BackgroundTimingCollection.Name)]
+    // SerializedGlobalStateCollection's background-task-timing half was introduced for. Sharing that
+    // collection serializes it against the other timing-sensitive classes instead of competing
+    // with them for thread-pool slots.
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class ResizeRelayoutTests
     {
         private static VirtualTerminal MakeTerminal(int width, int height)
@@ -141,8 +142,8 @@ namespace PromptPlus.Tests.Controls
             // The resize is detected via console.SizeChanged -> _pendingResize, processed on the
             // main render loop's next 16ms poll tick. A short fixed margin covering a few ticks is
             // the same category of wait already used elsewhere in this suite for background/async
-            // state (see BackgroundTimingCollection) — there is no narrower signal to hook into
-            // from outside the control.
+            // state (see SerializedGlobalStateCollection's background-task-timing half) — there is no
+            // narrower signal to hook into from outside the control.
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(100);
         }
     }

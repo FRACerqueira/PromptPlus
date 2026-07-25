@@ -48,10 +48,10 @@ namespace PromptPlus.Tests.Controls
     // ProgressBarType.Square instead. Default Range is 0..100, default Width is 40 (ConfigPrompt.
     // ProgressBarWidth), default abort key is Escape (shown as "Esc" in the tooltip).
     //
-    // [Collection(BackgroundTimingCollection.Name)]: see BackgroundTimingCollection.cs — every test
+    // [Collection(SerializedGlobalStateCollection.Name)]: see the comment on that collection — every test
     // here spawns a real background Task and relies on real wall-clock margins, which flaked under
     // full-suite parallel load until serialized against the other background-task-heavy classes.
-    [Collection(BackgroundTimingCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class ProgressBarControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });
@@ -183,7 +183,11 @@ namespace PromptPlus.Tests.Controls
                 .UpdateHandler((e, ct) => e.Update(10));
 
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            _ = control.Run(cts.Token);
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var result = control.Run(cts.Token);
+            sw.Stop();
+            // TEMP DIAGNOSTIC — remove before commit.
+            Console.Error.WriteLine($"[DIAG] elapsed={sw.ElapsedMilliseconds}ms IsAborted={result.IsAborted} FinishedValue={result.Content.FinishedValue} FinishedText={result.Content.FinishedText} Exception={result.Content.ExceptionProgress} snapshot=[{vt.Snapshot().Replace("\n", "|")}]");
 
             _ = vt.TextAt(1, 0, 27).Should().Be("0 |####################| 10");
         }

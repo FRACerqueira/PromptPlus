@@ -17,13 +17,13 @@ namespace PromptPlus.Tests.Unit
     // pattern already used for HelperTests' global static state — MockFileSystem is a pure in-memory
     // implementation, so this runs identically on Windows and Linux.
     //
-    // [Collection(FileHistoryCollection.Name)]: FileHistory.FileSystem is a static field shared by
+    // [Collection(SerializedGlobalStateCollection.Name)]: FileHistory.FileSystem is a static field shared by
     // the whole assembly. xUnit runs different test CLASSES in parallel by default (methods within
     // one class run sequentially already) — without this, this class racing against
     // Controls.InputControlHistoryModeTests (which swaps the same static) intermittently overwrote
     // each other's FileSystem mid-test. Found empirically: FileHistoryTests started failing only
     // after InputControlHistoryModeTests was added, never in isolation.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class FileHistoryTests : IDisposable
     {
         private readonly IFileSystem _original = FileHistory.FileSystem;

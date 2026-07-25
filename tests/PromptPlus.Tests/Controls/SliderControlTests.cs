@@ -14,7 +14,7 @@ namespace PromptPlus.Tests.Controls
     // Grupo 1 (FASE2-CONTROLS-PLAN.md) — SliderControl, sem ModeView. Confirmado por leitura:
     // cancelamento já seta ResultCtrl corretamente (linha 347-351). Default: Range(0,100),
     // Step=ranger/100=1, LargeStep=ranger/10=10, Layout=LeftRight.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class SliderControlTests : IDisposable
     {
         private const string HistoryFile = "slider-history-tests";

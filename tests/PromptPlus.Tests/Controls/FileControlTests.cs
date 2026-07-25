@@ -21,8 +21,8 @@ namespace PromptPlus.Tests.Controls
     //
     // `FileControl.FileSystem` is a static, swappable `IFileSystem` (mirrors `FileHistory.
     // FileSystem`) — every test here swaps it for a `MockFileSystem` in the constructor and
-    // restores the real one in Dispose, same pattern as `FileHistoryCollection`. No dedicated
-    // parallelization guard is added here beyond the existing `[Collection(FileHistoryCollection.
+    // restores the real one in Dispose, same pattern as `SerializedGlobalStateCollection`. No dedicated
+    // parallelization guard is added here beyond the existing `[Collection(SerializedGlobalStateCollection.
     // Name)]` (also needed because several tests touch `EnabledHistory`) — `FileControl.FileSystem`
     // and `FileHistory.FileSystem` are separate static fields, but sharing the same collection is
     // simplest and keeps this suite from racing the History-swapping suites already using it.
@@ -31,7 +31,7 @@ namespace PromptPlus.Tests.Controls
     // (`FormatSize`/`FormatSize`) always uses the ambient `CultureInfo.CurrentCulture`, whose
     // decimal separator is machine-dependent. Tests that check size text use byte counts that
     // render with no fractional digits (exact multiples of 1024) to stay culture-independent.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class FileControlTests : IDisposable
     {
         private readonly IFileSystem _originalHistoryFs = FileHistory.FileSystem;

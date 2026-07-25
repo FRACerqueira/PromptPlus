@@ -18,10 +18,10 @@ namespace PromptPlus.Tests.Controls
     // (StartBackgroundWildcard -> EnumerateSubtree) against real I/O at least once, since Mock-based
     // tests never touch a real disk.
     //
-    // [Collection(BackgroundTimingCollection.Name)]: the background-folder-check test spawns a real
+    // [Collection(SerializedGlobalStateCollection.Name)]: the background-folder-check test spawns a real
     // background Task and waits on a fixed real-time margin for it to finish — observed flaky under
-    // full-suite parallel load (see BackgroundTimingCollection.cs) until serialized this way.
-    [Collection(BackgroundTimingCollection.Name)]
+    // full-suite parallel load (see that collection's comment) until serialized this way.
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiFileControlRealFilesystemTests : IDisposable
     {
         private readonly DirectoryInfo _tempDir = Directory.CreateTempSubdirectory("promptplus-multifilecontrol-");
@@ -68,7 +68,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             var runTask = Task.Run(() => control.Run(cts.Token));
             // Now that this class is serialized against the other background-task-heavy classes
-            // (see BackgroundTimingCollection), a much smaller margin is safe: the background
+            // (see SerializedGlobalStateCollection), a much smaller margin is safe: the background
             // wildcard op only has 2 tiny real files to enumerate and no longer competes with
             // hundreds of other parallel tests for thread-pool slots.
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(500);

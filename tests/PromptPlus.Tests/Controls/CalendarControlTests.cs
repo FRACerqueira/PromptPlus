@@ -31,7 +31,7 @@ namespace PromptPlus.Tests.Controls
     // predicado rejeita a data padrão, `_selectedDate` já nasce nulo e `Enter` mostra
     // "Invalid date selected!" (não a mensagem do predicado, que nunca chega a ser avaliada nesse
     // caso).
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class CalendarControlTests : IDisposable
     {
         private const string HistoryFile = "calendar-history-tests";

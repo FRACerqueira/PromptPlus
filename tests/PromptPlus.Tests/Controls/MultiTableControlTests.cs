@@ -30,7 +30,7 @@ namespace PromptPlus.Tests.Controls
     //   em pleno filtro (mesmo bug do Table).
     // - Tooltip de jump agora usa `TooltipTableJump` e só aparece com pelo menos uma coluna
     //   `isFilterable` (mesma correção do Table).
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiTableControlTests : IDisposable
     {
         private const string HistoryFile = "multitable-history-tests";

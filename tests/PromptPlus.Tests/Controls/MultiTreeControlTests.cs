@@ -47,7 +47,7 @@ namespace PromptPlus.Tests.Controls
     // + `CascadeCheck` (padrão, `true`), marcar SÓ um container via Space simples (sem cascatear)
     // fica inerte — nem aparece no checkbox, nem no resultado — porque o estado de um container
     // sob cascata é sempre um agregado dos descendentes, nunca uma flag própria independente.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiTreeControlTests : IDisposable
     {
         private const string HistoryFile = "multitree-history-tests";

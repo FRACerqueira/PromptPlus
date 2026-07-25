@@ -36,7 +36,7 @@ namespace PromptPlus.Tests.Controls
     //   its baked-in parentheses/trailing space) across all 11 locales.
     //
     // ASCII glyphs (SupportsUnicode=false): Waiting=" ", Running=">", Success="v", Failed="x".
-    [Collection(BackgroundTimingCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiTasksControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

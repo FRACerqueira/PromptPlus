@@ -20,9 +20,13 @@ namespace PromptPlus.Tests.Controls
     //
     // `MultiFileControl.FileSystem` is a static, swappable `IFileSystem` (separate from both
     // `FileControl.FileSystem` and `FileHistory.FileSystem`) — every test swaps it for a
-    // `MockFileSystem` and restores the real one in Dispose. `[Collection(FileHistoryCollection.
-    // Name)]` is only needed for the tests that also touch `FileHistory.FileSystem` (Default/
-    // EnabledHistory), but is applied to the whole class for simplicity, same as FileControlTests.
+    // `MockFileSystem` and restores the real one in Dispose. `[Collection(SerializedGlobalStateCollection.
+    // Name)]` is needed for two independent reasons, applied to the whole class for simplicity
+    // (same as FileControlTests): the tests that touch `FileHistory.FileSystem` (Default/
+    // EnabledHistory) need it for that static, AND the background-wildcard-check tests below spawn
+    // a real background Task + a fixed real-time margin (see SerializedGlobalStateCollection's comment) —
+    // confirmed the same class of full-suite-parallel-contention risk as ProgressBar/TaskExec/
+    // MultiTasks/etc, even though its 400ms margin has enough slack that it hadn't flaked yet.
     //
     // Checking an UNCHECKED folder (default CascadeCheck=true) starts a real background Task that
     // recursively enumerates the folder's disk subtree off the UI thread (see StartBackgroundWildcard
@@ -34,7 +38,7 @@ namespace PromptPlus.Tests.Controls
     // still-live queue, then `.GetAwaiter().GetResult()`. This is only needed when a folder is
     // CHECKED via Space/Ctrl+Space with cascade enabled; unchecking an already-fully-checked folder
     // uses a synchronous fast path (no disk I/O), and individual file toggles are always synchronous.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiFileControlTests : IDisposable
     {
         private readonly IFileSystem _originalHistoryFs = FileHistory.FileSystem;

@@ -26,7 +26,7 @@ namespace PromptPlus.Tests.Controls
     //   de Select/MultiSelect/Table (que começam `false` e exigem opt-in explícito). Não é bug —
     //   a própria doc de `EnabledHistory` do Tree já promete esse comportamento — só uma
     //   divergência real entre controles, documentada aqui.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class TreeControlTests : IDisposable
     {
         private const string HistoryFile = "tree-history-tests";

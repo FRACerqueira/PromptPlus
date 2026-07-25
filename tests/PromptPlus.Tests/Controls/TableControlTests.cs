@@ -23,7 +23,7 @@ namespace PromptPlus.Tests.Controls
     // - A "linha de resposta" (WriteAnswer/FinishTemplate) usa o valor da CÉLULA DA COLUNA ATUAL
     //   (GetAnswerText), não `value.ToString()` como a doc do TextSelector sugere — Tab muda qual
     //   célula aparece como resposta, tanto durante a navegação quanto no Enter final.
-    [Collection(FileHistoryCollection.Name)]
+    [Collection(SerializedGlobalStateCollection.Name)]
     public class TableControlTests : IDisposable
     {
         private const string HistoryFile = "table-history-tests";
