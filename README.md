@@ -33,6 +33,31 @@
 ----
 ## What's new in the latest version
 
+# 📢 Release Note – PromptPlus V.6.X Beta
+
+## 🚀 Beta Phase Launch
+- The **6.X** version officially enters the **Beta phase**.  
+- Purpose: validate **new features, adjustments, and improvements** currently under development.
+
+## 🛠️ Source Code
+- Available only in the **develop** branch.  
+- The **main** branch will be updated later, once changes are consolidated and validated.
+
+## 📦 NuGet Package
+- Latest update: **6.0.1-Beta**.  
+- To install, you must **enable the pre-release option** in NuGet.
+
+## 💬 Community Feedback
+- This space is open for:  
+  - Sharing **feedback**  
+  - Reporting **issues**  
+  - Suggesting **enhancements**
+
+---
+
+🔗 For more details and to join the discussion, visit [GitHub Discussion #152](https://github.com/FRACerqueira/PromptPlus/discussions/152).
+
+
 ### V5.0.7 / V5.0.8
 [**Top**](#table-of-contents)
 
