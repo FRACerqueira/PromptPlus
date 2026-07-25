@@ -6,6 +6,7 @@ using PromptPlusLibrary.Controls.History;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
+using System.IO;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading;
@@ -47,24 +48,36 @@ namespace PromptPlus.Tests.Controls
 
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });
 
-        // C:\root
+        // MockFileSystem uses the real host OS's path rules (no cross-platform simulation —
+        // see TestableIO/System.IO.Abstractions#778), so a hardcoded Windows path like
+        // `C:\root` is misparsed on Linux (`\` isn't a separator there). Rooting under
+        // Path.GetTempPath() instead of a hardcoded drive letter derives a valid absolute
+        // path from the real OS for whichever drive/root is actually available — nothing is
+        // written to it, since MockFileSystem never touches the real disk.
+        //
+        // root
         //   sub\
         //     a.txt (1 B)
         //   top.txt (2048 B = "2 KB", no fractional digits)
+        private static readonly string Root = Path.Combine(Path.GetTempPath(), "root");
+        private static readonly string SubDir = Path.Combine(Root, "sub");
+        private static readonly string ATxtPath = Path.Combine(SubDir, "a.txt");
+        private static readonly string TopTxtPath = Path.Combine(Root, "top.txt");
+
         private static MockFileSystem MakeFs()
         {
             var fs = new MockFileSystem();
-            fs.AddDirectory(@"C:\root");
-            fs.AddDirectory(@"C:\root\sub");
-            fs.AddFile(@"C:\root\sub\a.txt", new MockFileData("a"));
-            fs.AddFile(@"C:\root\top.txt", new MockFileData(new byte[2048]));
+            fs.AddDirectory(Root);
+            fs.AddDirectory(SubDir);
+            fs.AddFile(ATxtPath, new MockFileData("a"));
+            fs.AddFile(TopTxtPath, new MockFileData(new byte[2048]));
             return fs;
         }
 
         private IFileControl MakeControl(VirtualTerminal vt)
         {
             FileControl.FileSystem = MakeFs();
-            return new PromptPlusControls(vt, new PromptConfig()).File("Choose").Root(@"C:\root");
+            return new PromptPlusControls(vt, new PromptConfig()).File("Choose").Root(Root);
         }
 
         [Fact]
@@ -145,10 +158,10 @@ namespace PromptPlus.Tests.Controls
         public void SearchPattern_filters_files_but_never_folders()
         {
             var fs = MakeFs();
-            fs.AddFile(@"C:\root\readme.md", new MockFileData("x"));
+            fs.AddFile(Path.Combine(Root, "readme.md"), new MockFileData("x"));
             FileControl.FileSystem = fs;
             var vt = MakeTerminal();
-            var control = new PromptPlusControls(vt, new PromptConfig()).File("Choose").Root(@"C:\root").SearchPattern("*.txt");
+            var control = new PromptPlusControls(vt, new PromptConfig()).File("Choose").Root(Root).SearchPattern("*.txt");
 
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
@@ -214,12 +227,13 @@ namespace PromptPlus.Tests.Controls
         public void Default_expands_the_tree_down_to_the_target_and_selects_it()
         {
             var vt = MakeTerminal();
-            var control = MakeControl(vt).Default(@"C:\root\sub\a.txt");
+            var control = MakeControl(vt).Default(ATxtPath);
 
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 17).Should().Be("Choose: sub\\a.txt");
+            var expected = $"Choose: sub{Path.DirectorySeparatorChar}a.txt";
+            _ = vt.TextAt(0, 0, expected.Length).Should().Be(expected);
             _ = vt.Find("Qty:4 items").Should().NotBeNull();
         }
 
@@ -233,7 +247,8 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 15).Should().Be("Choose: C:\\root");
+            var expected = $"Choose: {Root}";
+            _ = vt.TextAt(0, 0, expected.Length).Should().Be(expected);
         }
 
         [Fact]
@@ -271,19 +286,20 @@ namespace PromptPlus.Tests.Controls
             // EnabledHistory alone is already enough to restore the last confirmed path.
             const string historyFile = "file-history-tests";
             var vt = MakeTerminal();
-            var control = MakeControl(vt).Default(@"C:\root\sub\a.txt").EnabledHistory(historyFile);
+            var control = MakeControl(vt).Default(ATxtPath).EnabledHistory(historyFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
             FileControl.FileSystem = MakeFs();
-            var control2 = new PromptPlusControls(vt2, new PromptConfig()).File("Choose").Root(@"C:\root")
+            var control2 = new PromptPlusControls(vt2, new PromptConfig()).File("Choose").Root(Root)
                 .EnabledHistory(historyFile);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control2.Run(cts2.Token);
 
-            _ = vt2.TextAt(0, 0, 17).Should().Be("Choose: sub\\a.txt");
+            var expected = $"Choose: sub{Path.DirectorySeparatorChar}a.txt";
+            _ = vt2.TextAt(0, 0, expected.Length).Should().Be(expected);
         }
 
         [Fact]

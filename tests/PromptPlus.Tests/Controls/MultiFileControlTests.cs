@@ -6,6 +6,7 @@ using PromptPlusLibrary.Controls.MultiFile;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
+using System.IO;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading;
@@ -50,24 +51,36 @@ namespace PromptPlus.Tests.Controls
 
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });
 
-        // C:\root
+        // MockFileSystem uses the real host OS's path rules (no cross-platform simulation —
+        // see TestableIO/System.IO.Abstractions#778), so a hardcoded Windows path like
+        // `C:\root` is misparsed on Linux (`\` isn't a separator there). Rooting under
+        // Path.GetTempPath() instead of a hardcoded drive letter derives a valid absolute
+        // path from the real OS for whichever drive/root is actually available — nothing is
+        // written to it, since MockFileSystem never touches the real disk.
+        //
+        // root
         //   sub\
         //     a.txt (1 B)
         //   top.txt (2048 B = "2 KB", no fractional digits)
+        private static readonly string Root = Path.Combine(Path.GetTempPath(), "root");
+        private static readonly string SubDir = Path.Combine(Root, "sub");
+        private static readonly string ATxtPath = Path.Combine(SubDir, "a.txt");
+        private static readonly string TopTxtPath = Path.Combine(Root, "top.txt");
+
         private static MockFileSystem MakeFs()
         {
             var fs = new MockFileSystem();
-            fs.AddDirectory(@"C:\root");
-            fs.AddDirectory(@"C:\root\sub");
-            fs.AddFile(@"C:\root\sub\a.txt", new MockFileData("a"));
-            fs.AddFile(@"C:\root\top.txt", new MockFileData(new byte[2048]));
+            fs.AddDirectory(Root);
+            fs.AddDirectory(SubDir);
+            fs.AddFile(ATxtPath, new MockFileData("a"));
+            fs.AddFile(TopTxtPath, new MockFileData(new byte[2048]));
             return fs;
         }
 
         private IMultiFileControl MakeControl(VirtualTerminal vt)
         {
             MultiFileControl.FileSystem = MakeFs();
-            return new PromptPlusControls(vt, new PromptConfig()).MultiFile("Choose").Root(@"C:\root");
+            return new PromptPlusControls(vt, new PromptConfig()).MultiFile("Choose").Root(Root);
         }
 
         [Fact]
@@ -362,7 +375,8 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(300));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 23).Should().Be(@"Choose: C:\root\top.txt");
+            var expected = $"Choose: {TopTxtPath}";
+            _ = vt.TextAt(0, 0, expected.Length).Should().Be(expected);
         }
 
         [Fact]
@@ -384,19 +398,20 @@ namespace PromptPlus.Tests.Controls
         {
             const string historyFile = "multifile-history-tests";
             var vt = MakeTerminal();
-            var control = MakeControl(vt).Default([@"C:\root\sub\a.txt"]).EnabledHistory(historyFile);
+            var control = MakeControl(vt).Default([ATxtPath]).EnabledHistory(historyFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
             MultiFileControl.FileSystem = MakeFs();
-            var control2 = new PromptPlusControls(vt2, new PromptConfig()).MultiFile("Choose").Root(@"C:\root")
+            var control2 = new PromptPlusControls(vt2, new PromptConfig()).MultiFile("Choose").Root(Root)
                 .EnabledHistory(historyFile);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control2.Run(cts2.Token);
 
-            _ = vt2.TextAt(0, 0, 17).Should().Be(@"Choose: sub\a.txt");
+            var expected = $"Choose: sub{Path.DirectorySeparatorChar}a.txt";
+            _ = vt2.TextAt(0, 0, expected.Length).Should().Be(expected);
             _ = vt2.Find("a.txt").Should().NotBeNull();
         }
 
