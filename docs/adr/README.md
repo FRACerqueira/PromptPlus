@@ -76,6 +76,7 @@ test/build ADRs (0014–0019) predate that survey and were renumbered to follow.
 | [ADR0012V01R01](ADR0012V01R01-GeneratedApiDocsOffLimits.md) | Generated API docs are off-limits for manual edits | V01 | Accepted |
 | [ADR0013V01R01](ADR0013V01R01-MigrationGuideRules.md) | Migration guide maintenance rules (v5 → v6) | V01 | Accepted |
 | [ADR0020V01R01](ADR0020V01R01-DisplayWidthOverCharCountForLayout.md) | Display width (columns), not character count, for text layout | V01 | Accepted |
+| [ADR0023V01R01](ADR0023V01R01-GuardInteractiveControlsAgainstRedirectedInput.md) | Guard interactive controls against redirected console input in `Run()` | V01 | Accepted |
 
 ### Test & build architecture
 

@@ -204,6 +204,27 @@ PromptPlus.Controls
 | Tooltip visibility | `ShowTooltip = true` shows keyboard hints below the prompt |
 | Abort key hint | `ShowMessageAbortKey = true` includes the abort-key name in the tooltip |
 | Auto-initialization | PromptPlus initializes on first access: detects terminal, loads `PromptPlus.config` if present, registers error log hook |
+| Redirected console input | Interactive controls throw `InvalidOperationException` immediately when console input is redirected, instead of hanging forever. `ProgressBar`, `Task`, `MultiTasks`, `Time` are exempt — they complete on their own signal and run normally under redirected input |
+
+### Running under redirected/non-interactive input
+
+```csharp
+using PromptPlusLibrary;
+
+// Under a redirected console (a file, a pipe, most CI runners), this throws
+// InvalidOperationException immediately instead of hanging:
+var result = PromptPlus.Controls.Input("Name").Run();
+
+// Live controls have no such restriction — they don't wait on a real keystroke:
+var state = PromptPlus.Controls.Task("Working")
+    .Action(_ => DoWork())
+    .Run();
+```
+
+There is no opt-out: an interactive control fundamentally needs a real key press to produce a
+result, and a redirected console has no keyboard input buffer to read one from. Use a `ProgressBar`,
+`Task`, `MultiTasks`, or `Time` control for automated/CI scenarios instead. See
+[ADR0023](adr/ADR0023V01R01-GuardInteractiveControlsAgainstRedirectedInput.md) for the full rationale.
 
 ---
 
