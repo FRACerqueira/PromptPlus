@@ -193,6 +193,21 @@ namespace PromptPlusLibrary.Controls.Common
         /// <returns>The result of the control prompt.</returns>
         public ResultPrompt<T> Run(CancellationToken stoptoken = default)
         {
+            // Interactive controls block on a real key press (WaitKeypress loops on
+            // console.KeyAvailable). When input is redirected, KeyAvailable returns false
+            // forever instead of throwing (ConsolePlus 1.0.0-Beta4+), so without this guard
+            // Run() would hang indefinitely for any caller that does not pass its own
+            // CancellationToken (e.g. the common Show() -> CancellationToken.None path).
+            // Widgets never enter the key-reading loop and are unaffected. "Live" controls
+            // (ProgressBar/Task/MultiTasks/Time) complete on their own signal (progress/task/
+            // timer) without ever needing a real key, and already run correctly under
+            // redirected input today, so they are excluded from this guard.
+            if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected)
+            {
+                throw new InvalidOperationException(
+                    "Cannot run an interactive control: console input is redirected and no key presses can be read.");
+            }
+
             _showTooltipValue = OptionsControl.ShowTooltipValue;
 
 
