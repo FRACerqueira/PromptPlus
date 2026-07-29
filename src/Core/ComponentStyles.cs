@@ -120,7 +120,7 @@ namespace PromptPlusLibrary.Core
         /// </summary>
         SwitchOn,
         /// <summary>
-        /// Switch Regionwhen state 'Off'
+        /// Switch Region when state 'Off'
         /// </summary>
         SwitchOff,
         /// <summary>

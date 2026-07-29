@@ -8,7 +8,7 @@ namespace PromptPlusLibrary
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 {
     /// <summary>
-    /// Filter strategy for filter items in colletion
+    /// Filter strategy for filter items in collection
     /// </summary>
     public enum FilterMode
     {

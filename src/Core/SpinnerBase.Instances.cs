@@ -1,6 +1,6 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
-// The maintenance and evolution is maintained by the ConsolePlus project under MIT license
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
 using System;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace PromptPlusLibrary.Core
 {
     // Arrow and motion-based spinner implementations for Spinner.
-    // The abstract contract lives in Spinner.cs and the public catalog in Spinner.Known.cs.
+    // The abstract contract lives in SpinnerBase.cs and the public catalog in SpinnerInstance.Known.cs.
     internal abstract partial class SpinnerBase
     {
         private sealed class DefaultSpinner :  SpinnerBase

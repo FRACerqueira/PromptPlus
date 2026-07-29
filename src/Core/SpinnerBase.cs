@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// The maintenance and evolution is maintained by the ConsolePlus project under MIT license
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
 using System;
@@ -12,9 +12,9 @@ namespace PromptPlusLibrary.Core
     /// Represents a spinner that can be used to indicate progress in console applications.
     /// </summary>
     /// <remarks>
-    /// The concrete spinner implementations live in <c>Spinner.Definitions.cs</c> and the
+    /// The concrete spinner implementations live in <c>SpinnerBase.Instances.cs</c> and the
     /// catalog of well-known spinners is exposed through <see cref="Known"/> in
-    /// <c>Spinner.Known.cs</c>.
+    /// <c>SpinnerInstance.Known.cs</c>.
     /// </remarks>
     internal abstract partial class SpinnerBase
     {

@@ -158,7 +158,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="validselect">
         /// A callback that receives the row value and returns a <see cref="Task{TResult}"/> of
-        /// <see langword="bool"/> — <see langword="true"/> when the row is a valid selection.
+        /// <see langword="bool"/> â€” <see langword="true"/> when the row is a valid selection.
         /// </param>
         /// <returns>The current <see cref="ITableControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="validselect"/> is <see langword="null"/>.</exception>
@@ -183,7 +183,7 @@ namespace PromptPlusLibrary
         /// Replaces any previously registered synchronous predicate.
         /// </summary>
         /// <param name="validselect">
-        /// A callback that returns a <see cref="Task{TResult}"/> of <c>(bool, string?)</c> —
+        /// A callback that returns a <see cref="Task{TResult}"/> of <c>(bool, string?)</c> â€”
         /// <c>(true, null)</c> when valid, or <c>(false, "error message")</c> when not.
         /// </param>
         /// <returns>The current <see cref="ITableControl{T}"/> instance for chaining.</returns>
