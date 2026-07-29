@@ -5,7 +5,7 @@
 
 ## FilterMode Enum
 
-Filter strategy for filter items in colletion
+Filter strategy for filter items in collection
 
 ```csharp
 public enum FilterMode

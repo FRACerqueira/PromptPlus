@@ -37,11 +37,11 @@ Description Region
 
 Tooltips Region
 
-<a name='PromptPlusLibrary.SwitchStyles.Slider'></a>
+<a name='PromptPlusLibrary.SwitchStyles.Marker'></a>
 
-`Slider` 4
+`Marker` 4
 
-Slider Region
+Marker Region \(the moving thumb indicating the current state\)
 
 <a name='PromptPlusLibrary.SwitchStyles.Ranger'></a>
 

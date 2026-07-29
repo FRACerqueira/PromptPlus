@@ -72,7 +72,7 @@
 | [ColumnAlignment](ColumnAlignment.md 'PromptPlusLibrary\.ColumnAlignment') | Represents horizontal alignment for a table column\. |
 | [DateTimePart](DateTimePart.md 'PromptPlusLibrary\.DateTimePart') | Represents date parts |
 | [FileStyles](FileStyles.md 'PromptPlusLibrary\.FileStyles') | Represents the styles for the File control\. This enum defines various regions or components of the File control\. |
-| [FilterMode](FilterMode.md 'PromptPlusLibrary\.FilterMode') | Filter strategy for filter items in colletion |
+| [FilterMode](FilterMode.md 'PromptPlusLibrary\.FilterMode') | Filter strategy for filter items in collection |
 | [FilterTableMode](FilterTableMode.md 'PromptPlusLibrary\.FilterTableMode') | Filter strategy for filter items in table\. |
 | [HideChart](HideChart.md 'PromptPlusLibrary\.HideChart') | Flags enumeration specifying which chart elements should be hidden\. |
 | [HideProgressBar](HideProgressBar.md 'PromptPlusLibrary\.HideProgressBar') | Defines ProgressBar UI elements that can be hidden\. |
