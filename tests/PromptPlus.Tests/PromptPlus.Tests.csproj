@@ -13,8 +13,8 @@
   </ItemGroup>
   <ItemGroup>
     <!--
-      Debug config: PromptPlus/src references ConsolePlus/src via ProjectReference (see D6, TEST-PLAN.md
-      section 12) so the linked driver above gets the LOCAL ConsolePlus build — the one that grants us
+      Debug config: PromptPlus/src references ConsolePlus/src via ProjectReference so the linked
+      driver above gets the LOCAL ConsolePlus build — the one that grants us
       InternalsVisibleTo — instead of the published ConsolePlus.net NuGet package.
     -->
     <ProjectReference Include="..\..\src\PromptPlus.csproj" />

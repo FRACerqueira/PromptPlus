@@ -1,9 +1,9 @@
-﻿<div align="center">
+<div align="center">
   <img src="../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
 
-  ## **Guia de Documentação da API**
+  ## **API Documentation Guide**
 
   [![NuGet](https://img.shields.io/badge/NuGet-PromptPlus-blue)](https://www.nuget.org/packages/PromptPlus)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -15,38 +15,38 @@
 
 ---
 
-Este documento explica como a documentação da API do PromptPlus é gerada e mantida.
+This document explains how PromptPlus's API documentation is generated and maintained.
 
-## 🛠️ Ferramenta Utilizada
+## 🛠️ Tool Used
 
-A documentação da API é gerada automaticamente usando **[DefaultDocumentation](https://github.com/Doraku/DefaultDocumentation)** versão 1.2.5.
+API documentation is generated automatically using **[DefaultDocumentation](https://github.com/Doraku/DefaultDocumentation)** version 1.2.5.
 
-DefaultDocumentation é uma ferramenta que converte os comentários XML do código C# em arquivos Markdown, criando uma documentação navegável e completa da API.
+DefaultDocumentation is a tool that converts the XML comments from C# code into Markdown files, producing complete, navigable API documentation.
 
-## 📁 Estrutura da Documentação
+## 📁 Documentation Structure
 
 ```
 docs/
-├── api/                          # Documentação da API (gerada automaticamente)
-│   ├── PromptPlus.md           # Página principal do assembly
-│   ├── PromptPlusLibrary.*.md  # Páginas de tipos e membros
-│   └── links.json               # Links externos (opcional)
-├── getting-started.md           # Guias manuais
+├── api/                          # API documentation (generated automatically)
+│   ├── PromptPlus.md           # Main assembly page
+│   ├── PromptPlusLibrary.*.md  # Type and member pages
+│   └── links.json               # External links (optional)
+├── getting-started.md           # Manual guides
 ├── [others].md
 └── ...
 ```
 
-## ⚙️ Configuração
+## ⚙️ Configuration
 
-A configuração do DefaultDocumentation está no arquivo `src/PromptPlus.csproj`:
+The DefaultDocumentation configuration lives in the `src/PromptPlus.csproj` file:
 
 ```xml
 <PropertyGroup>
-	<!-- Gera XML de documentação -->
+	<!-- Generates the XML documentation file -->
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 </PropertyGroup>
 
-<!-- DefaultDocumentation APENAS em Release e no target net10.0 -->
+<!-- DefaultDocumentation ONLY in Release, for the net10.0 target -->
 <ItemGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">
 	<PackageReference Include="DefaultDocumentation" Version="1.2.5">
 		<PrivateAssets>all</PrivateAssets>
@@ -64,61 +64,61 @@ A configuração do DefaultDocumentation está no arquivo `src/PromptPlus.csproj
 </PropertyGroup>
 ```
 
-> ℹ️ Após a geração, uma task MSBuild (`PrependDocIconHeader`) adiciona o cabeçalho com o ícone
-> (`DocIconUrl` / `DocIconWidth`) no topo de cada arquivo `.md` gerado em `docs/api`.
+> ℹ️ After generation, an MSBuild task (`PrependDocIconHeader`) adds the icon header
+> (`DocIconUrl` / `DocIconWidth`) to the top of every `.md` file generated in `docs/api`.
 
-### Opções de Configuração
+### Configuration Options
 
-| Propriedade | Valor | Descrição |
+| Property | Value | Description |
 |-------------|-------|-----------|
-| `Condition` | `Release` + `net10.0` | **Documentação gerada APENAS em builds Release do target net10.0** |
-| `DefaultDocumentationFolder` | `../docs/api` | Pasta de saída para os arquivos Markdown |
-| `DefaultDocumentationGeneratedPages` | `Assembly, Namespaces, Types, Members` | Páginas geradas |
-| `DefaultDocumentationGeneratedAccessModifiers` | `Public` | Documenta apenas membros públicos |
-| `DefaultDocumentationAssemblyPageName` | `PromptPlus` | Nome da página principal do assembly (`PromptPlus.md`) |
-| `DocIconUrl` / `DocIconWidth` | icon.png / `120` | Cabeçalho com ícone adicionado a cada `.md` gerado |
+| `Condition` | `Release` + `net10.0` | **Documentation is generated ONLY in Release builds of the net10.0 target** |
+| `DefaultDocumentationFolder` | `../docs/api` | Output folder for the Markdown files |
+| `DefaultDocumentationGeneratedPages` | `Assembly, Namespaces, Types, Members` | Pages that are generated |
+| `DefaultDocumentationGeneratedAccessModifiers` | `Public` | Documents public members only |
+| `DefaultDocumentationAssemblyPageName` | `PromptPlus` | Name of the assembly's main page (`PromptPlus.md`) |
+| `DocIconUrl` / `DocIconWidth` | icon.png / `120` | Icon header added to each generated `.md` file |
 
-## 🔄 Regenerando a Documentação
+## 🔄 Regenerating the Documentation
 
-A documentação é regenerada automaticamente toda vez que você compila o projeto em **Release**
-para o target **net10.0**:
+The documentation is regenerated automatically every time you build the project in **Release**
+for the **net10.0** target:
 
-### Via Visual Studio
-1. Abra a solução no Visual Studio
-2. Mude para configuração **Release**
+### From Visual Studio
+1. Open the solution in Visual Studio
+2. Switch to the **Release** configuration
 3. Build → Build Solution (Ctrl+Shift+B)
-4. Os arquivos Markdown serão atualizados em `docs/api/`
+4. The Markdown files will be updated in `docs/api/`
 
-**Nota**: Em builds **Debug** (ou em targets diferentes de net10.0), a documentação **não** é
-gerada, para acelerar o desenvolvimento.
+**Note**: In **Debug** builds (or targets other than net10.0), the documentation is **not**
+generated, to keep development fast.
 
-### Via Linha de Comando
+### From the Command Line
 ```bash
-# Na raiz do repositório - APENAS Release gera documentação (target net10.0)
+# From the repository root - ONLY Release generates documentation (net10.0 target)
 dotnet build src/PromptPlus.csproj -c Release -f net10.0
 
-# Build Debug NÃO gera documentação
+# Debug build does NOT generate documentation
 dotnet build src/PromptPlus.csproj -c Debug
 ```
 
-### Verificando os arquivos gerados
+### Checking the Generated Files
 ```powershell
-# Verificar arquivos gerados
+# Check the generated files
 Get-ChildItem ..\docs\api\*.md | Select-Object Name, LastWriteTime
 ```
 
-## ✍️ Escrevendo Comentários XML
+## ✍️ Writing XML Comments
 
-Para que a documentação seja gerada corretamente, adicione comentários XML no código:
+For the documentation to be generated correctly, add XML comments to the code:
 
 ```csharp
 /// <summary>
-/// Escreve o texto especificado no console.
+/// Writes the specified text to the console.
 /// </summary>
-/// <param name="text">O texto a ser escrito.</param>
+/// <param name="text">The text to write.</param>
 /// <remarks>
-/// Este método suporta markup inline para estilização.
-/// Exemplo: <c>[red]Texto vermelho[/]</c>
+/// This method supports inline markup for styling.
+/// Example: <c>[red]Red text[/]</c>
 /// </remarks>
 /// <example>
 /// <code>
@@ -127,52 +127,52 @@ Para que a documentação seja gerada corretamente, adicione comentários XML no
 /// </example>
 public static void WriteLine(string text)
 {
-	// implementação
+	// implementation
 }
 ```
 
-### Tags XML Suportadas
+### Supported XML Tags
 
-| Tag | Uso |
+| Tag | Usage |
 |-----|-----|
-| `<summary>` | Descrição breve do membro |
-| `<param>` | Descrição de parâmetros |
-| `<returns>` | Descrição do valor de retorno |
-| `<remarks>` | Informações adicionais |
-| `<example>` | Exemplos de uso |
-| `<code>` | Blocos de código |
-| `<see>` | Referências cruzadas |
-| `<seealso>` | Ver também |
-| `<exception>` | Exceções que podem ser lançadas |
+| `<summary>` | Brief description of the member |
+| `<param>` | Description of a parameter |
+| `<returns>` | Description of the return value |
+| `<remarks>` | Additional information |
+| `<example>` | Usage examples |
+| `<code>` | Code blocks |
+| `<see>` | Cross-references |
+| `<seealso>` | See also |
+| `<exception>` | Exceptions that may be thrown |
 
-## 📝 Boas Práticas
+## 📝 Best Practices
 
-1. **Seja Conciso**: Mantenha o `<summary>` em uma linha
-2. **Documente Tudo Público**: Todos os membros públicos devem ter documentação
-3. **Use Exemplos**: Adicione `<example>` para métodos complexos
-4. **Referencie Outros Tipos**: Use `<see cref="ClassName"/>` para criar links
-5. **Documente Exceções**: Use `<exception>` para documentar erros possíveis
-6. **Markdown nos Comentários**: Você pode usar markdown dentro de `<remarks>`
+1. **Be Concise**: Keep the `<summary>` to a single line
+2. **Document Everything Public**: Every public member should have documentation
+3. **Use Examples**: Add `<example>` for complex methods
+4. **Reference Other Types**: Use `<see cref="ClassName"/>` to create links
+5. **Document Exceptions**: Use `<exception>` to document possible errors
+6. **Markdown in Comments**: You can use Markdown inside `<remarks>`
 
-## 🔍 Verificando a Qualidade
+## 🔍 Checking Quality
 
-### Avisos de Documentação
+### Documentation Warnings
 
-Para garantir que toda a API pública está documentada, você pode habilitar avisos:
+To make sure the entire public API is documented, you can enable warnings:
 
 ```xml
 <PropertyGroup>
-	<!-- Avisos para membros públicos sem documentação -->
+	<!-- Warnings for public members without documentation -->
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<NoWarn>$(NoWarn);CS1591</NoWarn> <!-- Remover para ver avisos -->
+	<NoWarn>$(NoWarn);CS1591</NoWarn> <!-- Remove to see the warnings -->
 </PropertyGroup>
 ```
 
-Remova `;CS1591` de `NoWarn` para ver avisos de documentação faltando.
+Remove `;CS1591` from `NoWarn` to see warnings about missing documentation.
 
-## 🌐 Links Externos (Opcional)
+## 🌐 External Links (Optional)
 
-O arquivo `docs/api/links.json` permite configurar links externos para tipos do .NET Framework:
+The `docs/api/links.json` file lets you configure external links for .NET Framework types:
 
 ```json
 {
@@ -182,77 +182,77 @@ O arquivo `docs/api/links.json` permite configurar links externos para tipos do 
 }
 ```
 
-Adicione novos tipos conforme necessário para melhorar os links da documentação.
+Add new types as needed to improve the documentation's links.
 
-## 🚀 Publicando a Documentação
+## 🚀 Publishing the Documentation
 
 ### GitHub Pages
 
-Para publicar a documentação no GitHub Pages:
+To publish the documentation on GitHub Pages:
 
-1. Configure o repositório para usar GitHub Pages
-2. Aponte para a branch/pasta que contém os arquivos Markdown
-3. A documentação estará disponível em `https://username.github.io/PromptPlus/`
+1. Configure the repository to use GitHub Pages
+2. Point it at the branch/folder containing the Markdown files
+3. The documentation will be available at `https://username.github.io/PromptPlus/`
 
-### ReadTheDocs ou Outras Plataformas
+### ReadTheDocs or Other Platforms
 
-Os arquivos Markdown gerados podem ser usados com qualquer plataforma de documentação que suporte Markdown.
+The generated Markdown files can be used with any documentation platform that supports Markdown.
 
-## 🐛 Solução de Problemas
+## 🐛 Troubleshooting
 
-### Documentação Não Está Sendo Gerada
+### Documentation Is Not Being Generated
 
-1. Verifique se `GenerateDocumentationFile` está `True`
-2. Confirme que o pacote DefaultDocumentation está instalado
-3. Faça um Clean + Rebuild da solução
-4. Verifique erros de build no Output
+1. Check that `GenerateDocumentationFile` is set to `True`
+2. Confirm that the DefaultDocumentation package is installed
+3. Do a Clean + Rebuild of the solution
+4. Check the Output window for build errors
 
-### Avisos de Build
+### Build Warnings
 
-Se ver avisos relacionados ao DefaultDocumentation, verifique:
-- A versão do pacote é compatível com seu .NET SDK
-- Todas as propriedades de configuração estão corretas
-- Não há conflitos com outros analisadores
+If you see warnings related to DefaultDocumentation, check:
+- The package version is compatible with your .NET SDK
+- All configuration properties are correct
+- There are no conflicts with other analyzers
 
-### Links Quebrados
+### Broken Links
 
-Se houver links quebrados na documentação:
-- Verifique se os namespaces/tipos referenciados existem
-- Atualize `links.json` para tipos externos
-- Use `<see cref="">` corretamente nos comentários XML
+If there are broken links in the documentation:
+- Check that the referenced namespaces/types exist
+- Update `links.json` for external types
+- Use `<see cref="">` correctly in the XML comments
 
-## 📦 Controle de Versão
+## 📦 Version Control
 
-### O que Commitar
+### What to Commit
 
-✅ **Commitar**:
-- Arquivos de configuração (`PromptPlus.csproj`)
-- Comentários XML no código-fonte
-- `links.json` (se usado)
+✅ **Commit**:
+- Configuration files (`PromptPlus.csproj`)
+- XML comments in the source code
+- `links.json` (if used)
 
-❓ **Opcional**:
-- Arquivos `.md` gerados em `docs/api/`
-  - **Commitar**: Para ter histórico e facilitar revisão em PRs
-  - **Não commitar**: Se preferir gerar sob demanda (adicionar `docs/api/*.md` ao `.gitignore`)
+❓ **Optional**:
+- The `.md` files generated in `docs/api/`
+  - **Commit**: To keep a history and make PR review easier
+  - **Don't commit**: If you prefer to generate on demand (add `docs/api/*.md` to `.gitignore`)
 
-A escolha depende da preferência da equipe. Commitar permite ver mudanças na documentação em PRs.
+The choice depends on team preference. Committing lets you see documentation changes in PRs.
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Ao fazer um Pull Request que adiciona ou modifica API pública:
+When submitting a Pull Request that adds or modifies public API:
 
-1. ✅ Adicione comentários XML completos
-2. ✅ Inclua exemplos quando apropriado
-3. ✅ Regenere a documentação (build)
-4. ✅ Verifique se os arquivos `.md` foram atualizados
-5. ✅ Revise a documentação gerada para qualidade
+1. ✅ Add complete XML comments
+2. ✅ Include examples where appropriate
+3. ✅ Regenerate the documentation (build)
+4. ✅ Check that the `.md` files were updated
+5. ✅ Review the generated documentation for quality
 
-## 📚 Recursos
+## 📚 Resources
 
-- [DefaultDocumentation no GitHub](https://github.com/Doraku/DefaultDocumentation)
+- [DefaultDocumentation on GitHub](https://github.com/Doraku/DefaultDocumentation)
 - [XML Documentation Comments (Microsoft)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
 - [Recommended XML Tags (Microsoft)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags)
 
 ---
 
-**Última atualização**: Este guia foi criado junto com a configuração inicial do DefaultDocumentation para o PromptPlus.
+**Last updated**: This guide was created alongside the initial DefaultDocumentation setup for PromptPlus.
