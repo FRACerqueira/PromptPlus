@@ -129,8 +129,8 @@ namespace MultiTreeControlSamples
                 .DefaultMatchBy((a, b) => a.Id == b.Id)
                 .CheckLeafOnly();
 
-            BuildFullTree(t4, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
-            PrintResult(t4.Run());
+            BuildFullTree(t5, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
+            PrintResult(t5.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
             ShowSection("6) ExtraInfo, PathSeparator('.') and ShowFullPath");
@@ -144,10 +144,11 @@ namespace MultiTreeControlSamples
                 .ShowFullPath(true)
                 .DefaultMatchBy((a, b) => a.Id == b.Id);
 
-            BuildFullTree(t5, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
-            PrintResult(t5.Run());
+            BuildFullTree(t6, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
+            PrintResult(t6.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("7) Range(2, 4) - Enter is rejected until the checked count is within bounds");
             var t7 = PromptPlus.Controls.MultiTree<Node>(
                     "Select between 2 and 4 items",
                     "Enter is rejected until the count is within [2, 4]")
@@ -160,6 +161,7 @@ namespace MultiTreeControlSamples
             PrintResult(t7.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("8) Default - pre-checked items auto-expand the tree");
             var t8 = PromptPlus.Controls.MultiTree<Node>(
                     "API and Mobile are pre-checked",
                     "Tree auto-expands to show each pre-checked node")
@@ -172,6 +174,7 @@ namespace MultiTreeControlSamples
             PrintResult(t8.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("9) PredicateChecked - only items matching the predicate can be checked");
             var t9 = PromptPlus.Controls.MultiTree<Node>(
                     "Only 'service' items (API, Database) can be checked",
                     "Try checking 'HR' or 'Sales' to see the error message")
@@ -188,6 +191,7 @@ namespace MultiTreeControlSamples
             PrintResult(t9.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("10) PredicateCheckedAsync - async predicate validation");
             var t10 = PromptPlus.Controls.MultiTree<Node>(
                     "Async predicate: only 'app' items (Web, Mobile) can be checked",
                     "Simulates an async validation call")
@@ -205,6 +209,7 @@ namespace MultiTreeControlSamples
             PrintResult(t10.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("11) ViewOnly - Space disabled; pre-checked defaults returned on Enter");
             var t11 = PromptPlus.Controls.MultiTree<Node>(
                     "ViewOnly: Space is disabled; pre-checked defaults returned on Enter",
                     "API and EMEA are pre-checked defaults")
@@ -245,7 +250,7 @@ namespace MultiTreeControlSamples
             }
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("12) EnableHistory - remembers checked nodes across runs");
+            ShowSection("13) EnableHistory - Default combined with a named history key");
             var t12 = PromptPlus.Controls.MultiTree<Node>(
                     "History is ON: checked values from the last run are restored",
                     "First run uses the Default; next runs load the last checked set from the .history file")
@@ -259,7 +264,7 @@ namespace MultiTreeControlSamples
             PrintResult(t12.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("13) ChangeDescription - description updates as cursor moves");
+            ShowSection("14) ChangeDescription - description updates as cursor moves");
             var t13 = PromptPlus.Controls.MultiTree<Node>(
                     "The description changes for every node under the cursor",
                     "(base description; will be replaced dynamically)")
@@ -271,7 +276,7 @@ namespace MultiTreeControlSamples
             PrintResult(t13.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("14) ChangeDescriptionAsync - async description");
+            ShowSection("15) ChangeDescriptionAsync - async description");
             var t14 = PromptPlus.Controls.MultiTree<Node>("Async description (simulated I/O)")
                 .Root(root)
                 .TextSelector(n => n.Name)
@@ -285,6 +290,7 @@ namespace MultiTreeControlSamples
             PrintResult(t14.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("16) Filter with Contains mode");
             var t15 = PromptPlus.Controls.MultiTree<Node>(
                     "Type any letters to filter (searches the full path)",
                     "Space still checks/unchecks matched nodes; Backspace clears filter")
@@ -297,7 +303,7 @@ namespace MultiTreeControlSamples
             PrintResult(t15.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("16) Filter with StartsWith mode");
+            ShowSection("17) Filter with StartsWith mode");
             var t16 = PromptPlus.Controls.MultiTree<Node>(
                     "Filters against the node name (StartsWith)",
                     "Try typing 'Group-01' or 'Item-001'")
@@ -311,7 +317,7 @@ namespace MultiTreeControlSamples
             PrintResult(t16.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("17) Interaction<T1> - populate the tree from an external source");
+            ShowSection("18) Interaction<T1> - populate the tree from an external source");
             var flatDepts = new (string Dept, string[] Teams)[]
             {
                 ("Engineering", ["Backend", "Frontend", "DevOps"]),
@@ -336,7 +342,7 @@ namespace MultiTreeControlSamples
             PrintResult(t17.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("18) InteractionAsync<T1> - async population variant");
+            ShowSection("19) InteractionAsync<T1> - async population variant");
             var t18 = PromptPlus.Controls.MultiTree<Node>("Tree populated by InteractionAsync<T1>")
                 .Root(new Node { Id = 999, Name = "Company (from InteractionAsync)" })
                 .TextSelector(n => n.Name)
@@ -352,7 +358,7 @@ namespace MultiTreeControlSamples
             PrintResult(t18.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("19) Styles + Options + PageSize - fully customized rendering");
+            ShowSection("20) Styles + Options + PageSize - fully customized rendering");
             var t19 = PromptPlus.Controls.MultiTree<Node>("Fully customized rendering")
                 .Root(root)
                 .TextSelector(n => n.Name)
@@ -376,7 +382,7 @@ namespace MultiTreeControlSamples
             PrintResult(t19.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("20) Large dataset + Default deep in the tree");
+            ShowSection("21) Large dataset + Default deep in the tree");
             // 30 departments, 20 teams each = 630 nodes.
             var flatBig = Enumerable.Range(1, 30)
                 .Select(d => (Dept: $"Dept-{d:00}",
@@ -414,7 +420,7 @@ namespace MultiTreeControlSamples
             PrintResult(t20.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("21) AddFirst / AddAfter / AddBefore - sibling ordering");
+            ShowSection("22) AddFirst / AddAfter / AddBefore - sibling ordering");
             var t21 = PromptPlus.Controls.MultiTree<Node>("Notice the order of the top-level nodes")
                 .Root(root)
                 .TextSelector(n => n.Name)
@@ -431,7 +437,7 @@ namespace MultiTreeControlSamples
             PrintResult(t21.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("22) Disabled nodes - AddLast(value, disable: true)");
+            ShowSection("23) Disabled nodes - AddLast(value, disable: true)");
             // A disabled node is still shown and can still be navigated to and
             // expanded/collapsed; only checking/unchecking it directly is blocked, with the
             // same message as CheckLeafOnly. A cascading check on an ancestor still passes
@@ -473,7 +479,7 @@ namespace MultiTreeControlSamples
             PrintResult(t22b.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("23) Construction-time check - AddLast(value, check: true)");
+            ShowSection("24) Construction-time check - AddLast(value, check: true)");
             // Unlike Default(...), check:true does not auto-expand the tree to reveal the node -
             // it just starts pre-checked, quietly, same spirit as
             // IMultiSelectControl<T>.AddItem(ischecked:)/IMultiTableControl<T>.AddItem(ischecked:).
