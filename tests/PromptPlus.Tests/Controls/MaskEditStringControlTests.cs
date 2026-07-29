@@ -10,7 +10,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 3 (FASE2-CONTROLS-PLAN.md) — MaskEditControl<string> (`IMaskEditStringControl`).
+    // MaskEditControl<string> (`IMaskEditStringControl`).
     // MaskEdit has no `ModeView`; the single `MaskEditControl<T>` class dispatches behavior by
     // runtime type (T=string here). Suites split by TYPE instead of mode — see
     // MaskEditNumberControlTests.cs / MaskEditCurrencyControlTests.cs / MaskEditDateTimeControlTests.cs
@@ -19,7 +19,7 @@ namespace PromptPlus.Tests.Controls
     // HideTipInputType) are exercised once here (the most representative type) and only smoke-
     // tested elsewhere to avoid duplicating the same assertions 4x.
     //
-    // 4 real bugs found and fixed this session (see FASE2-CONTROLS-PLAN.md for full detail):
+    // 4 real bugs found and fixed this session:
     // - `U[...]`/`{U[...]}` custom uppercase-letter masks wrongly accepted lowercase input
     //   (`Validchars` was set to `CharLowerLetters` instead of `CharUpperLetters` in both the
     //   single-char and group custom-bracket branches of `NormalizeStringMask`).

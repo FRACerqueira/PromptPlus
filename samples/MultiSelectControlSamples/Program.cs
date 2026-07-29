@@ -214,7 +214,7 @@ namespace MultiSelectControlSamples
                 .Run();
             PrintSelectionResult(resultstring);
 
-            // ---------- Additional scenarios not covered previously ----------
+            // ---------- Additional scenarios ----------
 
             ShowSection("16) Async interaction + TextSelectorAsync + ExtraInfoAsync");
             resultclass = PromptPlus.Controls.MultiSelect<(int id, string City, string other)>("Select", "Loaded with InteractionAsync")

@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source, see tests/TEST-PLAN.md)
+// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
 using System;
@@ -94,8 +94,8 @@ namespace ConsolePlusLibrary.Testing
                 ScrollUp(1);
             }
             _cells[CursorTop, CursorLeft] = new Cell(g, Current);
-            // Glyph width is treated as 1 here; wide glyphs (CJK/emoji) are out of scope for the
-            // Fase 1 pilot (Input+Select) — revisit if a later control's tests need it (TEST-PLAN.md D4).
+            // Glyph width is treated as 1 here; wide glyphs (CJK/emoji) are out of scope for
+            // now — revisit if a later control's tests need it.
             if (++CursorLeft >= Width)
             {
                 CursorLeft = 0;

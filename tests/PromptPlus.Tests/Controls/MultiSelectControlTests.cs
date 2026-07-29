@@ -12,14 +12,14 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — MultiSelectControl, modo `Select` (globais +
-    // check/uncheck/grupos/toggle-all fora de filtro). Cenários do modo `Filter` estão em
-    // MultiSelectControlFilterModeTests.cs. Checklist levantado lendo TryResult/BufferTemplate reais
-    // (MultiSelectControl.cs) + sondas de render (mesma técnica do piloto Select/Input).
+    // MultiSelectControl, `Select` mode (global navigation + check/uncheck/groups/toggle-all
+    // outside of filter). `Filter` mode scenarios are in MultiSelectControlFilterModeTests.cs.
+    // Checklist derived from reading the real TryResult/BufferTemplate (MultiSelectControl.cs)
+    // plus render probes (same technique used for Select/Input).
     //
-    // Diferença confirmada por sonda vs. o piloto Select: no cancelamento (Escape ou timeout de
-    // segurança), MultiSelect sempre retorna Content=[] (array vazio) — não preserva os itens
-    // marcados até aquele momento, diferente do Select (que preserva o item destacado). Ver
+    // Confirmed difference vs. Select: on cancellation (Escape or safety timeout), MultiSelect
+    // always returns Content=[] (empty array) — it does not preserve the items checked up to that
+    // point, unlike Select (which preserves the highlighted item). See
     // MultiSelectControl.cs:573/585 (`ResultCtrl = new ResultPrompt<T[]>([], true)`).
     [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiSelectControlTests : IDisposable

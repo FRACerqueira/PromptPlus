@@ -342,7 +342,6 @@ namespace PromptPlusLibrary.Controls.ProgressBar
                     var wakeUpCondition = GetWakeUpCondition(hasError, hasUpdatedProgress, isUpdatedSpinner);
                     if (wakeUpCondition is WaitWakeUpCondition.SpinnerOnly or WaitWakeUpCondition.SpinnerAndProgress)
                     {
-                        //reset elaptimer to wait next frame so that spinner
                         _spinner?.NextFrame();
                         elaptimer.Restart();
                     }
@@ -813,7 +812,6 @@ namespace PromptPlusLibrary.Controls.ProgressBar
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                //nothing to do, just exit the method
             }
             catch (Exception ex)
             {

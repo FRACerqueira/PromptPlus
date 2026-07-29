@@ -461,7 +461,6 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     {
                         if (histvalues.Length > 0)
                         {
-                            // override default value with history
                             _defaultValue = Optional<T>.Set(histvalues.First());
                             // set checked items with history (honoring the selection predicate:
                             // rejected values are silently skipped so the initial checked set never
@@ -480,7 +479,6 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                 }
             }
-            //set checked items with history
             if (_defaultValues.Any() && !loadedDefaultsFromHistory)
             {
                 foreach (var item in _defaultValues)
@@ -493,7 +491,6 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                 }
             }
-            //clear default values 
             _defaultValues = [];
             _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
 

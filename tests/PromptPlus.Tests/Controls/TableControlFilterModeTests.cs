@@ -8,10 +8,10 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — TableControl, modo `Filter` (FilterMode != Disabled),
-    // cobrindo os dois FilterTableMode: `Answer` (busca pelo texto de resposta/coluna atual) e
-    // `ColumnFilters` (busca só pela coluna atual, exige isFilterable). Globais e modo `Select`
-    // estão em TableControlTests.cs.
+    // TableControl, `Filter` mode (FilterMode != Disabled), covering both FilterTableMode values:
+    // `Answer` (searches the answer text / current column) and `ColumnFilters` (searches only the
+    // current column, requires isFilterable). Global behavior and `Select` mode are in
+    // TableControlTests.cs.
     public class TableControlFilterModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

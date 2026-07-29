@@ -9,7 +9,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 3 (FASE2-CONTROLS-PLAN.md) — MaskEditControl<decimal|double> (`IMaskEditCurrencyControl`).
+    // MaskEditControl<decimal|double> (`IMaskEditCurrencyControl`).
     // Globals shared with every MaskEdit type are exercised once in MaskEditStringControlTests.cs.
     // This file focuses on what's specific to decimal/double masks: NumberFormat with a decimal
     // part, the currency symbol (`MaskDecimalCurrency`/`MaskDoubleCurrency` vs. plain

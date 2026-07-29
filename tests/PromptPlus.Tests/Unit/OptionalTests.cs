@@ -4,7 +4,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // Optional<T> (Controls/Common/Optional.cs) — camada 1, unidade pura. Support type used to
+    // Optional<T> (Controls/Common/Optional.cs) — pure unit-level. Support type used to
     // distinguish "no default value provided" from an actual default value across most controls'
     // constructors and Paginator<T>.
     public class OptionalTests

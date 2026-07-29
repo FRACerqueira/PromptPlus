@@ -6,7 +6,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // SpinnerBase (Core/SpinnerBase.cs) — camada 1, unidade pura. Frame-cycling base for every
+    // SpinnerBase (Core/SpinnerBase.cs) — pure unit-level. Frame-cycling base for every
     // spinner definition (Task/Progress controls). Uses a minimal test double since the class is
     // abstract.
     public class SpinnerBaseTests

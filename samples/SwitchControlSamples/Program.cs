@@ -81,6 +81,7 @@ namespace SwitchControlSamples
 
                 ShowSection("8) Styles - custom prompt, answer and slider regions");
                 result = PromptPlus.Controls.Switch("Use cache")
+                    // Other style regions available on this control (not exercised here):
                     //.Styles(SwitchStyles.Prompt, new Style(Color.Yellow, Color.Black))
                     //.Styles(SwitchStyles.Answer, new Style(Color.Green, Color.Black))
                     //.Styles(SwitchStyles.Slider, new Style(Color.White, Color.Darkgray))

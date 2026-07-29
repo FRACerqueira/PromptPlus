@@ -969,7 +969,6 @@ namespace PromptPlusLibrary.Controls.FileExec
 
                 Style lineStyle = isSelected ? _optStyles[FileStyles.Selected] : _optStyles[FileStyles.UnSelected];
 
-                // Selector marker.
                 screenBuffer.Write(isSelected ? GetSymbol(SymbolType.Selector) : " ", ConsoleHandler.CurrentStyle);
 
                 // Indentation using tree-line symbols (depth-based). The ancestor guide lines come
@@ -993,7 +992,6 @@ namespace PromptPlusLibrary.Controls.FileExec
                         : GetSymbol(SymbolType.TreeLinecross), _optStyles[FileStyles.Lines]);
                 }
 
-                // Expand/collapse indicator for directories.
                 if (node.IsDirectory)
                 {
                     screenBuffer.Write(node.IsExpanded
@@ -1002,7 +1000,6 @@ namespace PromptPlusLibrary.Controls.FileExec
                     screenBuffer.Write(" ", ConsoleHandler.CurrentStyle);
                 }
 
-                // Entry name.
                 Style nameStyle = node.IsRoot
                     ? _optStyles[FileStyles.FileRoot]
                     : node.IsDirectory ? _optStyles[FileStyles.FileTypeFolder] : _optStyles[FileStyles.FileTypeFile];
@@ -1012,7 +1009,6 @@ namespace PromptPlusLibrary.Controls.FileExec
                 }
                 screenBuffer.Write(node.IsRoot ? FormatAnswer(node.FullPath, node.Name, isRoot: true) : node.Name, nameStyle);
 
-                // File size.
                 if (!node.IsDirectory && !_hideSize)
                 {
                     screenBuffer.Write($"  {FormatSize(node.Length)}", _optStyles[FileStyles.FileSize]);

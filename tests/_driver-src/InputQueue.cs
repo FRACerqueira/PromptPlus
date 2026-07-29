@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source, see tests/TEST-PLAN.md)
+// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
 using System;
@@ -71,7 +71,7 @@ namespace ConsolePlusLibrary.Testing
                 '-' => ConsoleKey.OemMinus,
                 '.' => ConsoleKey.OemPeriod,
                 ',' => ConsoleKey.OemComma,
-                _ => ConsoleKey.Oem1, // extend as pilot tests need specific punctuation
+                _ => ConsoleKey.Oem1, // extend as tests need specific punctuation
             };
         }
     }

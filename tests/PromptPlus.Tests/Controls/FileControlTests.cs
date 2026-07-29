@@ -14,8 +14,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 5 (FASE2-CONTROLS-PLAN.md) — FileControl (single-select tree browsing a real or
-    // mocked filesystem). This is the Mock-based main suite; `FileControlRealFilesystemTests.cs`
+    // FileControl (single-select tree browsing a real or mocked filesystem). This is the
+    // Mock-based main suite; `FileControlRealFilesystemTests.cs`
     // covers the case-sensitivity gap MockFileSystem can't reproduce on Linux (see that file's
     // header comment) and stays a thin real-disk safety net, not the primary coverage.
     //

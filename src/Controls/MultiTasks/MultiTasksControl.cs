@@ -710,8 +710,7 @@ namespace PromptPlusLibrary.Controls.MultiTasks
         /// <summary>
         /// Appends the explicit "{success} ok, {failed} failed, {waiting} wait" breakdown shared by
         /// the running and finished summary lines, so the meaning of each count never changes
-        /// between frames (see FASE2-CONTROLS-PLAN.md, Grupo 6, for why the previous done/total
-        /// fraction was replaced).
+        /// between frames (replaces the previous done/total fraction).
         /// </summary>
         private static void AppendCounts(StringBuilder sb, int total, int done, int success, int failed)
         {

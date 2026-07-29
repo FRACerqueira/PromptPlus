@@ -10,7 +10,7 @@ using Xunit;
 namespace PromptPlus.Tests.Controls
 {
     // FileControl (single-mode, tree-based browsing) against a REAL temporary directory — not
-    // MockFileSystem. Purpose (see FASE2-CONTROLS-PLAN.md, Grupo 5): confirmed by reflection that
+    // MockFileSystem. Purpose: confirmed by reflection that
     // MockFileSystem.StringOperations.Comparer is always OrdinalIgnoreCase, with no supported way to
     // configure it — it can never reproduce Linux's case-sensitive real filesystem. These tests don't
     // swap FileControl.FileSystem at all (default = real disk via .Root(tempDir)), so:
@@ -18,9 +18,9 @@ namespace PromptPlus.Tests.Controls
     //   they don't prove anything new locally.
     // - On Linux (ci.yml's ubuntu-latest job, case-sensitive real FS), they exercise the actual OS
     //   behavior Mock can't replicate — that's the whole point of this file existing.
-    // Bulk behavioral coverage (navigation, expand/collapse, tooltip, history) belongs in a future
-    // Mock-based FileControlTests.cs when FileControl's turn comes up in the Grupo 5 plan; this file
-    // is only the real-disk safety net, not the main suite.
+    // Bulk behavioral coverage (navigation, expand/collapse, tooltip, history) lives in the
+    // Mock-based FileControlTests.cs; this file is only the real-disk safety net, not the main
+    // suite.
     public class FileControlRealFilesystemTests : IDisposable
     {
         private readonly DirectoryInfo _tempDir = Directory.CreateTempSubdirectory("promptplus-filecontrol-");

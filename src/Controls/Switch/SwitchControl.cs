@@ -318,7 +318,6 @@ namespace PromptPlusLibrary.Controls.Switch
 
         public override void FinalizeControl()
         {
-            // none
         }
 
         private string AnswerToString(bool value) => value ? _onAnswer : _offAnswer;

@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source, see tests/TEST-PLAN.md)
+// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
 using System.Text;

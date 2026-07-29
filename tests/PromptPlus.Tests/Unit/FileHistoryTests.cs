@@ -10,8 +10,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // FileHistory (Controls/History/FileHistory.cs) — camada 1 unidade pura (AddHistory) + camada de
-    // I/O testável via System.IO.Abstractions (added specifically for this suite, per user request,
+    // FileHistory (Controls/History/FileHistory.cs) — pure unit-level (AddHistory) plus an I/O layer
+    // testable via System.IO.Abstractions (added specifically for this suite, per user request,
     // so Load/Save/Clear never touch the real user profile folder). Each test swaps in a fresh
     // MockFileSystem and restores the real FileSystem in `finally`, mirroring the save/restore
     // pattern already used for HelperTests' global static state — MockFileSystem is a pure in-memory

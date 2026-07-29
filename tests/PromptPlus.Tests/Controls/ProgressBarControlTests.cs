@@ -12,8 +12,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 6 (FASE2-CONTROLS-PLAN.md) — ProgressBarControl, the first "Live"
-    // (IsLiveAutoRenderControl) control covered in this rollout.
+    // ProgressBarControl, the first "Live" (IsLiveAutoRenderControl) control covered in this
+    // rollout.
     //
     // Unlike every control tested so far, ProgressBar is NOT driven by anything internal
     // (Stopwatch, real elapsed time) — it REQUIRES a caller-supplied UpdateHandler(Async) callback
@@ -29,8 +29,8 @@ namespace PromptPlus.Tests.Controls
     // guess: the handler sets a value, signals "ready", and blocks on "proceed" until released by
     // the test. The test waits on "ready" (a real signal, not a sleep), gives the render loop a
     // short fixed margin to notice the change and repaint (~16ms tick), reads the snapshot, then
-    // releases "proceed". This is a new pattern for this rollout — see FASE2-CONTROLS-PLAN.md's
-    // Grupo 6 section for the fuller rationale and how it differs from Time/TaskExec/MultiTasks.
+    // releases "proceed". This is a new pattern for this rollout, differing from how
+    // Time/TaskExec/MultiTasks are tested.
     //
     // 3 real bugs were found and fixed this session (all confirmed via probe before/after):
     // - A handler exception was reported as IsAborted=false (looked successful) because TryResult

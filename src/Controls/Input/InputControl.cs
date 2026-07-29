@@ -890,7 +890,6 @@ namespace PromptPlusLibrary.Controls.Input
         /// <inheritdoc/>
         public override void FinalizeControl()
         {
-            //none
         }
 
         private string GetTooltipToggle()
@@ -948,7 +947,7 @@ namespace PromptPlusLibrary.Controls.Input
                 return;
             }
 
-            ArraySegment<(string UniqueID, string Value)> subset = _localSuggestionPaginator!.GetPageData(); // Cache the page data
+            ArraySegment<(string UniqueID, string Value)> subset = _localSuggestionPaginator!.GetPageData();
             screenBuffer.WriteLine(PromptPlusResources.EntrySuggestion, _optStyles[InputStyles.Selected]);
             foreach (var (UniqueID, Value) in subset)
             {
@@ -983,7 +982,7 @@ namespace PromptPlusLibrary.Controls.Input
                 return;
             }
 
-            ArraySegment<ItemHistory> subset = _localHistpaginator!.GetPageData(); // Cache the page data
+            ArraySegment<ItemHistory> subset = _localHistpaginator!.GetPageData();
             screenBuffer.WriteLine(PromptPlusResources.EntryHistory, _optStyles[InputStyles.Selected]);
             var pos = -1;
             foreach (ItemHistory item in subset)

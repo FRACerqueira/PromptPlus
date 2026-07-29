@@ -5,7 +5,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // HotKey (Shared/Common/HotKey.cs) — camada 1, unidade pura. Support type for every control's
+    // HotKey (Shared/Common/HotKey.cs) — pure unit-level. Support type for every control's
     // configurable key bindings (abort key, tooltip toggle, filter activation, etc.).
     public class HotKeyTests
     {

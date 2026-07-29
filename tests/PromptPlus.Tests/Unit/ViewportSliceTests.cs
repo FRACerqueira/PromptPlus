@@ -8,17 +8,17 @@ using Xunit;
 namespace PromptPlus.Tests.Unit
 {
     // BaseControlPrompt.ViewportSlice/ViewportSliceCore (Controls/Common/BaseControlPrompt.cs) —
-    // motor de scroll+elipse compartilhado por Input/Select/MultiSelect/Table/MultiTable/Tree/
-    // MultiTree/Calendar/File/MultiFile. Só entra em jogo quando o texto NÃO cabe no viewport
-    // (FitsInWidth retorna false); com texto cabendo, o método sai por um early-return simples,
-    // fora do escopo destes testes. Chamado direto via a instância de InputControl (qualquer
-    // BaseControlPrompt<T> serve — ViewportSlice é público na base) para testar a matemática de
-    // scroll isoladamente, sem depender do loop de render via VirtualTerminal.
+    // scroll+ellipsis engine shared by Input/Select/MultiSelect/Table/MultiTable/Tree/
+    // MultiTree/Calendar/File/MultiFile. Only comes into play when the text does NOT fit the
+    // viewport (FitsInWidth returns false); when the text fits, the method exits via a simple
+    // early-return, out of scope for these tests. Called directly through an InputControl instance
+    // (any BaseControlPrompt<T> works — ViewportSlice is public on the base) to test the scroll math
+    // in isolation, without depending on the render loop via VirtualTerminal.
     public class ViewportSliceTests
     {
-        // fullText tem 30 chars (índices 0-9 = "0123456789", 10-29 = "A".."T"), bem maior que os
-        // viewports pequenos usados abaixo — reproduz deliberadamente a condição "texto maior que
-        // a tela" em que o bug relatado ocorria.
+        // fullText has 30 chars (indices 0-9 = "0123456789", 10-29 = "A".."T"), well longer than the
+        // small viewports used below — deliberately reproduces the "text longer than the screen"
+        // condition where the reported bug occurred.
         private const string LongText = "0123456789ABCDEFGHIJKLMNOPQRST";
 
         private static InputControl MakeProbe()
@@ -32,14 +32,14 @@ namespace PromptPlus.Tests.Unit
         {
             var probe = MakeProbe();
 
-            // viewportWidth=13, cursor no fim absoluto do texto (posição 30 == Length).
+            // viewportWidth=13, cursor at the absolute end of the text (position 30 == Length).
             (string visibleLeft, string visibleRight) = probe.ViewportSlice(LongText, LongText.Length, 200 - 13);
 
             _ = visibleRight.Should().BeEmpty("nothing exists after the cursor when it sits at the true end");
             _ = visibleLeft.Should().Be("_JKLMNOPQRST");
-            // Bug original: visibleLeft ocupava as 13 colunas inteiras (sem margem), forçando o
-            // cursor (que é posicionado logo depois de visibleLeft) a cair na mesma coluna do
-            // último caractere em vez de uma coluna além dele.
+            // Original bug: visibleLeft occupied the full 13 columns (no margin), forcing the
+            // cursor (which is positioned right after visibleLeft) to land on the same column as the
+            // last character instead of one column past it.
             _ = (visibleLeft.Length + visibleRight.Length).Should().Be(12, "one column must stay free for the caret");
         }
 
@@ -48,13 +48,13 @@ namespace PromptPlus.Tests.Unit
         {
             var probe = MakeProbe();
 
-            // Mesmo texto/viewport do teste anterior, cursor uma posição antes do fim (29): o 'T'
-            // passa a estar oculto à direita e precisa de elipse sinalizando isso.
+            // Same text/viewport as the previous test, cursor one position before the end (29): the
+            // 'T' becomes hidden on the right and needs an ellipsis to signal that.
             (string visibleLeft, string visibleRight) = probe.ViewportSlice(LongText, LongText.Length - 1, 200 - 13);
 
-            // Bug original: 'T' era descartado por TrimToBudget para abrir espaço para a elipse
-            // esquerda, e a elipse direita nunca era adicionada porque a flag hasHiddenRight tinha
-            // sido calculada ANTES do corte (com base na janela original, onde nada estava oculto).
+            // Original bug: 'T' was discarded by TrimToBudget to make room for the left ellipsis,
+            // and the right ellipsis was never added because the hasHiddenRight flag had been
+            // computed BEFORE the trim (based on the original window, where nothing was hidden yet).
             _ = visibleRight.Should().NotBeEmpty("the 'T' character got pushed out of view and must be signaled");
             _ = visibleRight.Should().EndWith("_", "the ASCII ellipsis marks hidden content on the right");
             _ = (visibleLeft.Length + visibleRight.Length).Should().Be(13, "cursor is not at the end here, so the full viewport can be used");

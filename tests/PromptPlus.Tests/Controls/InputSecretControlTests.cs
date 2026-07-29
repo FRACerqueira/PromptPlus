@@ -9,12 +9,12 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Camada 2 (render + estado via VirtualTerminal) — controle Secret (`PromptPlusControls.Secret`,
-    // IInputSecretControl). Mesma classe de produção do Input (`InputControl`, `isSecret: true`) e
-    // mesmas regras de segurança de teste (tecla terminal + CancellationToken; ver
-    // SelectControlTests/InputControlTests). Suíte separada porque a interface pública é distinta
-    // (IInputSecretControl não expõe History/Suggestions — InputControl.InitControl pula os dois
-    // quando _isinputsecret é true) e o comportamento visível (mascaramento, F2) é específico daqui.
+    // Secret control (`PromptPlusControls.Secret`, IInputSecretControl). Same production class as
+    // Input (`InputControl`, `isSecret: true`) and the same test conventions (terminal key +
+    // CancellationToken; see SelectControlTests/InputControlTests). Kept as a separate suite
+    // because the public interface differs (IInputSecretControl doesn't expose History/Suggestions
+    // — InputControl.InitControl skips both when `_isinputsecret` is true) and the visible behavior
+    // (masking, F2) is specific to this control.
     public class InputSecretControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

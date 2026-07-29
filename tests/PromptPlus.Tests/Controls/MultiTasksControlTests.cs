@@ -11,8 +11,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 6 (FASE2-CONTROLS-PLAN.md) — MultiTasksControl, the third "Live" control in
-    // this rollout. Same family as ProgressBar/TaskExec: each task's handler (Action(Async)) runs
+    // MultiTasksControl, the third "Live" control covered here. Same family as
+    // ProgressBar/TaskExec: each task's handler (Action(Async)) runs
     // on a background Task, and `_completed` (volatile) signals when the whole run (all tasks) is
     // done — so completion is deterministic in tests without Duration/Sleep guessing. See
     // [[promptplus-live-controls-strategy]] for the ManualResetEventSlim handshake technique used

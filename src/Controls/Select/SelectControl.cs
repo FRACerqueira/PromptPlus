@@ -803,7 +803,6 @@ namespace PromptPlusLibrary.Controls.Select
         /// <inheritdoc/>
         public override void FinalizeControl()
         {
-            //none
         }
 
         private void LoadEnum()

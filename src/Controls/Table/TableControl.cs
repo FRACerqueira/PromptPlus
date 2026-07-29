@@ -77,7 +77,7 @@ namespace PromptPlusLibrary.Controls.Table
         private int _initialRowIndex;
         private int _initialColumnIndex;
 
-        // ached sum of all column CalculatedWidths (without separators); updated in CalculateColumnWidths().
+        // Cached sum of all column CalculatedWidths (without separators); updated in CalculateColumnWidths().
         private int _totalColumnsWidth;
 
         // per-frame border string cache. Main strings already include the "  " row-prefix so
@@ -436,7 +436,7 @@ namespace PromptPlusLibrary.Controls.Table
             _initialItem = _localpaginator!.SelectedItem;
             _initialRowIndex = _localpaginator.CurrentIndex;
             _initialColumnIndex = _currentColumnIndex;
-            // D5: resolve symbol chars once so WriteHeader can use pre-built strings on every frame.
+            // Resolve symbol chars once so WriteHeader can use pre-built strings on every frame.
             _cachedSelectorMarker   = $"{GetSymbol(SymbolType.Selector)[0]} ";
             _cachedFilterableSuffix = $" {GetSymbol(SymbolType.FilterableStatus)[0]} ";
             LoadTooltipToggle();
@@ -561,7 +561,7 @@ namespace PromptPlusLibrary.Controls.Table
                         _indexTooptip = 0;
                         // Switching columns mid-filter would leave a stale filter term matched
                         // against a different column's text (silently, for Answer; down to zero
-                        // rows, for ColumnFilters — see FASE2-CONTROLS-PLAN.md). A filter is only
+                        // rows, for ColumnFilters). A filter is only
                         // ever valid on the column it was started on, so changing column exits it.
                         if (_modeView == ModeView.Filter)
                         {
@@ -904,7 +904,7 @@ namespace PromptPlusLibrary.Controls.Table
         /// header/data separator) and divides by the per-item render height, which is
         /// 2 when row separators are visible and 1 when they are hidden.
         /// <list type="bullet">
-        ///   <item><description>Structural lines: top border (1), header row + header/data separator (2), bottom border (1) � each suppressed by the matching <see cref="HideTable"/> flag.</description></item>
+        ///   <item><description>Structural lines: top border (1), header row + header/data separator (2), bottom border (1) — each suppressed by the matching <see cref="HideTable"/> flag.</description></item>
         ///   <item><description>Per-item height: 1 when <see cref="HideTable.RowSeparator"/> is set, 2 otherwise.</description></item>
         /// </list>
         /// </summary>
@@ -942,7 +942,7 @@ namespace PromptPlusLibrary.Controls.Table
                 : -1;
 
             // rebuild border strings only when the visible column window changes.
-            // The cached main strings already include the "  " row-prefix (D4), eliminating
+            // The cached main strings already include the "  " row-prefix, eliminating
             // per-frame PrefixNonSelectedLine() allocations.
             if (_visibleStartCol != _cachedBorderStartCol
                 || _visibleEndCol != _cachedBorderEndCol
@@ -986,7 +986,7 @@ namespace PromptPlusLibrary.Controls.Table
                     _localpaginator.SelectedPage + 1,
                     _localpaginator.PageCount
                 )!;
-                // D8: string.Concat avoids the interpolation overhead; colInfo is the common empty case.
+                // string.Concat avoids the interpolation overhead; colInfo is the common empty case.
                 string colInfo = string.Concat($"{PromptPlusResources.Col_Info}: ", (_currentColumnIndex + 1).ToString(CultureInfo.InvariantCulture), "/", _columns.Count.ToString(CultureInfo.InvariantCulture), ".");
                 screenBuffer.WriteLine(string.Concat(template, colInfo), _optStyles[TableStyles.Pagination]);
             }
@@ -995,7 +995,7 @@ namespace PromptPlusLibrary.Controls.Table
         /// <summary>
         /// Rebuilds all cached border strings whenever the visible column window
         /// (<see cref="_visibleStartCol"/>, <see cref="_visibleEndCol"/>, <see cref="_previewColumnIndex"/>)
-        /// changes. Each main string already includes the two-space row prefix (D4) so
+        /// changes. Each main string already includes the two-space row prefix so
         /// <see cref="WriteTable"/> and <see cref="WriteDataRows"/> can Write them directly
         /// without a per-frame <c>PrefixNonSelectedLine</c> allocation.
         /// </summary>
@@ -1236,7 +1236,7 @@ namespace PromptPlusLibrary.Controls.Table
                 - 2
                 - (hasOuterBorder ? 2 : 0);
 
-            // If everything fits, no scrolling needed (D1: use cached sum — O(1) instead of O(columns) LINQ).
+            // If everything fits, no scrolling needed (uses the cached sum — O(1) instead of O(columns) LINQ).
             int totalWidth = _totalColumnsWidth
                 + (hasSep ? Math.Max(0, _columns.Count - 1) : 0);
             if (totalWidth <= available)

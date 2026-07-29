@@ -583,7 +583,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
 
                     else if (_onfilterOnlySelected && _modeView == ModeView.Select && ConfigPrompt.HotKeyFilterAllSelected.Equals(keyinfo))
                     {
-                        // Exit "only selected" view: restore full list.
                         _onfilterOnlySelected = false;
                         _localpaginator!.UpdateCollection(_items);
                         SetSelectionDisabledErrorIfNeeded();
@@ -593,7 +592,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
                     }
                     else if (!_onfilterOnlySelected && _countChecked > 0 && _modeView == ModeView.Select && ConfigPrompt.HotKeyFilterAllSelected.Equals(keyinfo))
                     {
-                        // Enter "only selected" view: show only checked items.
                         _onfilterOnlySelected = true;
                         _localpaginator!.UpdateCollection(_items.Where(x => x.ValueChecked));
                         SetSelectionDisabledErrorIfNeeded();
@@ -664,7 +662,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
 
                     else if (!_viewOnly && ConfigPrompt.HotKeyToggleAll.Equals(keyinfo) && _onfilterOnlySelected)
                     {
-                        // Uncheck all + exit filter-only-selected mode.
                         foreach (var item in _localpaginator!.AllItems().Where(x => !x.Disabled))
                         {
                             if (item.ValueChecked)
@@ -683,7 +680,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
                     }
                     else if (!_viewOnly && _modeView == ModeView.Filter && ConfigPrompt.HotKeyToggleAll.Equals(keyinfo) && !_onfilterOnlySelected)
                     {
-                        // Toggle all in current filtered view.
                         int filteredCount = _localpaginator!.AllItems().Count(x => !x.Disabled);
                         bool targetChecked = _localpaginator.AllItems().Count(x => x.ValueChecked && !x.Disabled) != filteredCount;
                         foreach (var item in _localpaginator.AllItems().Where(x => !x.Disabled))
@@ -705,7 +701,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
                     }
                     else if (!_viewOnly && _modeView == ModeView.Select && ConfigPrompt.HotKeyToggleAll.Equals(keyinfo) && !_onfilterOnlySelected)
                     {
-                        // Toggle all in full list.
                         int allCount   = _items.Count(x => !x.Disabled);
                         bool targetChecked = _items.Count(x => x.ValueChecked && !x.Disabled) != allCount;
                         foreach (var item in _items.Where(x => !x.Disabled))

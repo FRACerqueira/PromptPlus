@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source, see tests/TEST-PLAN.md)
+// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
 namespace ConsolePlusLibrary.Testing
@@ -13,7 +13,7 @@ namespace ConsolePlusLibrary.Testing
     /// constructor (<c>new Color(r, g, b)</c>), never from a named palette constant (e.g. <c>Color.White</c>).
     /// Named constants carry an internal palette <c>Number</c>, which makes <see cref="ColorSystem.TrueColor"/>
     /// fall back to 8-bit SGR (<c>38;5;n</c>/<c>48;5;n</c>) instead of truecolor (<c>38;2;r;g;b</c>) — a sequence
-    /// <see cref="AnsiScreenInterpreter"/> does not model yet (Fase 2, see TEST-PLAN.md D4/A.3).
+    /// <see cref="AnsiScreenInterpreter"/> does not model yet (Fase 2).
     /// </remarks>
     public sealed class VirtualTerminalOptions
     {

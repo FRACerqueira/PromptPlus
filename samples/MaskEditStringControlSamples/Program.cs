@@ -39,18 +39,12 @@ namespace MaskEditStringControlSamples
                 .Run();
             PrintResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Mask(..., returnWithMask: true) - the returned value keeps mask literals.
-            // ----------------------------------------------------------------------------
             ShowSection("2) Mask - returnWithMask: true (literals kept in the result)");
             result = PromptPlus.Controls.MaskEdit("Phone")
                 .Mask("(999) 999-9999", returnWithMask: true)
                 .Run();
             PrintResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Letter / mixed tokens: license plate = 3 upper letters + 4 digits.
-            // ----------------------------------------------------------------------------
             ShowSection("3) Mask - letters and digits UUU-9999 (license plate)");
             result = PromptPlus.Controls.MaskEdit("Plate")
                 .Mask("UUU-9999")
@@ -90,9 +84,6 @@ namespace MaskEditStringControlSamples
                 .Run();
             PrintResult(result);
 
-            // ----------------------------------------------------------------------------
-            // HideTipInputType() - hides the "type" hint line below the input.
-            // ----------------------------------------------------------------------------
             ShowSection("7) HideTipInputType - hide the input type hint");
             result = PromptPlus.Controls.MaskEdit("ZIP")
                 .Mask("99999-999")
@@ -111,9 +102,6 @@ namespace MaskEditStringControlSamples
                 .Run();
             PrintResult(result);
 
-            // ----------------------------------------------------------------------------
-            // DefaultIfEmpty(value) - value returned when the user submits empty input.
-            // ----------------------------------------------------------------------------
             ShowSection("9) DefaultIfEmpty - press ENTER with empty input to use fallback");
             result = PromptPlus.Controls.MaskEdit("Phone")
                 .Mask("(999) 999-9999", returnWithMask: true)
@@ -145,9 +133,6 @@ namespace MaskEditStringControlSamples
                 .Run();
             PrintResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Styles(styleType, style) - customize each visual region.
-            // ----------------------------------------------------------------------------
             ShowSection("12) Styles - custom prompt, answer and tagged-info regions");
             result = PromptPlus.Controls.MaskEdit("Styled")
                 .Mask("AAAA-9999")
@@ -157,9 +142,6 @@ namespace MaskEditStringControlSamples
                 .Run();
             PrintResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Options(action) - shared control options (description, tooltip, abort...).
-            // ----------------------------------------------------------------------------
             ShowSection("13) Options - description, abort key and keep result visible");
             result = PromptPlus.Controls.MaskEdit("Product code")
                 .Mask("UUU-9999")
@@ -173,9 +155,6 @@ namespace MaskEditStringControlSamples
                 .Run();
             PrintResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Run(token) - cancelable execution using a CancellationToken.
-            // ----------------------------------------------------------------------------
             ShowSection("14) Run(token) - auto-cancels after 4 seconds");
             using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(4)))
             {

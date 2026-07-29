@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source, see tests/TEST-PLAN.md)
+// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
 // Typed Write/WriteLine/WriteFormat/WriteLineFormat overloads for char, char[], object, bool, double,

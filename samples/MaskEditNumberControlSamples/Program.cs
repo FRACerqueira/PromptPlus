@@ -38,18 +38,12 @@ namespace MaskEditNumberControlSamples
                 .Run();
             PrintIntResult(intResult);
 
-            // ----------------------------------------------------------------------------
-            // NumberFormat without group separator.
-            // ----------------------------------------------------------------------------
             ShowSection("2) NumberFormat - int, 5 digits, no group separator");
             intResult = PromptPlus.Controls.MaskInteger("PIN")
                 .NumberFormat(5, withseparatorgroup: false)
                 .Run();
             PrintIntResult(intResult);
 
-            // ----------------------------------------------------------------------------
-            // NumberFormat with signal (+/-) enabled.
-            // ----------------------------------------------------------------------------
             ShowSection("3) NumberFormat - int with signal (type + or - )");
             intResult = PromptPlus.Controls.MaskInteger("Temperature")
                 .NumberFormat(3, withsignal: true)
@@ -66,9 +60,6 @@ namespace MaskEditNumberControlSamples
                 .Run();
             PrintIntResult(intResult);
 
-            // ----------------------------------------------------------------------------
-            // HideTipInputType() - hides the input type hint line.
-            // ----------------------------------------------------------------------------
             ShowSection("5) HideTipInputType - hide the input type hint");
             intResult = PromptPlus.Controls.MaskInteger("Value")
                 .NumberFormat(5)
@@ -76,9 +67,6 @@ namespace MaskEditNumberControlSamples
                 .Run();
             PrintIntResult(intResult);
 
-            // ----------------------------------------------------------------------------
-            // Default(value) - initial value.
-            // ----------------------------------------------------------------------------
             ShowSection("6) Default - pre-filled value 1234");
             intResult = PromptPlus.Controls.MaskInteger("Quantity")
                 .NumberFormat(6)
@@ -86,9 +74,6 @@ namespace MaskEditNumberControlSamples
                 .Run();
             PrintIntResult(intResult);
 
-            // ----------------------------------------------------------------------------
-            // DefaultIfEmpty(value) - value returned when submitting empty input.
-            // ----------------------------------------------------------------------------
             ShowSection("7) DefaultIfEmpty - press ENTER empty to return 100");
             intResult = PromptPlus.Controls.MaskInteger("Quantity")
                 .NumberFormat(6)
@@ -153,9 +138,6 @@ namespace MaskEditNumberControlSamples
                 .Run();
             PrintIntResult(intResult);
 
-            // ----------------------------------------------------------------------------
-            // Options(action) - shared control options.
-            // ----------------------------------------------------------------------------
             ShowSection("13) Options - description and abort key");
             intResult = PromptPlus.Controls.MaskInteger("Year")
                 .NumberFormat(4, withseparatorgroup: false)
@@ -179,9 +161,6 @@ namespace MaskEditNumberControlSamples
             PromptPlus.Console.WriteLine($"IsAborted: {longResult.IsAborted}, Value: {longResult.Content}");
             PromptPlus.Console.WriteLine(string.Empty);
 
-            // ----------------------------------------------------------------------------
-            // Run(token) - cancelable execution.
-            // ----------------------------------------------------------------------------
             ShowSection("15) Run(token) - auto-cancels after 4 seconds");
             using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(4)))
             {

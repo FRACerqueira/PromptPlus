@@ -11,8 +11,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Grupo 1 (FASE2-CONTROLS-PLAN.md) — SwitchControl, sem ModeView. Confirmado por leitura:
-    // cancelamento já seta ResultCtrl corretamente (linha 220-224) — não é o bug #8 do InputControl.
+    // SwitchControl, no ModeView. Confirmed by reading the source: cancellation already sets
+    // ResultCtrl correctly (line 220-224) — not the same as InputControl's bug #8.
     [Collection(SerializedGlobalStateCollection.Name)]
     public class SwitchControlTests : IDisposable
     {

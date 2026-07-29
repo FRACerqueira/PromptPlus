@@ -9,8 +9,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // First Verify snapshot established for the pilot (tests/TEST-PLAN.md Fase 1 DoD): golden file
-    // of the full grid for one control's initial render.
+    // First Verify snapshot established for this suite: a golden file of the full grid for one
+    // control's initial render.
     public class SelectControlSnapshotTests
     {
         [Fact]

@@ -210,7 +210,6 @@ namespace PromptPlusLibrary.Controls.KeyPress
         /// <inheritdoc/>
         public override void FinalizeControl()
         {
-            //none
         }
 
         private string GetTooltipToggle()

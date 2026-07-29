@@ -35,14 +35,14 @@ namespace PromptPlus.Tests.Controls
         public const string Name = "FileHistory global state & background task timing";
     }
 
-    // Camada 2 (render + estado via VirtualTerminal) — piloto Fase 1, controle Input, modo `History`
-    // (F3, ver ConfigPrompt.HotKeyInputHistoryView). Globais e modo `Input` básico estão em
-    // InputControlTests.cs; modo `Sugestions` está em InputControlSuggestionsModeTests.cs.
+    // InputControl, `History` mode (F3, see ConfigPrompt.HotKeyInputHistoryView). Global behavior
+    // and basic `Input` mode are in InputControlTests.cs; `Suggestions` mode is in
+    // InputControlSuggestionsModeTests.cs.
     //
-    // FileHistory.FileSystem é trocado por um MockFileSystem por teste (mesmo padrão de
-    // FileHistoryTests.cs), pra nunca tocar o perfil real do usuário e ser determinístico em
-    // Windows/Linux. InitControl (chamado dentro de Run()) é quem lê o histórico do disco, então
-    // basta trocar o FileSystem e popular o arquivo ANTES de chamar Run().
+    // FileHistory.FileSystem is swapped for a MockFileSystem per test (same pattern as
+    // FileHistoryTests.cs), so it never touches the real user profile and stays deterministic on
+    // Windows/Linux. InitControl (called inside Run()) is what reads history from disk, so it's
+    // enough to swap the FileSystem and populate the file BEFORE calling Run().
     [Collection(SerializedGlobalStateCollection.Name)]
     public class InputControlHistoryModeTests : IDisposable
     {

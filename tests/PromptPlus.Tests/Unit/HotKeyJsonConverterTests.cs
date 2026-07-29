@@ -7,7 +7,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // HotKeyJsonConverter (Core/HotKeyJsonConverter.cs) — camada 1, unidade pura.
+    // HotKeyJsonConverter (Core/HotKeyJsonConverter.cs) — pure unit-level.
     public class HotKeyJsonConverterTests
     {
         private static JsonSerializerOptions Options() => new() { Converters = { new HotKeyJsonConverter() } };

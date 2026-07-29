@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source, see tests/TEST-PLAN.md)
+// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
 using ConsolePlusLibrary.ConsoleAbstractions;
@@ -16,7 +16,7 @@ namespace ConsolePlusLibrary.Testing
     /// <summary>
     /// In-memory <see cref="IConsole"/>/<see cref="IConsolePlus"/> that hosts the real <see cref="ConsoleWriter"/>
     /// and interprets its ANSI output into a <see cref="VirtualScreen"/>, giving deterministic, headless
-    /// read-back of cursor position and style. See tests/TEST-PLAN.md sections 3 and 5.
+    /// read-back of cursor position and style.
     /// </summary>
     public sealed partial class VirtualTerminal : IConsole, IConsolePlus
     {

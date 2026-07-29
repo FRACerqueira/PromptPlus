@@ -8,11 +8,11 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Camada 2 (render + estado via VirtualTerminal) — piloto Fase 1, controle Input, "Sugestions".
-    // Duas sub-suítes por comportamento (SuggestionHandler(autocomplete: bool)), não por ModeView:
-    // autocomplete=true NUNCA sai de ModeView.Input (cicla inline); autocomplete=false entra em
-    // ModeView.Sugestions (dropdown com paginação própria). Globais e modo `Input` básico estão em
-    // InputControlTests.cs; modo `History` está em InputControlHistoryModeTests.cs.
+    // InputControl, suggestions behavior. Two sub-suites split by behavior
+    // (SuggestionHandler(autocomplete: bool)), not by ModeView: autocomplete=true NEVER leaves
+    // ModeView.Input (cycles inline); autocomplete=false enters ModeView.Sugestions (a dropdown
+    // with its own pagination). Global behavior and basic `Input` mode are in InputControlTests.cs;
+    // `History` mode is in InputControlHistoryModeTests.cs.
     public class InputControlSuggestionsModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

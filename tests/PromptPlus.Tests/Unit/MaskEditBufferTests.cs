@@ -9,8 +9,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // MaskEditBuffer<T>/MaskElement (Controls/MaskEdit/{MaskEditBuffer,MaskElement}.cs) — camada 1,
-    // unidade pura. State machine backing the whole MaskEdit*Control family (string/number/currency/
+    // MaskEditBuffer<T>/MaskElement (Controls/MaskEdit/{MaskEditBuffer,MaskElement}.cs) — pure
+    // unit-level. State machine backing the whole MaskEdit*Control family (string/number/currency/
     // date-time). Fixtures are built via the REAL private NormalizeStringMask/NormalizeNumberMask
     // factory methods on MaskEditControl<T> (invoked via reflection, since they're private, not
     // internal — IVT does not relax `private`), so the element layout matches production exactly

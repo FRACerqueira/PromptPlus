@@ -336,7 +336,7 @@ internal static class Program
             .AddColumn("Price",    x => x.Price,    v => $"${v:N2}", alignment: ColumnAlignment.Right)
             .AddColumn("Stock",    x => x.Stock,    alignment: ColumnAlignment.Right, width: 7)
             .AddColumn("Available", x => x.Available ? "?" : "?", alignment: ColumnAlignment.Center, width: 10)
-            .AddColumn("Notes", x => x.Notes, alignment: ColumnAlignment.Left)//, width: 20)
+            .AddColumn("Notes", x => x.Notes, alignment: ColumnAlignment.Left)
             .AddItems(s_products)
             .AddItem(new Product(11, "Gaming Chair", "Furniture", 299.99m, 15, true, "USA", "Ergonomic design" + new string('-', 320) + "xz"))
             .PageSize(4)

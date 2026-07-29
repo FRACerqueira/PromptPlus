@@ -7,7 +7,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // PromptPlus/src/Core/ColorJsonConverter.cs — camada 1, unidade pura. Exact duplicate of
+    // PromptPlus/src/Core/ColorJsonConverter.cs — pure unit-level. Exact duplicate of
     // ConsolePlus's own ColorJsonConverter (different assembly/namespace, compiled independently),
     // carrying the SAME latent bug found there: fixing ConsolePlus's copy does not fix this one.
     public class ColorJsonConverterTests

@@ -12,41 +12,41 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — MultiTreeControl, modo `Select` (globais +
-    // expand/collapse/Tab-drilldown/check tri-state/cascade/F2/Range/ViewOnly/disabled/predicado
-    // fora de filtro). Cenários do modo `Filter` estão em MultiTreeControlFilterModeTests.cs.
-    // Checklist levantado lendo TryResult/InitControl/BufferTemplate reais (MultiTreeControl.cs)
-    // + sondas de render.
+    // MultiTreeControl, `Select` mode (global navigation + expand/collapse/Tab-drilldown/check
+    // tri-state/cascade/F2/Range/ViewOnly/disabled/predicate outside of filter). `Filter` mode
+    // scenarios are in MultiTreeControlFilterModeTests.cs. Checklist derived from reading the
+    // real TryResult/InitControl/BufferTemplate (MultiTreeControl.cs) plus render probes.
     //
-    // Correções aplicadas nesta sessão (mesmos padrões já corrigidos em MultiSelect/Table/
-    // MultiTable, sem precisar reconfirmar com o usuário — ver promptplus-multi-predicate-rule e
-    // promptplus-naming-audit-checklist):
-    // - `PredicateSelected`/`PredicateSelectedAsync` → `PredicateChecked`/`PredicateCheckedAsync`.
-    // - Predicado só valida ao MARCAR (Space) — desmarcar nunca deve chamá-lo. `ToggleCheck` e
-    //   `ToggleCheckSingleNode` validavam incondicionalmente antes de calcular a direção do toggle;
-    //   corrigido para calcular a direção primeiro e só validar no ramo de marcar.
-    // - Conceito de nó desabilitado adicionado (igual Tree/Select): visível, navegável, expansível,
-    //   mas não confirmável via Space/Ctrl+Space. Particular ao MultiTree (tri-state/cascata):
-    //   uma cascata (`SetCheckedOnSource`) atravessa um container desabilitado sem tocar na sua
-    //   própria flag, mas ainda alcança os descendentes habilitados; `Default(...)` força a marcação
-    //   de um nó desabilitado (bypassa o bloqueio), e essa marcação forçada sobrevive ao F2 de
-    //   desmarcar-tudo (F2 pula nós desabilitados nos dois sentidos).
+    // Fixes applied this session (same patterns already fixed in MultiSelect/Table/MultiTable —
+    // see promptplus-multi-predicate-rule and promptplus-naming-audit-checklist):
+    // - `PredicateSelected`/`PredicateSelectedAsync` -> `PredicateChecked`/`PredicateCheckedAsync`.
+    // - The predicate only validates on CHECK (Space) — unchecking must never call it.
+    //   `ToggleCheck` and `ToggleCheckSingleNode` used to validate unconditionally before
+    //   computing the toggle direction; fixed to compute the direction first and only validate
+    //   on the checking branch.
+    // - Added the concept of a disabled node (same as Tree/Select): visible, navigable,
+    //   expandable, but not confirmable via Space/Ctrl+Space. Specific to MultiTree
+    //   (tri-state/cascade): a cascade (`SetCheckedOnSource`) passes through a disabled container
+    //   without touching its own flag, but still reaches its enabled descendants; `Default(...)`
+    //   forces-checks a disabled node (bypassing the block), and that forced check survives the
+    //   F2 uncheck-all (F2 skips disabled nodes in both directions).
     //
-    // Bug real encontrado e corrigido nesta sessão (não fazia parte de nenhum padrão pré-aprovado):
-    // `SetCheckedOnSource` grava o próprio id de TODO nó tocado durante uma cascata (containers e
-    // folhas), mas o checkbox (`ComputeCheck`) e o contador do rodapé usavam fontes diferentes de
-    // verdade: o checkbox de um container com CascadeCheck=true SEMPRE deriva das folhas
-    // descendentes (ignorando a própria flag), enquanto `CollectCheckedFrom`/o contador do rodapé
-    // liam `_checkedSourceIds` bruto. Resultado: marcar um container em cascata e depois desmarcar
-    // UM filho individualmente deixava a flag do container "presa" em `_checkedSourceIds` para
-    // sempre — a tela mostrava corretamente `[?]` (Indeterminate), mas `Enter` incluía o container
-    // no resultado final mesmo assim, e o rodapé "N selected" inflava o contador. Corrigido fazendo
-    // `CollectCheckedFrom` e o rodapé usarem a mesma regra do checkbox (`ComputeCheck(node) ==
-    // Checked`) — agora tela, rodapé e resultado final nunca discordam. Efeito colateral esperado
-    // (não é bug, é consequência direta do mesmo modelo agregado): com `RecursiveMarkWithCtrlSpace`
-    // + `CascadeCheck` (padrão, `true`), marcar SÓ um container via Space simples (sem cascatear)
-    // fica inerte — nem aparece no checkbox, nem no resultado — porque o estado de um container
-    // sob cascata é sempre um agregado dos descendentes, nunca uma flag própria independente.
+    // Real bug found and fixed this session (not part of any pre-approved pattern):
+    // `SetCheckedOnSource` stamps its own id for EVERY node touched during a cascade (containers
+    // and leaves alike), but the checkbox (`ComputeCheck`) and the footer counter used different
+    // sources of truth: a container's checkbox with CascadeCheck=true ALWAYS derives from its
+    // descendant leaves (ignoring its own flag), while `CollectCheckedFrom`/the footer counter
+    // read the raw `_checkedSourceIds`. Result: checking a container via cascade and then
+    // unchecking ONE child individually left the container's flag "stuck" in
+    // `_checkedSourceIds` forever — the screen correctly showed `[?]` (Indeterminate), but
+    // `Enter` still included the container in the final result, and the "N selected" footer
+    // over-counted. Fixed by making `CollectCheckedFrom` and the footer use the same rule as the
+    // checkbox (`ComputeCheck(node) == Checked`) — now screen, footer, and final result never
+    // disagree. Expected side effect (not a bug, a direct consequence of the same aggregate
+    // model): with `RecursiveMarkWithCtrlSpace` + `CascadeCheck` (default `true`), checking ONLY
+    // a container via plain Space (no cascade) is inert — it shows up neither in the checkbox
+    // nor in the result — because a container's state under cascade is always an aggregate of
+    // its descendants, never an independent flag of its own.
     [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiTreeControlTests : IDisposable
     {

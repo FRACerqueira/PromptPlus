@@ -15,8 +15,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 5 (FASE2-CONTROLS-PLAN.md) — MultiFileControl (multi-check tree browsing a
-    // mocked filesystem, with tri-state folder checkboxes and a background recursive-check path).
+    // MultiFileControl (multi-check tree browsing a mocked filesystem, with tri-state folder
+    // checkboxes and a background recursive-check path).
     //
     // `MultiFileControl.FileSystem` is a static, swappable `IFileSystem` (separate from both
     // `FileControl.FileSystem` and `FileHistory.FileSystem`) — every test swaps it for a

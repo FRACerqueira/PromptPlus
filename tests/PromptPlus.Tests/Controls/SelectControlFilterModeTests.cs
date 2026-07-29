@@ -8,8 +8,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Camada 2 (render + estado via VirtualTerminal) — piloto Fase 1, controle Select, modo `Filter`
-    // (FilterMode != Disabled). Globais e modo `Select` estão em SelectControlTests.cs.
+    // SelectControl, `Filter` mode (FilterMode != Disabled), covering render + state via
+    // VirtualTerminal. Global behavior and `Select` mode are in SelectControlTests.cs.
     public class SelectControlFilterModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

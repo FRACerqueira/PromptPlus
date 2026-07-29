@@ -12,20 +12,20 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — TreeControl, modo `Select` (globais + expand/
-    // collapse/Tab-drilldown/ViewOnly/SelectLeafOnly/predicado fora de filtro). Cenários do modo
-    // `Filter` estão em TreeControlFilterModeTests.cs. Checklist levantado lendo TryResult/
-    // BufferTemplate/InitControl reais (TreeControl.cs) + sondas de render.
+    // TreeControl, `Select` mode (global behavior + expand/collapse/Tab-drilldown/ViewOnly/
+    // SelectLeafOnly/predicate outside of filter). Filter mode scenarios are in
+    // TreeControlFilterModeTests.cs. Checklist derived from reading the real
+    // TryResult/BufferTemplate/InitControl (TreeControl.cs) plus render probes.
     //
-    // Diferenças confirmadas por sonda vs. Select/Table:
-    // - Escape (real ou timeout) SEMPRE devolve Content=null/default, IsAborted=true — Tree nunca
-    //   preserva a posição do cursor no cancelamento (mesma família do MultiSelect, diferente do
-    //   Select/Table que preservam no Escape real).
-    // - `EnableHistory` sozinho (sem `.UseDefaultHistory()`/`.Default(...)`) JÁ recarrega o valor
-    //   salvo automaticamente — `_useDefaultHistory` começa `true` por padrão no Tree, diferente
-    //   de Select/MultiSelect/Table (que começam `false` e exigem opt-in explícito). Não é bug —
-    //   a própria doc de `EnableHistory` do Tree já promete esse comportamento — só uma
-    //   divergência real entre controles, documentada aqui.
+    // Confirmed differences vs. Select/Table:
+    // - Escape (real or timeout) ALWAYS returns Content=null/default, IsAborted=true — Tree never
+    //   preserves the cursor position on cancellation (same family as MultiSelect, unlike
+    //   Select/Table which preserve it on a real Escape).
+    // - `EnableHistory` alone (without `.UseDefaultHistory()`/`.Default(...)`) ALREADY reloads the
+    //   saved value automatically — `_useDefaultHistory` starts `true` by default on Tree, unlike
+    //   Select/MultiSelect/Table (which start `false` and require explicit opt-in). Not a bug —
+    //   Tree's own `EnableHistory` doc already promises this behavior — just a real divergence
+    //   between controls, documented here.
     [Collection(SerializedGlobalStateCollection.Name)]
     public class TreeControlTests : IDisposable
     {

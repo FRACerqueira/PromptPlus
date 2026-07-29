@@ -8,10 +8,10 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — MultiTableControl, modo `Filter` (FilterMode !=
-    // Disabled), cobrindo os dois FilterTableMode: `Answer` (sem dependência de isFilterable) e
-    // `ColumnFilters` (depende da coluna atual — por isso Tab/ShiftTab saem do filtro, ver
-    // ExitFilterMode). Globais e modo `Select` estão em MultiTableControlTests.cs.
+    // MultiTableControl, `Filter` mode (FilterMode != Disabled), covering both FilterTableMode
+    // values: `Answer` (no dependency on isFilterable) and `ColumnFilters` (depends on the
+    // current column — which is why Tab/ShiftTab exit the filter, see ExitFilterMode). Globals
+    // and `Select` mode are in MultiTableControlTests.cs.
     public class MultiTableControlFilterModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

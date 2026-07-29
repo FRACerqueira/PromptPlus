@@ -8,18 +8,18 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — MultiTreeControl, modo `Filter` (FilterMode !=
-    // Disabled). Globais e modo `Select` estão em MultiTreeControlTests.cs.
+    // MultiTreeControl, `Filter` mode (FilterMode != Disabled). Globals and `Select` mode are in
+    // MultiTreeControlTests.cs.
     //
-    // Achados confirmados por sonda (mesma família de comportamento do Tree, ver
+    // Findings confirmed by probe (same behavior family as Tree, see
     // TreeControlFilterModeTests.cs):
-    // - `FilterMode.StartsWith` casa contra o NOME PRÓPRIO de cada nó (`TextSelector`), não o
-    //   caminho completo — diferente de `Contains`, que casa contra o caminho completo cacheado
-    //   em `_flatDisplayCache`.
-    // - Marcar (Space) durante o filtro opera sobre o mesmo `TreeNode` fonte da árvore normal —
-    //   uma cascata em modo filtro reflete de volta corretamente nos nós em modo Select ao limpar
-    //   o filtro (ambas as projeções, `_nodes` e `_flatAll`, são recalculadas a partir do mesmo
-    //   `_checkedSourceIds` via `RefreshNodeChecks`).
+    // - `FilterMode.StartsWith` matches against each node's OWN NAME (`TextSelector`), not the
+    //   full path — unlike `Contains`, which matches against the full path cached in
+    //   `_flatDisplayCache`.
+    // - Checking (Space) during the filter operates on the same source `TreeNode` as the normal
+    //   tree — a cascade in filter mode correctly reflects back onto the nodes in Select mode
+    //   once the filter is cleared (both projections, `_nodes` and `_flatAll`, are recomputed
+    //   from the same `_checkedSourceIds` via `RefreshNodeChecks`).
     public class MultiTreeControlFilterModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

@@ -9,9 +9,10 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Grupo 1 (FASE2-CONTROLS-PLAN.md) — KeyPressControl, sem ModeView, sem History/filesystem.
-    // Confirmado por leitura: cancelamento JÁ seta ResultCtrl corretamente (TryResult.cs:103-107),
-    // diferente do bug #8 do InputControl — não é um gap a testar, é um "já está certo".
+    // KeyPressControl, no ModeView, no History/filesystem.
+    // Confirmed by reading the code: cancellation ALREADY sets ResultCtrl correctly
+    // (TryResult.cs:103-107), unlike the InputControl ResultCtrl-on-cancellation bug fixed
+    // elsewhere in this suite — nothing to regression-test here, this control was already correct.
     public class KeyPressControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

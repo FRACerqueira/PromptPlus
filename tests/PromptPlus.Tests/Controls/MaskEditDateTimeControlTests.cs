@@ -9,8 +9,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 3 (FASE2-CONTROLS-PLAN.md) — MaskEditControl<DateTime|DateOnly|TimeOnly>
-    // (`IMaskEditDateTimeControl`). Globals shared with every MaskEdit type are exercised once in
+    // MaskEditControl<DateTime|DateOnly|TimeOnly> (`IMaskEditDateTimeControl`). Globals shared
+    // with every MaskEdit type are exercised once in
     // MaskEditStringControlTests.cs. This file focuses on what's specific to date/time masks:
     // the 5 factories (MaskDate/MaskDateOnly/MaskTime/MaskTimeOnly/MaskDateTime), culture-driven
     // field ORDER (day/month/year re-templated from `ShortDatePattern`, always joined with a

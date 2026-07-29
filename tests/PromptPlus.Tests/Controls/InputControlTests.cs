@@ -9,10 +9,9 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Camada 2 (render + estado via VirtualTerminal) — piloto Fase 1, controle Input, modo `Input`
-    // (globais + edição básica). Modo `History` está em InputControlHistoryModeTests.cs, modo
-    // `Sugestions` em InputControlSuggestionsModeTests.cs.
-    // Mesmas regras de SelectControlTests (tecla terminal + CancellationToken de seguranca).
+    // InputControl, `Input` mode (global behavior + basic editing). `History` mode is in
+    // InputControlHistoryModeTests.cs, suggestions mode in InputControlSuggestionsModeTests.cs.
+    // Same conventions as SelectControlTests (terminal key + safety-net CancellationToken).
     public class InputControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

@@ -12,17 +12,17 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — TableControl, modo `Select` (globais + navegação de
-    // linha/coluna/ViewOnly/disabled/predicado fora de filtro). Cenários do modo `Filter`
-    // (Answer/ColumnFilters) estão em TableControlFilterModeTests.cs. Checklist levantado lendo
-    // TryResult/BufferTemplate/FinishTemplate reais (TableControl.cs) + sondas de render.
+    // TableControl, Select mode (global navigation across row/column/ViewOnly/disabled/predicate
+    // outside of filter). Filter mode scenarios (Answer/ColumnFilters) are in
+    // TableControlFilterModeTests.cs. Checklist derived from reading the real
+    // TryResult/BufferTemplate/FinishTemplate (TableControl.cs) plus render probes.
     //
-    // Diferenças confirmadas por sonda vs. o piloto Select/MultiSelect:
-    // - Cancelamento por Escape REAL preserva linha/coluna atuais (igual Select); cancelamento por
-    //   timeout (sem tecla) sempre devolve TableResult<T> default (Value nulo, Row/Col=0).
-    // - A "linha de resposta" (WriteAnswer/FinishTemplate) usa o valor da CÉLULA DA COLUNA ATUAL
-    //   (GetAnswerText), não `value.ToString()` como a doc do TextSelector sugere — Tab muda qual
-    //   célula aparece como resposta, tanto durante a navegação quanto no Enter final.
+    // Confirmed differences vs. Select/MultiSelect:
+    // - Real Escape cancellation preserves the current row/column (same as Select); timeout
+    //   cancellation (no key) always returns a default TableResult<T> (null Value, Row/Col=0).
+    // - The "answer line" (WriteAnswer/FinishTemplate) uses the CURRENT COLUMN'S CELL value
+    //   (GetAnswerText), not `value.ToString()` as the TextSelector docs suggest — Tab changes
+    //   which cell appears as the answer, both during navigation and on final Enter.
     [Collection(SerializedGlobalStateCollection.Name)]
     public class TableControlTests : IDisposable
     {

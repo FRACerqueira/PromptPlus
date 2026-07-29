@@ -100,7 +100,6 @@ namespace PromptPlusLibrary.Core
                         break;
 
                     default:
-                        // Skip unknown properties
                         break;
                 }
             }

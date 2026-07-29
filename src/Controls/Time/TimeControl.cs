@@ -345,7 +345,6 @@ namespace PromptPlusLibrary.Controls.Time
 
         public override void FinalizeControl()
         {
-            // none
         }
 
         private TimeSpan Remaining()

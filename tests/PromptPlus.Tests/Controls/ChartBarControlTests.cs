@@ -9,9 +9,9 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Grupo 1 (FASE2-CONTROLS-PLAN.md) — ChartBarControl, sem ModeView, mas com Paginator (mesma
-    // mecânica cíclica já confirmada no piloto Select: PageDown/PageUp dão a volta, PageUp pousa no
-    // último item da página anterior). Cancelamento já seta ResultCtrl corretamente (linha 478-483).
+    // ChartBarControl, no ModeView but with a Paginator (same cyclic mechanics already confirmed
+    // for Select: PageDown/PageUp wrap around, PageUp lands on the last item of the previous
+    // page). Cancellation already sets ResultCtrl correctly (line 478-483).
     public class ChartBarControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

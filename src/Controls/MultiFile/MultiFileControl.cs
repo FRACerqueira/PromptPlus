@@ -666,7 +666,6 @@ namespace PromptPlusLibrary.Controls.MultiFile
                     }
                     else if (keyinfo.IsPressSpaceKey() && selected != null && !selected.IsRoot)
                     {
-                        // Space toggles the checked state of the selected file/folder.
                         _indexTooptip = 0;
                         if (_selectFilesOnly && selected.IsDirectory)
                         {
@@ -736,7 +735,6 @@ namespace PromptPlusLibrary.Controls.MultiFile
                     }
                     else if (ConfigPrompt.HotKeyToggleAll.Equals(keyinfo))
                     {
-                        // Toggle the checked state of every currently visible checkable node.
                         ToggleAllVisible();
                         SetRangeValidationErrorIfNeeded();
                         _indexTooptip = 0;
@@ -2190,10 +2188,8 @@ namespace PromptPlusLibrary.Controls.MultiFile
 
                 Style lineStyle = isSelected ? _optStyles[MultiFileStyles.Selected] : _optStyles[MultiFileStyles.UnSelected];
 
-                // Selector marker.
                 screenBuffer.Write(isSelected ? GetSymbol(SymbolType.Selector) : " ", ConsoleHandler.CurrentStyle);
 
-                // Indentation using tree-line symbols (depth-based).
                 if (node.Depth > 0)
                 {
                     for (int d = 1; d < node.Depth; d++)
@@ -2208,7 +2204,7 @@ namespace PromptPlusLibrary.Controls.MultiFile
                         : GetSymbol(SymbolType.TreeLinecross), _optStyles[MultiFileStyles.Lines]);
                 }
 
-                // Check indicator (root cannot be checked).
+                // Root cannot be checked.
                 if (!node.IsRoot && (!_selectFilesOnly || !node.IsDirectory))
                 {
                     // While a background wildcard operation targets this folder, show a wait glyph
@@ -2245,7 +2241,6 @@ namespace PromptPlusLibrary.Controls.MultiFile
                     }
                 }
 
-                // Expand/collapse indicator for directories.
                 if (node.IsDirectory)
                 {
                     screenBuffer.Write(node.IsExpanded
@@ -2254,7 +2249,6 @@ namespace PromptPlusLibrary.Controls.MultiFile
                     screenBuffer.Write(" ", ConsoleHandler.CurrentStyle);
                 }
 
-                // Entry name.
                 Style nameStyle = node.IsRoot
                     ? _optStyles[MultiFileStyles.FileRoot]
                     : node.IsDirectory ? _optStyles[MultiFileStyles.FileTypeFolder] : _optStyles[MultiFileStyles.FileTypeFile];
@@ -2264,7 +2258,6 @@ namespace PromptPlusLibrary.Controls.MultiFile
                 }
                 screenBuffer.Write(node.IsRoot ? FormatAnswer(node.FullPath, node.Name, isRoot: true) : node.Name, nameStyle);
 
-                // File size.
                 if (!node.IsDirectory && !_hideSize)
                 {
                     screenBuffer.Write($"  {FormatSize(node.Length)}", _optStyles[MultiFileStyles.FileSize]);

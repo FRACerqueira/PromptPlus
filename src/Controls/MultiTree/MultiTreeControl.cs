@@ -476,7 +476,6 @@ namespace PromptPlusLibrary.Controls.MultiTree
                             ResultCtrl = new ResultPrompt<T[]>(CollectChecked(), false);
                             break;
                         }
-                        // Validate range.
                         T[] checkedValues = CollectChecked();
                         if (checkedValues.Length < _minRange)
                         {
@@ -519,7 +518,6 @@ namespace PromptPlusLibrary.Controls.MultiTree
                     }
                     else if (ConfigPrompt.HotKeyToggleAll.Equals(keyinfo) && !_viewOnly)
                     {
-                        // Toggle the checked state of every currently visible checkable node.
                         _indexTooptip = 0;
                         ToggleAllVisible();
                         SetRangeValidationErrorIfNeeded();

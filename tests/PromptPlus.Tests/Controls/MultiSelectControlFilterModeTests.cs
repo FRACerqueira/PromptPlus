@@ -8,9 +8,9 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — MultiSelectControl, modo `Filter` (FilterMode !=
-    // Disabled, digitação real). Globais e modo `Select` (incluindo a visão "só selecionados", que
-    // NÃO troca o ModeView) estão em MultiSelectControlTests.cs.
+    // MultiSelectControl, `Filter` mode (FilterMode != Disabled, real typing). Globals and
+    // `Select` mode (including the "only selected" view, which does NOT switch the ModeView) are
+    // in MultiSelectControlTests.cs.
     public class MultiSelectControlFilterModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

@@ -7,9 +7,9 @@ using Xunit;
 namespace PromptPlus.Tests.Unit
 {
     // BufferScreen/BufferState/LineScreen (Controls/Common/{BufferScreen,BufferState,LineScreen}.cs)
-    // — camada 1 (unidade pura, sem VirtualTerminal), o motor de diff de renderização que
-    // BaseControlPrompt.RenderBuffer usa para TODO controle. Exact expected values for the reflow
-    // math (PhysicalLineCount) and the diff edge cases were confirmed with a throwaway probe.
+    // — pure unit-level (no VirtualTerminal), the render-diff engine that BaseControlPrompt.RenderBuffer
+    // uses for every control. Exact expected values for the reflow math (PhysicalLineCount) and the
+    // diff edge cases were confirmed with a throwaway probe.
     public class BufferScreenTests
     {
         private static readonly Style S = new(new Color(1, 1, 1), new Color(2, 2, 2));

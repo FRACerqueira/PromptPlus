@@ -12,24 +12,23 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — MultiTableControl, modo `Select` (globais +
-    // check/uncheck/colunas/F2/F3/Range/ViewOnly/disabled/predicado fora de filtro). Combina os
-    // dois playbooks já validados: MultiSelect (semântica de marcar/desmarcar) + Table (colunas,
-    // Tab/ShiftTab, GetAnswerText por coluna atual). Cenários do modo `Filter` estão em
-    // MultiTableControlFilterModeTests.cs. Checklist levantado lendo TryResult/InitControl reais +
-    // sondas de render.
+    // MultiTableControl, `Select` mode (global navigation + check/uncheck/columns/F2/F3/Range/
+    // ViewOnly/disabled/predicate outside of filter). Combines the two already-validated
+    // playbooks: MultiSelect (check/uncheck semantics) + Table (columns, Tab/ShiftTab,
+    // GetAnswerText by current column). `Filter` mode scenarios are in
+    // MultiTableControlFilterModeTests.cs. Checklist derived from reading the real
+    // TryResult/InitControl plus render probes.
     //
-    // Correções aplicadas nesta sessão (mesmos padrões já corrigidos em MultiSelect/Table, sem
-    // precisar reconfirmar com o usuário — ver promptplus-multi-predicate-rule e
-    // promptplus-naming-audit-checklist):
-    // - `PredicateSelected`/`PredicateSelectedAsync` → `PredicateChecked`/`PredicateCheckedAsync`.
-    // - Predicado só valida ao MARCAR (Space) — desmarcar nunca chamava o predicado nos toggles em
-    //   massa (F2), mas o Space individual chamava incondicionalmente; corrigido.
-    // - `Tab`/`Shift+Tab` agora saem do modo filtro (`ExitFilterMode()`) antes de trocar de coluna,
-    //   nos dois `FilterTableMode` — sem isso, `ColumnFilters` esvaziava a lista ao trocar de coluna
-    //   em pleno filtro (mesmo bug do Table).
-    // - Tooltip de jump agora usa `TooltipTableJump` e só aparece com pelo menos uma coluna
-    //   `isFilterable` (mesma correção do Table).
+    // Fixes applied this session (same patterns already fixed in MultiSelect/Table — see
+    // promptplus-multi-predicate-rule and promptplus-naming-audit-checklist):
+    // - `PredicateSelected`/`PredicateSelectedAsync` -> `PredicateChecked`/`PredicateCheckedAsync`.
+    // - The predicate only validates on CHECK (Space) — unchecking never called the predicate on
+    //   the mass toggle (F2), but individual Space called it unconditionally; fixed.
+    // - `Tab`/`Shift+Tab` now exit filter mode (`ExitFilterMode()`) before changing column, in
+    //   both `FilterTableMode` values — without this, `ColumnFilters` emptied the list when
+    //   changing column mid-filter (same bug as Table).
+    // - The jump tooltip now uses `TooltipTableJump` and only appears with at least one
+    //   `isFilterable` column (same fix as Table).
     [Collection(SerializedGlobalStateCollection.Name)]
     public class MultiTableControlTests : IDisposable
     {

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // SpinnerBase.Known (Core/SpinnerInstance.Known.cs) — camada 1. Mostly static data, but a
+    // SpinnerBase.Known (Core/SpinnerInstance.Known.cs) — mostly static data, but a
     // cheap reflective sweep over every catalog entry catches a copy-paste data mistake (empty
     // frame list, zero/negative interval) for free.
     public class SpinnerKnownCatalogTests

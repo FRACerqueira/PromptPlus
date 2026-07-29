@@ -8,13 +8,14 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 2 (FASE2-CONTROLS-PLAN.md) — TreeControl, modo `Filter` (FilterMode != Disabled).
-    // Globais e modo `Select` estão em TreeControlTests.cs.
+    // TreeControl, `Filter` mode (FilterMode != Disabled). Global behavior and `Select` mode are
+    // in TreeControlTests.cs.
     //
-    // Achado confirmado por sonda: o filtro compara contra o CAMINHO COMPLETO de cada nó (incluindo
-    // a Root), mas o match não exige que o termo bata com o INÍCIO da string inteira — bate se
-    // QUALQUER segmento do caminho (separado por PathSeparator) começa com o termo digitado (em
-    // FilterMode.StartsWith). Por isso digitar "app" acha "Root/Apple" mesmo sem digitar "root/".
+    // Confirmed by probe: the filter compares against the FULL PATH of each node (including the
+    // Root), but the match does not require the term to hit the START of the whole string — it
+    // matches if ANY segment of the path (split by PathSeparator) starts with the typed term
+    // (under FilterMode.StartsWith). That's why typing "app" finds "Root/Apple" even without
+    // typing "root/".
     public class TreeControlFilterModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

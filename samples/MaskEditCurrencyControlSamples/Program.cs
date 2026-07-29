@@ -50,27 +50,18 @@ namespace MaskEditCurrencyControlSamples
                 .Run();
             PrintDecimalResult(result);
 
-            // ----------------------------------------------------------------------------
-            // NumberFormat with signal (+/-) for values that can be negative.
-            // ----------------------------------------------------------------------------
             ShowSection("3) NumberFormat - with signal (+/-)");
             result = PromptPlus.Controls.MaskDecimal("Balance")
                 .NumberFormat(6, 2, withsignal: true)
                 .Run();
             PrintDecimalResult(result);
 
-            // ----------------------------------------------------------------------------
-            // NumberFormat without group separator and with more decimals.
-            // ----------------------------------------------------------------------------
             ShowSection("4) NumberFormat - 4 decimals, no group separator");
             result = PromptPlus.Controls.MaskDecimal("Rate")
                 .NumberFormat(3, 4, withseparatorgroup: false)
                 .Run();
             PrintDecimalResult(result);
 
-            // ----------------------------------------------------------------------------
-            // PromptMask(value) - character shown on empty positions.
-            // ----------------------------------------------------------------------------
             ShowSection("5) PromptMask - use '0' on empty positions");
             result = PromptPlus.Controls.MaskDecimalCurrency("Price")
                 .NumberFormat(5, 2)
@@ -78,9 +69,6 @@ namespace MaskEditCurrencyControlSamples
                 .Run();
             PrintDecimalResult(result);
 
-            // ----------------------------------------------------------------------------
-            // HideTipInputType() - hides the input type hint line.
-            // ----------------------------------------------------------------------------
             ShowSection("6) HideTipInputType - hide the input type hint");
             result = PromptPlus.Controls.MaskDecimal("Amount")
                 .NumberFormat(6, 2)
@@ -88,9 +76,6 @@ namespace MaskEditCurrencyControlSamples
                 .Run();
             PrintDecimalResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Default(value) - initial value.
-            // ----------------------------------------------------------------------------
             ShowSection("7) Default - pre-filled value 1234.56");
             result = PromptPlus.Controls.MaskDecimalCurrency("Price")
                 .NumberFormat(6, 2)
@@ -98,9 +83,6 @@ namespace MaskEditCurrencyControlSamples
                 .Run();
             PrintDecimalResult(result);
 
-            // ----------------------------------------------------------------------------
-            // DefaultIfEmpty(value) - value returned when submitting empty input.
-            // ----------------------------------------------------------------------------
             ShowSection("8) DefaultIfEmpty - press ENTER empty to return 0.00");
             result = PromptPlus.Controls.MaskDecimalCurrency("Price")
                 .NumberFormat(6, 2)
@@ -163,9 +145,6 @@ namespace MaskEditCurrencyControlSamples
                 .Run();
             PrintDecimalResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Options(action) - shared control options.
-            // ----------------------------------------------------------------------------
             ShowSection("14) Options - description and abort key");
             result = PromptPlus.Controls.MaskDecimalCurrency("Total")
                 .NumberFormat(6, 2)
@@ -189,9 +168,6 @@ namespace MaskEditCurrencyControlSamples
             PromptPlus.Console.WriteLine($"IsAborted: {dblResult.IsAborted}, Value: {dblResult.Content}");
             PromptPlus.Console.WriteLine(string.Empty);
 
-            // ----------------------------------------------------------------------------
-            // Run(token) - cancelable execution.
-            // ----------------------------------------------------------------------------
             ShowSection("16) Run(token) - auto-cancels after 4 seconds");
             using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(4)))
             {

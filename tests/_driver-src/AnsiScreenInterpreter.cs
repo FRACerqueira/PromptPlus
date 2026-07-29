@@ -1,6 +1,6 @@
 // ***************************************************************************************
 // MIT LICENCE
-// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source, see tests/TEST-PLAN.md)
+// Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
 using System;
@@ -154,10 +154,10 @@ namespace ConsolePlusLibrary.Testing
                     // whenever a Color has .Number set (named ConsoleColor constants, and anything
                     // produced by Style.FindStyle's contrast adjustment, which snaps the foreground to
                     // the "nearest palette color" — confirmed hit by SwitchStyles.Slider's default
-                    // Style(ConsoleColor.White, ConsoleColor.DarkGray) during the Fase 2 Grupo 1 pass,
-                    // 2026-07-23). Resolve the index against ConsolePlus's own already-tested 256-color
-                    // table (ColorPalette.EightBit) instead of re-deriving the xterm cube/grayscale
-                    // formula here, so the driver can never drift from what production actually uses.
+                    // Style(ConsoleColor.White, ConsoleColor.DarkGray)). Resolve the index against
+                    // ConsolePlus's own already-tested 256-color table (ColorPalette.EightBit) instead
+                    // of re-deriving the xterm cube/grayscale formula here, so the driver can never
+                    // drift from what production actually uses.
                     int index = int.Parse(p[i + 2], CultureInfo.InvariantCulture);
                     Color palette = ColorPalette.EightBit[index];
                     var color = new Color(palette.R, palette.G, palette.B);

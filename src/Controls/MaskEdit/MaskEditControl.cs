@@ -216,7 +216,6 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             {
                 throw new ArgumentOutOfRangeException(nameof(value), "Value must be greater than or equal to -1.");
             }
-            // remove previous fixed value if exists    
             int index = _fixedvalues.FindIndex(f => f.Item1 == dateTimePart);
             if (index >= 0)
             {

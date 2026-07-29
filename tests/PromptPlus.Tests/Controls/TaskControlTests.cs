@@ -11,12 +11,12 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 6 (FASE2-CONTROLS-PLAN.md) — TaskControl, the second "Live" control in this
-    // rollout. Same family as ProgressBarControl: driven by a caller-supplied Action(Async)
-    // callback running on its own background Task (`_completed`/`_error` volatile fields signal
-    // completion), not by an internal Stopwatch — so completion is deterministic in tests without
-    // any Duration/Sleep guessing. See [[promptplus-live-controls-strategy]] for the general
-    // rationale and the ManualResetEventSlim handshake technique used for mid-run assertions below.
+    // TaskControl, the second "Live" control in this suite. Same family as ProgressBarControl:
+    // driven by a caller-supplied Action(Async) callback running on its own background Task
+    // (`_completed`/`_error` volatile fields signal completion), not by an internal Stopwatch —
+    // so completion is deterministic in tests without any Duration/Sleep guessing. See
+    // ProgressBarControlTests.cs for the general rationale and the ManualResetEventSlim handshake
+    // technique used for mid-run assertions below.
     //
     // 3 real bugs found and fixed this session (all confirmed via probe before/after):
     // - WriteAnswer only terminated its line (WriteLine) when ShowElapsedTime/Spinner had content —

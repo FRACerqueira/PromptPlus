@@ -7,9 +7,9 @@ using Xunit;
 
 namespace PromptPlus.Tests.Unit
 {
-    // Paginator<T> (Controls/Common/Paginator.cs) — camada 1 (unidade pura, sem VirtualTerminal),
-    // classe de apoio mais reusada do PromptPlus (Select, MultiSelect, Tree, MultiTree, MultiTasks,
-    // MultiFile, ChartBar, Table, MultiTable, FileExec, Calendar todas dependem dela via
+    // Paginator<T> (Controls/Common/Paginator.cs) — pure unit-level (no VirtualTerminal), the most
+    // reused support class in PromptPlus (Select, MultiSelect, Tree, MultiTree, MultiTasks,
+    // MultiFile, ChartBar, Table, MultiTable, FileExec and Calendar all depend on it via
     // ComputeEffectivePageSize). Exact expected values for the tricky navigation edges were
     // confirmed with a throwaway probe and observing the real output, not by hand-tracing.
     public class PaginatorTests
@@ -226,7 +226,7 @@ namespace PromptPlus.Tests.Unit
         public void Constructing_with_pageSize_zero_throws_instead_of_silently_misbehaving()
         {
             // Documents the contract: callers MUST pass a page size >= 1 (BaseControlPrompt's
-            // ComputeEffectivePageSize already guarantees this in production, per TEST-PLAN.md).
+            // ComputeEffectivePageSize already guarantees this in production).
             Action act = () => Make(pageSize: 0);
             _ = act.Should().Throw<DivideByZeroException>();
         }

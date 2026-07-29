@@ -29,7 +29,6 @@ namespace PromptPlusLibrary.Controls.Calendar
         /// </summary>
         private const int ReservedTemplateLines = 16;
 
-        // Cached composite format string for improved performance
         private static readonly CompositeFormat s_showingCalendarNotesFormat = CompositeFormat.Parse(PromptPlusResources.ShowingCalendarNotes);
 
 
@@ -630,7 +629,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                     }
                     #endregion
 
-                    //Today
                     else if (keyinfo.IsPressHomeKey() && IsValidToday())
                     {
                         if (_selectedDate.HasValue)
@@ -649,7 +647,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //next year
                     else if (keyinfo.IsPressPageUpKey() && IsDateInRange(_currentDate.AddYears(1)))
                     {
                         _indexTooptip = 0;
@@ -662,7 +659,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //previous year
                     else if (keyinfo.IsPressPageDownKey() && IsDateInRange(_currentDate.AddYears(-1)))
                     {
                         _indexTooptip = 0;
@@ -675,7 +671,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //next month
                     else if (keyinfo.IsPressTabKey() && IsDateInRange(_currentDate.AddMonths(1)))
                     {
                         _indexTooptip = 0;
@@ -688,7 +683,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //previous month
                     else if (keyinfo.IsPressShiftTabKey() && IsDateInRange(_currentDate.AddMonths(-1)))
                     {
                         _indexTooptip = 0;
@@ -701,7 +695,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //next dayofweek
                     else if (keyinfo.IsPressDownArrowKey(true) && IsDateInRange(_currentDate.AddDays(7)))
                     {
                         _indexTooptip = 0;
@@ -714,7 +707,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //previous dayofweek
                     else if (keyinfo.IsPressUpArrowKey(true) && IsDateInRange(_currentDate.AddDays(-7)))
                     {
                         _indexTooptip = 0;
@@ -727,7 +719,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //next day
                     else if (keyinfo.IsPressRightArrowKey(true) && IsDateInRange(_currentDate.AddDays(1)))
                     {
                         _indexTooptip = 0;
@@ -740,7 +731,6 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         break;
                     }
-                    //previous day
                     else if (keyinfo.IsPressLeftArrowKey(true) && IsDateInRange(_currentDate.AddDays(-1)))
                     {
                         _indexTooptip = 0;
@@ -867,7 +857,6 @@ namespace PromptPlusLibrary.Controls.Calendar
 
         public override void FinalizeControl()
         {
-            //none
         }
 
         private void WriteNotes(BufferScreen screenBuffer)
@@ -878,7 +867,7 @@ namespace PromptPlusLibrary.Controls.Calendar
             }
             EnsurePaginatorPageSizeUpToDate();
 
-            ArraySegment<(string uniqueID, string note)> subset = _localpaginator!.GetPageData(); // Cache the page data
+            ArraySegment<(string uniqueID, string note)> subset = _localpaginator!.GetPageData();
             string selectorSymbol = GetSymbol(SymbolType.Selector);
             screenBuffer.WriteLine(string.Format(_culture, s_showingCalendarNotesFormat, _currentDate.ToString("d", _culture)), _optStyles[CalendarStyles.Tooltips]);
             foreach ((string uniqueID, string note) in subset)

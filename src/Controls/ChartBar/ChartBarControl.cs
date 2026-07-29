@@ -376,29 +376,25 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
         public override void InitControl(CancellationToken cancellationToken)
         {
-            // Validate items
             if (_items.Count == 0)
             {
                 throw new InvalidOperationException("No items to show in chart. Use AddItem() to add data.");
             }
 
-            // Calculate ticket step for bar rendering
             double maxValue = _items.Max(x => x.Value);
             _ticketStep = maxValue == 0 ? 1 : _width / maxValue;
 
-            // Calculate max label length. MaxLengthLabel's public contract is a count of
-            // symbols/runes (documented as "characters"), not display columns — counted by rune so a
-            // CJK supplementary-plane surrogate pair is never counted as 2.
+            // MaxLengthLabel's public contract is a count of symbols/runes (documented as
+            // "characters"), not display columns — counted by rune so a CJK supplementary-plane
+            // surrogate pair is never counted as 2.
             _maxLengthLabel = _items.Max(x => DisplayWidthHelpers.CountRunes(x.Label));
 
-            // Apply label truncation if set (0 = no truncation)
             if (_maxShowLengthLabel > 0 && _maxLengthLabel > _maxShowLengthLabel)
             {
                 _maxLengthLabel = _maxShowLengthLabel;
             }
             else if (_maxShowLengthLabel == 0)
             {
-                // No truncation - use full label length
                 _maxShowLengthLabel = int.MaxValue;
             }
 
@@ -411,7 +407,6 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 return truncated.GetDisplayLength() is { Length: > 0 } d ? d[0] : 0;
             });
 
-            // Set bar character based on type
             _barOn = _chartBarType switch
             {
                 ChartBarType.Fill => ' ',
@@ -420,10 +415,8 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 _ => throw new NotImplementedException($"ChartBarType {_chartBarType} not implemented"),
             };
 
-            // Calculate total value
             _totalValue = _items.Sum(x => Math.Round(x.Value, _fractionalDigits));
 
-            // Order items
             ChangeOrder();
 
             // Auto-assign colors and calculate percentages
@@ -450,10 +443,8 @@ namespace PromptPlusLibrary.Controls.ChartBar
                     : ConsoleHandler.CurrentStyle.ForeGround(item.Color.Value);
             }
 
-            // Calculate effective page size
             _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, (byte)_pageSize);
 
-            // Initialize Paginator
             _localPaginator = new Paginator<ChartItem>(
                 FilterMode.Disabled,
                 _items,
@@ -469,7 +460,6 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 _localPaginator.FirstItem();
             }
 
-            // Load tooltips for interactive mode
             if (!IsWidget)
             {
                 LoadTooltipToggle();
@@ -504,7 +494,6 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
                     ConsoleKeyInfo keyInfo = press.Key;
 
-                    // Abort key
                     if (IsAbortKeyPress(keyInfo))
                     {
                         _indexTooltip = 0;
@@ -512,12 +501,10 @@ namespace PromptPlusLibrary.Controls.ChartBar
                         break;
                     }
 
-                    // Enter to select
                     if (keyInfo.IsPressEnterKey())
                     {
                         _indexTooltip = 0;
 
-                        // Validate selection
                         (bool ok, string? message) = ValidateSelection(_localPaginator?.SelectedItem!).Result;
 
                         if (!ok)
@@ -530,7 +517,6 @@ namespace PromptPlusLibrary.Controls.ChartBar
                         break;
                     }
 
-                    // Tooltip toggle
                     if (IsTooltipToggerKeyPress(keyInfo))
                     {
                         _indexTooltip++;

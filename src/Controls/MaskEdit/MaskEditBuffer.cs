@@ -203,7 +203,6 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         public bool TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo,bool enabledemacks)
         {
 
-            //skip keys enter, esc.
             if (keyinfo.Key == ConsoleKey.Escape || keyinfo.Key == ConsoleKey.Enter)
             {
                 return false;
@@ -271,67 +270,51 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             bool isvalid;
             switch (keyinfo.Key)
             {
-                //jump next delimiter
                 case ConsoleKey.Tab when keyinfo.Modifiers == 0:
                     {
                         isvalid = JumpNextDelimiter();
                     }
                     break;
-                //jump previous delimiter
                 case ConsoleKey.Tab when keyinfo.Modifiers == ConsoleModifiers.Shift:
                     {
                         isvalid = JumpPreviusDelimiter();
                     }
                     break;
-                //Emacs keyboard shortcut, when when have any text
-                // Clears the content
                 case ConsoleKey.L when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                     {
                         isvalid = Clear();
                     }
                     break;
-                //Emacs keyboard shortcut when when have any text
-                //Deletes the previous character (same as backspace).
                 case ConsoleKey.H when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.Backspace when keyinfo.Modifiers == 0:
                     {
                         isvalid = Backspace();
                     }
                     break;
-                //Emacs keyboard shortcut when when have any text
-                //(end) moves the cursor to the line end (equivalent to the key End).
                 case ConsoleKey.E when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.End when keyinfo.Modifiers == 0:
                     {
                         isvalid = ToEnd();
                     }
                     break;
-                //Emacs keyboard shortcut when when have any text
-                //Moves the cursor to the line start (equivalent to the key Home).
                 case ConsoleKey.A when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.Home when keyinfo.Modifiers == 0:
                     {
                         isvalid = ToStart();
                     }
                     break;
-                //Emacs keyboard shortcut when when have any text
-                //Moves the cursor back one character (equivalent to the key ←).
                 case ConsoleKey.B when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.LeftArrow when keyinfo.Modifiers == 0:
                     {
                         isvalid = Backward();
                     }
                     break;
-                //Emacs keyboard shortcut when when have any text
-                //Moves the cursor forward one character (equivalent to the key →).
                 case ConsoleKey.F when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.RightArrow when keyinfo.Modifiers == 0:
                     {
                         isvalid = Forward();
                     }
                     break;
-                //Emacs keyboard shortcut when when have any text
-                //Delete the current character (then equivalent to the key Delete).
                 case ConsoleKey.D when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.Delete when keyinfo.Modifiers == 0:
                     {

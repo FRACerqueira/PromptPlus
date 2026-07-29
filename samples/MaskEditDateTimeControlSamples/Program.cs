@@ -39,9 +39,6 @@ namespace MaskEditDateTimeControlSamples
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // PromptMask(value) - character shown on empty positions.
-            // ----------------------------------------------------------------------------
             ShowSection("2) PromptMask - use '_' explicitly (default) shown as '#'");
             result = PromptPlus.Controls.MaskDate("Date")
                 .PromptMask('#')
@@ -59,18 +56,12 @@ namespace MaskEditDateTimeControlSamples
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // InputMode(EditCursorFreely) - cursor moves freely across the mask.
-            // ----------------------------------------------------------------------------
             ShowSection("4) InputMode - EditCursorFreely");
             result = PromptPlus.Controls.MaskDateTime("Timestamp")
                 .InputMode(InputBehavior.EditCursorFreely)
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // HideTipInputType() - hides the input type hint line.
-            // ----------------------------------------------------------------------------
             ShowSection("5) HideTipInputType - hide the input type hint");
             result = PromptPlus.Controls.MaskDate("Date")
                 .HideTipInputType()
@@ -87,18 +78,12 @@ namespace MaskEditDateTimeControlSamples
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Default(value) - pre-fills with an initial date/time.
-            // ----------------------------------------------------------------------------
             ShowSection("7) Default - pre-filled with today");
             result = PromptPlus.Controls.MaskDate("Date")
                 .Default(DateTime.Today)
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // DefaultIfEmpty(value) - value returned when submitting empty input.
-            // ----------------------------------------------------------------------------
             ShowSection("8) DefaultIfEmpty - press ENTER empty to return 2000-01-01");
             result = PromptPlus.Controls.MaskDate("Date")
                 .DefaultIfEmpty(new DateTime(2000, 1, 1))
@@ -145,9 +130,6 @@ namespace MaskEditDateTimeControlSamples
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Styles(styleType, style) - customize regions.
-            // ----------------------------------------------------------------------------
             ShowSection("13) Styles - custom prompt, answer and tagged-info");
             result = PromptPlus.Controls.MaskDate("Styled date")
                 .WeekTypeMode(WeekType.WeekShort)
@@ -157,9 +139,6 @@ namespace MaskEditDateTimeControlSamples
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // Options(action) - shared control options.
-            // ----------------------------------------------------------------------------
             ShowSection("14) Options - description and abort key");
             result = PromptPlus.Controls.MaskDateTime("Appointment")
                 .Options(opt =>
@@ -180,9 +159,6 @@ namespace MaskEditDateTimeControlSamples
                 .Run();
             PrintDateResult(result);
 
-            // ----------------------------------------------------------------------------
-            // MaskDateOnly - DateOnly value.
-            // ----------------------------------------------------------------------------
             ShowSection("16) MaskDateOnly - DateOnly value");
             var dateOnly = PromptPlus.Controls.MaskDateOnly("Release date")
                 .Default(DateOnly.FromDateTime(DateTime.Today))
@@ -190,9 +166,6 @@ namespace MaskEditDateTimeControlSamples
             PromptPlus.Console.WriteLine($"IsAborted: {dateOnly.IsAborted}, Value: {dateOnly.Content}");
             PromptPlus.Console.WriteLine(string.Empty);
 
-            // ----------------------------------------------------------------------------
-            // MaskTimeOnly - TimeOnly value.
-            // ----------------------------------------------------------------------------
             ShowSection("17) MaskTimeOnly - TimeOnly value");
             var timeOnly = PromptPlus.Controls.MaskTimeOnly("Start time")
                 .Default(new TimeOnly(8, 30, 0))
@@ -200,9 +173,6 @@ namespace MaskEditDateTimeControlSamples
             PromptPlus.Console.WriteLine($"IsAborted: {timeOnly.IsAborted}, Value: {timeOnly.Content}");
             PromptPlus.Console.WriteLine(string.Empty);
 
-            // ----------------------------------------------------------------------------
-            // Run(token) - cancelable execution.
-            // ----------------------------------------------------------------------------
             ShowSection("18) Run(token) - auto-cancels after 5 seconds");
             using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
             {

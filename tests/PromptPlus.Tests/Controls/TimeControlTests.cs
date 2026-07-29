@@ -11,8 +11,8 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 6 (FASE2-CONTROLS-PLAN.md) — TimeControl, the last "Live" control in this
-    // rollout, deliberately saved for last because it is the ONLY one of the four driven purely by
+    // TimeControl, the last "Live" control in this suite, deliberately saved for last because it
+    // is the ONLY one of the four driven purely by
     // a real System.Diagnostics.Stopwatch (WaitKeypress checks `_stopwatch.Elapsed >= _duration`)
     // — there is no caller-supplied callback to hook into like ProgressBar/TaskExec/MultiTasks, so
     // completion timing cannot be made fully deterministic. Per the user's explicit guidance: tests

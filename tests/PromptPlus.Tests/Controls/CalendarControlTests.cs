@@ -12,25 +12,25 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 4 (FASE2-CONTROLS-PLAN.md) — CalendarControl, modo `Input` (globais + navegação
-    // de data/mês/ano/semana + Range/disabled/predicado fora do modo Notes). Cenários do modo
-    // `ShowNotes` estão em CalendarControlNotesModeTests.cs. Checklist levantado lendo
-    // TryResult/InitControl/BufferTemplate reais + sondas de render.
+    // CalendarControl, `Input` mode (global navigation across date/month/year/week plus
+    // Range/disabled/predicate outside of Notes mode). `ShowNotes` mode scenarios are in
+    // CalendarControlNotesModeTests.cs. Checklist derived from reading the real
+    // TryResult/InitControl/BufferTemplate plus render probes.
     //
-    // Todos os testes fixam `.Default(new DateTime(2024, 3, 15))` (uma sexta-feira) — o controle
-    // usa `DateTime.Today` como âncora quando nenhum Default é dado, o que tornaria a maioria dos
-    // testes não-determinísticos (dependentes do dia em que a suíte roda). Só o teste dedicado do
-    // Home (`Home_navigates_to_todays_date`) compara contra `DateTime.Today` dinamicamente.
+    // All tests pin `.Default(new DateTime(2024, 3, 15))` (a Friday) — the control uses
+    // `DateTime.Today` as its anchor when no Default is given, which would make most tests
+    // non-deterministic (dependent on the day the suite runs). Only the dedicated Home test
+    // (`Home_navigates_to_todays_date`) compares against `DateTime.Today` dynamically.
     //
-    // Achado confirmado por sonda, não é bug: navegar (Tab/ShiftTab/PageUp/PageDown/setas/Home)
-    // define `_selectedDate = _currentDate` sempre que a data é válida (`IsValidSelect`), SEM
-    // reavaliar o predicado (`PredicateSelected`) — o predicado só é checado no `Enter`
-    // (`ValidateSelection`). Isso significa que navegar até uma data rejeitada pelo predicado a
-    // deixa "selecionada" (aparece com o marcador de seleção), e só o `Enter` mostra o erro. Já a
-    // seleção INICIAL (`InitControl`) respeita o predicado desde o primeiro render — se o
-    // predicado rejeita a data padrão, `_selectedDate` já nasce nulo e `Enter` mostra
-    // "Invalid date selected!" (não a mensagem do predicado, que nunca chega a ser avaliada nesse
-    // caso).
+    // Confirmed by probe, not a bug: navigating (Tab/ShiftTab/PageUp/PageDown/arrows/Home) sets
+    // `_selectedDate = _currentDate` whenever the date is valid (`IsValidSelect`), WITHOUT
+    // re-evaluating the predicate (`PredicateSelected`) — the predicate is only checked on `Enter`
+    // (`ValidateSelection`). This means navigating to a date rejected by the predicate leaves it
+    // "selected" (shown with the selection marker), and only `Enter` surfaces the error. The
+    // INITIAL selection (`InitControl`), however, respects the predicate from the very first
+    // render — if the predicate rejects the default date, `_selectedDate` starts out null and
+    // `Enter` shows "Invalid date selected!" (not the predicate's message, which is never
+    // evaluated in that case).
     [Collection(SerializedGlobalStateCollection.Name)]
     public class CalendarControlTests : IDisposable
     {

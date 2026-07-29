@@ -495,7 +495,6 @@ namespace PromptPlusLibrary.Controls.Slider
 
         public override void FinalizeControl()
         {
-            //NONE
         }
 
         private string ValueToString(double value)

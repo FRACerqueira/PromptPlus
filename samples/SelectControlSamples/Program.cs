@@ -213,7 +213,7 @@ namespace SelectControlSamples
                 .Run();
             PrintSelectionResult(resultstring);
 
-            // ---------- Additional scenarios not covered previously ----------
+            // ---------- Additional scenarios ----------
 
             ShowSection("15) InteractionAsync + TextSelectorAsync + ExtraInfoAsync");
             resultclass = PromptPlus.Controls.Select<(int id, string City, string other)>("Select : ", "Loaded with InteractionAsync")

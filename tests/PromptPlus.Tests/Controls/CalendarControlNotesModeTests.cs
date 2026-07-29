@@ -9,19 +9,19 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 4 (FASE2-CONTROLS-PLAN.md) — CalendarControl, modo `ShowNotes` (F2, só quando
-    // o dia atual tem ao menos uma nota). Globais e modo `Input` estão em CalendarControlTests.cs.
+    // CalendarControl, `ShowNotes` mode (F2, only available when the current day has at least one
+    // note). Global behavior and `Input` mode are in CalendarControlTests.cs.
     //
-    // Achado confirmado por sonda, não é bug: o buffer de texto (`EmacsConsoleBuffer`) usado pra
-    // exibir a nota selecionada é somente-leitura de fato — digitar uma letra imprimível NUNCA
-    // edita o texto da nota; em vez disso, pula (jump-by-letter, com wraparound) pra próxima nota
-    // da lista cujo texto comece com essa letra. Só teclas de navegação (setas/Home/End, via
-    // `TryAcceptedReadlineConsoleKey`) movem o cursor dentro do viewport da nota exibida.
+    // Confirmed by probe, not a bug: the text buffer (`EmacsConsoleBuffer`) used to display the
+    // selected note is effectively read-only — typing a printable letter NEVER edits the note text;
+    // instead it jumps (jump-by-letter, with wraparound) to the next note in the list whose text
+    // starts with that letter. Only navigation keys (arrows/Home/End, via
+    // `TryAcceptedReadlineConsoleKey`) move the cursor within the displayed note's viewport.
     //
-    // Achado confirmado por sonda: `Enter` dentro do modo ShowNotes primeiro reseta de volta pro
-    // modo `Input` e ENTÃO continua o fluxo normal de confirmação (usa `_selectedDate`, que nunca
-    // mudou enquanto via notas) — ou seja, `Enter` a partir das notas fecha a visão E confirma o
-    // calendário no mesmo pressionar de tecla, não é só um "fechar notas".
+    // Confirmed by probe: `Enter` inside ShowNotes mode first resets back to `Input` mode and THEN
+    // continues the normal confirmation flow (using `_selectedDate`, which never changed while
+    // viewing notes) — i.e. `Enter` from the notes view closes the view AND confirms the calendar
+    // in the same keypress, not just a "close notes" action.
     public class CalendarControlNotesModeTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

@@ -9,24 +9,26 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Camada 2 (render + estado via VirtualTerminal) — piloto Fase 1, controle Select, modo `Select`
-    // (globais + navegação/edição fora de filtro). Cenários do modo `Filter` estão em
-    // SelectControlFilterModeTests.cs — ver checklist tecla×modo em tests/TEST-PLAN.md.
+    // SelectControl, `Select` mode (global behavior + navigation/editing outside of filter),
+    // covering render + state via VirtualTerminal. `Filter` mode scenarios are in
+    // SelectControlFilterModeTests.cs.
     //
-    // Regra obrigatória (ver tests/TEST-PLAN.md secao 13): toda sequencia de teclas termina em
-    // Enter/Escape, e todo Run() recebe um CancellationToken com timeout curto como rede de
-    // seguranca — WaitKeypress so retorna quando ha tecla ou cancelamento, sem excecao se a fila
-    // esvaziar antes disso. VirtualTerminal usa as dimensoes default (Width=80, Height=24): valores
-    // abaixo de MinSafeRenderWidth(80)/MinSafeRenderHeight(10) prendem Run() no aviso de "terminal
-    // pequeno" (RenderBuffer, BaseControlPrompt.cs:1523-1530), que so sai via console.CancelToken —
-    // nao o token passado a Run() — e VirtualTerminal.CancelToken nunca cancela.
+    // Mandatory rule: every key sequence ends in Enter/Escape, and every Run() receives a
+    // CancellationToken with a short timeout as a safety net — WaitKeypress only returns when a
+    // key is available or the token cancels, with no exception if the queue drains before that.
+    // VirtualTerminal uses the default dimensions (Width=80, Height=24): values below
+    // MinSafeRenderWidth(80)/MinSafeRenderHeight(10) trap Run() in the "terminal too small"
+    // warning (RenderBuffer, BaseControlPrompt.cs:1523-1530), which only exits via
+    // console.CancelToken — not the token passed to Run() — and VirtualTerminal.CancelToken never
+    // cancels.
     //
-    // Cenários que terminam em erro de validação/item desabilitado nunca chamam Enter->confirma:
-    // TryResult so seta SetError e retorna false, entao o loop de Run() volta a esperar outra tecla.
-    // Como esses testes nao querem enviar uma tecla real depois do erro, eles reaproveitam a MESMA
-    // rede de seguranca (CancellationTokenSource curto) usada pelos testes de render inicial: o
-    // cancelamento (nao um Escape real) e o que encerra o Run(), e o resultado final vem Aborted por
-    // causa disso — nao e o app "abortando por si", e um artefato deliberado do harness de teste.
+    // Scenarios that end in a validation error / disabled item never reach an Enter->confirm:
+    // TryResult just calls SetError and returns false, so Run()'s loop goes back to waiting for
+    // another key. Since those tests don't want to send a real key after the error, they reuse the
+    // SAME safety net (a short CancellationTokenSource) used by the initial-render tests: the
+    // cancellation (not a real Escape) is what ends Run(), and the final result comes back
+    // Aborted because of that — not the app "aborting on its own", but a deliberate artifact of
+    // the test harness.
     public class SelectControlTests
     {
         private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });

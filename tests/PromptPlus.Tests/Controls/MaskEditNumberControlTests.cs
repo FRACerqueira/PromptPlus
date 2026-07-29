@@ -9,7 +9,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Fase 2, Grupo 3 (FASE2-CONTROLS-PLAN.md) — MaskEditControl<int|long> (`IMaskEditNumberControl`).
+    // MaskEditControl<int|long> (`IMaskEditNumberControl`).
     // Globals shared with every MaskEdit type (Enter/Escape/tooltip/Default/predicate) are
     // exercised once in MaskEditStringControlTests.cs; this file focuses on what's specific to
     // integer masks: NumberFormat-driven mask construction, the shift-left digit entry model,
