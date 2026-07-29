@@ -28,9 +28,9 @@ namespace PromptPlusLibrary
         /// </summary>
         Tooltips,
         /// <summary>
-        /// Slider Region
+        /// Marker Region (the moving thumb indicating the current state)
         /// </summary>
-        Slider,
+        Marker,
         /// <summary>
         /// Ranger Region
         /// </summary>

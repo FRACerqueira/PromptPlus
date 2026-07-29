@@ -84,7 +84,7 @@ namespace SwitchControlSamples
                     // Other style regions available on this control (not exercised here):
                     //.Styles(SwitchStyles.Prompt, new Style(Color.Yellow, Color.Black))
                     //.Styles(SwitchStyles.Answer, new Style(Color.Green, Color.Black))
-                    //.Styles(SwitchStyles.Slider, new Style(Color.White, Color.Darkgray))
+                    //.Styles(SwitchStyles.Marker, new Style(Color.White, Color.Darkgray))
                     .Styles(SwitchStyles.SwitchOn, new Style(Color.Black, Color.Darkgreen))
                     .Styles(SwitchStyles.SwitchOff, new Style(Color.Black, Color.Darkred))
                     //.Styles(SwitchStyles.Ranger, new Style(Color.Cyan, Color.Black))

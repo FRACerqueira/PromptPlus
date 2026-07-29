@@ -543,7 +543,7 @@ namespace PromptPlusLibrary.Controls.Slider
             Style OnStyle = _optStyles[SliderStyles.Slider].Background(_optStyles[SliderStyles.Slider].Foreground);
             if (_sliderBarType != SliderBarType.Fill)
             {
-                OnStyle = _optStyles[SliderStyles.Slider];
+                OnStyle = _optStyles[SliderStyles.Slider].Foreground;
             }
             int valuestep = CurrentValueStep(_currentValue);
 

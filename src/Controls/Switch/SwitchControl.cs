@@ -372,7 +372,7 @@ namespace PromptPlusLibrary.Controls.Switch
             {
                 if (i == thumbIndex)
                 {
-                    screenBuffer.Write(" ", _optStyles[SwitchStyles.Slider]);
+                    screenBuffer.Write(" ", _optStyles[SwitchStyles.Marker]);
                 }
                 else
                 {

@@ -153,7 +153,7 @@ namespace ConsolePlusLibrary.Testing
                     // 8-bit indexed SGR (38;5;n / 48;5;n) — AnsiColorBuilder.GetEightBit emits this
                     // whenever a Color has .Number set (named ConsoleColor constants, and anything
                     // produced by Style.FindStyle's contrast adjustment, which snaps the foreground to
-                    // the "nearest palette color" — confirmed hit by SwitchStyles.Slider's default
+                    // the "nearest palette color" — confirmed hit by SliderStyles.Slider's default
                     // Style(ConsoleColor.White, ConsoleColor.DarkGray)). Resolve the index against
                     // ConsolePlus's own already-tested 256-color table (ColorPalette.EightBit) instead
                     // of re-deriving the xterm cube/grayscale formula here, so the driver can never

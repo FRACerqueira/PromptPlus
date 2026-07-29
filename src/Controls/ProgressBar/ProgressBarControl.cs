@@ -600,7 +600,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
             Style OnStyle = _optStyles[ProgressBarStyles.Slider].Background(_optStyles[ProgressBarStyles.Slider].Foreground);
             if (_progressBarType != ProgressBarType.Fill)
             {
-                OnStyle = _optStyles[ProgressBarStyles.Slider];
+                OnStyle = _optStyles[ProgressBarStyles.Slider].Foreground;
             }
             int valuestep = CurrentValueStep(currentvalue);
 

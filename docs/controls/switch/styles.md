@@ -32,10 +32,10 @@ can recolor per control instance.
 | `Answer` | The confirmed state |
 | `Description` | The description line under the prompt |
 | `Tooltips` | The keyboard-hint line |
-| `Slider` | The toggle track |
+| `Marker` | The moving thumb that indicates the current position |
 | `Ranger` | The state delimiters |
-| `SwitchOn` | The label/region when the state is **on** |
-| `SwitchOff` | The label/region when the state is **off** |
+| `SwitchOn` | The track fill when the state is **on** |
+| `SwitchOff` | The track fill when the state is **off** |
 | `Error` | The error line |
 
 > ⚠️ The on/off region names are spelled `SwitchOn` and `SwitchOff` in the enum (no second `c`) — use

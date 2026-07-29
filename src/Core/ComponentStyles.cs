@@ -124,6 +124,10 @@ namespace PromptPlusLibrary.Core
         /// </summary>
         SwitchOff,
         /// <summary>
+        /// Switch Marker (moving thumb) Region
+        /// </summary>
+        Marker,
+        /// <summary>
         ///Group tip content
         /// </summary>
         GroupTip,
