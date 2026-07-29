@@ -48,8 +48,10 @@ when a successor version replaces it.
 
 Numbering is **per project**. ADR0001 records the foundational decision to split
 PromptPlus 5.x into two projects (ConsolePlus + PromptPlus). The product/design
-ADRs (0002–0013) follow from the PromptPlus architecture documentation; the
-test/build ADRs (0014–0019) predate that survey and were renumbered to follow.
+ADRs (0002–0013, plus 0020 and 0023) follow from the PromptPlus architecture
+documentation; the test/build ADRs (0014–0019, plus 0021 and 0022) predate that
+survey and were renumbered to follow. Later ADRs are appended to whichever
+section they belong to as new decisions arise.
 
 ## Index
 

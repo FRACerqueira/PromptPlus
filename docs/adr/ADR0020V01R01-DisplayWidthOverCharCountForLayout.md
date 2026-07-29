@@ -62,8 +62,8 @@ contain wide runes: table/column headers and cell values (`TableControl`, `Multi
 chart titles and item labels (`ChartBarControl`), calendar month/weekday names formatted through
 `CultureInfo` (`CalendarControl`), separator-line width for grouped/separated list items
 (`SelectControl`, `MultiSelectControl`), and secret-field masking after an already-correct
-column-aware viewport slice (`InputControl`). See
-[`docs/cjk-display-width-plan.md`](../cjk-display-width-plan.md) for the itemized, trackable list.
+column-aware viewport slice (`InputControl`). Each was tracked item-by-item in a working rollout
+plan (since completed and removed).
 
 ## Decision
 
@@ -93,8 +93,8 @@ column-aware viewport slice (`InputControl`). See
 
 4. **Per-control fixes are tracked, not bundled into this ADR.** Each remaining instance (Table/
    MultiTable, ChartBar, Calendar, Select/MultiSelect, Input secret masking) is a separate, boundable
-   change with its own regression test, tracked in
-   [`docs/cjk-display-width-plan.md`](../cjk-display-width-plan.md). One of them (`ChartBar`'s
+   change with its own regression test, tracked in a working rollout plan (since completed and
+   removed). One of them (`ChartBar`'s
    `MaxLengthLabel`) has a public-API semantic question (character count vs. display columns) that
    needs an explicit answer before it's touched, precisely because it's observable API behavior, not
    an internal-only fix.
@@ -119,6 +119,5 @@ column-aware viewport slice (`InputControl`). See
   (not raw UTF-16 units, so a supplementary-plane CJK surrogate pair is never split), then padding is
   computed from the *actual display width* of that truncated text across all items, not from the
   character cap itself. This keeps the public API's observable behavior identical while making
-  cross-item column alignment correct regardless of script mix. See
-  [`docs/cjk-display-width-plan.md`](../cjk-display-width-plan.md) for the exact fields/methods
-  touched.
+  cross-item column alignment correct regardless of script mix. The exact fields/methods touched
+  are recorded in the fix's own commit and regression tests.

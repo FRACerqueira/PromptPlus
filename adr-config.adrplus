@@ -1,7 +1,7 @@
 {
   "folderadr": "docs/adr",
   "migrationpattern": "",
-  "template": "",
+  "template": "## Context\n\nDescribe the forces, constraints, and background that make this decision necessary.\n\n## Decision\n\nState the decision that was made.\n\n## Consequences\n\n- **Positive:** \n- **Negative / trade-off:** \n",
   "prefix": "ADR",
   "lenseq": 4,
   "lenversion": 2,
