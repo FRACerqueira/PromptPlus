@@ -14,7 +14,7 @@ namespace InputControlsSamples
     {
         static void Main()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ko-KR");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             PromptPlus.Config.DefaultCulture = Thread.CurrentThread.CurrentCulture;
 
             PromptPlus.Console.ResetColor();
@@ -87,7 +87,7 @@ namespace InputControlsSamples
                 .SuggestionHandlerAsync(async input =>
                 {
                     await Task.Delay(1);
-                    var values = new[] { "US", "UK", "BR", "DE", "FR", "ES", "IT" };
+                    var values = new[] { "us", "uk", "br", "de", "fr", "es", "it" };
                     if (string.IsNullOrWhiteSpace(input))
                     {
                         return values;
