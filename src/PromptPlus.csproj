@@ -69,7 +69,7 @@
 	<ItemGroup>
 		<!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
 		<PackageReference Include="System.IO.Abstractions" Version="*" />
-		<PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta4" />
+		<PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta6" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
