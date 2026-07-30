@@ -34,7 +34,7 @@
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/FRACerqueira/PromptPlus</PackageProjectUrl>
-		<Version>6.0.0-Beta5</Version>
+		<Version>6.0.0-Beta6</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2026 - Fernando Cerqueira</Copyright>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
