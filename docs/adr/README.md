@@ -48,10 +48,10 @@ when a successor version replaces it.
 
 Numbering is **per project**. ADR0001 records the foundational decision to split
 PromptPlus 5.x into two projects (ConsolePlus + PromptPlus). The product/design
-ADRs (0002–0013, plus 0020 and 0023) follow from the PromptPlus architecture
-documentation; the test/build ADRs (0014–0019, plus 0021 and 0022) predate that
-survey and were renumbered to follow. Later ADRs are appended to whichever
-section they belong to as new decisions arise.
+ADRs (0002–0013, plus 0020, 0023, 0024, and 0025) follow from the PromptPlus
+architecture documentation; the test/build ADRs (0014–0019, plus 0021 and 0022)
+predate that survey and were renumbered to follow. Later ADRs are appended to
+whichever section they belong to as new decisions arise.
 
 ## Index
 
@@ -79,6 +79,8 @@ section they belong to as new decisions arise.
 | [ADR0013V01R01](ADR0013V01R01-MigrationGuideRules.md) | Migration guide maintenance rules (v5 → v6) | V01 | Accepted |
 | [ADR0020V01R01](ADR0020V01R01-DisplayWidthOverCharCountForLayout.md) | Display width (columns), not character count, for text layout | V01 | Accepted |
 | [ADR0023V01R01](ADR0023V01R01-GuardInteractiveControlsAgainstRedirectedInput.md) | Guard interactive controls against redirected console input in `Run()` | V01 | Accepted |
+| [ADR0024V01R01](ADR0024V01R01-LiveAnswerLineFollowsTheCursorNotACheckedSummary.md) | Live answer line follows the cursor, not a checked summary | V01 | Accepted |
+| [ADR0025V01R01](ADR0025V01R01-ReadOnlyAnswerViewportSharedBufferAndResizePosition.md) | Read-only answer viewport: shared buffer, resize preserves position | V01 | Accepted |
 
 ### Test & build architecture
 

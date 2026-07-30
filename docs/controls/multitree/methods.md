@@ -242,6 +242,9 @@ IMultiTreeControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
 ```
 
 Shows a secondary piece of text next to each node label (return `null` to show nothing for that node).
+The focused node's `ExtraInfo` also appears in the live answer line while navigating (not in the
+final checked-values summary shown after **Enter**) — see
+[Operations](operations.md#anatomy-of-the-control).
 
 > Throws `ArgumentNullException` if `extraInfoNode` is `null`.
 

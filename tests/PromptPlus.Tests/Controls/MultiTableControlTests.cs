@@ -58,7 +58,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            _ = vt.TextAt(0, 0, 11).Should().Be("Choose: Ann");
             _ = vt.TextAt(1, 0, 23).Should().Be("  +---+--------+-------");
             _ = vt.TextAt(2, 0, 23).Should().Be("  | # |> Name  |  Age  ");
             _ = vt.TextAt(4, 0, 23).Should().Be("> |[ ]|Ann     |30     ");
@@ -67,8 +67,11 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void Space_checks_the_current_row_and_the_answer_reflects_the_current_column()
+        public void Space_checks_the_row_and_the_answer_reflects_the_focused_row_and_column()
         {
+            // The answer follows the cursor (row + currently Tab-focused column), not a running
+            // summary of checked rows — here it happens to be the same row that was just checked,
+            // but that's incidental (cursor never moved off row 1; only the column changed).
             var vt = MakeTerminal();
             var control = MakeTable(vt);
             _ = vt.Keys.Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Tab);
@@ -85,6 +88,7 @@ namespace PromptPlus.Tests.Controls
         [Fact]
         public void Space_again_unchecks_the_row()
         {
+            // Cursor stays parked on row 1 ("Ann") throughout — Space never moves it.
             var vt = MakeTerminal();
             var control = MakeTable(vt);
             _ = vt.Keys.Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Spacebar);
@@ -92,7 +96,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            _ = vt.TextAt(0, 0, 11).Should().Be("Choose: Ann");
             // Unlike MultiSelect, the "N selected" suffix is only appended when N > 0 — with
             // nothing checked, it's omitted entirely rather than showing "0 selected".
             _ = vt.Find("selected").Should().BeNull();
@@ -110,6 +114,9 @@ namespace PromptPlus.Tests.Controls
 
             _ = result.IsAborted.Should().BeFalse();
             _ = result.Content.Should().BeEquivalentTo([new Person("Ann", 30), new Person("Bob", 25)]);
+            // FinishTemplate must still show the checked-items summary (not the cursor's last
+            // position, which was row 2/"Bob") — the discriminating check for the whole design:
+            // live answer follows the cursor, final answer summarizes the result.
             _ = vt.TextAt(0, 0, 15).Should().Be("Choose: Ann,Bob");
         }
 
@@ -200,7 +207,9 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 19).Should().Be("Choose: Ann,Bob,Cid");
+            // The answer follows the cursor (still parked on row 1, "Ann") — F2 doesn't navigate —
+            // not a running summary of every checked row.
+            _ = vt.TextAt(0, 0, 11).Should().Be("Choose: Ann");
             _ = vt.Find("3 selected").Should().NotBeNull();
         }
 
@@ -214,7 +223,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            _ = vt.TextAt(0, 0, 11).Should().Be("Choose: Ann");
             // Unlike MultiSelect, the "N selected" suffix is only appended when N > 0 — with
             // nothing checked, it's omitted entirely rather than showing "0 selected".
             _ = vt.Find("selected").Should().BeNull();
@@ -286,7 +295,9 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            // Exiting the view resets the cursor to the first row ("Ann") via UpdateCollection's
+            // default FirstItem() fallback.
+            _ = vt.TextAt(0, 0, 11).Should().Be("Choose: Ann");
             // Unlike MultiSelect, the "N selected" suffix is only appended when N > 0 — with
             // nothing checked, it's omitted entirely rather than showing "0 selected".
             _ = vt.Find("selected").Should().BeNull();

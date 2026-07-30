@@ -23,7 +23,7 @@ expand/collapse, filtering, leaf-only rules, validation, history, and view-only 
 ## Anatomy of the control
 
 ```
-Pick a service                           ← prompt
+Pick a service: API  (service)           ← prompt + live answer (follows the cursor) + ExtraInfo
 Type to filter the full path             ← description (optional / dynamic)
 ▼ Company                                ← root (expanded container)
   ▼ Engineering            (dept)        ← container + ExtraInfo
@@ -34,6 +34,10 @@ Filter: ap_                              ← live filter text (when filtering)
 Page 1/2                                 ← pagination
 Enter: confirm  Esc: cancel              ← tooltip
 ```
+
+The answer line updates as you navigate and includes `ExtraInfo`/`ExtraInfoAsync` when set (same
+two-space format as the list row), scrollable via `Home`/`End`/`←`/`→` when it overflows the width.
+Once confirmed (**Enter**), the final answer shown is the plain node text/path — no `ExtraInfo`.
 
 Every region can be recolored — see [Styles](styles.md).
 
@@ -83,12 +87,13 @@ tree.AddLast(sales);
 | `→` / `+` | Expand the focused container |
 | `←` / `-` | Collapse the focused container |
 | `Page Up` / `Page Down` | Jump one page |
-| `Home` / `End` | First / last visible row |
+| `Ctrl+Home` / `Ctrl+End` | First / last visible row |
 | `Shift+F3` | Toggle short name ↔ full path display |
 | `Enter` | Confirm the focused node (runs leaf-only + validation) |
 | `Esc` | Abort → `IsAborted == true` |
 | Any printable character | Type to filter (when [`Filter`](methods.md#filter) is not `Disabled`) |
 | `Backspace` | Edit / clear the filter text |
+| `Home` / `End` / `←` / `→` | Scroll the answer line horizontally (when it overflows the width) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 

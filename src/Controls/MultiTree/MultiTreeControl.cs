@@ -1312,6 +1312,17 @@ namespace PromptPlusLibrary.Controls.MultiTree
             // The checked-item count is shown in the pagination footer instead.
             VNode? selected = _localpaginator?.SelectedItem;
             string text = selected is null ? string.Empty : FormatAnswerForNode(selected);
+            // Shown live only, same two-space convention as the list row (no Prefix/Suffix
+            // config here, unlike Select/MultiSelect). The final answer (the checked-values join
+            // via FormatAnswerForValue) intentionally stays plain.
+            if (selected is not null && (_extraInfoSelector is not null || _extraInfoSelectorAsync is not null))
+            {
+                string? extra = GetExtraInfoText(selected.Value);
+                if (!string.IsNullOrEmpty(extra))
+                {
+                    text += $"  {extra}";
+                }
+            }
             WriteAnswerViewport(screenBuffer, text, _optStyles[MultiTreeStyles.Answer]);
         }
 

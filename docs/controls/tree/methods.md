@@ -238,6 +238,8 @@ ITreeControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
 ```
 
 Shows a secondary piece of text next to each node label (return `null` to show nothing for that node).
+The focused node's `ExtraInfo` also appears in the live answer line while navigating (not in the
+final answer shown after **Enter**) — see [Operations](operations.md#anatomy-of-the-control).
 
 ```csharp
 PromptPlus.Controls.Tree<Node>("Nodes")

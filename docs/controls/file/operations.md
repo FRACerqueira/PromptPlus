@@ -23,7 +23,7 @@ rules, history, and the values it returns.
 ## Anatomy of the control
 
 ```
-Select a file or folder                  ← prompt
+Select a file or folder: index.md  1.2 KB ← prompt + live answer (path + size, follows the cursor)
 Right/+ expand, Left/- collapse          ← description (optional)
 C:\Projects                              ← root folder
 ├─ ▶ src                                 ← collapsed folder (expand symbol)
@@ -34,6 +34,10 @@ C:\Projects                              ← root folder
 Page 1/2                                 ← pagination
 Enter: select  Esc: cancel               ← tooltip
 ```
+
+The answer line shows the size next to the path for a focused **file** (omitted for folders, and
+omitted entirely when [`HideSize`](methods.md#hidesize) is set) — the same information as the list
+row, but reachable via `Home`/`End`/`←`/`→` scrolling if the path is too long to fit.
 
 Every region can be recolored — see [Styles](styles.md).
 

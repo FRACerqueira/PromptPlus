@@ -168,6 +168,79 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void ExtraInfo_is_appended_to_the_live_answer()
+        {
+            // No key sent: the safety-net timeout ends Run() leaving this live frame on screen.
+            var vt = MakeTerminal();
+            var control = MakeTree(vt).ExtraInfo(x => $"Length: {x.Length}");
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Choose: Root  Length: 4").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfoAsync_is_appended_to_the_live_answer()
+        {
+            // "Apple" is a non-root node, so FormatAnswerForNode shows "Root/Apple" (parent +
+            // PathSeparator + name); ExtraInfo still receives the raw value ("Apple", 5 chars).
+            var vt = MakeTerminal();
+            var control = MakeTree(vt).ExtraInfoAsync(x => System.Threading.Tasks.Task.FromResult<string?>($"Length: {x.Length}"));
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Choose: Root/Apple  Length: 5").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_is_not_appended_to_the_final_answer()
+        {
+            // Same drill-down (Tab, Tab -> A1) as Space_checks_a_leaf_and_Enter_confirms_it, so the
+            // checked result is known: just the leaf "A1".
+            var vt = MakeTerminal();
+            var control = MakeTree(vt).ExtraInfo(x => $"Length: {x.Length}");
+            _ = vt.Keys.Enqueue(ConsoleKey.Tab).Enqueue(ConsoleKey.Tab).Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            var result = control.Run(cts.Token);
+
+            _ = result.IsAborted.Should().BeFalse();
+            _ = result.Content.Should().BeEquivalentTo(["A1"]);
+            _ = vt.Find("Length: 2").Should().BeNull();
+            _ = vt.TextAt(0, 0, 16).Should().Be("Choose: Apple/A1");
+        }
+
+        [Fact]
+        public void ExtraInfo_overflowing_the_console_width_is_hidden_up_front()
+        {
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeTree(vt).ExtraInfo(_ => longExtra);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().BeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_overflow_is_reachable_by_scrolling_the_live_answer_with_End()
+        {
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeTree(vt).ExtraInfo(_ => longExtra);
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().NotBeNull();
+        }
+
+        [Fact]
         public void Space_on_a_container_cascades_the_check_to_every_descendant_and_auto_expands()
         {
             var vt = MakeTerminal();

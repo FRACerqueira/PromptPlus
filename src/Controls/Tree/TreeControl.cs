@@ -83,8 +83,6 @@ namespace PromptPlusLibrary.Controls.Tree
         private ModeView _modeView = ModeView.Select;
         private FilterMode _filterType = FilterMode.Disabled;
         private EmacsConsoleBuffer? _filterBuffer;
-        private EmacsConsoleBuffer? _answerBuffer;
-        private bool _updatePosAnswerBuffer;
         private string _lastinput = string.Empty;
         // Flat projection of every user node, built once when the user first enters filter mode.
         // Each VNode here carries a synthesized "display" (its full path) so the paginator can
@@ -427,9 +425,7 @@ namespace PromptPlusLibrary.Controls.Tree
                 throw new InvalidOperationException("Tree control requires DefaultMatchBy.");
             }
 
-            _answerBuffer = new(true, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
             _filterBuffer = new(false, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
-            _updatePosAnswerBuffer = true;
             _modeView = ModeView.Select;
             _lastinput = string.Empty;
             _flatAll = null;
@@ -593,17 +589,9 @@ namespace PromptPlusLibrary.Controls.Tree
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    bool updatePosAnswerBufferBeforeThisKey = _updatePosAnswerBuffer;
-                    _updatePosAnswerBuffer = true;
-
                     KeyPressResult press = ReadNextKey(true, cancellationToken);
                     if (press.IsResize || press.IsCancelled)
                     {
-                        // Restore the flag's pre-iteration value instead of leaving it force-set to
-                        // `true` above — same fix as Select/MultiSelect/Table/MultiTable: a resize
-                        // must not silently undo a scroll the user had just navigated to on the
-                        // answer preview.
-                        _updatePosAnswerBuffer = updatePosAnswerBufferBeforeThisKey;
                         if (press.IsCancelled)
                         {
                             _indexTooptip = 0;
@@ -811,7 +799,6 @@ namespace PromptPlusLibrary.Controls.Tree
                     }
                     else if (TryAnswerViewportNavigation(keyinfo))
                     {
-                        _updatePosAnswerBuffer = false;
                         break;
                     }
                     else if (_filterType != FilterMode.Disabled && _modeView == ModeView.Filter
@@ -822,7 +809,7 @@ namespace PromptPlusLibrary.Controls.Tree
                         break;
                     }
                     else if (_filterType != FilterMode.Disabled && _modeView == ModeView.Select
-                             && _answerBuffer!.IsPrintable(keyinfo.KeyChar))
+                             && _filterBuffer!.IsPrintable(keyinfo.KeyChar))
                     {
                         var keifilter = keyinfo;
                         if (keifilter.IsPressFilterActivationKey())
@@ -1173,16 +1160,18 @@ namespace PromptPlusLibrary.Controls.Tree
 
             VNode? selected = _localpaginator?.SelectedItem;
             string text = selected is null ? string.Empty : FormatAnswer(selected);
-            if (_updatePosAnswerBuffer)
+            // Shown live only, same two-space convention as the list row (no Prefix/Suffix
+            // config here, unlike Select/MultiSelect). The final answer (FormatAnswerForValue)
+            // intentionally stays plain.
+            if (selected is not null && (_extraInfoSelector is not null || _extraInfoSelectorAsync is not null))
             {
-                _answerBuffer!.LoadPrintable(text);
-                _answerBuffer.ToHome();
+                string? extra = GetExtraInfoText(selected.Value);
+                if (!string.IsNullOrEmpty(extra))
+                {
+                    text += $"  {extra}";
+                }
             }
-            int promptWidth = GetPromptDisplayWidth();
-            (string visibleLeft, string visibleRight) = ViewportSlice(_answerBuffer!, promptWidth);
-            screenBuffer.Write(visibleLeft, _optStyles[TreeStyles.Answer]);
-            screenBuffer.SavePromptCursor();
-            screenBuffer.WriteLine(visibleRight, _optStyles[TreeStyles.Answer]);
+            WriteAnswerViewport(screenBuffer, text, _optStyles[TreeStyles.Answer]);
         }
 
         private void WriteAnswerFilter(BufferScreen screenBuffer)

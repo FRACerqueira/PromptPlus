@@ -457,7 +457,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
             if (!_viewOnly && _localpaginator!.SelectedIndex >= 0 && _localpaginator.SelectedItem!.Disabled)
                 SetError(PromptPlusResources.SelectionDisabled);
 
-            RefreshAnswerBuffer();
             LoadTooltipToggle();
         }
 
@@ -674,7 +673,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         _localpaginator!.UpdateCollection(_items);
                         SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
-                        RefreshAnswerBuffer();
                         RebuildTooltipIfNeeded();
                         break;
                     }
@@ -695,7 +693,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         if (_countChecked == 0) _onfilterOnlySelected = false;
                         SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
-                        RefreshAnswerBuffer();
                         RebuildTooltipIfNeeded();
                         break;
                     }
@@ -716,7 +713,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         if (_countChecked == 0) _onfilterOnlySelected = false;
                         SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
-                        RefreshAnswerBuffer();
                         RebuildTooltipIfNeeded();
                         break;
                     }
@@ -746,7 +742,6 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         if (_countChecked == 0) _onfilterOnlySelected = false;
                         SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
-                        RefreshAnswerBuffer();
                         RebuildTooltipIfNeeded();
                         break;
                     }
@@ -850,11 +845,10 @@ namespace PromptPlusLibrary.Controls.MultiTable
 
         private void RefreshAnswerBuffer()
         {
-            string text = string.Empty;
-            if (_countChecked > 0)
-            {
-                text = string.Join(',', _items.Where(x => x.ValueChecked).Select(GetAnswerText));
-            }
+            // Live only: follows the cursor (row + currently Tab-focused column, same resolution
+            // as GetAnswerText already uses for the list), mirroring Select/MultiSelect/Table.
+            // The final answer (FinishTemplate) intentionally keeps the checked-items summary.
+            string text = _localpaginator?.SelectedItem is { } selected ? GetAnswerText(selected) : string.Empty;
             _answerBuffer.LoadPrintable(text);
             _answerBuffer.ToHome();
         }

@@ -23,7 +23,7 @@ checking and cascade, filtering, leaf-only rules, validation, ranges, history, a
 ## Anatomy of the control
 
 ```
-Check items and press Enter              ← prompt
+Check items and press Enter: API  (service) ← prompt + live answer (follows the cursor) + ExtraInfo
 Space=check  Enter=confirm  ESC=abort     ← description (optional / dynamic)
 ▼ [~] Company                            ← root, indeterminate (some descendants checked)
   ▼ [x] Engineering        (dept)        ← checked container + ExtraInfo
@@ -37,7 +37,10 @@ Enter: confirm  Esc: cancel              ← tooltip
 ```
 
 Checkbox states: `[ ]` unchecked · `[x]` checked · `[~]` indeterminate (some but not all descendants
-checked). Every region can be recolored — see [Styles](styles.md).
+checked). The answer line updates as you navigate and includes `ExtraInfo`/`ExtraInfoAsync` when set
+(same two-space format as the list row), scrollable via `Home`/`End`/`←`/`→` when it overflows the
+width. Once confirmed (**Enter**), the final answer shown is the checked-values summary — no
+`ExtraInfo`. Every region can be recolored — see [Styles](styles.md).
 
 ---
 
@@ -86,12 +89,13 @@ tree.AddLast(sales);
 | `Ctrl+Space` | Recursive check of a container + descendants (when [`RecursiveMarkWithCtrlSpace`](methods.md#recursivemarkwithctrlspace) is on) |
 | `F2` | Toggle-all (check / uncheck every node) |
 | `Page Up` / `Page Down` | Jump one page |
-| `Home` / `End` | First / last visible row |
+| `Ctrl+Home` / `Ctrl+End` | First / last visible row |
 | `Shift+F3` | Toggle short name ↔ full path display |
 | `Enter` | Confirm the checked set (runs the range + validation gates) |
 | `Esc` | Abort → `IsAborted == true` |
 | Any printable character | Type to filter (when [`Filter`](methods.md#filter) is not `Disabled`) |
 | `Backspace` | Edit / clear the filter text |
+| `Home` / `End` / `←` / `→` | Scroll the answer line horizontally (when it overflows the width) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 

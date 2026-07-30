@@ -157,6 +157,83 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void ExtraInfo_is_appended_to_the_live_answer()
+        {
+            // No key sent: the safety-net timeout ends Run() leaving this live frame on screen.
+            var vt = MakeTerminal();
+            var control = MakeTree(vt).ExtraInfo(x => $"Length: {x.Length}");
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Choose: Root  Length: 4").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfoAsync_is_appended_to_the_live_answer()
+        {
+            var vt = MakeTerminal();
+            var control = MakeTree(vt).ExtraInfoAsync(x => System.Threading.Tasks.Task.FromResult<string?>($"Length: {x.Length}"));
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            // "Apple" is a non-root node, so FormatAnswer shows "Root/Apple" (parent + PathSeparator
+            // + name); the ExtraInfo selector still receives the raw value ("Apple", 5 chars).
+            _ = vt.Find("Choose: Root/Apple  Length: 5").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_is_not_appended_to_the_final_answer()
+        {
+            var vt = MakeTerminal();
+            var control = MakeTree(vt).ExtraInfo(x => $"Length: {x.Length}");
+            _ = vt.Keys.Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            var result = control.Run(cts.Token);
+
+            _ = result.IsAborted.Should().BeFalse();
+            _ = result.Content.Should().Be("Root");
+            _ = vt.Find("Length: 4").Should().BeNull();
+            _ = vt.TextAt(0, 0, 12).Should().Be("Choose: Root");
+        }
+
+        [Fact]
+        public void ExtraInfo_overflowing_the_console_width_is_hidden_up_front()
+        {
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeTree(vt).ExtraInfo(_ => longExtra);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().BeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_overflow_is_reachable_by_scrolling_the_live_answer_with_End()
+        {
+            // Confirms the fix for the pre-existing bug found while adding this feature: WriteAnswer
+            // used to render from its own separate _answerBuffer via ViewportSlice while the key loop
+            // forwarded Home/End/Left/Right to the base class's _answerViewportBuffer through
+            // TryAnswerViewportNavigation — two different buffers, so those keys never moved anything
+            // WriteAnswer actually read. WriteAnswer now renders through WriteAnswerViewport, the
+            // same buffer TryAnswerViewportNavigation moves, matching Select/MultiSelect/MultiTree.
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeTree(vt).ExtraInfo(_ => longExtra);
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().NotBeNull();
+        }
+
+        [Fact]
         public void Escape_always_aborts_with_a_null_result_regardless_of_the_cursor()
         {
             var vt = MakeTerminal();

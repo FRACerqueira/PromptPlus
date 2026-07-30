@@ -1,8 +1,14 @@
 using ConsolePlusLibrary.Testing;
 using FluentAssertions;
 using PromptPlusLibrary;
+using PromptPlusLibrary.Controls.FileExec;
+using PromptPlusLibrary.Controls.History;
+using PromptPlusLibrary.Controls.MultiFile;
 using PromptPlusLibrary.Core;
 using System;
+using System.IO;
+using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,10 +28,33 @@ namespace PromptPlus.Tests.Controls
     // collection serializes it against the other timing-sensitive classes instead of competing
     // with them for thread-pool slots.
     [Collection(SerializedGlobalStateCollection.Name)]
-    public class ResizeRelayoutTests
+    public class ResizeRelayoutTests : IDisposable
     {
+        private readonly IFileSystem _originalHistoryFs = FileHistory.FileSystem;
+        private readonly MockFileSystem _mockHistoryFs = new();
+        private readonly IFileSystem _originalFileFs = FileControl.FileSystem;
+        private readonly IFileSystem _originalMultiFileFs = MultiFileControl.FileSystem;
+
+        public ResizeRelayoutTests() => FileHistory.FileSystem = _mockHistoryFs;
+
+        public void Dispose()
+        {
+            FileHistory.FileSystem = _originalHistoryFs;
+            FileControl.FileSystem = _originalFileFs;
+            MultiFileControl.FileSystem = _originalMultiFileFs;
+        }
+
         private static VirtualTerminal MakeTerminal(int width, int height)
             => VirtualTerminal.Create(o => { o.SupportsUnicode = false; o.Width = width; o.Height = height; });
+
+        private static MockFileSystem MakeFileSystemWithLongName(out string root)
+        {
+            root = Path.Combine(Path.GetTempPath(), "resize-root");
+            var fs = new MockFileSystem();
+            fs.AddDirectory(root);
+            fs.AddFile(Path.Combine(root, new string('x', 100) + ".txt"), new MockFileData(new byte[2048]));
+            return fs;
+        }
 
         private static IInputControl MakeInput(VirtualTerminal vt)
             => new PromptPlusControls(vt, new PromptConfig()).Input("Name");
@@ -94,8 +123,10 @@ namespace PromptPlus.Tests.Controls
         public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_Select()
         {
             // Regression for the same bug pattern in SelectControl (also present in
-            // MultiSelect/Table/MultiTable/Tree — same fix applied by direct analogy after
-            // confirming the code shape is identical, not re-probed for each one): _updatePosAnswerBuffer
+            // MultiSelect/Table/MultiTable — same fix applied by direct analogy after confirming the
+            // code shape is identical, not re-probed for each one). Tree had this too until it was
+            // refactored onto WriteAnswerViewport (see the Tree-specific test below, which covers
+            // that control's own mechanism for restoring the same guarantee): _updatePosAnswerBuffer
             // is force-set true at the top of every loop iteration and only narrowed back down by
             // specific keys (e.g. navigating the long answer preview with End). The press.IsResize
             // branch used to break out with the flag stuck at its force-set value, so a resize right
@@ -112,6 +143,147 @@ namespace PromptPlus.Tests.Controls
             var runTask = Task.Run(() => control.Run(cts.Token));
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
 
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+            var cursorAfterScroll = vt.GetCursorPosition();
+
+            vt.RaiseResize(90, 24);
+            WaitUntilRenderSettles();
+
+            _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
+                "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
+                $"the end (col {cursorAfterScroll.Left} before resize)");
+
+            _ = vt.Keys.Enqueue(ConsoleKey.Escape);
+            _ = runTask.GetAwaiter().GetResult();
+        }
+
+        [Fact]
+        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_Tree()
+        {
+            // Tree used to carry the same _updatePosAnswerBuffer resize-preservation dance as
+            // Select (by direct analogy, per the comment above) until it was replaced with the
+            // shared WriteAnswerViewport helper to fix an unrelated bug: the answer line's own
+            // scroll keys (Home/End/Left/Right) were never wired to the buffer WriteAnswer actually
+            // rendered from, so scrolling did nothing at all. That fix used WriteAnswerViewport's
+            // default behavior, which re-anchors to Home on any resize — silently dropping the
+            // resize-preservation Tree had before. WriteAnswerViewport now takes an opt-in
+            // preservePositionOnResize flag; Tree passes true to restore parity with Select.
+            var vt = MakeTerminal(100, 24);
+            string longExtra = new('X', 90);
+            var tree = new PromptPlusControls(vt, new PromptConfig())
+                .Tree<string>("Choose")
+                .Root("Root")
+                .TextSelector(x => x)
+                .DefaultMatchBy((a, b) => a == b)
+                .ExtraInfo(_ => longExtra);
+            _ = tree.AddLast("Leaf");
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var runTask = Task.Run(() => tree.Run(cts.Token));
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+            var cursorAfterScroll = vt.GetCursorPosition();
+
+            vt.RaiseResize(90, 24);
+            WaitUntilRenderSettles();
+
+            _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
+                "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
+                $"the end (col {cursorAfterScroll.Left} before resize)");
+
+            _ = vt.Keys.Enqueue(ConsoleKey.Escape);
+            _ = runTask.GetAwaiter().GetResult();
+        }
+
+        [Fact]
+        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_MultiTree()
+        {
+            // MultiTree never had the _updatePosAnswerBuffer dance (it always used
+            // WriteAnswerViewport), so this is new coverage rather than a regression check — added
+            // for parity with Select/MultiSelect/Table/MultiTable/Tree, per the same
+            // preservePositionOnResize opt-in used for Tree above.
+            var vt = MakeTerminal(100, 24);
+            string longExtra = new('X', 90);
+            var tree = new PromptPlusControls(vt, new PromptConfig())
+                .MultiTree<string>("Choose")
+                .Root("Root")
+                .TextSelector(x => x)
+                .DefaultMatchBy((a, b) => a == b)
+                .ExtraInfo(_ => longExtra);
+            _ = tree.AddLast("Leaf");
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var runTask = Task.Run(() => tree.Run(cts.Token));
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+            var cursorAfterScroll = vt.GetCursorPosition();
+
+            vt.RaiseResize(90, 24);
+            WaitUntilRenderSettles();
+
+            _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
+                "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
+                $"the end (col {cursorAfterScroll.Left} before resize)");
+
+            _ = vt.Keys.Enqueue(ConsoleKey.Escape);
+            _ = runTask.GetAwaiter().GetResult();
+        }
+
+        [Fact]
+        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_File()
+        {
+            // File/MultiFile always used WriteAnswerViewport's original re-anchor-on-resize
+            // behavior — the only two controls left out of the Select/MultiSelect/Table/MultiTable/
+            // Tree/MultiTree resize-preservation guarantee. WriteAnswerViewport now preserves the
+            // scroll position across resize unconditionally, so this is new coverage for File/
+            // MultiFile rather than a regression check.
+            var vt = MakeTerminal(100, 24);
+            FileControl.FileSystem = MakeFileSystemWithLongName(out string root);
+            var control = new PromptPlusControls(vt, new PromptConfig()).File("Choose").Root(root);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var runTask = Task.Run(() => control.Run(cts.Token));
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+            var cursorAfterScroll = vt.GetCursorPosition();
+
+            vt.RaiseResize(90, 24);
+            WaitUntilRenderSettles();
+
+            _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
+                "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
+                $"the end (col {cursorAfterScroll.Left} before resize)");
+
+            _ = vt.Keys.Enqueue(ConsoleKey.Escape);
+            _ = runTask.GetAwaiter().GetResult();
+        }
+
+        [Fact]
+        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_MultiFile()
+        {
+            var vt = MakeTerminal(100, 24);
+            MultiFileControl.FileSystem = MakeFileSystemWithLongName(out string root);
+            var control = new PromptPlusControls(vt, new PromptConfig()).MultiFile("Choose").Root(root);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var runTask = Task.Run(() => control.Run(cts.Token));
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
+
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+            _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
             _ = vt.Keys.Enqueue(ConsoleKey.End);
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
             var cursorAfterScroll = vt.GetCursorPosition();

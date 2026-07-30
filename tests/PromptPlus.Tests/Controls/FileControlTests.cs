@@ -224,6 +224,92 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void Answer_shows_the_size_when_the_cursor_is_on_a_file()
+        {
+            var vt = MakeTerminal();
+            var control = MakeControl(vt);
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.DownArrow);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            string expected = $"Choose: root{Path.DirectorySeparatorChar}top.txt  2 KB";
+            _ = vt.TextAt(0, 0, expected.Length).Should().Be(expected);
+        }
+
+        [Fact]
+        public void Answer_omits_the_size_when_the_cursor_is_on_a_directory()
+        {
+            var vt = MakeTerminal();
+            var control = MakeControl(vt);
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            // "sub" is a non-root directory, so the answer shows "root<sep>sub" (immediate parent
+            // + name) with no size suffix — same guard the list row already applies.
+            string expected = $"Choose: root{Path.DirectorySeparatorChar}sub";
+            _ = vt.TextAt(0, 0, expected.Length).Should().Be(expected);
+        }
+
+        [Fact]
+        public void HideSize_also_removes_the_size_from_the_live_answer()
+        {
+            var vt = MakeTerminal();
+            var control = MakeControl(vt).HideSize();
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.DownArrow);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            string expected = $"Choose: root{Path.DirectorySeparatorChar}top.txt";
+            _ = vt.TextAt(0, 0, expected.Length).Should().Be(expected);
+        }
+
+        [Fact]
+        public void Answer_size_suffix_overflowing_the_console_width_is_hidden_up_front()
+        {
+            // Motivating scenario for putting the size in the live answer instead of only the list
+            // row: a long path can push the size suffix off-screen. First confirm it really is
+            // off-screen before scrolling.
+            var fs = MakeFs();
+            string longName = new string('x', 100) + ".txt";
+            fs.AddFile(Path.Combine(Root, longName), new MockFileData(new byte[2048]));
+            FileControl.FileSystem = fs;
+            var vt = MakeTerminal();
+            var control = new PromptPlusControls(vt, new PromptConfig()).File("Choose").Root(Root);
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.DownArrow);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            // "2 KB" legitimately still appears in top.txt's own list row — scope the assertion to
+            // the answer line (row 0) so this only checks the overflowing item's answer.
+            _ = vt.TextAt(0, 0, 200).Should().NotContain("2 KB");
+        }
+
+        [Fact]
+        public void Answer_size_suffix_overflow_is_reachable_by_scrolling_the_live_answer_with_End()
+        {
+            // ...and now confirm the answer line's horizontal scroll (End) makes the size suffix
+            // reachable — the whole point of putting it in the answer line, not only the list row.
+            var fs = MakeFs();
+            string longName = new string('x', 100) + ".txt";
+            fs.AddFile(Path.Combine(Root, longName), new MockFileData(new byte[2048]));
+            FileControl.FileSystem = fs;
+            var vt = MakeTerminal();
+            var control = new PromptPlusControls(vt, new PromptConfig()).File("Choose").Root(Root);
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.DownArrow)
+                .Enqueue(ConsoleKey.End);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.TextAt(0, 0, 200).Should().Contain("2 KB");
+        }
+
+        [Fact]
         public void Default_expands_the_tree_down_to_the_target_and_selects_it()
         {
             var vt = MakeTerminal();

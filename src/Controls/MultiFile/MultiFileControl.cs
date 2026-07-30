@@ -2127,6 +2127,14 @@ namespace PromptPlusLibrary.Controls.MultiFile
             Node? selected = _localpaginator?.SelectedItem;
             string text = selected is null ? string.Empty : FormatAnswer(selected.FullPath, selected.Name, selected.IsRoot);
 
+            // Shown live only, same guard as the list row: no size for directories, and none at
+            // all when HideSize() is set. The final answer (BuildCheckedItemsText) intentionally
+            // stays plain — it's built from FormatAnswer directly, never from this method.
+            if (selected is not null && !selected.IsDirectory && !_hideSize)
+            {
+                text += $"  {FormatSize(selected.Length)}";
+            }
+
             // Read-only, horizontally-scrollable answer handled by the base: it owns the emacs
             // buffer and only reloads it when the text changes, so horizontal navigation and the
             // left/right ellipsis behave correctly for long paths.

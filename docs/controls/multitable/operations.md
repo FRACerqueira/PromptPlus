@@ -23,7 +23,7 @@ horizontal scrolling, paging, history, and view-only mode.
 ## Anatomy of the control
 
 ```
-Select products                          ← prompt
+Select products: Notebook Pro            ← prompt + live answer (follows the cursor + column)
 Category: Electronics                     ← description (optional / dynamic)
 +---------------------------------------+
 |   |  Id  | Name          |   Price    |  ← header row
@@ -35,6 +35,12 @@ Filter: note                              ← live filter text (when filtering)
 Page 1/2                                  ← pagination
 Space: check  Enter: confirm  Esc: cancel ← tooltip
 ```
+
+The answer line updates as you navigate: without a [`TextSelector`](methods.md#textselector) it
+shows the value of the row under the cursor in whichever column is currently Tab-focused (`Tab`/
+`Shift+Tab` change it); with a `TextSelector`, that fixed text is shown instead, regardless of
+column. Once confirmed (**Enter**), the final answer shown is the checked-rows summary
+(comma-joined), resolved the same way per row.
 
 Every region can be recolored — see [Styles](styles.md).
 

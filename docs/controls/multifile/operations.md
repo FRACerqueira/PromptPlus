@@ -23,7 +23,7 @@ and recursive marking, the count range, validation, history, and the values it r
 ## Anatomy of the control
 
 ```
-Check files or folders                   ← prompt
+Check files or folders: Program.cs  1.2 KB ← prompt + live answer (path + size, follows the cursor)
 Space to check, Enter to confirm         ← description (optional)
 C:\Projects                              ← root folder
 +- ▼ [x] src                             ← expanded, checked folder
@@ -35,6 +35,11 @@ Checked: 3                               ← tagged info (count)
 Page 1/2                                 ← pagination
 Space: check  Enter: confirm  Esc: cancel ← tooltip
 ```
+
+The live answer shows the size next to the path for a focused **file** (omitted for folders, and
+omitted entirely when [`HideSize`](methods.md#hidesize) is set), reachable via
+`Home`/`End`/`←`/`→` scrolling if the path is too long to fit. The final answer after **Enter**
+shows the checked-items summary (paths only, no size).
 
 Every region can be recolored — see [Styles](styles.md).
 

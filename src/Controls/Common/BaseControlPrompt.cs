@@ -61,8 +61,6 @@ namespace PromptPlusLibrary.Controls.Common
         // scroll (ToHome) without reloading the content when only the geometry changed.
         private EmacsConsoleBuffer? _answerViewportBuffer;
         private string? _answerViewportLastText;
-        private int _answerViewportLastWidth = -1;
-        private int _answerViewportLastHeight = -1;
         private bool _resizePositionHandled;
 
         /// <summary>
@@ -955,8 +953,10 @@ namespace PromptPlusLibrary.Controls.Common
         /// The base owns an internal <see cref="EmacsConsoleBuffer"/> and only reloads it when
         /// <paramref name="text"/> changes, so the cursor position (and therefore the horizontal
         /// scroll and the left/right ellipsis) is preserved while the user navigates with
-        /// Home/End/Left/Right. When the text does not fit the available width, the tail of the text
-        /// stays visible with an ellipsis on the left.
+        /// Home/End/Left/Right, and also across a terminal resize — matching the resize behavior of
+        /// the controls that manage their own answer buffer (Select/MultiSelect/Table/MultiTable/
+        /// Input). When the text does not fit the available width, the tail of the text stays visible
+        /// with an ellipsis on the left.
         /// </summary>
         /// <param name="screenBuffer">The screen buffer to write into.</param>
         /// <param name="text">The current answer text.</param>
@@ -967,35 +967,20 @@ namespace PromptPlusLibrary.Controls.Common
 
             int promptWidth = GetPromptDisplayWidth();
             int viewportWidth = Math.Max(0, ConsoleHandler.Width - promptWidth);
-            int terminalHeight = ConsoleHandler.Height;
 
             // Reload the buffer only when the text changes (ToHome anchors at the start, like
             // Select). Anchoring at the start keeps the recorded cursor column small, so the answer
             // never fills the full width nor triggers a pending-wrap that duplicates the line on
-            // resize. Reloading only on change preserves horizontal navigation between frames.
+            // resize. A terminal resize alone does NOT reload/re-anchor — the viewport slice below is
+            // recomputed fresh from the current width every call, so the existing cursor position
+            // stays valid and the scroll survives the resize.
             bool textChanged = !string.Equals(text, _answerViewportLastText, StringComparison.Ordinal);
-
-            // A terminal resize changes the geometry; re-anchor the horizontal scroll so the
-            // read-only answer stays predictably aligned at the start. Track BOTH width and height:
-            // a width change alters the viewport slice directly, while a height change can move and
-            // re-anchor the frame on screen (scroll/relayout), so either warrants a re-anchor. Only
-            // re-anchor (ToHome) here instead of reloading, since the content did not change.
-            bool geometryChanged = viewportWidth != _answerViewportLastWidth
-                                   || terminalHeight != _answerViewportLastHeight;
-
             if (textChanged)
             {
                 _answerViewportBuffer.LoadPrintable(text ?? string.Empty);
                 _answerViewportBuffer.ToHome();
                 _answerViewportLastText = text;
             }
-            else if (geometryChanged)
-            {
-                _answerViewportBuffer.ToHome();
-            }
-
-            _answerViewportLastWidth = viewportWidth;
-            _answerViewportLastHeight = terminalHeight;
 
             // Slice directly from the cached text and the buffer's cursor position, reusing the
             // viewportWidth already computed above. The buffer content always equals
