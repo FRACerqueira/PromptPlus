@@ -71,8 +71,11 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void Space_checks_the_selected_item_and_updates_the_answer()
+        public void Space_checks_the_selected_item()
         {
+            // The answer line follows the cursor (parked on "A" both before and after Space),
+            // not a running summary of checked items — see Enter_confirms_with_all_checked_items
+            // for the final-answer summary shown after commit.
             var vt = MakeTerminal();
             var control = MakeMultiSelect(vt);
             _ = vt.Keys.Enqueue(ConsoleKey.Spacebar);
@@ -86,8 +89,10 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void Space_again_unchecks_the_item_and_clears_the_answer()
+        public void Space_again_unchecks_the_item()
         {
+            // Checking/unchecking never touches the answer line — it still reads "A" because the
+            // cursor never left that row, regardless of the item's checked state.
             var vt = MakeTerminal();
             var control = MakeMultiSelect(vt);
             _ = vt.Keys.Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Spacebar);
@@ -95,7 +100,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
             _ = vt.TextAt(1, 0, 6).Should().Be(">[ ] A");
             _ = vt.Find("0 selected").Should().NotBeNull();
         }
@@ -112,6 +117,91 @@ namespace PromptPlus.Tests.Controls
 
             _ = result.IsAborted.Should().BeFalse();
             _ = result.Content.Should().BeEquivalentTo(["A", "B"]);
+            // FinishTemplate must still show the checked-items summary (not the cursor's last
+            // position, which was "B") — this is the discriminating check for the whole design:
+            // live answer follows the cursor, final answer summarizes the result.
+            _ = vt.Find("Choose: A,B").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_is_appended_to_the_live_answer()
+        {
+            // The live answer line can scroll horizontally (ViewportSlice) when text overflows the
+            // console width, unlike a list row — so it's a reliable place to surface ExtraInfo.
+            // No key sent: the safety-net timeout ends Run() leaving this live frame on screen.
+            var vt = MakeTerminal();
+            var control = MakeMultiSelect(vt).ExtraInfo(x => $"Length: {x.Length}");
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Choose: A (Length: 1)").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_overflowing_the_console_width_is_hidden_up_front()
+        {
+            // Motivating scenario for showing ExtraInfo in the live answer: WriteListSelect has no
+            // viewport, so a long ExtraInfo can get cut off in the list row with no way back to it.
+            // First, confirm the tail really is off-screen before scrolling.
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeMultiSelect(vt).ExtraInfo(_ => longExtra);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().BeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_overflow_is_reachable_by_scrolling_the_live_answer_with_End()
+        {
+            // ...and now confirm the answer line's horizontal scroll (Home/End/Left/Right) makes
+            // that same tail reachable — the whole point of surfacing ExtraInfo here instead of
+            // only in the list row.
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeMultiSelect(vt).ExtraInfo(_ => longExtra);
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_is_not_appended_to_the_final_answer()
+        {
+            // The final answer (BuildCheckedItemsText, after Enter) intentionally stays plain text.
+            var vt = MakeTerminal();
+            var control = MakeMultiSelect(vt).ExtraInfo(x => $"Length: {x.Length}");
+            _ = vt.Keys.Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            var result = control.Run(cts.Token);
+
+            _ = result.IsAborted.Should().BeFalse();
+            _ = result.Content.Should().BeEquivalentTo(["A"]);
+            _ = vt.Find("(Length: 1)").Should().BeNull();
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
+        }
+
+        [Fact]
+        public void ExtraInfo_is_not_appended_when_the_cursor_is_on_a_group_header()
+        {
+            // WriteListSelect never resolves ExtraInfo for a header row either; the live answer
+            // mirrors that and shows only the group name.
+            var vt = MakeTerminal();
+            var control = new PromptPlusControls(vt, new PromptConfig()).MultiSelect<string>("Choose")
+                .AddGroupedItem("G1", "A").AddGroupedItem("G1", "B")
+                .ExtraInfo(x => $"Length: {x.Length}");
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.TextAt(0, 0, 10).Should().Be("Choose: G1");
         }
 
         [Fact]
@@ -184,7 +274,8 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            // Cursor stays parked on "A" — Space on an individual item never moves it.
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
             _ = vt.TextAt(1, 0, 6).Should().Be(">[ ] A");
             _ = vt.Find("0 selected").Should().NotBeNull();
             _ = vt.Find(PromptPlusResources.PredicateSelectInvalid).Should().BeNull();
@@ -201,7 +292,9 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.Find("Choose: A,B").Should().NotBeNull();
+            // The answer line follows the cursor (still parked on the G1 header, which Space
+            // doesn't move), not a running summary of every checked item.
+            _ = vt.Find("Choose: G1").Should().NotBeNull();
             _ = vt.Find("2 selected").Should().NotBeNull();
             // G2's own item stays untouched — only G1's children are affected.
             _ = vt.Find("[ ] C").Should().NotBeNull();
@@ -218,7 +311,8 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            // Cursor stays parked on the G1 header throughout, so the answer reads its group name.
+            _ = vt.TextAt(0, 0, 10).Should().Be("Choose: G1");
             _ = vt.Find("0 selected").Should().NotBeNull();
         }
 
@@ -234,7 +328,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            _ = vt.TextAt(0, 0, 10).Should().Be("Choose: G1");
             _ = vt.Find("0 selected").Should().NotBeNull();
         }
 
@@ -248,7 +342,9 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 13).Should().Be("Choose: A,B,C");
+            // The answer line follows the cursor (still parked on "A"), not a running summary of
+            // every checked item.
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
             _ = vt.Find("3 selected").Should().NotBeNull();
             _ = vt.TextAt(1, 0, 6).Should().Be(">[x] A");
             _ = vt.TextAt(2, 0, 6).Should().Be(" [x] B");
@@ -285,7 +381,8 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            // Cursor stays parked on "A" throughout — F2 doesn't move it.
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
             _ = vt.Find("0 selected").Should().NotBeNull();
         }
 
@@ -299,7 +396,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
             _ = vt.Find("0 selected").Should().NotBeNull();
         }
 
@@ -339,7 +436,9 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.TextAt(0, 0, 8).Should().Be("Choose: ");
+            // Exiting the view resets the cursor to the first item ("A") via UpdateCollection's
+            // default FirstItem() fallback.
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
             _ = vt.Find("0 selected").Should().NotBeNull();
             _ = vt.Find("Qty:3 items").Should().NotBeNull();
         }
@@ -362,8 +461,9 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result = control.Run(cts.Token);
 
-            // Confirmed via the final answer line (FinishTemplate re-renders it from the same
-            // _answerBuffer) and the returned Content — both must agree that A is still checked.
+            // Confirmed via the final answer line (FinishTemplate rebuilds it from
+            // BuildCheckedItemsText(), independent of the cursor's last position) and the
+            // returned Content — both must agree that A is still checked.
             _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
             _ = result.IsAborted.Should().BeFalse();
             _ = result.Content.Should().BeEquivalentTo(["A"]);

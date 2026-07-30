@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiTree — Methods ?](methods.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiTree — Methods →](methods.md)
 
 ---
 
@@ -24,7 +24,7 @@ aggregate state of their descendants. You build the structure exactly like [`Tre
 — a required root, first-level nodes, and nested children — then the user checks nodes and confirms.
 Checking can cascade to descendants, be limited to leaves, or be constrained by a count range.
 
-> ?? Only need to pick **one** node? Use the [**Tree**](../tree/index.md) control — same tree model,
+> 🔘 Only need to pick **one** node? Use the [**Tree**](../tree/index.md) control — same tree model,
 > single selection.
 
 ---
@@ -70,7 +70,7 @@ if (!result.IsAborted)
 
 - `MultiTree<string>("Check folders")` creates a tree of strings. The type argument `T` is the node type.
 - `Root(...)`, `TextSelector(...)`, and `DefaultMatchBy(...)` are **required** — see
-  [Operations ? Building the tree model](operations.md#building-the-tree-model).
+  [Operations → Building the tree model](operations.md#building-the-tree-model).
 - `.Run()` renders the tree and blocks until **Enter** (confirm) or **Esc** (abort), returning a
   [`ResultPrompt<T[]>`](../../architecture.md#resultpromptt) whose `Content` is the **array** of
   checked values.
@@ -91,7 +91,7 @@ var tree = PromptPlus.Controls
     .TextSelector(n => n)
     .DefaultMatchBy((a, b) => a == b);
 
-var eng     = tree.AddLast("Engineering");   // first-level ? returns ITreeNode<string>
+var eng     = tree.AddLast("Engineering");   // first-level → returns ITreeNode<string>
 var backend = eng.AddLast("Backend");        // child of Engineering
 backend.AddLast("API");                      // leaf
 backend.AddLast("Database");                 // leaf

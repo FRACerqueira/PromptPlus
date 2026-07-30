@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiTable — Methods ?](methods.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiTable — Methods →](methods.md)
 
 ---
 
@@ -23,7 +23,7 @@ collection as a bordered table, but each row carries a checkbox: the user toggle
 can be constrained to a minimum/maximum count, and gets back an array of the checked rows. Everything the
 single-row table offers — columns, filtering, horizontal scrolling, history, view-only — applies here too.
 
-> ?? Only need **one** row? Use the [**Table**](../table/index.md) control — same grid model, single choice.
+> 🔘 Only need **one** row? Use the [**Table**](../table/index.md) control — same grid model, single choice.
 
 ---
 

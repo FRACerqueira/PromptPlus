@@ -492,7 +492,6 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 }
             }
             _defaultValues = [];
-            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
 
             _countChecked = _items.Count(x => x.ValueChecked && !x.IsFirstItemGroup);
 
@@ -742,14 +741,6 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                             item.ValueChecked = false;
                             _countChecked--;
                         }
-                        if (_countChecked == 0)
-                        {
-                            _answerBuffer!.Clear();
-                        }
-                        else
-                        {
-                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
-                        }
                         _onfilterOnlySelected = false;
                         _localpaginator!.UpdateCollection(_items);
                         _localpaginator!.UpdateFilter(string.Empty);
@@ -776,14 +767,6 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                                 _countChecked += grpavaluecheck ? 1 : -1;
                             }
                         }
-                        if (_countChecked == 0)
-                        {
-                            _answerBuffer!.Clear();
-                        }
-                        else
-                        {
-                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
-                        }
                         SetRangeValidationErrorIfNeeded();
                         break;
                     }
@@ -806,14 +789,6 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                                 item.ValueChecked = grpavaluecheck;
                                 _countChecked += grpavaluecheck ? 1 : -1;
                             }
-                        }
-                        if (_countChecked == 0)
-                        {
-                            _answerBuffer!.Clear();
-                        }
-                        else
-                        {
-                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
                         }
                         SetRangeValidationErrorIfNeeded();
                         break;
@@ -840,20 +815,12 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                                 _countChecked += grpavaluecheck ? 1 : -1;
                             }
                         }
-                        if (_countChecked == 0)
+                        if (_countChecked == 0 && _onfilterOnlySelected)
                         {
-                            _answerBuffer!.Clear();
-                            if (_onfilterOnlySelected)
-                            {
-                                _onfilterOnlySelected = false;
-                                _localpaginator!.UpdateCollection(_items);
-                                _localpaginator!.UpdateFilter(string.Empty);
-                                _filterBuffer!.Clear();
-                            }
-                        }
-                        else
-                        {
-                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
+                            _onfilterOnlySelected = false;
+                            _localpaginator!.UpdateCollection(_items);
+                            _localpaginator!.UpdateFilter(string.Empty);
+                            _filterBuffer!.Clear();
                         }
                         SetRangeValidationErrorIfNeeded();
                         break;
@@ -877,20 +844,12 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                             _localpaginator.SelectedItem.ValueChecked = true;
                             _countChecked++;
                         }
-                        if (_countChecked == 0)
+                        if (_countChecked == 0 && _onfilterOnlySelected)
                         {
-                            _answerBuffer!.Clear();
-                            if (_onfilterOnlySelected)
-                            {
-                                _onfilterOnlySelected = false;
-                                _localpaginator!.UpdateCollection(_items);
-                                _localpaginator!.UpdateFilter(string.Empty);
-                                _filterBuffer!.Clear();
-                            }
-                        }
-                        else
-                        {
-                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
+                            _onfilterOnlySelected = false;
+                            _localpaginator!.UpdateCollection(_items);
+                            _localpaginator!.UpdateFilter(string.Empty);
+                            _filterBuffer!.Clear();
                         }
                         SetRangeValidationErrorIfNeeded();
                         break;
@@ -979,7 +938,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             WritePrompt(screenBuffer, _optStyles[MultiSelectStyles.Prompt]);
             if (!ResultCtrl!.Value.IsAborted)
             {
-                screenBuffer.WriteLine(_answerBuffer!.ToString(), _optStyles[MultiSelectStyles.Answer]);
+                screenBuffer.WriteLine(BuildCheckedItemsText(), _optStyles[MultiSelectStyles.Answer]);
             }
             else if (ResultCtrl!.Value.IsAborted && OptionsControl.ShowMessageAbortKeyValue)
             {
@@ -1359,9 +1318,35 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         {
             if (_modeView == ModeView.Select)
             {
+                string text = string.Empty;
+                if (_localpaginator!.SelectedIndex >= 0)
+                {
+                    ItemSelect<T> selected = _localpaginator.SelectedItem;
+                    // A group header's own Text mirrors its first child's value (an AddGroupedItem
+                    // artifact); show the group name instead, matching what WriteListSelect renders
+                    // for that row. Headers never carry ExtraInfo (WriteListSelect never resolves
+                    // it for them either), so the check below is skipped for them naturally.
+                    if (selected.IsFirstItemGroup)
+                    {
+                        text = selected.Group!;
+                    }
+                    else
+                    {
+                        text = selected.Text!;
+                        // Shown live only: the list row can overflow the console width with no way
+                        // to scroll it back into view, while the answer line already supports
+                        // horizontal scrolling (ViewportSlice) — a second, reliable place to read
+                        // it. The final answer (BuildCheckedItemsText) intentionally stays plain.
+                        if (HasExtraInfo(selected, out string extraInfo))
+                        {
+                            text += extraInfo;
+                        }
+                    }
+                }
                 if (_updatePosAnswerBuffer)
                 {
-                    _answerBuffer!.ToHome();
+                    _answerBuffer!.LoadPrintable(text);
+                    _answerBuffer.ToHome();
                 }
                 int promptWidth = GetPromptDisplayWidth();
                 (string visibleLeft, string visibleRight) = ViewportSlice(_answerBuffer!, promptWidth);

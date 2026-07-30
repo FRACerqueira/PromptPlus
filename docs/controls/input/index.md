@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [Input — Methods ?](methods.md)
+[← Back to Home](../../../README.md) • **Next:** [Input — Methods →](methods.md)
 
 ---
 
@@ -22,7 +22,7 @@ e-mail address, a URL, a search term, a note. It supports live character filteri
 coercion, length limits, confirmation-time validation, Tab autocomplete suggestions, and
 persistent history — all through a single fluent chain.
 
-> ?? Need to hide what the user types (passwords, API keys, PINs)? Use the
+> 🔒 Need to hide what the user types (passwords, API keys, PINs)? Use the
 > [**Secret**](../secret/index.md) control instead — it shares this same API plus a mask character.
 
 ---
@@ -68,7 +68,7 @@ if (!result.IsAborted)
 - The call returns a [`ResultPrompt<string>`](../../architecture.md#resultpromptt): read `.Content`
   for the text and `.IsAborted` to detect Esc.
 
-> ?? Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
+> 💡 Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
 
 ---
 

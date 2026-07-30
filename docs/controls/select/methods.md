@@ -213,7 +213,9 @@ ISelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
 ```
 
 Shows a secondary piece of text for each item (return `null` to show nothing for that item). It is
-wrapped with the prefix/suffix from config (default `(` `)`).
+wrapped with the prefix/suffix from config (default `(` `)`). The focused item's `ExtraInfo` also
+appears in the live answer line while navigating (not in the final answer shown after **Enter**) —
+see [Operations](operations.md#anatomy-of-the-control).
 
 ```csharp
 PromptPlus.Controls.Select<string>("City")

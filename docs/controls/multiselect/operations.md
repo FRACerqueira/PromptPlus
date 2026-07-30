@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiSelect — Styles ?](styles.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiSelect — Styles →](styles.md)
 
 ---
 
@@ -23,17 +23,22 @@ paging, the selection range, validation, history, and view-only mode.
 ## Anatomy of the control
 
 ```
-Which cities?                            ? prompt
-Type to filter                           ? description (optional / dynamic)
-North America                            ? group header (grouped lists)
-› [x] Seattle          (Length: 7)       ? focused item (checked) + ExtraInfo
+Which cities? Seattle (Length: 7)        ← prompt + live answer (follows the cursor) + ExtraInfo
+Type to filter                           ← description (optional / dynamic)
+North America                            ← group header (grouped lists)
+› [x] Seattle          (Length: 7)       ← focused item (checked) + ExtraInfo
   [ ] New York         (Length: 8)
 Asia
   [x] Tokyo            (Length: 5)
-Filter: to_                              ? live filter text (when filtering)
-Page 1/2                                 ? pagination
-Space: check  F2: all  Enter: confirm    ? tooltip
+Filter: to_                              ← live filter text (when filtering)
+Page 1/2                                 ← pagination
+Space: check  F2: all  Enter: confirm    ← tooltip
 ```
+
+> The answer line updates as you navigate and includes `ExtraInfo`/`ExtraInfoAsync` when set — useful
+> when a row's own text is too wide for the console and would otherwise be cut off, since this line
+> scrolls horizontally (`Home`/`End`/`←`/`→`). Once confirmed (**Enter**), the final answer
+> shown is the checked-items summary (`BuildCheckedItemsText`) — no `ExtraInfo`.
 
 Every region can be recolored — see [Styles](styles.md).
 
@@ -43,7 +48,7 @@ Every region can be recolored — see [Styles](styles.md).
 
 | Key | Action |
 |---|---|
-| `?` / `?` | Move focus up / down |
+| `↑` / `↓` | Move focus up / down |
 | `Page Up` / `Page Down` | Jump one page |
 | `Ctrl+Home` / `Ctrl+End` | First / last item |
 | `Space` | Toggle the checkbox of the focused item (runs the check predicate) |
@@ -51,9 +56,10 @@ Every region can be recolored — see [Styles](styles.md).
 | `F2` | **Toggle all** — check all items, or uncheck them if all are checked |
 | `F3` | **Filter only selected** — show only the checked items; press again to leave the view |
 | `Enter` | Confirm the checked set (runs range validation) |
-| `Esc` | Abort ? `IsAborted == true`, `Content` is an empty array |
+| `Esc` | Abort → `IsAborted == true`, `Content` is an empty array |
 | Any printable character | Type to filter, or **jump** to the next match when filtering is `Disabled` |
 | `Backspace` | Edit the filter text |
+| `Home` / `End` / `←` / `→` | Scroll the answer line horizontally (when it overflows the width) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 
@@ -138,8 +144,8 @@ Grouped and ungrouped items can be mixed in one list.
 Pressing **Enter**:
 
 1. If [`Range`](methods.md#range) is set, the count of checked items is validated —
-   - fewer than the minimum ? the list stays open with a "minimum" error;
-   - more than the maximum ? the list stays open with a "maximum" error.
+   - fewer than the minimum → the list stays open with a "minimum" error;
+   - more than the maximum → the list stays open with a "maximum" error.
 2. Otherwise the control closes and returns the checked items as a `T[]`.
 
 The running error line also updates live as you check/uncheck against the range, so the user sees when
@@ -206,4 +212,4 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 - [Methods](methods.md) — the API these behaviors come from
 - [Keyboard Bindings](../../keyboard-bindings.md) — full physical-key reference
 - [Global Behaviors](../../global-behaviors.md) — the config layer behind `Options`
-- [Select ? Operations](../select/operations.md) — the single-choice sibling's runtime behavior
+- [Select → Operations](../select/operations.md) — the single-choice sibling's runtime behavior

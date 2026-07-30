@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiTree — Operations ?](operations.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiTree — Operations →](operations.md)
 
 ---
 
@@ -138,7 +138,7 @@ The `disable` and `check` parameters have the same meaning as on [`Root`](#root)
 
 ```csharp
 var sales = tree.AddLast("Sales");
-tree.AddBefore(sales, "HR");   // ? [HR, Sales]
+tree.AddBefore(sales, "HR");   // → [HR, Sales]
 ```
 
 > Throws `InvalidOperationException` if `node` does not belong to this tree or is the root.
@@ -255,7 +255,7 @@ IMultiTreeControl<T> ExtraInfoAsync(Func<T, Task<string?>> extraInfoNode)
 
 Asynchronous version of [`ExtraInfo`](#extrainfo).
 
-> ?? The task is awaited **synchronously (blocking)** once per node, per render frame — keep it fast.
+> ⚠️ The task is awaited **synchronously (blocking)** once per node, per render frame — keep it fast.
 
 ---
 
@@ -445,7 +445,7 @@ IMultiTreeControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> valids
 
 Asynchronous counterparts.
 
-> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
+> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
 
 ---
 
@@ -548,7 +548,7 @@ IMultiTreeControl<T> EnableHistory(string filename, Action<IHistoryOptions>? opt
 
 Persists the checked values to `filename`; previously checked items are restored on the next run. The
 `IHistoryOptions` builder is the same one documented for
-[Input ? EnableHistory](../input/methods.md#enablehistory).
+[Input → EnableHistory](../input/methods.md#enablehistory).
 
 ```csharp
 PromptPlus.Controls.MultiTree<Node>("Nodes")
@@ -590,7 +590,7 @@ IMultiTreeControl<T> Options(Action<IControlOptions> options)
 
 Overrides global behaviors for this one control (prompt/description text, abort key, tooltip,
 hide-after-finish, extra-info affixes). See
-[Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
+[Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
 
 ---
 
@@ -619,4 +619,4 @@ var result = PromptPlus.Controls.MultiTree<Node>("Nodes")
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `MultiTreeStyles` regions
 - [Index](index.md) — overview and method map
-- [Tree ? Methods](../tree/methods.md) — the single-choice sibling
+- [Tree → Methods](../tree/methods.md) — the single-choice sibling

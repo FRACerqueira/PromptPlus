@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [Secret — Operations ?](operations.md)
+[← Back to Home](../../../README.md) • **Next:** [Secret — Operations →](operations.md)
 
 ---
 
@@ -64,7 +64,7 @@ PromptPlus.Controls.Secret("PIN")
 > If you never call `MaskSecret`, the control still masks input using
 > `PromptPlus.Config.SecretChar` and allows F2 reveal (`enabledView` defaults to on). Call it
 > only to change the symbol or to disable reveal. See
-> [Operations ? The mask character](operations.md#the-mask-character).
+> [Operations → The mask character](operations.md#the-mask-character).
 
 ---
 
@@ -202,7 +202,7 @@ PromptPlus.Controls.Secret("Password", "Minimum 8 chars (async)")
     .Run();
 ```
 
-> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — it does not run
+> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — it does not run
 > in parallel with the render loop. Keep it fast; long calls freeze the prompt until they return.
 
 ---
@@ -228,7 +228,7 @@ PromptPlus.Controls.Secret("Password", "Minimum 8 chars")
 
 > Throws `ArgumentNullException` if `value` is `null`.
 >
-> ?? The callback receives the raw text — show a derived value like `input.Length`, never the
+> ⚠️ The callback receives the raw text — show a derived value like `input.Length`, never the
 > secret itself.
 
 ---
@@ -299,7 +299,7 @@ PromptPlus.Controls.Secret("Password")
     .Run();
 ```
 
-See [Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions)
+See [Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions)
 for the complete `IControlOptions` list.
 
 ---
@@ -333,4 +333,4 @@ var result = PromptPlus.Controls.Secret("Password").Run(cts.Token);
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `InputStyles` regions
 - [Index](index.md) — overview and method map
-- [Input ? Methods](../input/methods.md) — the full un-masked API for comparison
+- [Input → Methods](../input/methods.md) — the full un-masked API for comparison

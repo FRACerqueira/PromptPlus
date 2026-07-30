@@ -1069,6 +1069,14 @@ namespace PromptPlusLibrary.Controls.Select
                 if (_localpaginator!.SelectedIndex >= 0)
                 {
                     text = _localpaginator!.SelectedItem.Text!;
+                    // Shown live only: the list row can overflow the console width with no way to
+                    // scroll it back into view, while the answer line already supports horizontal
+                    // scrolling (ViewportSlice) — a second, reliable place to read it. The final
+                    // answer (FinishTemplate) intentionally stays plain text.
+                    if (HasExtraInfo(_localpaginator.SelectedItem, out string extraInfo))
+                    {
+                        text += extraInfo;
+                    }
                 }
                 if (_updatePosAnswerBuffer)
                 {

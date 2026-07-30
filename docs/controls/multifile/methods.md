@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiFile — Operations ?](operations.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiFile — Operations →](operations.md)
 
 ---
 
@@ -241,7 +241,7 @@ IMultiFileControl PredicateCheckedAsync(Func<FileItem, Task<(bool, string?)>> va
 
 Asynchronous counterparts.
 
-> ?? For an individual toggle the predicate is awaited **synchronously (blocking) on the UI thread**.
+> ⚠️ For an individual toggle the predicate is awaited **synchronously (blocking) on the UI thread**.
 > During a recursive folder (wildcard) selection it runs on a **background thread** while enumerating
 > the subtree, so it must be thread-safe and must not touch UI state.
 
@@ -325,7 +325,7 @@ IMultiFileControl EnableHistory(string filename, Action<IHistoryOptions>? option
 
 Persists the confirmed paths to `filename` and can restore them as the defaults on the next run (the
 tree expands to the first). The `IHistoryOptions` builder is identical to the one documented for
-[Input ? EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
+[Input → EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -368,7 +368,7 @@ IMultiFileControl Options(Action<IControlOptions> options)
 
 Overrides global behaviors for this one control (prompt/description text, abort key, tooltip,
 hide-after-finish). See
-[Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
+[Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
 
 ```csharp
 PromptPlus.Controls.MultiFile("Check").Root(root)
@@ -411,4 +411,4 @@ if (!result.IsAborted)
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `MultiFileStyles` regions
 - [Index](index.md) — overview and method map
-- [File ? Methods](../file/methods.md) — the single-selection sibling
+- [File → Methods](../file/methods.md) — the single-selection sibling

@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiFile — Styles ?](styles.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiFile — Styles →](styles.md)
 
 ---
 
@@ -23,17 +23,17 @@ and recursive marking, the count range, validation, history, and the values it r
 ## Anatomy of the control
 
 ```
-Check files or folders                   ? prompt
-Space to check, Enter to confirm         ? description (optional)
-C:\Projects                              ? root folder
-+- ? [x] src                             ? expanded, checked folder
-¦    › [x] Program.cs      1.2 KB        ? focused, checked file + size
-¦      [ ] Startup.cs      3.4 KB        ? unchecked file
-+- ? [ ] docs                            ? collapsed folder
+Check files or folders                   ← prompt
+Space to check, Enter to confirm         ← description (optional)
+C:\Projects                              ← root folder
++- ▼ [x] src                             ← expanded, checked folder
+│    › [x] Program.cs      1.2 KB        ← focused, checked file + size
+│      [ ] Startup.cs      3.4 KB        ← unchecked file
++- ▶ [ ] docs                            ← collapsed folder
 +- [x] README.md           0.8 KB
-Checked: 3                               ? tagged info (count)
-Page 1/2                                 ? pagination
-Space: check  Enter: confirm  Esc: cancel ? tooltip
+Checked: 3                               ← tagged info (count)
+Page 1/2                                 ← pagination
+Space: check  Enter: confirm  Esc: cancel ← tooltip
 ```
 
 Every region can be recolored — see [Styles](styles.md).
@@ -48,9 +48,9 @@ survives collapsing and re-expanding its branch.
 
 | Key | Action |
 |---|---|
-| `?` / `?` | Move focus up / down |
-| `?` / `+` | Expand the focused folder |
-| `?` / `-` | Collapse the focused folder |
+| `↑` / `↓` | Move focus up / down |
+| `→` / `+` | Expand the focused folder |
+| `←` / `-` | Collapse the focused folder |
 | `Space` | Check / uncheck (recursive on folders by default — see below) |
 | `Ctrl+Space` | Recursive folder mark, when [`RecursiveMarkWithCtrlSpace`](methods.md#recursivemarkwithctrlspace) is on |
 | `F2` | Toggle all (check / uncheck everything currently loaded) |
@@ -58,7 +58,7 @@ survives collapsing and re-expanding its branch.
 | `Page Up` / `Page Down` | Jump one page |
 | `Home` / `End` | First / last visible item |
 | `Enter` | Confirm the checked entries (subject to the range) |
-| `Esc` | Abort ? `IsAborted == true` |
+| `Esc` | Abort → `IsAborted == true` |
 | `Shift+F3` | Toggle the summary between full path and short name |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
@@ -195,5 +195,5 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 
 - [Methods](methods.md) — the API these behaviors come from
 - [Keyboard Bindings](../../keyboard-bindings.md) — full physical-key reference
-- [File ? Operations](../file/operations.md) — the single-selection sibling
+- [File → Operations](../file/operations.md) — the single-selection sibling
 - [Global Behaviors](../../global-behaviors.md) — the config layer behind `Options`

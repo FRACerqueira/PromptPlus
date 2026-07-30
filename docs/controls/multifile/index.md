@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiFile — Methods ?](methods.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiFile — Methods →](methods.md)
 
 ---
 
@@ -25,7 +25,7 @@ survives collapsing and re-expanding the branch that contains it. Beyond the sha
 options, it adds cascade checking, recursive folder marking, a min/max count range, and a check
 predicate.
 
-> ?? Only need **one** file or folder? Use the [**File**](../file/index.md) control — same tree
+> 🔘 Only need **one** file or folder? Use the [**File**](../file/index.md) control — same tree
 > browser, single selection.
 
 ---

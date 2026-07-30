@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [Secret — Styles ?](styles.md)
+[← Back to Home](../../../README.md) • **Next:** [Secret — Styles →](styles.md)
 
 ---
 
@@ -24,11 +24,11 @@ handle passwords and keys.
 ## Anatomy of the control
 
 ```
-Password: ####_                          ? prompt + masked text + cursor
-Min 8 chars with upper/lower/digit       ? description (optional / dynamic)
-Length: 4                                ? ChangeDescription output (optional)
-Password must have at least 8 chars      ? error line, only when validation fails
-Enter: confirm  Esc: cancel  F2: reveal  ? tooltip (toggle with F1 / Ctrl+F1)
+Password: ####_                          ← prompt + masked text + cursor
+Min 8 chars with upper/lower/digit       ← description (optional / dynamic)
+Length: 4                                ← ChangeDescription output (optional)
+Password must have at least 8 chars      ← error line, only when validation fails
+Enter: confirm  Esc: cancel  F2: reveal  ← tooltip (toggle with F1 / Ctrl+F1)
 ```
 
 Every region can be recolored — see [Styles](styles.md). What the user typed appears as mask
@@ -43,8 +43,8 @@ symbols, not the real characters, unless they reveal it with F2 (see below).
 | Key | Action |
 |---|---|
 | Any printable character | Insert at the cursor, shown as the mask symbol (subject to [`AcceptInput`](methods.md#acceptinput) and [`MaxLength`](methods.md#maxlength)) |
-| `?` / `?` | Move one character |
-| `Ctrl+?` / `Ctrl+?` | Move one word |
+| `←` / `→` | Move one character |
+| `Ctrl+←` / `Ctrl+→` | Move one word |
 | `Home` / `End` | Start / end of line |
 | `Backspace` | Delete character before the cursor |
 | `Delete` | Delete character at the cursor |
@@ -56,7 +56,7 @@ symbols, not the real characters, unless they reveal it with F2 (see below).
 | Key | Action |
 |---|---|
 | `Enter` | Confirm — runs validation, then returns the value |
-| `Esc` | Abort (when the abort key is enabled) ? `IsAborted == true` |
+| `Esc` | Abort (when the abort key is enabled) → `IsAborted == true` |
 | `F2` | Reveal / hide the plain text (when [`MaskSecret`](methods.md#masksecret) was left with `enabledView: true`) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
@@ -94,7 +94,7 @@ Calling `MaskSecret('*')` overrides the config for that one control. If you neve
 
 The reveal hotkey is configurable via `PromptPlus.Config.HotKeyInputPasswordView` (default `F2`).
 
-> ?? Disable reveal (`enabledView: false`) when someone might be looking over the user's shoulder or
+> ⚠️ Disable reveal (`enabledView: false`) when someone might be looking over the user's shoulder or
 > the session is being recorded — a PIN entry is a good candidate.
 
 ---
@@ -105,15 +105,15 @@ The restrictions apply in a fixed order, so it helps to picture the pipeline:
 
 ```
 key pressed
-   ¦
-   +- is it a control/navigation key? --? handled (move, delete, F2, confirm, …)
-   ¦
-   +- printable character
-          ¦
-          +- AcceptInput(c) == false ? --? ignored
-          +- length already == MaxLength ? --? ignored
-          +- InputToCase applied (upper/lower)
-          +- inserted at cursor, drawn as the mask symbol
+   │
+   ├─ is it a control/navigation key? --→ handled (move, delete, F2, confirm, …)
+   │
+   └─ printable character
+          │
+          ├─ AcceptInput(c) == false? --→ ignored
+          ├─ length already == MaxLength? --→ ignored
+          ├─ InputToCase applied (upper/lower)
+          └─ inserted at cursor, drawn as the mask symbol
 ```
 
 Consequently:
@@ -130,10 +130,10 @@ Pressing **Enter** runs this sequence:
 
 1. Validation runs — [`PredicateValid`](methods.md#predicatevalid) /
    [`PredicateValidAsync`](methods.md#predicatevalidasync), if configured.
-2. **Valid** ? the control closes and returns `ResultPrompt<string>` with `IsAborted == false`.
-   **Invalid** ? the control stays open, shows the error line, and waits for more input.
+2. **Valid** → the control closes and returns `ResultPrompt<string>` with `IsAborted == false`.
+   **Invalid** → the control stays open, shows the error line, and waits for more input.
 
-> ?? Validation only runs on confirm, never per keystroke. Use `AcceptInput` for per-keystroke rules
+> ⚠️ Validation only runs on confirm, never per keystroke. Use `AcceptInput` for per-keystroke rules
 > and `PredicateValid` for whole-value rules (length, complexity, match against a policy).
 
 Because `Secret` has no `DefaultIfEmpty`, an empty field confirms as an empty string — add a
@@ -188,4 +188,4 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 - [Methods](methods.md) — the API these behaviors come from
 - [Keyboard Bindings](../../keyboard-bindings.md) — full physical-key and Emacs reference
 - [Global Behaviors](../../global-behaviors.md) — the config layer behind `Options`
-- [Input ? Operations](../input/operations.md) — the un-masked sibling, including history behavior
+- [Input → Operations](../input/operations.md) — the un-masked sibling, including history behavior

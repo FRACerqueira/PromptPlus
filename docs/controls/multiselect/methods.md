@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [MultiSelect — Operations ?](operations.md)
+[← Back to Home](../../../README.md) • **Next:** [MultiSelect — Operations →](operations.md)
 
 ---
 
@@ -219,7 +219,9 @@ IMultiSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
 ```
 
 Shows a secondary piece of text for the focused item (return `null` to show nothing). It is wrapped
-with the prefix/suffix from config (default `(` `)`).
+with the prefix/suffix from config (default `(` `)`). It also appears in the live answer line while
+navigating (not in the final checked-items summary shown after **Enter**) — see
+[Operations](operations.md#anatomy-of-the-control).
 
 ```csharp
 PromptPlus.Controls.MultiSelect<string>("Cities")
@@ -424,7 +426,7 @@ IMultiSelectControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> vali
 
 Asynchronous counterparts of the two [`PredicateChecked`](#predicatechecked) overloads.
 
-> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
+> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
 
 ---
 
@@ -487,7 +489,7 @@ IMultiSelectControl<T> EnableHistory(string filename, Action<IHistoryOptions>? o
 
 Persists confirmed selections to `filename` and can restore them (via [`Default`](#default) or
 [`UseDefaultHistory`](#usedefaulthistory)). The `IHistoryOptions` builder is identical to the one
-documented for [Input ? EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`,
+documented for [Input → EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`,
 `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -533,7 +535,7 @@ IMultiSelectControl<T> Options(Action<IControlOptions> options)
 
 Overrides global behaviors for this one control (prompt/description text, abort key, tooltip,
 hide-after-finish, extra-info affixes). See
-[Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
+[Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
 
 > Throws `ArgumentNullException` if `options` is `null`.
 
@@ -562,4 +564,4 @@ var result = PromptPlus.Controls.MultiSelect<string>("Cities").AddItems(cities).
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `MultiSelectStyles` regions
 - [Index](index.md) — overview and method map
-- [Select ? Methods](../select/methods.md) — the single-choice sibling's API
+- [Select → Methods](../select/methods.md) — the single-choice sibling's API

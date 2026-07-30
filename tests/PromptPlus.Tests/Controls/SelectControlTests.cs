@@ -100,6 +100,85 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void ExtraInfo_is_appended_to_the_live_answer()
+        {
+            // The live answer line can scroll horizontally (ViewportSlice) when text overflows the
+            // console width, unlike a list row — so it's a reliable place to surface ExtraInfo.
+            // No key sent: the safety-net timeout ends Run() leaving this live frame on screen
+            // (Select never reaches FinishTemplate on that path — see the class-level comment).
+            var vt = MakeTerminal();
+            var control = MakeSelect(vt).ExtraInfo(x => $"Length: {x.Length}");
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Choose: A (Length: 1)").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_overflowing_the_console_width_is_hidden_up_front()
+        {
+            // Motivating scenario for showing ExtraInfo in the live answer: WriteListSelect has no
+            // viewport, so a long ExtraInfo can get cut off in the list row with no way back to it.
+            // First, confirm the tail really is off-screen before scrolling.
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeSelect(vt).ExtraInfo(_ => longExtra);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().BeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_overflow_is_reachable_by_scrolling_the_live_answer_with_End()
+        {
+            // ...and now confirm the answer line's horizontal scroll (Home/End/Left/Right) makes
+            // that same tail reachable — the whole point of surfacing ExtraInfo here instead of
+            // only in the list row.
+            var vt = MakeTerminal();
+            string longExtra = new string('X', 100) + "TAIL";
+            var control = MakeSelect(vt).ExtraInfo(_ => longExtra);
+            _ = vt.Keys.Enqueue(ConsoleKey.End);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("TAIL").Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ExtraInfo_is_not_appended_to_the_final_answer()
+        {
+            // The final answer (after Enter) intentionally stays plain text.
+            var vt = MakeTerminal();
+            var control = MakeSelect(vt).ExtraInfo(x => $"Length: {x.Length}");
+            _ = vt.Keys.Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            var result = control.Run(cts.Token);
+
+            _ = result.IsAborted.Should().BeFalse();
+            _ = result.Content.Should().Be("A");
+            _ = vt.Find("(Length: 1)").Should().BeNull();
+            _ = vt.TextAt(0, 0, 9).Should().Be("Choose: A");
+        }
+
+        [Fact]
+        public void ExtraInfoAsync_is_appended_to_the_live_answer_but_not_to_the_final_one()
+        {
+            var vt = MakeTerminal();
+            var control = MakeSelect(vt).ExtraInfoAsync(x => System.Threading.Tasks.Task.FromResult<string?>($"Length: {x.Length}"));
+            _ = vt.Keys.Enqueue(ConsoleKey.DownArrow);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Choose: B (Length: 1)").Should().NotBeNull();
+        }
+
+        [Fact]
         public void Escape_aborts_and_keeps_the_item_selected_at_the_time_of_cancel()
         {
             var vt = MakeTerminal();

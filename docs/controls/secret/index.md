@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [Secret — Methods ?](methods.md)
+[← Back to Home](../../../README.md) • **Next:** [Secret — Methods →](methods.md)
 
 ---
 
@@ -23,7 +23,7 @@ shares the same live filtering, case coercion, length cap, and confirmation-time
 `Input`, but replaces every typed character with a mask symbol and can optionally let the user peek
 at the plain text with **F2**.
 
-> ?? `Secret` deliberately omits the persistence features of `Input` (no history, no autocomplete,
+> ⚠️ `Secret` deliberately omits the persistence features of `Input` (no history, no autocomplete,
 > no seeded default). A secret should never be written to disk or offered as a suggestion — see the
 > [security note](operations.md#security-note) in Operations.
 
@@ -71,7 +71,7 @@ if (!result.IsAborted)
 - The call returns a [`ResultPrompt<string>`](../../architecture.md#resultpromptt): read `.Content`
   for the entered text and `.IsAborted` to detect Esc.
 
-> ?? Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
+> 💡 Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
 > Never echo `.Content` to the console — the example above prints a confirmation, not the value.
 
 ---

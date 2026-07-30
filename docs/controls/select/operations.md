@@ -23,7 +23,7 @@ validation, history, and view-only mode.
 ## Anatomy of the control
 
 ```
-Which city?                              ← prompt
+Which city? Seattle (Length: 7)          ← prompt + live answer (follows the cursor) + ExtraInfo
 Type to filter                           ← description (optional / dynamic)
 North America                            ← group header (grouped lists)
 › Seattle            (Length: 7)         ← focused item + ExtraInfo
@@ -35,6 +35,11 @@ Page 1/2                                 ← pagination
 Enter: confirm  Esc: cancel              ← tooltip
 ```
 
+> The answer line updates as you navigate and includes `ExtraInfo`/`ExtraInfoAsync` when set — useful
+> when a row's own text is too wide for the console and would otherwise be cut off, since this line
+> scrolls horizontally (`Home`/`End`/`←`/`→`). Once confirmed (**Enter**), the final answer
+> shown is the plain item text — no `ExtraInfo`.
+
 Every region can be recolored — see [Styles](styles.md).
 
 ---
@@ -45,11 +50,12 @@ Every region can be recolored — see [Styles](styles.md).
 |---|---|
 | `↑` / `↓` | Move focus up / down |
 | `Page Up` / `Page Down` | Jump one page |
-| `Home` / `End` | First / last item |
+| `Ctrl+Home` / `Ctrl+End` | First / last item |
 | `Enter` | Confirm the focused item (runs validation) |
 | `Esc` | Abort → `IsAborted == true` |
 | Any printable character | Type to filter (when [`Filter`](methods.md#filter) is not `Disabled`) |
 | `Backspace` | Edit the filter text |
+| `Home` / `End` / `←` / `→` | Scroll the answer line horizontally (when it overflows the width) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 

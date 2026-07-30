@@ -11,7 +11,7 @@
 
 </div>
 
-[? Back to Home](../../../README.md) • **Next:** [Input — Operations ?](operations.md)
+[← Back to Home](../../../README.md) • **Next:** [Input — Operations →](operations.md)
 
 ---
 
@@ -62,7 +62,7 @@ PromptPlus.Controls.Input("Profile")
     .Run();
 ```
 
-> ?? Combine `Default(string.Empty, true)` with `EnableHistory(...)` to pre-load the last value
+> 💡 Combine `Default(string.Empty, true)` with `EnableHistory(...)` to pre-load the last value
 > the user confirmed on a previous run.
 
 ---
@@ -80,7 +80,7 @@ Sets the value returned when the user confirms **without typing anything**. Unli
 PromptPlus.Controls.Input("Display Name", "Press Enter to accept the fallback")
     .DefaultIfEmpty("Anonymous")
     .Run();
-// User presses Enter on an empty field ? result.Content == "Anonymous"
+// User presses Enter on an empty field → result.Content == "Anonymous"
 ```
 
 ---
@@ -201,7 +201,7 @@ PromptPlus.Controls.Input("Username")
     .Run();
 ```
 
-> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — it does not run
+> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — it does not run
 > in parallel with the render loop. Keep it fast; long calls freeze the prompt until they return.
 
 ---
@@ -311,8 +311,8 @@ PromptPlus.Controls.Input("Profile", "Press F3 to browse history")
     .Run();
 ```
 
-> ?? Use a distinct `filename` per field so unrelated histories don't collide. See
-> [Operations ? History](operations.md#history) for the runtime behavior.
+> 💡 Use a distinct `filename` per field so unrelated histories don't collide. See
+> [Operations → History](operations.md#history) for the runtime behavior.
 
 ---
 
@@ -387,7 +387,7 @@ PromptPlus.Controls.Input("Name")
     .Run();
 ```
 
-See [Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions)
+See [Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions)
 for the complete `IControlOptions` list.
 
 ---
