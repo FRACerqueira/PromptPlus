@@ -78,7 +78,7 @@ whichever section they belong to as new decisions arise.
 | [ADR0012V01R01](ADR0012V01R01-GeneratedApiDocsOffLimits.md) | Generated API docs are off-limits for manual edits | V01 | Accepted |
 | [ADR0013V01R01](ADR0013V01R01-MigrationGuideRules.md) | Migration guide maintenance rules (v5 → v6) | V01 | Accepted |
 | [ADR0020V01R01](ADR0020V01R01-DisplayWidthOverCharCountForLayout.md) | Display width (columns), not character count, for text layout | V01 | Accepted |
-| [ADR0023V01R01](ADR0023V01R01-GuardInteractiveControlsAgainstRedirectedInput.md) | Guard interactive controls against redirected console input in `Run()` | V01 | Accepted |
+| [ADR0023V01R02](ADR0023V01R02-GuardInteractiveControlsAgainstRedirectedInput.md) | Guard interactive controls against redirected console input in `Run()` | V01 (R02) | Accepted |
 | [ADR0024V01R01](ADR0024V01R01-LiveAnswerLineFollowsTheCursorNotACheckedSummary.md) | Live answer line follows the cursor, not a checked summary | V01 | Accepted |
 | [ADR0025V01R01](ADR0025V01R01-ReadOnlyAnswerViewportSharedBufferAndResizePosition.md) | Read-only answer viewport: shared buffer, resize preserves position | V01 | Accepted |
 

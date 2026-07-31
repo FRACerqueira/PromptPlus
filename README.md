@@ -25,6 +25,13 @@
 - **History persistence** — last confirmed value saved and pre-loaded automatically
 - **Terminal-safe** — auto-detects size, re-renders on resize, enforces 80×10 minimum gracefully
 - **Cross-platform** — Windows, Linux, macOS; .NET 8, 9 and 10
+- **Demo Mode** — script keyboard input to auto-record GIFs/videos of your controls, no human needed ([`AutoDemoSamples`](samples/AutoDemoSamples/Program.cs))
+
+<div align="center">
+  <video src="media/PromptPlusDemo.mp4" controls autoplay loop muted playsinline width="720">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 ---
 
@@ -220,7 +227,10 @@ ConsolePlus.WriteLine("Hello, [bold]world[/]!");
 
 ## Samples
 
-The `samples/` folder contains runnable projects for every control and widget — one sample per concept.
+The `samples/` folder contains runnable projects for every control and widget — one sample per
+concept — plus [`AutoDemoSamples`](samples/AutoDemoSamples/Program.cs), which scripts a walkthrough of
+several controls using [Demo Mode](docs/demo-mode.md) and is the actual source used to record the
+demo video above.
 
 ---
 
@@ -235,6 +245,7 @@ The `samples/` folder contains runnable projects for every control and widget �
 | [Visual Symbols](docs/visual-symbols.md) | Symbol catalog |
 | [Global Styles](docs/global-styles.md) | Style override API |
 | [Widgets](docs/widgets.md) | Output-only widgets guide |
+| [Demo Mode](docs/demo-mode.md) | Scripted keyboard input for recording GIFs/videos of console apps |
 | [Controls index](docs/index.md) | All pages in one place |
 | [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs |
 

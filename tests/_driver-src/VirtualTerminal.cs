@@ -210,6 +210,37 @@ namespace ConsolePlusLibrary.Testing
         public int Read() => -1;
         public void Beep() { }
 
+        // ---- demo mode: VirtualTerminal's own InputQueue already IS a scripted-key queue, so these
+        // members are thin pass-throughs and never change KeyAvailable/ReadKey/ReadKeyAsync above.
+        public bool DemoModeEnabled { get; set; }
+        public bool DemoModeActive => DemoModeEnabled && _input.HasNext;
+        public bool HasScriptedInput => _input.HasNext;
+        public int ScriptedDelayMs { get; set; }
+        // delayMs is accepted for interface parity but ignored: ReadKeyAsync above never awaits, so
+        // there is no wait to apply it to.
+        public void EnqueueKey(ConsoleKeyInfo key, int? delayMs = null) => _input.Enqueue(key);
+        public void EnqueueKey(ConsoleKey key, bool shift = false, bool alt = false, bool ctrl = false, int? delayMs = null)
+            => _input.Enqueue(key, shift, alt, ctrl);
+        public void EnqueueKeys(params ConsoleKeyInfo[] keys)
+        {
+            foreach (var key in keys)
+            {
+                _input.Enqueue(key);
+            }
+        }
+        public void EnqueueKeys(int delayMs, params ConsoleKeyInfo[] keys)
+        {
+            foreach (var key in keys)
+            {
+                _input.Enqueue(key);
+            }
+        }
+        public void EnqueueText(string text, int? delayMs = null) => _input.Type(text);
+        public void ClearScriptedInput()
+        {
+            while (_input.HasNext) { _input.Next(); }
+        }
+
         // ---- buffers ----
         public TargetScreen CurrentBuffer => _buffer;
 

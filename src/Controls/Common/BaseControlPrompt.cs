@@ -200,7 +200,10 @@ namespace PromptPlusLibrary.Controls.Common
             // (ProgressBar/Task/MultiTasks/Time) complete on their own signal (progress/task/
             // timer) without ever needing a real key, and already run correctly under
             // redirected input today, so they are excluded from this guard.
-            if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected)
+            // DemoModeActive is excluded too: it means scripted keys are queued and consumed
+            // by KeyAvailable/ReadKeyAsync regardless of redirection, so the "no key presses
+            // can be read" premise this guard protects against does not hold.
+            if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected && !console.DemoModeActive)
             {
                 throw new InvalidOperationException(
                     "Cannot run an interactive control: console input is redirected and no key presses can be read.");

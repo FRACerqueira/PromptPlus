@@ -32,6 +32,7 @@ Everything you need to use PromptPlus, organized by topic.
 | [Spinners](spinners.md) | The `SpinnersType` catalog, visual samples, and Unicode/ASCII portability |
 | [Global Styles](global-styles.md) | The `Style` API, per-control `.Styles()`, and `ContrastRatio` |
 | [Widgets](widgets.md) | Output-only widgets: Slider, Calendar, Switch, Banner, Dash, ChartBar |
+| [Demo Mode](demo-mode.md) | Scripted keyboard input for recording GIFs/videos of console apps, and the redirected-input guard exception |
 
 ---
 

@@ -204,7 +204,7 @@ PromptPlus.Controls
 | Tooltip visibility | `ShowTooltip = true` shows keyboard hints below the prompt |
 | Abort key hint | `ShowMessageAbortKey = true` includes the abort-key name in the tooltip |
 | Auto-initialization | PromptPlus initializes on first access: detects terminal, loads `PromptPlus.config` if present, registers error log hook |
-| Redirected console input | Interactive controls throw `InvalidOperationException` immediately when console input is redirected, instead of hanging forever. `ProgressBar`, `Task`, `MultiTasks`, `Time` are exempt — they complete on their own signal and run normally under redirected input |
+| Redirected console input | Interactive controls throw `InvalidOperationException` immediately when console input is redirected, instead of hanging forever. `ProgressBar`, `Task`, `MultiTasks`, `Time` are exempt — they complete on their own signal and run normally under redirected input. [Demo Mode](demo-mode.md) is also exempt while active |
 
 ### Running under redirected/non-interactive input
 
@@ -221,10 +221,13 @@ var state = PromptPlus.Controls.Task("Working")
     .Run();
 ```
 
-There is no opt-out: an interactive control fundamentally needs a real key press to produce a
-result, and a redirected console has no keyboard input buffer to read one from. Use a `ProgressBar`,
-`Task`, `MultiTasks`, or `Time` control for automated/CI scenarios instead. See
-[ADR0023](adr/ADR0023V01R01-GuardInteractiveControlsAgainstRedirectedInput.md) for the full rationale.
+An interactive control fundamentally needs a real key press to produce a result, and a redirected
+console has no keyboard input buffer to read one from — a `ProgressBar`, `Task`, `MultiTasks`, or
+`Time` control is the normal way to handle automated/CI scenarios instead. The one opt-out is
+[Demo Mode](demo-mode.md): while `PromptPlus.Console.DemoModeActive` is `true` (enabled and a
+scripted key is currently queued), this guard does not fire, since a scripted key is available
+regardless of redirection — see the linked guide for the caveats. See
+[ADR0023](adr/ADR0023V01R02-GuardInteractiveControlsAgainstRedirectedInput.md) for the full rationale.
 
 ---
 

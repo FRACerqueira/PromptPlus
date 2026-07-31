@@ -2,12 +2,12 @@
 <!--
 | Fields | Values |
 | --- | --- |
-| ADR | ADR0023V01R01 |
+| ADR | ADR0023V01R02 |
 | Version | 01 |
-| Revision | 01 |
+| Revision | 02 |
 | Status | Accepted |
 | Created | 2026-07-28 |
-| Changed | 2026-07-28 |
+| Changed | 2026-07-31 |
 | Superseded |  |
 -->
 
@@ -16,7 +16,7 @@
 
   # PromptPlus
 
-  ## **ADR0023V01R01**
+  ## **ADR0023V01R02**
 
   [![NuGet](https://img.shields.io/badge/NuGet-PromptPlus-blue)](https://www.nuget.org/packages/PromptPlus)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -28,11 +28,13 @@
 
 ---
 
-# ADR0023V01R01 — Guard interactive controls against redirected console input in `Run()`
+# ADR0023V01R02 — Guard interactive controls against redirected console input in `Run()`
 
 - **Status:** Accepted
-- **Version:** V01 / Revision R01
+- **Version:** V01 / Revision R02
 - **Created:** 2026-07-28
+- **Changed:** 2026-07-31 (R02 — carved out the [Demo Mode](../demo-mode.md) exception: the guard no
+  longer fires while a scripted key is queued and being consumed)
 
 ## Context
 
@@ -48,7 +50,7 @@ while (!console.KeyAvailable && !token.IsCancellationRequested)
 ```
 
 `Show()` and the default `Run()` overload use `CancellationToken.None`, which never cancels. Per
-ConsolePlus's [ADR0015 — Redirected/headless console I/O contract](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/adr/ADR0015V01R01-RedirectedConsoleIoContract.md),
+ConsolePlus's [ADR0015 — Redirected/headless console I/O contract](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/adr/ADR0015V01R02-RedirectedConsoleIoContract.md),
 `KeyAvailable` **fails safe** under redirected input — it returns `false` forever instead of
 throwing. Combined, this means any interactive control run against a redirected console with no
 caller-supplied `CancellationToken` — the common case, since `Show()` and plain `.Run()` are the
@@ -75,7 +77,7 @@ reaches through the `IControls`/`IWidgets` factory interfaces — rather than in
 each control individually:
 
 ```csharp
-if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected)
+if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected && !console.DemoModeActive)
 {
     throw new InvalidOperationException(
         "Cannot run an interactive control: console input is redirected and no key presses can be read.");
@@ -95,6 +97,12 @@ if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected)
   key" controls for resize handling. Guarding them too would have newly broken an already-working,
   legitimate use case: running a spinner/progress/countdown control in a script or CI pipeline with
   redirected input.
+- **`DemoModeActive` excluded (R02)** — it means scripted keys are queued and consumed by
+  `KeyAvailable`/`ReadKeyAsync` regardless of redirection (see ConsolePlus's
+  [Demo Mode](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/demo-mode.md)), so the "no
+  key presses can be read" premise this guard protects against does not hold for that read. This
+  check is per-call: it only excludes reads actually serviced by a queued scripted key, not the whole
+  run — see [Consequences](#consequences).
 
 ## Consequences
 
@@ -106,10 +114,13 @@ if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected)
   interactive control silently hanging under redirected input (unlikely, but possible if it supplied
   its own timeout `CancellationToken` expecting a graceful abort) now gets an immediate exception
   instead. Callers that need to run under redirected/non-interactive input must use a `Live` control
-  (`ProgressBar`/`Task`/`MultiTasks`/`Time`) instead of an interactive one — there is no opt-out.
+  (`ProgressBar`/`Task`/`MultiTasks`/`Time`) instead of an interactive one, **or** drive the control
+  under [Demo Mode](../demo-mode.md) with the scripted-key queue kept non-empty for the control's
+  entire run — there is no other opt-out.
 - **Dependency:** requires a ConsolePlus version that implements the ADR0015 redirected-I/O contract —
   a reliable `IConsole.IsInputRedirected` and `KeyAvailable` failing safe rather than throwing — for
-  this guard to be meaningful.
+  this guard to be meaningful. As of R02, it also requires a ConsolePlus version that implements
+  `DemoModeActive` (any version shipping Demo Mode) for the exception clause to compile/apply.
 - **Verified:** `PromptPlus.Tests` 690/690 green (net10.0) — the `VirtualTerminal` test driver
   hardcodes `IsInputRedirected => false`, so no test seam was needed. Empirical check against the real
   `ConsolePlus.net` package: `Input(...).Run()` under redirected stdin now throws immediately with the
