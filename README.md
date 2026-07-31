@@ -189,37 +189,37 @@ PromptPlus will discover and load it automatically at runtime via the standard .
 
 ## Controls Reference
 
-|          Control              | Factory method | Returns |
+| Control | Factory method | Returns |
 |---|---|---|
-| [Text input](docs/controls/input/index.md) | `PromptPlus.Controls.Input(prompt)` | `ResultPrompt<string>` |
-| [Secret / password](docs/controls/secret/index.md) | `PromptPlus.Controls.Secret(prompt)` | `ResultPrompt<string>` |
-| [Key press](docs/controls/keypress/index.md) | `PromptPlus.Controls.KeyPress(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
-| [Confirm (yes/no)](docs/controls/confirm/index.md) | `PromptPlus.Controls.Confirm(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
-| [Single select](docs/controls/select/index.md) | `PromptPlus.Controls.Select<T>(prompt)` | `ResultPrompt<T>` |
-| [Multi select](docs/controls/multiselect/index.md) | `PromptPlus.Controls.MultiSelect<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
+| [Text&nbsp;input](docs/controls/input/index.md) | `PromptPlus.Controls.Input(prompt)` | `ResultPrompt<string>` |
+| [Secret&nbsp;/&nbsp;password](docs/controls/secret/index.md) | `PromptPlus.Controls.Secret(prompt)` | `ResultPrompt<string>` |
+| [Key&nbsp;press](docs/controls/keypress/index.md) | `PromptPlus.Controls.KeyPress(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
+| [Confirm&nbsp;(yes/no)](docs/controls/confirm/index.md) | `PromptPlus.Controls.Confirm(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
+| [Single&nbsp;select](docs/controls/select/index.md) | `PromptPlus.Controls.Select<T>(prompt)` | `ResultPrompt<T>` |
+| [Multi&nbsp;select](docs/controls/multiselect/index.md) | `PromptPlus.Controls.MultiSelect<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
 | [Table](docs/controls/table/index.md) | `PromptPlus.Controls.Table<T>(prompt)` | `ResultPrompt<TableResult<T>>` |
 | [Multi-table](docs/controls/multitable/index.md) | `PromptPlus.Controls.MultiTable<T>(prompt)` | `ResultPrompt<IEnumerable<TableResult<T>>>` |
 | [Tree](docs/controls/tree/index.md) | `PromptPlus.Controls.Tree<T>(prompt)` | `ResultPrompt<T>` |
 | [Multi-tree](docs/controls/multitree/index.md) | `PromptPlus.Controls.MultiTree<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
-| [File browser](docs/controls/file/index.md) | `PromptPlus.Controls.File(prompt)` | `ResultPrompt<FileInfo>` |
+| [File&nbsp;browser](docs/controls/file/index.md) | `PromptPlus.Controls.File(prompt)` | `ResultPrompt<FileInfo>` |
 | [Multi-file](docs/controls/multifile/index.md) | `PromptPlus.Controls.MultiFile(prompt)` | `ResultPrompt<IEnumerable<FileInfo>>` |
 | [Calendar](docs/controls/calendar/index.md) | `PromptPlus.Controls.Calendar(prompt)` | `ResultPrompt<DateTime>` |
-| [Progress bar](docs/controls/progressbar/index.md) | `PromptPlus.Controls.ProgressBar(prompt)` | `ResultPrompt<double>` |
+| [Progress&nbsp;bar](docs/controls/progressbar/index.md) | `PromptPlus.Controls.ProgressBar(prompt)` | `ResultPrompt<double>` |
 | [Task](docs/controls/task/index.md) | `PromptPlus.Controls.Task(prompt)` | `ResultPrompt<StateTask>` |
 | [Multi-tasks](docs/controls/multitasks/index.md) | `PromptPlus.Controls.MultiTasks(prompt)` | `ResultPrompt<IEnumerable<MultiTaskResult>>` |
-| [Chart bar](docs/controls/chartbar/index.md) | `PromptPlus.Controls.ChartBar(prompt)` | `ResultPrompt<double>` |
-| [Mask — string](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskEdit(prompt)` | `ResultPrompt<string>` |
-| [Mask — integer](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskInteger(prompt)` | `ResultPrompt<int>` |
-| [Mask — long](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskLong(prompt)` | `ResultPrompt<long>` |
-| [Mask — decimal](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDecimal(prompt)` | `ResultPrompt<decimal>` |
-| [Mask — decimal currency](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDecimalCurrency(prompt)` | `ResultPrompt<decimal>` |
-| [Mask — double](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDouble(prompt)` | `ResultPrompt<double>` |
-| [Mask — double currency](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDoubleCurrency(prompt)` | `ResultPrompt<double>` |
-| [Mask — date & time](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDateTime(prompt)` | `ResultPrompt<DateTime>` |
-| [Mask — date only](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDate(prompt)` | `ResultPrompt<DateTime>` |
-| [Mask — DateOnly](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDateOnly(prompt)` | `ResultPrompt<DateOnly>` |
-| [Mask — time only](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskTime(prompt)` | `ResultPrompt<DateTime>` |
-| [Mask — TimeOnly](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskTimeOnly(prompt)` | `ResultPrompt<TimeOnly>` |
+| [Chart&nbsp;bar](docs/controls/chartbar/index.md) | `PromptPlus.Controls.ChartBar(prompt)` | `ResultPrompt<double>` |
+| [Mask&nbsp;—&nbsp;string](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskEdit(prompt)` | `ResultPrompt<string>` |
+| [Mask&nbsp;—&nbsp;integer](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskInteger(prompt)` | `ResultPrompt<int>` |
+| [Mask&nbsp;—&nbsp;long](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskLong(prompt)` | `ResultPrompt<long>` |
+| [Mask&nbsp;—&nbsp;decimal](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDecimal(prompt)` | `ResultPrompt<decimal>` |
+| [Mask&nbsp;—&nbsp;decimal&nbsp;currency](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDecimalCurrency(prompt)` | `ResultPrompt<decimal>` |
+| [Mask&nbsp;—&nbsp;double](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDouble(prompt)` | `ResultPrompt<double>` |
+| [Mask&nbsp;—&nbsp;double&nbsp;currency](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDoubleCurrency(prompt)` | `ResultPrompt<double>` |
+| [Mask&nbsp;—&nbsp;date&nbsp;&&nbsp;time](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDateTime(prompt)` | `ResultPrompt<DateTime>` |
+| [Mask&nbsp;—&nbsp;date&nbsp;only](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDate(prompt)` | `ResultPrompt<DateTime>` |
+| [Mask&nbsp;—&nbsp;DateOnly](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskDateOnly(prompt)` | `ResultPrompt<DateOnly>` |
+| [Mask&nbsp;—&nbsp;time&nbsp;only](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskTime(prompt)` | `ResultPrompt<DateTime>` |
+| [Mask&nbsp;—&nbsp;TimeOnly](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskTimeOnly(prompt)` | `ResultPrompt<TimeOnly>` |
 
 ---
 
