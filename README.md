@@ -25,12 +25,10 @@
 - **History persistence** — last confirmed value saved and pre-loaded automatically
 - **Terminal-safe** — auto-detects size, re-renders on resize, enforces 80×10 minimum gracefully
 - **Cross-platform** — Windows, Linux, macOS; .NET 8, 9 and 10
-- **Demo Mode** — script keyboard input to auto-record GIFs/videos of your controls, no human needed ([`AutoDemoSamples`](samples/AutoDemoSamples/Program.cs))
+- **Demo Mode** — script keyboard input to auto-record GIFs of your controls, no human needed ([`AutoDemoSamples`](samples/AutoDemoSamples/Program.cs))
 
 <div align="center">
-  <video src="https://raw.githubusercontent.com/FRACerqueira/PromptPlus/main/media/PromptPlusDemo.mp4" controls autoplay loop muted playsinline width="720">
-    Your browser does not support the video tag.
-  </video>
+  <img src="media/PromptPlusDemo.gif" alt="PromptPlus demo" width="720" />
 </div>
 
 ---
@@ -230,7 +228,7 @@ ConsolePlus.WriteLine("Hello, [bold]world[/]!");
 The `samples/` folder contains runnable projects for every control and widget — one sample per
 concept — plus [`AutoDemoSamples`](samples/AutoDemoSamples/Program.cs), which scripts a walkthrough of
 several controls using [Demo Mode](docs/demo-mode.md) and is the actual source used to record the
-demo video above.
+demo GIF above.
 
 ---
 

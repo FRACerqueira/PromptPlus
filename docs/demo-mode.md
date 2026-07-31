@@ -18,8 +18,10 @@
 **Demo Mode** is a ConsolePlus feature — surfaced automatically through `PromptPlus.Console`, since
 that property *is* the underlying `IConsole` — that lets you script keyboard input ahead of time
 instead of typing it live. It exists to make **recording** interactive console apps (GIFs, videos,
-screenshots for a README) reliable and repeatable. It is exactly how the demo video in
-[this project's own README](../README.md) was produced.
+screenshots for a README) reliable and repeatable. It is exactly how the demo GIF in
+[this project's own README](../README.md) was produced (recorded as video, then converted to GIF —
+GitHub's Markdown renderer does not reliably play a raw `<video>` tag, but animated GIFs always
+autoplay and loop natively).
 
 > 📖 For the full member-by-member API reference (`DemoModeEnabled`, `EnqueueText`, `ScriptedDelayMs`,
 > etc.), see ConsolePlus's [Demo Mode guide](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/demo-mode.md).
@@ -93,8 +95,9 @@ them; just run them as usual inside a Demo Mode script.
 that scripts a walkthrough of ten different controls and widgets back to back — `Input`, `Select`,
 `MultiSelect`, `MaskDate`, `Input` with suggestions (both auto-complete and manual), `MultiTasks`,
 `ProgressBar`, `Slider`, and `ChartBar`. It is the actual source used to record this project's README
-demo video: run it, select the terminal window as your recording area during the initial
-`Console.ReadKey()` pause, and it plays itself out at a natural typing pace.
+demo GIF: run it, select the terminal window as your recording area during the initial
+`Console.ReadKey()` pause, let it play itself out at a natural typing pace, then convert the
+recording to an animated GIF (e.g. with `ffmpeg`) before embedding it in Markdown.
 
 ---
 
