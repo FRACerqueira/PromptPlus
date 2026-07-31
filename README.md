@@ -33,6 +33,29 @@
 
 ---
 
+## What's new in the latest version
+
+### 📢 Release Note – PromptPlus V.6.X Beta
+
+### 🚀 Beta Phase Launch
+- The **6.X** version officially enters the **Beta phase**.  
+- Purpose: validate **new features, adjustments, and improvements** currently under development.
+
+### 🛠️ Source Code
+- Available in the **main** branch.  
+
+### 📦 NuGet Package
+- Latest update: **6.0.0-Beta[seq]**.  
+- To install, you must **enable the pre-release option** in NuGet.
+
+### 💬 Community Feedback
+- This space is open for:  
+  - Sharing **feedback**  
+  - Reporting **issues**  
+  - Suggesting **enhancements**
+
+---
+
 ## Installation
 
 PromptPlus 6.x is currently in **Beta** — you must enable pre-release packages to install it.
