@@ -28,7 +28,7 @@
 - **Demo Mode** — script keyboard input to auto-record GIFs/videos of your controls, no human needed ([`AutoDemoSamples`](samples/AutoDemoSamples/Program.cs))
 
 <div align="center">
-  <video src="media/PromptPlusDemo.mp4" controls autoplay loop muted playsinline width="720">
+  <video src="https://raw.githubusercontent.com/FRACerqueira/PromptPlus/main/media/PromptPlusDemo.mp4" controls autoplay loop muted playsinline width="720">
     Your browser does not support the video tag.
   </video>
 </div>
