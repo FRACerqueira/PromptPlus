@@ -241,6 +241,71 @@ the fluent widgets (`Slider`, `Calendar`, `Switch`, `ChartBar`) render when you 
 
 ## ConsolePlus Integration
 
+**[ConsolePlus](https://github.com/FRACerqueira/ConsolePlus)** gives you a rock-solid rendering foundation: styled output, markup, colors, widgets,
+cursor/screen control, and capability detection. **PromptPlus** is the complementary product that builds **on top of** that foundation to deliver **intelligent,
+professional, interactive console controls** — the kind of rich prompts you'd otherwise have to build
+by hand.
+
+> **In one sentence:** ConsolePlus is *how you render*; PromptPlus is *how you interact*.
+
+### Why two products?
+
+**[ConsolePlus](https://github.com/FRACerqueira/ConsolePlus)** deliberately stays focused on **rendering primitives**. It ships the input building
+blocks you need for simple scenarios — `ReadLine`, `ReadKey`, and even
+[Emacs-style line editing](reading-input.md#the-emacs-style-line-editor) — but it intentionally stops
+short of full interactive UI.
+
+**PromptPlus** picks up exactly where those primitives end, adding **stateful, keyboard-driven controls**
+with validation, paging, filtering, history, and theming — all rendered through the same ConsolePlus
+engine, so colors, markup, and capability fallbacks behave identically.
+
+---
+
+### How they fit together
+
+```text
+┌──────────────────────────────────────────────┐
+│                  Your app                    │
+├────────────────────────┬─────────────────────┤
+│      PromptPlus        │                     │
+│  (interactive controls)│                     │
+│  Input · Select · ...  │   ← optional layer  │
+├────────────────────────┴─────────────────────┤
+│                 ConsolePlus                  │
+│  output · markup · colors · widgets · ANSI   │
+│  cursor/screen · capability detection        │
+└──────────────────────────────────────────────┘
+```
+
+PromptPlus references ConsolePlus and reuses its console driver directly. In fact,
+`PromptPlus.Console` **is** the ConsolePlus driver — so anything you learned in the
+[Writing Output](writing-output.md), [Markup](markup.md), and [Colors](colors.md) guides applies
+unchanged inside PromptPlus.
+
+### The `PromptPlus` entry point
+
+Just like `ConsolePlus`, `PromptPlus` is a static facade. It exposes four members:
+
+| Member | Type | Purpose |
+|--------|------|---------|
+| `PromptPlus.Console` | `IConsole` | The shared ConsolePlus console driver |
+| `PromptPlus.Controls` | `IControls` | Factory for interactive controls |
+| `PromptPlus.Widgets` | `IWidgets` | Banners, dashes, calendar and other visual widgets |
+| `PromptPlus.Config` | `IPromptPlusConfig` | Global configuration (themes, behavior) |
+
+```csharp
+using ConsolePlusLibrary;
+using PromptPlusLibrary;
+
+// Rendering — identical to ConsolePlus
+PromptPlus.Console.WriteLine("[Teal]Powered by ConsolePlus[/]");
+
+// Widgets
+PromptPlus.Widgets.Banner("PromptPlus", Color.Bisque);
+```
+
+---
+
 `PromptPlus.Console` exposes the same `IConsole` driver as `ConsolePlus`. Use it to write styled text, manage cursor, and compose output alongside your controls:
 
 ```csharp
