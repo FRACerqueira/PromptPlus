@@ -48,10 +48,18 @@ See the [Framework Design Guidelines](https://msdn.microsoft.com/en-us/library/m
 
 The assembly `PromptPlus` should have no dependencies except the .NET BCL library.
 
+PromptPlus also depends on **ConsolePlus**, resolved differently in Debug vs Release — see
+[The ConsolePlus dependency](docs/consoleplus-dependency.md) before you try to build or debug
+locally, especially if you only cloned `PromptPlus` on its own.
+
 ### Unit tests
 
 Make sure to run all unit tests before creating a pull request.
 Any new code should also have reasonable unit test coverage.
+
+If your change touches the `VirtualTerminal` test driver (`tests/_driver-src`), see
+[Test Driver Maintenance](docs/testing-driver-maintenance.md) — that source is duplicated in
+ConsolePlus's repo too and both copies must stay in sync.
 
 ----
 ## Contributing process
@@ -70,6 +78,10 @@ Any new code should also have reasonable unit test coverage.
 ### Set up your environment
 
  * You create, or update, a fork of `PromptPlus` under your GitHub account.
+ * If you plan to build/debug in the default Debug configuration (most local dev), also clone
+   `ConsolePlus` as a sibling folder next to `PromptPlus` — see
+   [The ConsolePlus dependency](docs/consoleplus-dependency.md) for why and what breaks if you skip
+   this.
  * From there you create a branch named specific to the feature.
  * In the branch you do work specific to the feature.
  * Please also observe the following:

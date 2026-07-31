@@ -3,237 +3,222 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
+using PromptPlusLibrary.Controls.Common;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace PromptPlusLibrary.Controls.KeyPress
 {
+
+    /// <inheritdoc/>
     internal sealed class KeyPressControl : BaseControlPrompt<ConsoleKeyInfo?>, IKeyPressControl
     {
-        private readonly Dictionary<KeyPressStyles, Style> _optStyles = BaseControlOptions.LoadStyle<KeyPressStyles>();
-        private readonly List<(ConsoleKeyInfo KeyPress, string? Text)> _keyValids = [];
-        private readonly List<string> _toggerTooptips = [];
-        private Spinners? _spinner;
+        private readonly Dictionary<KeyPressStyles, Style> _optStyles;
+        private readonly Dictionary<(ConsoleKey Key, ConsoleModifiers Modifiers), string?> _keyValids = [];
+        private string[] _toggerTooptips = [];
         private int _indexTooptip;
-        private string _tooltipModeInput = string.Empty;
-        private string? _currentspinnerFrame;
+        private Func<ConsoleKeyInfo, string>? _message;
+        private Func<ConsoleKeyInfo, CancellationToken, Task<string>>? _messageAsync;
         private bool _showInvalidkey;
-        private bool _showTimer;
-        private TimeSpan _timeoutcount;
-        private bool _istimeout;
-        private ConsoleKey? _defaultkey;
-        private ConsoleModifiers? _defaultmodifiers;
-        private readonly Stopwatch _timer;
+        private ConsoleKeyInfo? _currentKeyPress;
+        private string _currentKeyPressText = string.Empty;
 
-#pragma warning disable IDE0290 // Use primary constructor
-        public KeyPressControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public KeyPressControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
-            _showTimer = true;
-            _timeoutcount = TimeSpan.Zero;
-            _timer = new Stopwatch();
+            _optStyles = OptionsControl.LoadStyle<KeyPressStyles>(console.CurrentStyle);
         }
-#pragma warning restore IDE0290 // Use primary constructor
 
         #region IKeyPressControl
 
-        public IKeyPressControl Timeout(TimeSpan time, ConsoleKey defaultkey, ConsoleModifiers? defaultmodifiers = null)
-        { 
-            _istimeout = true;
-            _timeoutcount = time;
-            _defaultkey = defaultkey;
-            _defaultmodifiers = defaultmodifiers ?? ConsoleModifiers.None;
-            return this;
-        }
-
-        public IKeyPressControl ShowCountDown(bool value = true)
-        { 
-            _showTimer = value;
-            return this;
-        }
-
-        public IKeyPressControl AddKeyValid(ConsoleKey key, ConsoleModifiers? modifiers = null, string? showtext = null)
+        /// <inheritdoc/>
+        public IKeyPressControl AddValidKey(ConsoleKey key, ConsoleModifiers? requiredModifiers = null, string? displayText = null)
         {
-            modifiers ??= ConsoleModifiers.None;
-            _keyValids.Add((new ConsoleKeyInfo((char)key, key, modifiers.Value.HasFlag(ConsoleModifiers.Shift), modifiers.Value.HasFlag(ConsoleModifiers.Alt), modifiers.Value.HasFlag(ConsoleModifiers.Control)), showtext));
+            ConsoleModifiers modifiers = requiredModifiers ?? ConsoleModifiers.None;
+            _keyValids[(key, modifiers)] = displayText;
             return this;
         }
 
-        public IKeyPressControl ShowInvalidKey(bool value = true)
+        /// <inheritdoc/>
+        public IKeyPressControl Options(Action<IControlOptions> configureOptions)
         {
-            _showInvalidkey = value;
+            ArgumentNullException.ThrowIfNull(configureOptions);
+            configureOptions.Invoke(OptionsControl);
             return this;
         }
 
-        public IKeyPressControl Options(Action<IControlOptions> options)
+        /// <inheritdoc/>
+        public IKeyPressControl ShowMessage(Func<ConsoleKeyInfo, string>? message)
         {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
+            _message = message;
+            _messageAsync = null;
             return this;
         }
+
+        /// <inheritdoc/>
+        public IKeyPressControl ShowMessageAsync(Func<ConsoleKeyInfo, CancellationToken, Task<string>>? message = null)
+        {
+            _message = null;
+            _messageAsync = message;
+            return this;
+        }
+
+        /// <inheritdoc/>
         public IKeyPressControl Styles(KeyPressStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
             return this;
         }
-        public IKeyPressControl Spinner(SpinnersType spinnersType)
-        {
-            _spinner = new Spinners(spinnersType);
-            return this;
-        }
 
         #endregion
 
-        public override void InitControl(CancellationToken _)
+        /// <inheritdoc/>
+        public override void InitControl(CancellationToken cancellationToken)
         {
-            _tooltipModeInput = string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip);
+            _showInvalidkey = _message != null || _messageAsync != null;
             LoadTooltipToggle();
-            _timer.Start();
         }
 
-
+        /// <inheritdoc/>
         public override bool TryResult(CancellationToken cancellationToken)
         {
-            bool oldcursor = ConsolePlus.CursorVisible;
-            ConsolePlus.CursorVisible = true;
+            bool oldcursor = ConsoleHandler.CursorVisible;
+            ConsoleHandler.CursorVisible = true;
             try
             {
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ConsoleKeyInfo? keyinfo = WaitKeypressSpinner(cancellationToken);
-
-                    if (!keyinfo.HasValue)
+                    _currentKeyPress = null;
+                    _currentKeyPressText = string.Empty;
+                    KeyPressResult press = ReadNextKey(true, cancellationToken);
+                    if (press.IsResize || press.IsCancelled)
                     {
-                        _indexTooptip = 0;
-                        ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(null, true);
-                        break;
-                    }
-                    else if (keyinfo.Value.Key == ConsoleKey.None)
-                    {
-                        break;
-                    }
-                    else if (IsAbortKeyPress(keyinfo.Value) && !IsValidKeypress(keyinfo.Value))
-                    {
-                        _indexTooptip = 0;
-                        ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(keyinfo.Value, true);
+                        if (press.IsCancelled)
+                        {
+                            _indexTooptip = 0;
+                            ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(default!, true);
+                        }
                         break;
                     }
 
-                    else if (IsTooltipToggerKeyPress(keyinfo!.Value) && !IsValidKeypress(keyinfo.Value))
+                    ConsoleKeyInfo keyinfo = press.Key;
+
+                    if (IsAbortKeyPress(keyinfo))
+                    {
+                        _indexTooptip = 0;
+                        ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(keyinfo, true);
+                        break;
+                    }
+                    else if (IsTooltipToggerKeyPress(keyinfo))
                     {
                         _indexTooptip++;
-                        if (_indexTooptip > _toggerTooptips.Count)
+                        if (_indexTooptip > _toggerTooptips.Length)
                         {
                             _indexTooptip = 0;
                         }
                         break;
                     }
-                    else if (CheckTooltipShowHideKeyPress(keyinfo.Value) && !IsValidKeypress(keyinfo.Value))
+                    else if (CheckTooltipShowHideKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_keyValids.Count == 0 || IsValidKeypress(keyinfo.Value))
+                    else if (_keyValids.Count == 0 || IsValidKeypress(keyinfo, out _currentKeyPressText))
                     {
                         _indexTooptip = 0;
-                        ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(keyinfo.Value, false);
+                        _currentKeyPress = keyinfo;
+                        ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(keyinfo, false);
                         break;
                     }
                     else
                     {
                         _indexTooptip = 0;
-                        SetError(string.Format(Messages.InvalidKey, ConsoleKeyInfoText(keyinfo.Value)));
+                        if (_showInvalidkey)
+                        {
+                            var msg = _message?.Invoke(keyinfo) ?? _messageAsync?.Invoke(keyinfo, cancellationToken).GetAwaiter().GetResult();
+                            if (msg != null)
+                            {
+                                SetError(msg);
+                            }
+                        }
                         break;
                     }
                 }
             }
             finally
             {
-                ConsolePlus.CursorVisible = oldcursor;
+                ConsoleHandler.CursorVisible = oldcursor;
             }
             return ResultCtrl != null;
         }
 
+        /// <inheritdoc/>
         public override void BufferTemplate(BufferScreen screenBuffer)
         {
-            WritePrompt(screenBuffer);
+            WritePrompt(screenBuffer, _optStyles[KeyPressStyles.Prompt]);
 
             WriteAnswer(screenBuffer);
-
-            WriteError(screenBuffer);
 
             WriteDescription(screenBuffer);
 
             WriteTooltip(screenBuffer);
+
+            WriteError(screenBuffer, _optStyles[KeyPressStyles.Error]);
         }
 
+        /// <inheritdoc/>
+        public override void WritePrompt(BufferScreen screenBuffer, Style style)
+        {
+            if (!string.IsNullOrEmpty(OptionsControl.PromptValue))
+            {
+                screenBuffer.Write(OptionsControl.PromptValue, style);
+                if (OptionsControl.SufixAfterPromptValue is not null)
+                {
+                    screenBuffer.Write(OptionsControl.SufixAfterPromptValue, style);
+                }
+            }
+            else if (_keyValids.Count == 0)
+            {
+                screenBuffer.Write(PromptPlusResources.PressAnyKey, style);
+                if (OptionsControl.SufixAfterPromptValue is not null)
+                {
+                    screenBuffer.Write(OptionsControl.SufixAfterPromptValue, style);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            string answer = ResultCtrl!.Value.IsAborted
-                ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
-                : ValidTextKeypress(ResultCtrl!.Value.Content!.Value);
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
+            string answer = _currentKeyPressText;
+            if (ResultCtrl!.Value.IsAborted && OptionsControl.ShowMessageAbortKeyValue)
             {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[KeyPressStyles.Prompt]);
+                answer = PromptPlusResources.CanceledKey;
             }
+            WritePrompt(screenBuffer, _optStyles[KeyPressStyles.Prompt]);
             screenBuffer.WriteLine(answer, _optStyles[KeyPressStyles.Answer]);
             return true;
         }
 
+        /// <inheritdoc/>
         public override void FinalizeControl()
         {
-            //none
         }
 
-        private void WritePrompt(BufferScreen screenBuffer)
+        private string GetTooltipToggle()
         {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
+            if (_indexTooptip >= _toggerTooptips.Length)
             {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[KeyPressStyles.Prompt]);
+                _indexTooptip = 0;
             }
-        }
-
-        private void WriteAnswer(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.SavePromptCursor();
-            }
-            screenBuffer.SavePromptCursor();
-            if (_showTimer  && _istimeout)
-            {
-                var answertimer = _timeoutcount - _timer.Elapsed;
-                screenBuffer.Write($" ({answertimer:hh\\:mm\\:ss\\:ff}) ", _optStyles[KeyPressStyles.TaggedInfo]);
-            }
-            if (_currentspinnerFrame != null)
-            {
-                screenBuffer.Write(_currentspinnerFrame, _optStyles[KeyPressStyles.Spinner]);
-            }
-            screenBuffer.WriteLine("", _optStyles[KeyPressStyles.Answer]);
-        }
-
-        private void WriteDescription(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(GeneralOptions.DescriptionValue))
-            {
-                screenBuffer.WriteLine(GeneralOptions.DescriptionValue, _optStyles[KeyPressStyles.Description]);
-            }
-        }
-
-        private void WriteError(BufferScreen screenBuffer)
-        {
-            if (_showInvalidkey && !string.IsNullOrEmpty(ValidateError))
-            {
-                screenBuffer.WriteLine(ValidateError, _optStyles[KeyPressStyles.Error]);
-                ClearError();
-            }
+            return _toggerTooptips[_indexTooptip];
         }
 
         private void WriteTooltip(BufferScreen screenBuffer)
@@ -242,144 +227,80 @@ namespace PromptPlusLibrary.Controls.KeyPress
             {
                 return;
             }
-            string tooltip = _tooltipModeInput;
-            if (_indexTooptip > 0)
+            string? tooltip = GetTooltipToggle();
+            var renderTooltip = $"{ConfigPrompt.HotKeyTooltip}:{PromptPlusResources.TooltipBase}.{tooltip}";
+            if (!renderTooltip.EndsWith('.'))
             {
-                tooltip = GetTooltipToggle();
+                renderTooltip = $"{renderTooltip}.";
             }
-            screenBuffer.Write(tooltip!, _optStyles[KeyPressStyles.Tooltips]);
+            screenBuffer.WriteLine(renderTooltip, _optStyles[KeyPressStyles .Tooltips]);
         }
 
-        private string GetTooltipToggle()
+        private void WriteAnswer(BufferScreen screenBuffer)
         {
-            return _toggerTooptips[_indexTooptip - 1];
+            screenBuffer.Write(_currentKeyPressText, _optStyles[KeyPressStyles.Answer]);
+            screenBuffer.SavePromptCursor();
+            screenBuffer.WriteLine("", _optStyles[KeyPressStyles.Answer]);
         }
 
-        private void LoadTooltipToggle()
+        private void WriteDescription(BufferScreen screenBuffer)
         {
-            List<string> lsttooltips =
-            [
-                    $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}"
-                ];
-            if (_keyValids.Count == 0)
+            if (!string.IsNullOrEmpty(OptionsControl.DescriptionValue))
             {
-                lsttooltips[0] = $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {Messages.AnyKey}";
+                screenBuffer.WriteLine(OptionsControl.DescriptionValue, _optStyles[KeyPressStyles.Description]);
+            }
+        }
 
-            }
-            if (GeneralOptions.EnabledAbortKeyValue)
+        private bool IsValidKeypress(ConsoleKeyInfo value, out string keyPressText)
+        {
+            if (_keyValids.TryGetValue((value.Key, value.Modifiers), out string? text))
             {
-                lsttooltips[0] += $", {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}";
-            }
-            foreach ((ConsoleKeyInfo KeyPress, string? Text) item in _keyValids)
-            {
-                if (string.IsNullOrEmpty(item.Text))
+                keyPressText = text ?? string.Empty;
+                if (string.IsNullOrEmpty(keyPressText) && IsPrintable(value.KeyChar))
                 {
-                    lsttooltips.Add(string.Format(Messages.ValidAnyKey, ConsoleKeyInfoText(item.KeyPress)));
+                    keyPressText = value.KeyChar.ToString();
                 }
-                else
-                {
-                    lsttooltips.Add(string.Format(Messages.ValidAnyKey, $"{ConsoleKeyInfoText(item.KeyPress)}={item.Text}"));
-                }
+                return true;
             }
-            _toggerTooptips.Clear();
-            _toggerTooptips.AddRange(lsttooltips);
+            keyPressText = string.Empty;
+            return false;
         }
 
-
-        private bool IsValidKeypress(ConsoleKeyInfo value)
-        {
-            return _keyValids.Count != 0 && _keyValids.Any(x => x.KeyPress.Key == value.Key && x.KeyPress.Modifiers == value.Modifiers);
-        }
-        private string ConsoleKeyInfoText(ConsoleKeyInfo value)
-        {
-            StringBuilder result = new();
-            if (value.Modifiers.HasFlag(ConsoleModifiers.Control))
-            {
-                result.Append("Crtl+");
-            }
-            if (value.Modifiers.HasFlag(ConsoleModifiers.Shift))
-            {
-                result.Append("Shift+");
-            }
-            if (value.Modifiers.HasFlag(ConsoleModifiers.Alt))
-            {
-                result.Append("Alt+");
-            }
-            if (IsPrintable(value.KeyChar))
-            {
-                result.Append(value.KeyChar);
-            }
-            else
-            {
-                result.Append(value.Key.ToString());
-            }
-            return result.ToString();
-        }
-
-        private string ValidTextKeypress(ConsoleKeyInfo value)
-        {
-            (ConsoleKeyInfo KeyPress, string? Text) aux = _keyValids.First(x => x.KeyPress.Key == value.Key && x.KeyPress.Modifiers == value.Modifiers);
-            if (!string.IsNullOrEmpty(aux.Text))
-            {
-                return aux.Text;
-            }
-            StringBuilder result = new();
-            if (IsPrintable(aux.KeyPress.KeyChar))
-            {
-                result.Append(ConsoleKeyInfoText(aux.KeyPress));
-            }
-            else
-            {
-                result.Append(Messages.PressedKey);
-            }
-            return result.ToString();
-        }
-
-
-        private readonly UnicodeCategory[] _nonRenderingCategories =
+        private static readonly UnicodeCategory[] _nonRenderingCategories =
         [
             UnicodeCategory.Control,
             UnicodeCategory.OtherNotAssigned,
             UnicodeCategory.Surrogate
         ];
 
-        private bool IsPrintable(char c)
+        private static bool IsPrintable(char c)
         {
-            return !char.IsControl(c) && (char.IsWhiteSpace(c) ||
-                !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c)));
+            if (char.IsControl(c))
+            {
+                return false;
+            }
+
+            if (char.IsWhiteSpace(c))
+            {
+                return true;
+            }
+
+            UnicodeCategory category = char.GetUnicodeCategory(c);
+            return category is not UnicodeCategory.Control
+                and not UnicodeCategory.OtherNotAssigned
+                and not UnicodeCategory.Surrogate;
         }
 
-        private ConsoleKeyInfo? WaitKeypressSpinner(CancellationToken token)
+        private void LoadTooltipToggle()
         {
-            var curtime = _timer.Elapsed;
-            while (!ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
+            List<string> lsttooltips = [];
+            if (OptionsControl.EnabledAbortKeyValue)
             {
-                if (_istimeout)
-                {
-                    if (_timer.Elapsed >= _timeoutcount)
-                    {
-                        _timer.Stop();
-                        _istimeout = false;
-                        return new ConsoleKeyInfo(
-                            (char)_defaultkey!.Value,
-                            _defaultkey!.Value,
-                            _defaultmodifiers!.Value.HasFlag(ConsoleModifiers.Shift),
-                            _defaultmodifiers!.Value.HasFlag(ConsoleModifiers.Alt),
-                            _defaultmodifiers!.Value.HasFlag(ConsoleModifiers.Control));
-                    }
-                    else if (_showTimer && curtime.TotalMilliseconds + 100 <= _timer.Elapsed.TotalMilliseconds)
-                    {
-                        return new ConsoleKeyInfo(new char(), ConsoleKey.None, false, false, false);
-                    }
-                }
-                if (_spinner != null && _spinner.HasNextFrame(out string? newframe))
-                {
-                    _currentspinnerFrame = newframe;
-                    return new ConsoleKeyInfo(new char(), ConsoleKey.None, false, false, false);
-                }
-                token.WaitHandle.WaitOne(2);
+                lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
             }
-            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : null;
+            lsttooltips.Add($"{ConfigPrompt.HotKeyTooltipShowHide}:{PromptPlusResources.TooltipShowHide}");
+            _toggerTooptips = [.. lsttooltips];
         }
+
     }
 }

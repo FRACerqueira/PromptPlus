@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,38 +117,290 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnyKey" xml:space="preserve">
-    <value>ou pressione qualquer outra tecla para terminar</value>
+  <data name="Abort" xml:space="preserve">
+    <value>Abortar</value>
   </data>
   <data name="CanceledKey" xml:space="preserve">
     <value>Cancelado</value>
   </data>
+  <data name="Emac_alt_b" xml:space="preserve">
+    <value>Alt+B:Move o cursor uma palavra para trás</value>
+  </data>
+  <data name="Emac_alt_c" xml:space="preserve">
+    <value>Alt+C:Coloca em maiúscula o caractere sob o cursor e move para a final da palavra</value>
+  </data>
+  <data name="Emac_alt_d" xml:space="preserve">
+    <value>Alt+D:Limpar palavra após o cursor</value>
+  </data>
+  <data name="Emac_alt_f" xml:space="preserve">
+    <value>Alt+F:Move o cursor uma palavra para frente</value>
+  </data>
+  <data name="Emac_alt_l" xml:space="preserve">
+    <value>Alt+L:Minusculo do cursor até o final da palavra</value>
+  </data>
+  <data name="Emac_alt_u" xml:space="preserve">
+    <value>Alt+U:Maiúsculas do cursor até o final da palavra.</value>
+  </data>
+  <data name="Emac_ctrl_a" xml:space="preserve">
+    <value>Ctrl+A:Move o cursor para o início da linha (equivalente à tecla home)</value>
+  </data>
+  <data name="Emac_ctrl_b" xml:space="preserve">
+    <value>Ctrl+B:Move o cursor um caractere para trás (equivalente à tecla de seta para a esquerda)</value>
+  </data>
+  <data name="Emac_ctrl_d" xml:space="preserve">
+    <value>Ctrl+D:Apaga o caractere atual (equivalente à tecla delete)</value>
+  </data>
+  <data name="Emac_ctrl_e" xml:space="preserve">
+    <value>Ctrl+E:Move o cursor para o final da linha (equivalente à tecla End)</value>
+  </data>
+  <data name="Emac_ctrl_f" xml:space="preserve">
+    <value>Ctrl+F:Move o cursor um caractere para frente (equivalente à tecla de seta para a direita)</value>
+  </data>
+  <data name="Emac_ctrl_h" xml:space="preserve">
+    <value>Ctrl+H:Limpa a linha após o cursor</value>
+  </data>
+  <data name="Emac_ctrl_k" xml:space="preserve">
+    <value>Ctrl+K:Limpa a linha após o cursor</value>
+  </data>
+  <data name="Emac_ctrl_l" xml:space="preserve">
+    <value>Ctrl+L:Limpa todo o conteúdo</value>
+  </data>
+  <data name="Emac_ctrl_t" xml:space="preserve">
+    <value>Ctrl+T:Transpõe os dois caracteres anteriores</value>
+  </data>
+  <data name="Emac_ctrl_u" xml:space="preserve">
+    <value>Ctrl+U:Limpa a linha antes do cursor</value>
+  </data>
+  <data name="Emac_ctrl_w" xml:space="preserve">
+    <value>Ctrl+W:Limpa a palavra antes do cursor</value>
+  </data>
+  <data name="Emac_Insert" xml:space="preserve">
+    <value>Insert:Alterna modo de substituição (padrão é o modo de inserção)</value>
+  </data>
+  <data name="EntryHistory" xml:space="preserve">
+    <value>Históricos para entrada</value>
+  </data>
+  <data name="EntrySuggestion" xml:space="preserve">
+    <value>Sugestões para entrada</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erro!</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtro</value>
   </data>
-  <data name="Group" xml:space="preserve">
-    <value>Grupo</value>
-  </data>
   <data name="HistoryNotFound" xml:space="preserve">
-    <value>Historico vazio para os dados informados</value>
+    <value>Histórico vazio para os dados informados</value>
+  </data>
+  <data name="InvalidDateSelect" xml:space="preserve">
+    <value>Data selecionada inválida!</value>
+  </data>
+  <data name="MoveDays" xml:space="preserve">
+    <value>Left/Right:Muda dia</value>
+  </data>
+  <data name="MoveDayWeek" xml:space="preserve">
+    <value>Up/Down:Muda dia com o mesmo dia da semana</value>
+  </data>
+  <data name="MoveMonth" xml:space="preserve">
+    <value>Tab/Shift Tab:Mudar Mes</value>
+  </data>
+  <data name="MoveToday" xml:space="preserve">
+    <value>Home:Hoje</value>
+  </data>
+  <data name="MoveYear" xml:space="preserve">
+    <value>PgUp/PgDown:Muda ano</value>
+  </data>
+  <data name="MsgErrorPromptPlusConfig" xml:space="preserve">
+    <value>Erro ao carregar a configuração do PromptPlus.</value>
+  </data>
+  <data name="MsgErrorStyleSchema" xml:space="preserve">
+    <value>O StyleSchema não foi inicializado.</value>
+  </data>
+  <data name="MultiSelectMaxSelection" xml:space="preserve">
+    <value>Máximo de {0} itens já foi ultrapassado</value>
+  </data>
+  <data name="MultiSelectMinSelection" xml:space="preserve">
+    <value>Mínimo de {0} itens é necessário</value>
+  </data>
+  <data name="MultiTasksFailed" xml:space="preserve">
+    <value>{0} falharam</value>
+  </data>
+  <data name="MultiTasksSuccessCount" xml:space="preserve">
+    <value>{0} com sucesso</value>
+  </data>
+  <data name="MultiTasksWaitingCount" xml:space="preserve">
+    <value>{0} aguardando</value>
+  </data>
+  <data name="TooltipToggleFullPath" xml:space="preserve">
+    <value>Alternar caminho completo/nome</value>
+  </data>
+  <data name="TooltipExpandCollapse" xml:space="preserve">
+    <value>+/-:Expandir/Recolher</value>
+  </data>
+  <data name="TooltipTreeTab" xml:space="preserve">
+    <value>Tab:Prox./Expandir ShiftTab:Prev./Recolher</value>
+  </data>
+  <data name="NoChar" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="PaginationTemplate" xml:space="preserve">
+    <value>Qtd:{0} itens. {1} de {2} páginas.</value>
+  </data>
+  <data name="PredicateSelectInvalid" xml:space="preserve">
+    <value>Item selecionado não atende aos critérios</value>
+  </data>
+  <data name="PressAnyKey" xml:space="preserve">
+    <value>Pressione qualquer tecla</value>
+  </data>
+  <data name="PressKey" xml:space="preserve">
+    <value>Pressione a tecla</value>
+  </data>
+  <data name="ResizeTerminalWarning" xml:space="preserve">
+    <value>Redimensione o terminal ({0} de altura e {1} de largura). O atual é ({2} e {3})...</value>
+  </data>
+  <data name="SelectionDisabled" xml:space="preserve">
+    <value>Item desativado</value>
+  </data>
+  <data name="ShowingCalendarNotes" xml:space="preserve">
+    <value>Mostrando notas do dia {0}</value>
+  </data>
+  <data name="TooltipBase" xml:space="preserve">
+    <value>Dicas</value>
+  </data>
+  <data name="TooltipBaseNavegate" xml:space="preserve">
+    <value>Setas:Navegar</value>
+  </data>
+  <data name="TooltipCheckAll" xml:space="preserve">
+    <value>Marcar/Desmarcar todos os item</value>
+  </data>
+  <data name="TooltipCheckItem" xml:space="preserve">
+    <value>Espaço:Marcar/Desmarcar</value>
+  </data>
+  <data name="TooltipRecursiveMark" xml:space="preserve">
+    <value>Ctrl+Espaço:Marcar/Desmarcar recursivamente</value>
+  </data>
+  <data name="TooltipCountCheck" xml:space="preserve">
+    <value>{0} selecionados.</value>
+  </data>
+  <data name="MultiFileRunningBackground" xml:space="preserve">
+    <value>(aguardando tarefa)</value>
+  </data>
+  <data name="MultiFileOnlySelected" xml:space="preserve">
+    <value>Apenas selecionado</value>
+  </data>
+  <data name="TooltipEnterFinish" xml:space="preserve">
+    <value>Enter:Concluir</value>
+  </data>
+  <data name="TooltipEnterSelect" xml:space="preserve">
+    <value>Enter:Selecionar item</value>
+  </data>
+  <data name="TooltipChartBarSwitchLayout" xml:space="preserve">
+    <value>{0}:Alternar Layout</value>
+  </data>
+  <data name="TooltipChartBarSwitchLegend" xml:space="preserve">
+    <value>{0}:Mostrar/Ocultar Legenda</value>
+  </data>
+  <data name="TooltipChartBarSwitchOrder" xml:space="preserve">
+    <value>{0}:Alterar Ordenação</value>
+  </data>
+  <data name="TooltipFilter" xml:space="preserve">
+    <value>Digite um caracter para iniciar o filtro</value>
+  </data>
+  <data name="TooltipFilterAllSelected" xml:space="preserve">
+    <value>Mostra apenas marcado</value>
+  </data>
+  <data name="TooltipHistoryClear" xml:space="preserve">
+    <value>Ctrl+Del:Limpar histórico</value>
+  </data>
+  <data name="TooltipHistoryShow" xml:space="preserve">
+    <value>Ver/Esconder histórico(mín.{0} caracteres)</value>
+  </data>
+  <data name="TooltipJump" xml:space="preserve">
+    <value>Digite o caractere inicial para ir diretamente ao item</value>
+  </data>
+  <data name="TooltipNavegateTextPrompt" xml:space="preserve">
+    <value>Esquerda/Direita/Início/Fim: Move o cursor dentro do prompt</value>
+  </data>
+  <data name="TooltipPages" xml:space="preserve">
+    <value>Up/Down/PgUp/PgDown: Mover seletor, Ctrl+Home/End:Primeiro/Último item</value>
+  </data>
+  <data name="TooltipShowHide" xml:space="preserve">
+    <value>Mostrar/Ocultar dicas</value>
+  </data>
+  <data name="TooltipSliderLeftRight" xml:space="preserve">
+    <value>Left/Right/Tab/ShiftTab:Altera o valor</value>
+  </data>
+  <data name="TooltipSliderUpDown" xml:space="preserve">
+    <value>Up/Down/Tab/ShiftTab:Altera o valor</value>
+  </data>
+  <data name="TooltipSuggestionShiftTab" xml:space="preserve">
+    <value>ShitfTab: Cancelar sugestão</value>
+  </data>
+  <data name="TooltipSuggestionTab" xml:space="preserve">
+    <value>Tab: Mostra sugestão,novamente aceita (Min. {0} chars)</value>
+  </data>
+  <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
+    <value>Tab/ShiftTab:Sugestões (Min. {0} chars)</value>
+  </data>
+  <data name="TooltipSwitch" xml:space="preserve">
+    <value>Left/Right (ou espaço0):Alternar</value>
+  </data>
+  <data name="TooltipToggleNotes" xml:space="preserve">
+    <value>Ver/Esconder Notas</value>
+  </data>
+  <data name="TooltipViewPassword" xml:space="preserve">
+    <value>Ver/Esconder senha</value>
+  </data>
+  <data name="YesChar" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>Espaço</value>
   </data>
   <data name="InputFinishEnter" xml:space="preserve">
     <value>Enter:Concluir</value>
   </data>
+  <data name="MaskeditInputPending" xml:space="preserve">
+    <value>Existem entradas não digitadas.</value>
+  </data>
+  <data name="MaskEditInvalidInput" xml:space="preserve">
+    <value>Entradas com valores inválidos</value>
+  </data>
   <data name="MaskEditPosAnyChar" xml:space="preserve">
     <value>Qualquer texto (A-Z,a-z,0-9)</value>
+  </data>
+  <data name="MaskEditPosConstant" xml:space="preserve">
+    <value>Constante ({0})</value>
+  </data>
+  <data name="MaskEditPosCurrencySymbol" xml:space="preserve">
+    <value>Símbolo da moeda</value>
   </data>
   <data name="MaskEditPosCustom" xml:space="preserve">
     <value>{0}{1}Somente({2})</value>
   </data>
+  <data name="MaskEditPosDateSep" xml:space="preserve">
+    <value>Separador de data</value>
+  </data>
   <data name="MaskEditPosDay" xml:space="preserve">
     <value>Dia (0-9)</value>
+  </data>
+  <data name="MaskEditPosDecSep" xml:space="preserve">
+    <value>Separador de decimal</value>
+  </data>
+  <data name="MaskEditPosGrpSep" xml:space="preserve">
+    <value>Separador de grupo</value>
   </data>
   <data name="MaskEditPosHour" xml:space="preserve">
     <value>Hora (0-9)</value>
   </data>
   <data name="MaskEditPosLetter" xml:space="preserve">
     <value>Letra (A-Z,a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterLower" xml:space="preserve">
+    <value>Letra (a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterUpper" xml:space="preserve">
+    <value>Letra (A-Z)</value>
   </data>
   <data name="MaskEditPosMinute" xml:space="preserve">
     <value>Minuto (0-9)</value>
@@ -162,337 +414,34 @@
   <data name="MaskEditPosSecond" xml:space="preserve">
     <value>Segundo (0-9)</value>
   </data>
-  <data name="MaskEditPosYear" xml:space="preserve">
-    <value>Ano (0-9)</value>
-  </data>
-  <data name="MoveDays" xml:space="preserve">
-    <value>Left/Right:Mudar dia</value>
-  </data>
-  <data name="MoveDayWeek" xml:space="preserve">
-    <value>Up/Down:Mudar dia com o mesmo dia da semana</value>
-  </data>
-  <data name="MoveMonth" xml:space="preserve">
-    <value>Tab/Shift Tab:Mudar Mes</value>
-  </data>
-  <data name="MoveToday" xml:space="preserve">
-    <value>Home:Hoje</value>
-  </data>
-  <data name="MoveYear" xml:space="preserve">
-    <value>PgUp/PgDown:Mudar ano</value>
-  </data>
-  <data name="MultiSelectCheck" xml:space="preserve">
-    <value>Space:Marcar/Desmarcar</value>
-  </data>
-  <data name="MultiSelectMaxSelection" xml:space="preserve">
-    <value>Máximo de {0} itens já foi ultrapassado</value>
-  </data>
-  <data name="MultiSelectMinSelection" xml:space="preserve">
-    <value>Mínimo de {0} itens é necessário</value>
-  </data>
-  <data name="NoChar" xml:space="preserve">
-    <value>N</value>
-  </data>
-  <data name="OffValue" xml:space="preserve">
-    <value>Desligado</value>
-  </data>
-  <data name="OnValue" xml:space="preserve">
-    <value>Ligado</value>
-  </data>
-  <data name="OrderHighest" xml:space="preserve">
-    <value>Maior valor</value>
-  </data>
-  <data name="OrderLabelAsc" xml:space="preserve">
-    <value>Rótulo ascendente</value>
-  </data>
-  <data name="OrderLabelDec" xml:space="preserve">
-    <value>Rótulo descendente</value>
-  </data>
-  <data name="OrderSmallest" xml:space="preserve">
-    <value>Menor valor</value>
-  </data>
-  <data name="OrderStandard" xml:space="preserve">
-    <value>Padrão</value>
-  </data>
-  <data name="PaginationTemplate" xml:space="preserve">
-    <value>Exibindo:{1}/{2} páginas de {0} itens.</value>
-  </data>
-  <data name="PressedKey" xml:space="preserve">
-    <value>Tecla pressionada</value>
-  </data>
-  <data name="SelectionDisabled" xml:space="preserve">
-    <value>Item desativado</value>
-  </data>
-  <data name="SliderNumberLeftRightKeyNavigator" xml:space="preserve">
-    <value>Left/Right:Valor curto, Tab/Shift+Tab:Valor grande</value>
-  </data>
-  <data name="SliderNumberUpDownKeyNavigator" xml:space="preserve">
-    <value>Up/Down:Valor curto, Tab/Shift+Tab:Valor grande</value>
-  </data>
-  <data name="SwitchKeyNavigator" xml:space="preserve">
-    <value>Left/Right:Mudar</value>
-  </data>
-  <data name="TableMoveCols" xml:space="preserve">
-    <value>Ctrl+Left/Right:Move colunas</value>
-  </data>
-  <data name="TooltipCancelEsc" xml:space="preserve">
-    <value>{0}:Cancelar</value>
-  </data>
-  <data name="TooltipChart" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Mover, Enter:Concluir</value>
-  </data>
-  <data name="TooltipChartSwitchLegend" xml:space="preserve">
-    <value>{0}:Ver/Esconder legenda</value>
-  </data>
-  <data name="TooltipChartSwitchOrder" xml:space="preserve">
-    <value>{0}:Mudar ordenação</value>
-  </data>
-  <data name="TooltipChartSwitchType" xml:space="preserve">
-    <value>{0}:Mudar tipo de chart</value>
-  </data>
-  <data name="TooltipShowHide" xml:space="preserve">
-    <value>{0}:Ver/Esconder dicas</value>
-  </data>
-  <data name="TooltipHistoryClear" xml:space="preserve">
-    <value>Ctrl+Del:Limpar histórico</value>
-  </data>
-  <data name="TooltipHistoryEsc" xml:space="preserve">
-    <value>Esc:Cancelar histórico</value>
-  </data>
-  <data name="TooltipHistoryShow" xml:space="preserve">
-    <value>{0}:Mostrar histórico(mín.{1} caracteres)</value>
-  </data>
-  <data name="TooltipPages" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Mover seletor, Ctrl+Home/End:Primeiro/Último item</value>
-  </data>
-  <data name="TooltipSelectAll" xml:space="preserve">
-    <value>{0}:Alternar Marcar  todos</value>
-  </data>
-  <data name="TooltipSuggestionEsc" xml:space="preserve">
-    <value>Esc:Cancelar sugestões</value>
-  </data>
-  <data name="TooltipSuggestionToggle" xml:space="preserve">
-    <value>Tab/Shift Tab:Sugestões</value>
-  </data>
-  <data name="TooltipToggle" xml:space="preserve">
-    <value>{0}:Alternar dicas</value>
-  </data>
-  <data name="TooltipToggleExpandPress" xml:space="preserve">
-    <value>+/-:Expandir/Recolher</value>
-  </data>
-  <data name="TooltipToggleNotes" xml:space="preserve">
-    <value>{0}:Ver/Esconder Notas</value>
-  </data>
-  <data name="TooltipViewPassword" xml:space="preserve">
-    <value>{0}:Ver/Esconder senha</value>
-  </data>
-  <data name="ValidAnyKey" xml:space="preserve">
-    <value>Tecla válida:{0}</value>
-  </data>
-  <data name="ValidateInvalid" xml:space="preserve">
-    <value>Valor inválido!</value>
-  </data>
-  <data name="YesChar" xml:space="preserve">
-    <value>S</value>
-  </data>
-  <data name="Emac_ctrl_t" xml:space="preserve">
-    <value>Ctrl+T:Transpõe os dois caracteres anteriores</value>
-  </data>
-  <data name="Emac_ctrl_l" xml:space="preserve">
-    <value>Ctrl+L:Limpa todo o conteúdo</value>
-  </data>
-  <data name="Emac_alt_l" xml:space="preserve">
-    <value>Alt+L:Minusculo do cursor até o final da palavra</value>
-  </data>
-  <data name="Emac_ctrl_u" xml:space="preserve">
-    <value>Ctrl+U:Limpa a linha antes do cursor</value>
-  </data>
-  <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Maiúsculas do cursor até o final da palavra.</value>
-  </data>
-  <data name="Emac_ctrl_k" xml:space="preserve">
-    <value>Ctrl+K:Limpa a linha após o cursor</value>
-  </data>
-  <data name="Emac_ctrl_w" xml:space="preserve">
-    <value>Ctrl+W:Limpa a palavra antes do cursor</value>
-  </data>
-  <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Coloca em maiúscula o caractere sob o cursor e move para a final da palavra</value>
-  </data>
-  <data name="Emac_alt_d" xml:space="preserve">
-    <value>Alt+D:Limpar palavra após o cursor</value>
-  </data>
-  <data name="Emac_alt_f" xml:space="preserve">
-    <value>Alt+F:Move o cursor uma palavra para frente</value>
-  </data>
-  <data name="Emac_alt_b" xml:space="preserve">
-    <value>Alt+B:Move o cursor uma palavra para trás</value>
-  </data>
-  <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Limpa a linha após o cursor</value>
-  </data>
-  <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Move o cursor para o final da linha (equivalente à tecla End)</value>
-  </data>
-  <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Move o cursor para o início da linha (equivalente à tecla home)</value>
-  </data>
-  <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Move o cursor um caractere para trás (equivalente à tecla de seta para a esquerda)</value>
-  </data>
-  <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Move o cursor um caractere para frente (equivalente à tecla de seta para a direita)</value>
-  </data>
-  <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Apaga o caractere atual (equivalente à tecla delete)</value>
-  </data>
-  <data name="Emac_Insert" xml:space="preserve">
-    <value>Insert:Alterna modo de substituição (padrão é o modo de inserção)</value>
-  </data>
-  <data name="ShowingCalendarNotes" xml:space="preserve">
-    <value>Mostrando notas do dia {0}</value>
-  </data>
-  <data name="NoteNotFound" xml:space="preserve">
-    <value>Notas vazias para os dados informados</value>
-  </data>
-  <data name="InvalidKey" xml:space="preserve">
-    <value>Tecla Inválida:{0}</value>
-  </data>
-  <data name="YesText" xml:space="preserve">
-    <value>Sim</value>
-  </data>
-  <data name="NoText" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="TooltipWaitTimer" xml:space="preserve">
-    <value>Temporizador:</value>
-  </data>
-  <data name="TaksRunning" xml:space="preserve">
-    <value>Executando {0} tarefa(s)</value>
-  </data>
-  <data name="TaskSeqName" xml:space="preserve">
-    <value>Tarefa{0}</value>
-  </data>
-  <data name="TaskFiniched" xml:space="preserve">
-    <value>{0} concluído(s), {1} erro(s), {2} cancelado</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Erro!</value>
-  </data>
-  <data name="EntryHistory" xml:space="preserve">
-    <value>Histórico de entrada</value>
-  </data>
-  <data name="TooltipHistoryKey" xml:space="preserve">
-    <value>{0}:Mostrar histórico</value>
-  </data>
-  <data name="TooltipFilterMode" xml:space="preserve">
-    <value>{0}:Alternar modo filtro</value>
-  </data>
-  <data name="TooltipCountCheck" xml:space="preserve">
-    <value>{0} selecionados.</value>
-  </data>
-  <data name="ErrorAutoCompleteService" xml:space="preserve">
-    <value>Erro no serviço de preenchimento automático</value>
-  </data>
-  <data name="EntryOptions" xml:space="preserve">
-    <value>Opções de escolha</value>
-  </data>
-  <data name="MaskEditPosConstant" xml:space="preserve">
-    <value>Constante ({0})</value>
-  </data>
-  <data name="MaskEditPosLetterUpper" xml:space="preserve">
-    <value>Letra (A-Z)</value>
-  </data>
-  <data name="MaskEditPosLetterLower" xml:space="preserve">
-    <value>Letra (a-z)</value>
+  <data name="MaskEditPosSing" xml:space="preserve">
+    <value>Sinal +-</value>
   </data>
   <data name="MaskEditPosSpace" xml:space="preserve">
     <value>Espaço</value>
   </data>
-  <data name="MaskEditPosDateSep" xml:space="preserve">
-    <value>Separador de data</value>
-  </data>
   <data name="MaskEditPosTimeSep" xml:space="preserve">
     <value>Separador de tempo</value>
   </data>
-  <data name="MaskEditPosDecSep" xml:space="preserve">
-    <value>Separador de decimal</value>
+  <data name="MaskEditPosYear" xml:space="preserve">
+    <value>Ano (0-9)</value>
   </data>
-  <data name="MaskEditPosGrpSep" xml:space="preserve">
-    <value>Separador de grupo</value>
+  <data name="TooltipCancelEsc" xml:space="preserve">
+    <value>{0}:Cancelar</value>
   </data>
-  <data name="MaskEditPosCurrencySymbol" xml:space="preserve">
-    <value>Símbolo da moeda</value>
+  <data name="TooltipToggle" xml:space="preserve">
+    <value>{0}:Alternar dicas</value>
   </data>
-  <data name="MaskEditPosSing" xml:space="preserve">
-    <value>Sinal +-</value>
+  <data name="TooltipJumpdelimiter" xml:space="preserve">
+    <value>Tab\ShiftTab:Salta entre os delimitadores.</value>
   </data>
-  <data name="MaskeditInputPending" xml:space="preserve">
-    <value>Existem entradas não digitadas.</value>
+  <data name="TooltipTableColumnNav" xml:space="preserve">
+    <value>Tab/ShiftTab:Navegar entre colunas</value>
   </data>
-  <data name="MaskEditInvalidInput" xml:space="preserve">
-    <value>Entradas com valores inválidos</value>
+  <data name="TooltipTableJump" xml:space="preserve">
+    <value>Digite a letra inicial para ir ao item (colunas filtráveis)</value>
   </data>
-  <data name="TableAnswerRow" xml:space="preserve">
-    <value>Linha:{0}</value>
-  </data>
-  <data name="TableAnswerMultiRow" xml:space="preserve">
-    <value>Linhas:{0}</value>
-  </data>
-  <data name="PredicateSelectInvalid" xml:space="preserve">
-    <value>Item selecionado não atende aos critérios </value>
-  </data>
-  <data name="FileInfoRoot" xml:space="preserve">
-    <value>Pasta Raiz</value>
-  </data>
-  <data name="FileInfoFolder" xml:space="preserve">
-    <value>Pasta: {0}</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Carregando...</value>
-  </data>
-  <data name="Unloading" xml:space="preserve">
-    <value>Descarregando...</value>
-  </data>
-  <data name="TooltipLevelHomeEnd" xml:space="preserve">
-    <value>Ctrl+Home:Nível anterior, Ctrl+End:Último item do nível</value>
-  </data>
-  <data name="SearchFilter" xml:space="preserve">
-    <value>Filtro de pesquisa:</value>
-  </data>
-  <data name="Filtered" xml:space="preserve">
-    <value>Filtrado</value>
-  </data>
-  <data name="InputFinishFilter" xml:space="preserve">
-    <value>Enter:Aplicar filtro</value>
-  </data>
-  <data name="SpaceMultSelect" xml:space="preserve">
-    <value>Shift+Espaço = Espaço para filtro</value>
-  </data>
-  <data name="NotCollapse" xml:space="preserve">
-    <value>Há itens marcados, não podem ser recolhido</value>
-  </data>
-  <data name="NodePath" xml:space="preserve">
-    <value>Caminho:</value>
-  </data>
-  <data name="TooltipExpandAllPress" xml:space="preserve">
-    <value>Alt+:Expandir todos</value>
-  </data>
-  <data name="TooltipOrder" xml:space="preserve">
-    <value>Ordenação:{0}</value>
-  </data>
-  <data name="LoadMore" xml:space="preserve">
-    <value>Enter:Carregar mais itens.</value>
-  </data>
-  <data name="FilterOnlySelected" xml:space="preserve">
-    <value>Só Selecionados</value>
-  </data>
-  <data name="TooltipFilterOnlySelected" xml:space="preserve">
-    <value>{0}:Alternar modo só selecionados</value>
-  </data>
-  <data name="TooltipSelectAllGroups" xml:space="preserve">
-    <value>{0}:Alternar Marcar  todos os grupos</value>
-  </data>
-  <data name="TooltipToggleFullPath" xml:space="preserve">
-    <value>{0}: Alternar caminho completo/nome da pasta</value>
+  <data name="Col_Info" xml:space="preserve">
+    <value>Col</value>
   </data>
 </root>

@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  # Detects whether the push/PR touches anything besides docs/*.md. Doc-only changes
+  # still get a build (below) but skip the test run entirely.
+  changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # dorny/paths-filter needs the pre-push commit to diff against on push
+          # events; a shallow (depth-1) clone doesn't have it, so it falls back to
+          # treating everything as changed. Full history avoids that.
+          fetch-depth: 0
+
+      - name: Filter changed paths
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            code:
+              - '**'
+              - '!**/*.md'
+              - '!docs/**'
+
+  # Single job, OS matrix only (net10.0 tests, not the full net8/9/10 TFM axis).
+  build-and-test:
+    name: Build & Test (${{ matrix.os }})
+    needs: changes
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Build library (Release)
+        run: dotnet build src/PromptPlus.csproj --configuration Release
+
+      # Skipped for doc-only changes (docs/** and *.md) — those only need a build to
+      # verify nothing broke, not a full test pass. See ADR0022.
+      - name: Test (net10.0 only)
+        if: needs.changes.outputs.code == 'true'
+        run: >
+          dotnet test tests/PromptPlus.Tests/PromptPlus.Tests.csproj
+          --configuration Debug
+          --framework net10.0
+          --verbosity normal
+          --logger "trx;LogFileName=test-results.trx"
+          --collect:"XPlat Code Coverage"
+          --results-directory TestResults
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always() && needs.changes.outputs.code == 'true'
+        with:
+          name: test-results-${{ matrix.os }}
+          path: "**/TestResults/**/*.trx"
+          retention-days: 7
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: always() && needs.changes.outputs.code == 'true'
+        with:
+          name: coverage-${{ matrix.os }}
+          path: "**/TestResults/**/coverage.cobertura.xml"
+          retention-days: 7

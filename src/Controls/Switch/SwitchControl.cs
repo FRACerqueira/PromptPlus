@@ -3,6 +3,9 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
+using PromptPlusLibrary.Controls.Common;
+using PromptPlusLibrary.Controls.History;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
@@ -11,78 +14,91 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.Switch
 {
     internal sealed class SwitchControl : BaseControlPrompt<bool?>, ISwitchControl, ISwitchWidget
     {
-        private readonly Dictionary<SwitchStyles, Style> _optStyles = BaseControlOptions.LoadStyle<SwitchStyles>();
+        private readonly Dictionary<SwitchStyles, Style> _optStyles;
         private Func<bool, string>? _changeDescription;
-        private bool _defaultValue;
-        private bool _useDefaultHistory;
+        private Func<bool, Task<string>>? _changeDescriptionAsync;
+        private bool? _defaultValue;
+        private bool _useDefaultHistory = true;
         private HistoryOptions? _historyOptions;
-        private byte _width;
-        private readonly List<string> _toggerTooptips = [];
-        private int _indexTooptip;
-        private string _tooltipModeInput = string.Empty;
+        private IList<ItemHistory>? _itemHistories;
         private bool _currentValue;
-        private string? _onValue;
-        private string? _offValue;
+        private string _offValue = PromptPlusResources.NoChar;
+        private string _onValue = PromptPlusResources.YesChar;
+        private string _offAnswer = PromptPlusResources.NoChar;
+        private string _onAnswer = PromptPlusResources.YesChar;
+        private byte _width;
+        private string[] _toggerTooptips = [];
+        private int _indexTooptip;
 
-        public void InternalDefault(bool value)
+        public SwitchControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
-            _defaultValue = value;
-            _useDefaultHistory = false;
-        }
-        public void InternalOffValue(string value)
-        {
-            _offValue = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
-        }
-
-        public void InternalOnValue(string value)
-        {
-            _onValue = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
+            _optStyles = OptionsControl.LoadStyle<SwitchStyles>(console.CurrentStyle);
+            _width = ConfigPrompt.SwitchWidth;
         }
 
+        #region ISwitchControl, ISwitchWidget
 
-        public SwitchControl(bool widget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(widget, console, promptConfig, baseControlOptions)
+        public ISwitchControl Options(Action<IControlOptions> options)
         {
-            _width = ConfigPlus.SwitchWidth;
+            ArgumentNullException.ThrowIfNull(options);
+            options.Invoke(OptionsControl);
+            return this;
         }
 
-        #region ISwitchControl
-
-        ISwitchWidget ISwitchWidget.Styles(SwitchStyles styleType, Style style)
+        public ISwitchControl Styles(SwitchStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
             return this;
         }
 
-        ISwitchWidget ISwitchWidget.Width(byte value)
-        {
-            if (value < 6)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "Width must be greater or equal than 6");
-            }
-            _width = value;
-            return this;
-        }
-
-
-        public ISwitchControl ChangeDescription(Func<bool, string> value)
-        {
-            _changeDescription = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
-            throw new NotImplementedException();
-        }
-
-        public ISwitchControl Default(bool value, bool usedefaultHistory = true)
+        public ISwitchControl Default(bool value, bool useDefaultHistory = true)
         {
             _defaultValue = value;
-            _useDefaultHistory = usedefaultHistory;
+            _useDefaultHistory = useDefaultHistory;
             return this;
         }
 
-        public ISwitchControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public ISwitchControl OffValue(string value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _offValue = value;
+            _offAnswer = value;
+            return this;
+        }
+
+        public ISwitchControl OffValue(EmojiName emojiName, string fallbacktext)
+        {
+            ArgumentNullException.ThrowIfNull(fallbacktext);
+            string emoji = (EmojiValue)emojiName;
+            _offValue = string.IsNullOrWhiteSpace(emoji) ? fallbacktext : emoji;
+            _offAnswer = fallbacktext;
+            return this;
+        }
+
+        public ISwitchControl OnValue(string value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _onValue = value;
+            _onAnswer = value;
+            return this;
+        }
+
+        public ISwitchControl OnValue(EmojiName emojiName, string fallbacktext)
+        {
+            ArgumentNullException.ThrowIfNull(fallbacktext);
+            string emoji = (EmojiValue)emojiName;
+            _onValue = string.IsNullOrWhiteSpace(emoji) ? fallbacktext : emoji;
+            _onAnswer = fallbacktext;
+            return this;
+        }
+
+        public ISwitchControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))
@@ -94,38 +110,54 @@ namespace PromptPlusLibrary.Controls.Switch
             return this;
         }
 
-        public ISwitchControl OffValue(string value)
+        public ISwitchControl ChangeDescription(Func<bool, string> value)
         {
-            _offValue = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescription = value;
+            _changeDescriptionAsync = null;
             return this;
         }
 
-        public ISwitchControl OnValue(string value)
+        public ISwitchControl ChangeDescriptionAsync(Func<bool, Task<string>> value)
         {
-            _onValue = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescriptionAsync = value;
+            _changeDescription = null;
             return this;
         }
 
-        public ISwitchControl Options(Action<IControlOptions> options)
+        /// <inheritdoc/>
+        ISwitchWidget ISwitchWidget.Styles(SwitchStyles styleType, Style style)
         {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
+            Styles(styleType, style);
             return this;
         }
 
-        public ISwitchControl Styles(SwitchStyles styleType, Style style)
+        /// <inheritdoc/>
+        ISwitchWidget ISwitchWidget.OffValue(string value)
         {
-            _optStyles[styleType] = style;
+            OffValue(value);
             return this;
         }
 
-        public ISwitchControl Width(byte value)
+        /// <inheritdoc/>
+        ISwitchWidget ISwitchWidget.OffValue(EmojiName emojiName, string fallbacktext)
         {
-            if (value < 6)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "Width must be greater or equal than 6");
-            }
-            _width = value;
+            OffValue(emojiName, fallbacktext);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISwitchWidget ISwitchWidget.OnValue(string value)
+        {
+            OnValue(value);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISwitchWidget ISwitchWidget.OnValue(EmojiName emojiName, string fallbacktext)
+        {
+            OnValue(emojiName, fallbacktext);
             return this;
         }
 
@@ -133,177 +165,85 @@ namespace PromptPlusLibrary.Controls.Switch
 
         public override void InitControl(CancellationToken cancellationToken)
         {
-            if (_useDefaultHistory && _historyOptions != null)
+            if (IsWidget)
             {
-                string? lasthist = FileHistory
-                    .LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue)
-                    .Select(x => x.History)
-                    .FirstOrDefault();
-                if (bool.TryParse(lasthist ?? _defaultValue.ToString(), out bool histbool))
+                _historyOptions = null;
+            }
+
+            if (_historyOptions is not null)
+            {
+                try
                 {
-                    _defaultValue = histbool;
+                    _itemHistories = [.. FileHistory
+                        .LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue)
+                        .Where(x => TryDeserializeHistoryValue(x.History, out _))];
+                }
+                catch
+                {
+                    _itemHistories = [];
+                }
+
+                if (_useDefaultHistory && _itemHistories.Count > 0)
+                {
+                    if (TryDeserializeHistoryValue(_itemHistories[0].History, out bool historyValue))
+                    {
+                        _defaultValue = historyValue;
+                    }
                 }
             }
-            _currentValue = _defaultValue;
-            if (!IsWidgetControl)
+
+            _currentValue = _defaultValue ?? false;
+
+            if (_width < 4)
+            {
+                _width = 4;
+            }
+
+            if (!IsWidget)
             {
                 LoadTooltipToggle();
-                _tooltipModeInput = GetTooltipModeInput();
-            }
-        }
-
-        private string GetTooltipModeInput()
-        {
-            StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            tooltip.Append(", ");
-            tooltip.Append(Messages.SwitchKeyNavigator);
-            tooltip.ToString();
-            return tooltip.ToString();
-        }
-
-        private void LoadTooltipToggle()
-        {
-            _toggerTooptips.Clear();
-            if (GeneralOptions.EnabledAbortKeyValue)
-            {
-                _toggerTooptips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}");
-            }
-            else
-            {
-                _toggerTooptips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}");
-            }
-        }
-
-        public override void BufferTemplate(BufferScreen screenBuffer)
-        {
-            if (!IsWidgetControl)
-            {
-                WritePrompt(screenBuffer);
-
-                WriteAnswer(screenBuffer);
-
-                WriteError(screenBuffer);
-
-                WriteDescription(screenBuffer);
-            }
-
-            WriteSwitch(screenBuffer);
-
-            if (!IsWidgetControl)
-            {
-                WriteTooltip(screenBuffer);
-            }
-        }
-
-        private void WriteError(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(ValidateError))
-            {
-                screenBuffer.WriteLine(ValidateError, _optStyles[SwitchStyles.Error]);
-                ClearError();
-            }
-        }
-
-        private void WriteTooltip(BufferScreen screenBuffer)
-        {
-            if (!IsShowTooltip)
-            {
-                return;
-            }
-            string tooltip = _tooltipModeInput;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            screenBuffer.Write(tooltip!, _optStyles[SwitchStyles.Tooltips]);
-        }
-
-        private string GetTooltipToggle()
-        {
-            return _toggerTooptips[_indexTooptip - 1];
-        }
-
-        private void WriteSwitch(BufferScreen screenBuffer)
-        {
-            screenBuffer.Write($"{ValueToString(false)} ", _optStyles[SwitchStyles.Ranger]);
-            if (_currentValue)
-            {
-                screenBuffer.Write(new string(' ', _width / 2), _optStyles[SwitchStyles.SliderOn].Background(_optStyles[SwitchStyles.SliderOn].Background));
-                screenBuffer.Write(new string(' ', _width / 2), _optStyles[SwitchStyles.SliderOn].Background(_optStyles[SwitchStyles.SliderOn].Foreground));
-            }
-            else
-            {
-                screenBuffer.Write(new string(' ', _width / 2), _optStyles[SwitchStyles.SliderOff].Background(_optStyles[SwitchStyles.SliderOff].Foreground));
-                screenBuffer.Write(new string(' ', _width / 2), _optStyles[SwitchStyles.SliderOff].Background(_optStyles[SwitchStyles.SliderOff].Background));
-            }
-            screenBuffer.WriteLine($" {ValueToString(true)}", _optStyles[SwitchStyles.Ranger]);
-        }
-
-        private void WriteDescription(BufferScreen screenBuffer)
-        {
-            string? desc = _changeDescription?.Invoke(_currentValue) ?? GeneralOptions.DescriptionValue;
-            if (!string.IsNullOrEmpty(desc))
-            {
-                screenBuffer.WriteLine(desc, _optStyles[SwitchStyles.Description]);
-            }
-        }
-
-        private void WriteAnswer(BufferScreen screenBuffer)
-        {
-            string answer = ValueToString(_currentValue);
-            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), _optStyles[SwitchStyles.Answer]);
-            screenBuffer.Write(answer, _optStyles[SwitchStyles.Answer]);
-            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), _optStyles[SwitchStyles.Answer]);
-            screenBuffer.SavePromptCursor();
-            screenBuffer.WriteLine("", _optStyles[SwitchStyles.Answer]);
-        }
-
-        private string ValueToString(bool currentValue)
-        {
-            return currentValue ? _onValue ?? Messages.OnValue : _offValue ?? Messages.OffValue;
-        }
-
-        private void WritePrompt(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[SwitchStyles.Prompt]);
             }
         }
 
         public override bool TryResult(CancellationToken cancellationToken)
         {
-            bool oldcursor = ConsolePlus.CursorVisible;
-            ConsolePlus.CursorVisible = true;
+            bool oldcursor = ConsoleHandler.CursorVisible;
+            ConsoleHandler.CursorVisible = true;
             try
             {
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
-
-                    #region default Press to Finish and tooltip
-                    if (cancellationToken.IsCancellationRequested)
+                    KeyPressResult press = ReadNextKey(true, cancellationToken);
+                    if (press.IsResize || press.IsCancelled)
                     {
-                        ResultCtrl = new ResultPrompt<bool?>(_currentValue, true);
+                        if (press.IsCancelled)
+                        {
+                            _indexTooptip = 0;
+                            ResultCtrl = new ResultPrompt<bool?>(default!, true);
+                        }
                         break;
                     }
-                    else if (IsAbortKeyPress(keyinfo))
+
+                    ConsoleKeyInfo keyinfo = press.Key;
+
+                    if (IsAbortKeyPress(keyinfo))
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<bool?>(_currentValue, true);
                         break;
                     }
                     else if (keyinfo.IsPressEnterKey())
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<bool?>(_currentValue, false);
-                        SaveHistory(_currentValue);
+                        SaveHistory();
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
                     {
                         _indexTooptip++;
-                        if (_indexTooptip > _toggerTooptips.Count)
+                        if (_indexTooptip > _toggerTooptips.Length)
                         {
                             _indexTooptip = 0;
                         }
@@ -314,9 +254,19 @@ namespace PromptPlusLibrary.Controls.Switch
                         _indexTooptip = 0;
                         break;
                     }
-                    #endregion
-
-                    else if (keyinfo.IsPressLeftArrowKey() || keyinfo.IsPressRightArrowKey())
+                    else if (keyinfo.IsPressLeftArrowKey())
+                    {
+                        _currentValue = false;
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (keyinfo.IsPressRightArrowKey())
+                    {
+                        _currentValue = true;
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (keyinfo.IsPressSpaceKey())
                     {
                         _currentValue = !_currentValue;
                         _indexTooptip = 0;
@@ -326,20 +276,40 @@ namespace PromptPlusLibrary.Controls.Switch
             }
             finally
             {
-                ConsolePlus.CursorVisible = oldcursor;
+                ConsoleHandler.CursorVisible = oldcursor;
             }
+
             return ResultCtrl != null;
+        }
+
+        public override void BufferTemplate(BufferScreen screenBuffer)
+        {
+            if (!IsWidget)
+            {
+                WritePrompt(screenBuffer, _optStyles[SwitchStyles.Prompt]);
+
+                WriteAnswer(screenBuffer);
+
+                WriteDescription(screenBuffer);
+            }
+
+            WriteSwitch(screenBuffer);
+
+            if (!IsWidget)
+            {
+                WriteTooltip(screenBuffer);
+
+                WriteError(screenBuffer, _optStyles[SwitchStyles.Error]);
+            }
         }
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[SwitchStyles.Prompt]);
-            }
+            WritePrompt(screenBuffer, _optStyles[SwitchStyles.Prompt]);
+
             string answer = ResultCtrl!.Value.IsAborted
-                ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
-                : ValueToString(_currentValue);
+                ? OptionsControl.EnabledAbortKeyValue ? PromptPlusResources.CanceledKey : string.Empty
+                : AnswerToString(_currentValue);
 
             screenBuffer.WriteLine(answer, _optStyles[SwitchStyles.Answer]);
 
@@ -348,21 +318,138 @@ namespace PromptPlusLibrary.Controls.Switch
 
         public override void FinalizeControl()
         {
-            // none
         }
 
-        private void SaveHistory(bool value)
+        private string AnswerToString(bool value) => value ? _onAnswer : _offAnswer;
+
+        private string GetTooltipToggle()
         {
-            if (_historyOptions == null)
+            if (_indexTooptip >= _toggerTooptips.Length)
+            {
+                _indexTooptip = 0;
+            }
+            return _toggerTooptips[_indexTooptip];
+        }
+
+        private void WriteAnswer(BufferScreen screenBuffer)
+        {
+            string answer = AnswerToString(_currentValue);
+            screenBuffer.Write(answer, _optStyles[SwitchStyles.Answer]);
+            screenBuffer.SavePromptCursor();
+            screenBuffer.WriteLine("", _optStyles[SwitchStyles.Answer]);
+        }
+
+        private void WriteDescription(BufferScreen screenBuffer)
+        {
+            string? desc;
+            if (_changeDescriptionAsync is not null)
+            {
+                desc = _changeDescriptionAsync.Invoke(_currentValue)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            else
+            {
+                desc = _changeDescription?.Invoke(_currentValue) ?? OptionsControl.DescriptionValue;
+            }
+
+            if (!string.IsNullOrEmpty(desc))
+            {
+                screenBuffer.WriteLine(desc, _optStyles[SwitchStyles.Description]);
+            }
+        }
+
+        private void WriteSwitch(BufferScreen screenBuffer)
+        {
+            int barWidth = Math.Max(2, (int)_width);
+            int thumbIndex = _currentValue ? barWidth - 1 : 0;
+            Style stateStyle = _currentValue ? _optStyles[SwitchStyles.SwitchOn] : _optStyles[SwitchStyles.SwitchOff];
+
+            screenBuffer.Write($"{_offValue} ", _optStyles[SwitchStyles.Ranger]);
+
+            for (int i = 0; i < barWidth; i++)
+            {
+                if (i == thumbIndex)
+                {
+                    screenBuffer.Write(" ", _optStyles[SwitchStyles.Marker]);
+                }
+                else
+                {
+                    screenBuffer.Write(" ", stateStyle);
+                }
+            }
+
+            screenBuffer.Write($" {_onValue}", _optStyles[SwitchStyles.Ranger]);
+            screenBuffer.WriteLine("", _optStyles[SwitchStyles.Prompt]);
+        }
+
+        private void WriteTooltip(BufferScreen screenBuffer)
+        {
+            if (!IsShowTooltip)
             {
                 return;
             }
-            string aux = JsonSerializer.Serialize<bool>(value);
-            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
-            IList<ItemHistory> hist = FileHistory.AddHistory(aux, _historyOptions!.ExpirationTimeValue, null);
-            FileHistory.SaveHistory(_historyOptions!.FileNameValue, hist);
 
+            string tooltip = GetTooltipToggle();
+            tooltip = $"{ConfigPrompt.HotKeyTooltip}:{PromptPlusResources.TooltipBase}.{tooltip}";
+            if (!tooltip.EndsWith('.'))
+            {
+                tooltip = $"{tooltip}.";
+            }
+            screenBuffer.WriteLine(tooltip, _optStyles[SwitchStyles.Tooltips]);
+        }
+
+        private static string GetTooltipMain()
+        {
+            StringBuilder tooltip = new();
+            tooltip.Append(PromptPlusResources.TooltipEnterFinish);
+            tooltip.Append('.');
+            tooltip.Append(PromptPlusResources.TooltipSwitch);
+            tooltip.Append('.');
+            return tooltip.ToString();
+        }
+
+        private void LoadTooltipToggle()
+        {
+            List<string> lsttooltips =
+            [
+                GetTooltipMain()
+            ];
+            if (OptionsControl.EnabledAbortKeyValue)
+            {
+                lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
+            }
+            lsttooltips.Add($"{ConfigPrompt.HotKeyTooltipShowHide}:{PromptPlusResources.TooltipShowHide}");
+            _toggerTooptips = [.. lsttooltips];
+        }
+
+        private void SaveHistory()
+        {
+            if (_historyOptions is null)
+            {
+                return;
+            }
+
+            string serializedValue = JsonSerializer.Serialize(_currentValue);
+            IList<ItemHistory> hist = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+            hist.Clear();
+            FileHistory.AddHistory(serializedValue, _historyOptions.ExpirationTimeValue, hist);
+            FileHistory.SaveHistory(_historyOptions.FileNameValue, hist, _historyOptions.MaxItemsValue);
+            _itemHistories = hist;
+        }
+
+        private static bool TryDeserializeHistoryValue(string value, out bool result)
+        {
+            try
+            {
+                result = JsonSerializer.Deserialize<bool>(value);
+                return true;
+            }
+            catch
+            {
+                return bool.TryParse(value, out result);
+            }
         }
     }
 }
-

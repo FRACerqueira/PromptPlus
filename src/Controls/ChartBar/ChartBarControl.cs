@@ -1,8 +1,10 @@
-﻿// ***************************************************************************************
+// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
+using PromptPlusLibrary.Controls.Common;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
@@ -11,85 +13,276 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.ChartBar
 {
     internal sealed class ChartBarControl : BaseControlPrompt<ChartItem?>, IChartBarControl, IChartBarWidget
     {
+        /// <summary>
+        /// Total rows the control template reserves around the chart:
+        /// prompt+answer line, optional description line, tooltip line, error line,
+        /// and pagination footer when active. Chart title and legends are counted
+        /// separately in the visible chart area.
+        /// Used to derive the maximum visible page size from the available console height.
+        /// </summary>
+        private const int ReservedTemplateLines = 5;
+
+        private static readonly System.Text.CompositeFormat s_tooltipShowHideFormat =
+            CompositeFormat.Parse(PromptPlusResources.TooltipShowHide);
+        private static readonly System.Text.CompositeFormat s_tooltipCancelEscFormat =
+            CompositeFormat.Parse(PromptPlusResources.TooltipCancelEsc);
+        private static readonly System.Text.CompositeFormat s_tooltipChartBarSwitchLayoutFormat =
+            CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchLayout);
+        private static readonly System.Text.CompositeFormat s_tooltipChartBarSwitchLegendFormat =
+            CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchLegend);
+        private static readonly System.Text.CompositeFormat s_tooltipChartBarSwitchOrderFormat =
+            CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchOrder);
+
+        private readonly Dictionary<ChartBarStyles, Style> _optStyles;
         private CultureInfo _culture;
-        private readonly Dictionary<ChartBarStyles, Style> _optStyles = BaseControlOptions.LoadStyle<ChartBarStyles>();
         private List<ChartItem> _items = [];
         private ChartBarType _chartBarType = ChartBarType.Fill;
         private ChartBarLayout _layout = ChartBarLayout.Standard;
         private ChartBarOrder _order = ChartBarOrder.None;
         private Func<ChartItem, string>? _changeDescription;
-        private Func<ChartItem, (bool, string?)>? _predicatevalidselect;
+        private Func<ChartItem, Task<string>>? _changeDescriptionAsync;
+        private Func<ChartItem, (bool, string?)>? _predicateValidSelect;
+        private Func<ChartItem, Task<(bool, string?)>>? _predicateValidSelectAsync;
         private bool _hasLegends;
         private bool _showLegends;
+        private bool _enableLayoutSwitcher = true;
+        private bool _enableOrderingSwitcher = true;
         private byte _width;
         private byte _fractionalDigits = 2;
-        private int _startpage;
-        private int _indexitem;
-        private (string id, int page)[] _paginginfo = [];
-        private double _totalvalue;
+        private double _totalValue;
         private int _pageSize;
+        private int _effectivePageSize;
+        private Paginator<ChartItem>? _localPaginator;
         private HideChart _hideChart = HideChart.None;
-        private readonly List<string> _toggerTooptips = [];
-        private int _indexTooptip;
-        private string _tooltipModeInput = string.Empty;
-        private ChartItem? _currentitem;
+        private List<string> _toggleTooltips = [];
+        private int _indexTooltip;
         private int _sequence;
+        // Dedicated counter for auto-generated item ids — separate from _sequence (which only
+        // advances when a color is auto-assigned) so every AddItem call gets a stable, insertion-
+        // ordered id regardless of whether a color was passed explicitly.
+        private int _itemIdSequence;
         private string? _title;
         private TextAlignment _titleAlignment = TextAlignment.Center;
         private char _barOn = ' ';
         private double _ticketStep;
-        private int _maxlengthlabel;
-        private int _maxShowlengthlabel;
-        private EmacsBuffer? _answerBuffer;
-        private int _maxWidth;
+        private int _maxLengthLabel;
+        private int _maxLabelDisplayWidth;
+        private int _maxShowLengthLabel;
 
-        public void InternalTitle(string title, TextAlignment alignment)
+
+        public ChartBarControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions)
+            : base(isWidget, console, promptConfig, baseControlOptions)
         {
-            _title = title;
-            _titleAlignment = alignment;
+            _optStyles = OptionsControl.LoadStyle<ChartBarStyles>(console.CurrentStyle);
+            _culture = ConfigPrompt.DefaultCulture;
+            _pageSize = isWidget ? byte.MaxValue : (byte)0;
+            _width = ConfigPrompt.ChartWidth;
+            _maxShowLengthLabel = 0; // 0 = no truncation (show full labels)
         }
 
-        public void InternalShowLegends(bool value)
+        #region IChartBarControl
+
+        public IChartBarControl Layout(ChartBarLayout layout = ChartBarLayout.Standard)
+        {
+            _layout = layout;
+            return this;
+        }
+
+        public IChartBarControl Culture(CultureInfo culture)
+        {
+            ArgumentNullException.ThrowIfNull(culture);
+            if (!culture.Name.ExistsCulture())
+            {
+                throw new CultureNotFoundException(culture.Name);
+            }
+            _culture = culture;
+            return this;
+        }
+
+        public IChartBarControl BarType(ChartBarType type = ChartBarType.Fill)
+        {
+            _chartBarType = type;
+            return this;
+        }
+
+        public IChartBarControl Title(string title, TextAlignment alignment = TextAlignment.Center)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(title, nameof(title));
+            _title = title;
+            _titleAlignment = alignment;
+            return this;
+        }
+
+        public IChartBarControl Width(byte value)
+        {
+            if (value < 10)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), "Width must be at least 10.");
+            }
+            _width = value;
+            return this;
+        }
+
+        public IChartBarControl Styles(ChartBarStyles styleType, Style style)
+        {
+            _optStyles[styleType] = style;
+            return this;
+        }
+
+        public IChartBarControl AddItem(string label, double value, Color? colorBar = null, string? id = null)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(label, nameof(label));
+
+            // Zero-padded so a lexicographic string sort (e.g. ChartBarOrder.LabelAsc-style ties,
+            // or any future feature that orders by Id) still matches insertion order regardless of
+            // how many items are added — "0000000002" sorts before "0000000010", "2" would not.
+            var itemId = id ?? (_itemIdSequence++).ToString("D10", CultureInfo.InvariantCulture);
+
+            if (!colorBar.HasValue)
+            {
+                colorBar = (Color)(15 - (_sequence % 16));
+                _sequence++;
+            }
+
+            var item = new ChartItem(itemId, label, value, colorBar);
+            _items.Add(item);
+
+            return this;
+        }
+
+        public IChartBarControl MaxLengthLabel(byte value = 0)
+        {
+            // When value is 0, labels are not truncated (show full length)
+            // When value > 0, labels are truncated to the specified length
+            _maxShowLengthLabel = value;
+            return this;
+        }
+
+
+
+        public IChartBarControl ChangeDescription(Func<ChartItem, string> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescription = value;
+            _changeDescriptionAsync = null;
+            return this;
+        }
+
+        public IChartBarControl ChangeDescriptionAsync(Func<ChartItem, Task<string>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescriptionAsync = value;
+            _changeDescription = null;
+            return this;
+        }
+
+        public IChartBarControl Interaction<T>(IEnumerable<T> items, Action<T, IChartBarControl> interactionAction)
+        {
+            ArgumentNullException.ThrowIfNull(items);
+            ArgumentNullException.ThrowIfNull(interactionAction);
+
+            foreach (var item in items)
+            {
+                interactionAction.Invoke(item, this);
+            }
+            return this;
+        }
+
+        public IChartBarControl FractionalDigits(byte value)
+        {
+            if (value > 5)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), "FractionalDigits must be between 0 and 5.");
+            }
+            _fractionalDigits = value;
+            return this;
+        }
+
+        public IChartBarControl OrderBy(ChartBarOrder order)
+        {
+            _order = order;
+            return this;
+        }
+
+        public IChartBarControl ShowLegends(bool value = true)
         {
             _hasLegends = value;
             _showLegends = value;
-        }
-
-        public ChartBarControl(bool isWidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
-        {
-            _culture = ConfigPlus.DefaultCulture;
-            _pageSize = isWidget ? int.MaxValue : ConfigPlus.PageSize;
-            _width = ConfigPlus.ChartWidth;
-            _maxWidth = ConfigPlus.MaxWidth;
-            _maxShowlengthlabel = 20;
-        }
-
-        #region IChartBar
-
-        IChartBarControl IChartBarControl.MaxWidth(byte maxWidth)
-        {
-            if (maxWidth < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
-            }
-            _maxWidth = maxWidth;
             return this;
         }
 
-        IChartBarControl IChartBarControl.MaxLengthLabel(byte value)
+        public IChartBarControl EnableLayoutSwitcher(bool value = true)
         {
-            if (value < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "MaxLengthLabel must be greater than 0");
-            }
-            _maxShowlengthlabel = value;
+            _enableLayoutSwitcher = value;
             return this;
         }
+
+        public IChartBarControl EnableOrderingSwitcher(bool value = true)
+        {
+            _enableOrderingSwitcher = value;
+            return this;
+        }
+
+        public IChartBarControl HideElements(HideChart value)
+        {
+            _hideChart = value;
+            return this;
+        }
+
+        public IChartBarControl PageSize(byte value)
+        {
+            _pageSize = value;
+            return this;
+        }
+
+        public IChartBarControl Options(Action<IControlOptions> options)
+        {
+            ArgumentNullException.ThrowIfNull(options);
+            options.Invoke(OptionsControl);
+            return this;
+        }
+
+        public IChartBarControl PredicateSelected(Func<ChartItem, bool> validSelect)
+        {
+            ArgumentNullException.ThrowIfNull(validSelect);
+            _predicateValidSelect = item => (validSelect(item), null);
+            _predicateValidSelectAsync = null;
+            return this;
+        }
+
+        public IChartBarControl PredicateSelectedAsync(Func<ChartItem, Task<bool>> validSelect)
+        {
+            ArgumentNullException.ThrowIfNull(validSelect);
+            _predicateValidSelectAsync = async item => (await validSelect(item), (string?)null);
+            _predicateValidSelect = null;
+            return this;
+        }
+
+        public IChartBarControl PredicateSelected(Func<ChartItem, (bool, string?)> validSelect)
+        {
+            ArgumentNullException.ThrowIfNull(validSelect);
+            _predicateValidSelect = validSelect;
+            _predicateValidSelectAsync = null;
+            return this;
+        }
+
+        public IChartBarControl PredicateSelectedAsync(Func<ChartItem, Task<(bool, string?)>> validSelect)
+        {
+            ArgumentNullException.ThrowIfNull(validSelect);
+            _predicateValidSelectAsync = validSelect;
+            _predicateValidSelect = null;
+            return this;
+        }
+
+        #endregion
+
+        #region IChartBarWidget
 
         IChartBarWidget IChartBarWidget.Layout(ChartBarLayout layout)
         {
@@ -106,6 +299,12 @@ namespace PromptPlusLibrary.Controls.ChartBar
         IChartBarWidget IChartBarWidget.BarType(ChartBarType type)
         {
             BarType(type);
+            return this;
+        }
+
+        IChartBarWidget IChartBarWidget.Title(string title, TextAlignment alignment)
+        {
+            Title(title, alignment);
             return this;
         }
 
@@ -127,14 +326,22 @@ namespace PromptPlusLibrary.Controls.ChartBar
             return this;
         }
 
-        IChartBarWidget IChartBarWidget.Interaction<T>(IEnumerable<T> items, Action<T, IChartBarWidget> interactionaction)
+        IChartBarWidget IChartBarWidget.MaxLengthLabel(byte value)
+        {
+            MaxLengthLabel(value);
+            return this;
+        }
+
+
+
+        IChartBarWidget IChartBarWidget.Interaction<T>(IEnumerable<T> items, Action<T, IChartBarWidget> interactionAction)
         {
             ArgumentNullException.ThrowIfNull(items);
-            ArgumentNullException.ThrowIfNull(interactionaction);
+            ArgumentNullException.ThrowIfNull(interactionAction);
 
-            foreach (T? item in items)
+            foreach (var item in items)
             {
-                interactionaction.Invoke(item, this);
+                interactionAction.Invoke(item, this);
             }
             return this;
         }
@@ -151,866 +358,714 @@ namespace PromptPlusLibrary.Controls.ChartBar
             return this;
         }
 
+        IChartBarWidget IChartBarWidget.ShowLegends(bool value)
+        {
+            ShowLegends(value);
+            return this;
+        }
+
         IChartBarWidget IChartBarWidget.HideElements(HideChart value)
         {
             HideElements(value);
             return this;
         }
 
-        public IChartBarControl Title(string title, TextAlignment alignment = TextAlignment.Center)
-        {
-            _title = title ?? throw new ArgumentNullException(nameof(title), "Title cannot be null");
-            _titleAlignment = alignment;
-            return this;
-        }
-
-        public IChartBarControl Options(Action<IControlOptions> options)
-        {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
-            return this;
-        }
-
-        public IChartBarControl HideElements(HideChart value)
-        {
-            _hideChart = value;
-            return this;
-        }
-
-        public IChartBarControl AddItem(string label, double value, Color? colorBar = null, string? id = null)
-        {
-            if (string.IsNullOrEmpty(label))
-            {
-                throw new ArgumentException("Label cannot be null or empty", nameof(label));
-            }
-            _sequence++;
-            string idlist = $"{_sequence:D5}|{id ?? string.Empty}";
-            _items.Add(new ChartItem(idlist, label, value, colorBar));
-            return this;
-        }
-
-        public IChartBarControl ChangeDescription(Func<ChartItem, string> value)
-        {
-            if (IsWidgetControl)
-            {
-                throw new InvalidOperationException("PageSize not available in WidgetControl");
-            }
-            ArgumentNullException.ThrowIfNull(value);
-            _changeDescription = value;
-            return this;
-        }
-
-        public IChartBarControl BarType(ChartBarType type = ChartBarType.Fill)
-        {
-            _chartBarType = type;
-            return this;
-        }
-
-        public IChartBarControl Culture(CultureInfo culture)
-        {
-            ArgumentNullException.ThrowIfNull(culture);
-            if (!culture.Name.ExistsCulture())
-            {
-                throw new CultureNotFoundException(culture.Name);
-            }
-            _culture = culture;
-            return this;
-        }
-
-        public IChartBarControl Interaction<T>(IEnumerable<T> items, Action<T, IChartBarControl> interactionaction)
-        {
-            ArgumentNullException.ThrowIfNull(items);
-            ArgumentNullException.ThrowIfNull(interactionaction);
-
-            foreach (T? item in items)
-            {
-                interactionaction.Invoke(item, this);
-            }
-            return this;
-        }
-
-        public IChartBarControl Layout(ChartBarLayout layout = ChartBarLayout.Standard)
-        {
-            _layout = layout;
-            return this;
-        }
-
-        public IChartBarControl OrderBy(ChartBarOrder order)
-        {
-            _order = order;
-            return this;
-        }
-
-        public IChartBarControl ShowLegends(bool value = true)
-        {
-            _hasLegends = value;
-            _showLegends = value;
-            return this;
-        }
-
-        public IChartBarControl Styles(ChartBarStyles styleType, Style style)
-        {
-            _optStyles[styleType] = style;
-            return this;
-        }
-
-        public IChartBarControl PredicateSelected(Func<ChartItem, bool> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) =>
-            {
-                bool fn = validselect(input);
-                if (fn)
-                {
-                    return (true, null);
-                }
-                return (false, null);
-            };
-            return this;
-        }
-
-        public IChartBarControl PredicateSelected(Func<ChartItem, (bool, string?)> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            return this;
-        }
-
-        public IChartBarControl Width(byte value)
-        {
-            if (value < 10)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "Width must be greater or equal than 10");
-            }
-            _width = value;
-            return this;
-        }
-
-        public IChartBarControl FractionalDigits(byte value)
-        {
-            _fractionalDigits = value;
-            return _fractionalDigits > 5 ? throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5") : (IChartBarControl)this;
-        }
-
-        public IChartBarControl PageSize(byte value)
-        {
-            if (IsWidgetControl)
-            {
-                throw new InvalidOperationException("PageSize not available in WidgetControl");
-            }
-            if (value < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "PageSize must be greater or equal than 1");
-            }
-            _pageSize = value;
-            return this;
-        }
-
         #endregion
+
+        #region BaseControlPrompt Implementation
 
         public override void InitControl(CancellationToken cancellationToken)
         {
-            if (_maxWidth > _width)
-            {
-                _maxWidth = _width;
-            }
-            _answerBuffer = new(true, CaseOptions.Any, (_) => true,int.MaxValue, _maxWidth);
             if (_items.Count == 0)
             {
-                throw new InvalidOperationException("No items to show");
+                throw new InvalidOperationException("No items to show in chart. Use AddItem() to add data.");
             }
-            if (IsWidgetControl)
-            {
-                _pageSize = int.MaxValue;
-            }
+
             double maxValue = _items.Max(x => x.Value);
             _ticketStep = maxValue == 0 ? 1 : _width / maxValue;
-            _maxlengthlabel = _items.Max(x => x.Label.Length);
-            if (IsWidgetControl)
+
+            // MaxLengthLabel's public contract is a count of symbols/runes (documented as
+            // "characters"), not display columns — counted by rune so a CJK supplementary-plane
+            // surrogate pair is never counted as 2.
+            _maxLengthLabel = _items.Max(x => DisplayWidthHelpers.CountRunes(x.Label));
+
+            if (_maxShowLengthLabel > 0 && _maxLengthLabel > _maxShowLengthLabel)
             {
-                _maxShowlengthlabel = int.MaxValue;
+                _maxLengthLabel = _maxShowLengthLabel;
             }
-            if (_maxlengthlabel > _maxShowlengthlabel && !IsWidgetControl)
+            else if (_maxShowLengthLabel == 0)
             {
-                _maxlengthlabel = _maxShowlengthlabel;
+                _maxShowLengthLabel = int.MaxValue;
             }
-            switch (_chartBarType)
+
+            // Column alignment across items must be based on the DISPLAY WIDTH of each label once
+            // truncated to _maxLengthLabel runes, not on _maxLengthLabel itself — an ASCII label and a
+            // CJK label truncated to the same rune count can occupy very different terminal columns.
+            _maxLabelDisplayWidth = _items.Max(x =>
             {
-                case ChartBarType.Fill:
-                    break;
-                case ChartBarType.Light:
-                    _barOn = ConfigPlus.GetSymbol(SymbolType.ChartLight)[0];
-                    break;
-                case ChartBarType.Square:
-                    _barOn = ConfigPlus.GetSymbol(SymbolType.ChartSquare)[0];
-                    break;
-                default:
-                    throw new NotImplementedException($"Not implemented {_chartBarType}");
-            }
-            _totalvalue = _items.Sum(x => Math.Round(x.Value, _fractionalDigits));
-            //order items
+                string truncated = DisplayWidthHelpers.TruncateToRuneCount(x.Label, _maxLengthLabel);
+                return truncated.GetDisplayLength() is { Length: > 0 } d ? d[0] : 0;
+            });
+
+            _barOn = _chartBarType switch
+            {
+                ChartBarType.Fill => ' ',
+                ChartBarType.Light => GetSymbol(SymbolType.ChartLight)[0],
+                ChartBarType.Square => GetSymbol(SymbolType.ChartSquare)[0],
+                _ => throw new NotImplementedException($"ChartBarType {_chartBarType} not implemented"),
+            };
+
+            _totalValue = _items.Sum(x => Math.Round(x.Value, _fractionalDigits));
+
             ChangeOrder();
 
-            //auto-color
-            int indexcolor = 15;
-            foreach (ChartItem item in _items)
+            // Auto-assign colors and calculate percentages
+            int indexColor = 15;
+            foreach (var item in _items)
             {
                 if (!item.Color.HasValue)
                 {
-                    if (Color.FromInt32(indexcolor) == Color.FromConsoleColor(ConsolePlus.BackgroundColor))
+                    if (Color.FromInt32(indexColor) == Color.FromConsoleColor(ConsoleHandler.BackgroundColor))
                     {
-                        indexcolor--;
-                        if (indexcolor < 0)
+                        indexColor--;
+                        if (indexColor < 0)
                         {
-                            indexcolor = 15;
+                            indexColor = 15;
                         }
                     }
-                    item.Color = Color.FromInt32(indexcolor);
-                    indexcolor--;
+                    item.Color = Color.FromInt32(indexColor);
+                    indexColor--;
                 }
-                item.Percent = Math.Round((100 * item.Value) / _totalvalue, _fractionalDigits);
+
+                item.Percent = Math.Round((100 * item.Value) / _totalValue, _fractionalDigits);
                 item.StyleBar = _chartBarType == ChartBarType.Fill
                     ? new Style(item.Color.Value, item.Color.Value)
-                    : Style.Default().ForeGround(item.Color.Value);
-            }
-            _currentitem = _items.FirstOrDefault();
-            if (_currentitem != null)
-            {
-                var answer = _currentitem!.Label;
-                if (_layout == ChartBarLayout.Stacked && !_showLegends)
-                {
-                    answer = $"{_currentitem!.Label}: {ValueToString(_currentitem!.Value)}({ValueToString(_currentitem.Percent)}%)";
-                }
-                _answerBuffer!.LoadPrintable(answer);
-                _answerBuffer.ToHome();
-            }
-            LoadTooltipToggle();
-            _tooltipModeInput = GetTooltipModeInput();
-        }
-
-        public override void BufferTemplate(BufferScreen screenBuffer)
-        {
-            if (!IsWidgetControl)
-            {
-                WritePrompt(screenBuffer);
-
-                WriteAnswer(screenBuffer);
-
-                WriteDescription(screenBuffer);
+                    : ConsoleHandler.CurrentStyle.ForeGround(item.Color.Value);
             }
 
-            WriteTitle(screenBuffer);
+            _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, (byte)_pageSize);
 
-            WriteChartBar(screenBuffer);
+            _localPaginator = new Paginator<ChartItem>(
+                FilterMode.Disabled,
+                _items,
+                _effectivePageSize,
+                Optional<ChartItem>.Empty(),
+                (item1, item2) => item1.Id == item2.Id,
+                null,
+                null,
+                null);
 
-            WriteLegends(screenBuffer);
-
-            if (!_hideChart.HasFlag(HideChart.Ordering) && !IsWidgetControl)
+            if (_localPaginator.SelectedItem == null)
             {
-                screenBuffer.WriteLine(string.Format(Messages.TooltipOrder, TextOrder(_order)), _optStyles[ChartBarStyles.ChartOrder]);
+                _localPaginator.FirstItem();
             }
 
-            if (!IsWidgetControl)
+            if (!IsWidget)
             {
-                if (_pageSize < _items.Count)
-                {
-                    string template = ConfigPlus.PaginationTemplate.Invoke(
-                        _items.Count,
-                        _startpage + 1,
-                        _items.Count / _pageSize + 1
-                    )!;
-                    screenBuffer.WriteLine(template, _optStyles[ChartBarStyles.Pagination]);
-                }
-                WriteTooltip(screenBuffer);
+                LoadTooltipToggle();
             }
         }
 
         public override bool TryResult(CancellationToken cancellationToken)
         {
-            bool oldcursor = ConsolePlus.CursorVisible;
-            ConsolePlus.CursorVisible = true;
-            bool updateposanswer = false;
+            if (IsWidget)
+            {
+                return false;
+            }
+
+            bool oldCursor = ConsoleHandler.CursorVisible;
+            ConsoleHandler.CursorVisible = true;
             try
             {
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    updateposanswer = false;
-                    ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
+                    KeyPressResult press = ReadNextKey(true, cancellationToken);
 
-                    #region default Press to Finish and tooltip
-
-                    if (cancellationToken.IsCancellationRequested)
+                    if (press.IsResize || press.IsCancelled)
                     {
-                        _indexTooptip = 0;
-                        ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, true);
+                        if (press.IsCancelled)
+                        {
+                            _indexTooltip = 0;
+                            ResultCtrl = new ResultPrompt<ChartItem?>(_localPaginator?.SelectedItem, true);
+                        }
                         break;
                     }
-                    else if (IsAbortKeyPress(keyinfo))
+
+                    ConsoleKeyInfo keyInfo = press.Key;
+
+                    if (IsAbortKeyPress(keyInfo))
                     {
-                        _indexTooptip = 0;
-                        ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, true);
+                        _indexTooltip = 0;
+                        ResultCtrl = new ResultPrompt<ChartItem?>(_localPaginator?.SelectedItem, true);
                         break;
                     }
-                    else if (keyinfo.IsPressEnterKey())
+
+                    if (keyInfo.IsPressEnterKey())
                     {
-                        _indexTooptip = 0;
-                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_currentitem!) ?? (true, null);
+                        _indexTooltip = 0;
+
+                        (bool ok, string? message) = ValidateSelection(_localPaginator?.SelectedItem!).Result;
+
                         if (!ok)
                         {
-                            if (string.IsNullOrEmpty(message))
-                            {
-                                SetError(Messages.PredicateSelectInvalid);
-                            }
-                            else
-                            {
-                                SetError(message);
-                            }
+                            SetError(message ?? PromptPlusResources.PredicateSelectInvalid);
                             break;
                         }
-                        ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, false);
+
+                        ResultCtrl = new ResultPrompt<ChartItem?>(_localPaginator?.SelectedItem, false);
                         break;
                     }
-                    else if (IsTooltipToggerKeyPress(keyinfo))
+
+                    if (IsTooltipToggerKeyPress(keyInfo))
                     {
-                        _indexTooptip++;
-                        if (_indexTooptip > _toggerTooptips.Count)
+                        _indexTooltip++;
+                        if (_indexTooltip > _toggleTooltips.Count)
                         {
-                            _indexTooptip = 0;
+                            _indexTooltip = 0;
                         }
                         break;
                     }
-                    else if (CheckTooltipShowHideKeyPress(keyinfo))
+
+                    // Tooltip show/hide
+                    if (CheckTooltipShowHideKeyPress(keyInfo))
                     {
-                        _indexTooptip = 0;
                         break;
                     }
 
-                    #endregion
-
-                    else if (ConfigPlus.HotKeyTooltipChartBarSwitchLayout.Equals(keyinfo) && !_hideChart.HasFlag(HideChart.Layout))
+                    // Switch Layout
+                    if (ConfigPrompt.HotKeyChartBarSwitchLayout.Equals(keyInfo) && _enableLayoutSwitcher)
                     {
-                        _layout = _layout == ChartBarLayout.Standard ? ChartBarLayout.Stacked : ChartBarLayout.Standard;
-                        _indexitem = 0;
-                        _startpage = 0;
-                        _currentitem = _items[_indexitem];
-                        updateposanswer = true;
+                        ChartBarLayout targetLayout = _layout == ChartBarLayout.Standard ? ChartBarLayout.Stacked : ChartBarLayout.Standard;
+
+                        // Only switch to Stacked if there's enough space
+                        if (targetLayout == ChartBarLayout.Stacked && !CanRenderStackedLayout())
+                        {
+                            // Cannot switch to stacked layout - not enough width
+                            _indexTooltip = 0;
+                            break;
+                        }
+
+                        _layout = targetLayout;
+                        _localPaginator?.FirstItem();
+                        _indexTooltip = 0;
                         break;
                     }
-                    else if (ConfigPlus.HotKeyTooltipChartBarSwitchLegend.Equals(keyinfo) && _hasLegends)
+
+                    // Switch Legend
+                    if (ConfigPrompt.HotKeyChartBarSwitchLegend.Equals(keyInfo) && _hasLegends)
                     {
                         _showLegends = !_showLegends;
+                        _indexTooltip = 0;
                         break;
                     }
-                    else if (ConfigPlus.HotKeyTooltipChartBarSwitchOrder.Equals(keyinfo) && !_hideChart.HasFlag(HideChart.Ordering))
+
+                    // Switch Order
+                    if (ConfigPrompt.HotKeyChartBarSwitchOrder.Equals(keyInfo) && _enableOrderingSwitcher)
                     {
-                        int intorder = (int)_order;
-                        intorder++;
-                        if (!Enum.IsDefined(typeof(ChartBarOrder), intorder))
+                        int intOrder = (int)_order;
+                        intOrder++;
+                        if (!Enum.IsDefined(typeof(ChartBarOrder), intOrder))
                         {
-                            intorder = 0;
+                            intOrder = 0;
                         }
-                        _order = (ChartBarOrder)intorder;
+                        _order = (ChartBarOrder)intOrder;
                         ChangeOrder();
-                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
-                        _indexTooptip = 0;
+                        _indexTooltip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressCtrlHomeKey())
+
+                    // Ctrl+Home
+                    if (keyInfo.IsPressCtrlHomeKey())
                     {
-                        _indexitem = 0;
-                        _currentitem = _items[_indexitem];
-                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
-                        _indexTooptip = 0;
-                        break;
-                    }
-                    else if (keyinfo.IsPressCtrlEndKey())
-                    {
-                        _indexitem = _items.Count - 1;
-                        _currentitem = _items[_indexitem];
-                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
-                        _indexTooptip = 0;
-                        break;
-                    }
-                    else if (keyinfo.IsPressPageUpKey())
-                    {
-                        if (_indexitem == 0)
+                        if (!_localPaginator!.Home())
                         {
-                            _indexitem = _items.Count - 1;
+                            continue;
+                        }
+                        _indexTooltip= 0;
+                        break;
+                    }
+
+                    // Ctrl+End
+                    if (keyInfo.IsPressCtrlEndKey())
+                    {
+                        if (!_localPaginator!.End())
+                        {
+                            continue;
+                        }
+                        _indexTooltip = 0;
+                        break;
+                    }
+
+                    // Navigation: Up arrow / Left arrow  when stacked 
+                    if (keyInfo.IsPressUpArrowKey() || (keyInfo.IsPressLeftArrowKey() && _layout == ChartBarLayout.Stacked))
+                    {
+                        if (_localPaginator!.IsFirstPageItem)
+                        {
+                            _localPaginator!.PreviousPage(IndexOption.LastItem);
                         }
                         else
                         {
-                            _indexitem -= _pageSize;
-                            if (_indexitem < 0)
-                            {
-                                _indexitem = 0;
-                            }
+                            _localPaginator!.PreviousItem();
                         }
-                        _currentitem = _items[_indexitem];
-                        updateposanswer = true;
-                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
-                        _indexTooptip = 0;
+                        _indexTooltip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressPageDownKey())
+
+                    // Navigation: Down arrow / Right arrow  when stacked
+                    if (keyInfo.IsPressDownArrowKey() || (keyInfo.IsPressRightArrowKey() && _layout == ChartBarLayout.Stacked))
                     {
-                        if (_indexitem == _items.Count - 1)
+                        if (_localPaginator!.IsLastPageItem)
                         {
-                            _indexitem = 0;
+                            _localPaginator.NextPage(IndexOption.FirstItem);
                         }
                         else
                         {
-                            _indexitem += _pageSize;
-                            if (_indexitem > _items.Count - 1)
-                            {
-                                _indexitem = _items.Count - 1;
-                            }
+                            _localPaginator.NextItem();
                         }
-                        _currentitem = _items[_indexitem];
-                        updateposanswer = true;
-                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
-                        _indexTooptip = 0;
+                        _indexTooltip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressUpArrowKey())
+
+                    // Page Up 
+                    if (keyInfo.IsPressPageUpKey())
                     {
-                        if (_indexitem - 1 >= 0)
+                        if (_localPaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                         {
-                            _indexitem--;
+                            _indexTooltip = 0;
+                            break;
                         }
-                        else
-                        {
-                            _indexitem = _items.Count - 1;
-                        }
-                        _currentitem = _items[_indexitem];
-                        updateposanswer = true;
-                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
-                        _indexTooptip = 0;
-                        break;
                     }
-                    else if (keyinfo.IsPressDownArrowKey())
+
+                    // Page Down 
+                    if (keyInfo.IsPressPageDownKey())
                     {
-                        if (_indexitem + 1 < _items.Count)
+                        if (_localPaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                         {
-                            _indexitem++;
+                            _indexTooltip = 0;
+                            break;
                         }
-                        else
-                        {
-                            _indexitem = 0;
-                        }
-                        _currentitem = _items[_indexitem];
-                        updateposanswer = true;
-                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
-                        _indexTooptip = 0;
-                        break;
-                    }
-                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
-                    {
-                        _indexTooptip = 0;
-                        break;
                     }
                 }
             }
             finally
             {
-                ConsolePlus.CursorVisible = oldcursor;
+                ConsoleHandler.CursorVisible = oldCursor;
             }
-            if (_currentitem != null && updateposanswer)
-            {
-                var answer = _currentitem!.Label;
-                if (_layout == ChartBarLayout.Stacked && !_showLegends)
-                {
-                    answer = $"{_currentitem!.Label}: {ValueToString(_currentitem!.Value)}({ValueToString(_currentitem.Percent)}%)";
-                }
-                _answerBuffer!.LoadPrintable(answer);
-                _answerBuffer.ToHome();
-            }
+
             return ResultCtrl != null;
         }
 
+        public override void BufferTemplate(BufferScreen screenBuffer)
+        {
+            // Re-evaluate the effective page size every frame so the visible items count
+            // stays in sync with the current console height (after any terminal resize).
+            int targetPageSize = ComputeEffectivePageSize(ReservedTemplateLines, (byte)_pageSize);
+            if (targetPageSize != _effectivePageSize)
+            {
+                _effectivePageSize = targetPageSize;
+                _localPaginator?.UpdatePageSize(_effectivePageSize);
+            }
 
+            if (!IsWidget)
+            {
+                WritePrompt(screenBuffer, _optStyles[ChartBarStyles.Prompt]);
+                WriteAnswer(screenBuffer);
+                WriteDescription(screenBuffer);
+            }
+
+            WriteChart(screenBuffer);
+
+            if (!IsWidget)
+            {
+                WriteTooltip(screenBuffer);
+                WriteError(screenBuffer, _optStyles[ChartBarStyles.Error]);
+            }
+        }
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            WritePrompt(screenBuffer);
+            WritePrompt(screenBuffer, _optStyles[ChartBarStyles.Prompt]);
 
-            screenBuffer.Write("  ", new Style(_currentitem!.Color!.Value, _currentitem!.Color!.Value));
-            screenBuffer.Write(" ", Style.Default());
-            if (!IsWidgetControl)
-            {
-                var answer = _answerBuffer!.ToString();
-                if (answer.Length > _maxWidth!)
-                {
-                    answer = answer[.._maxWidth] + "...";
-                }
-                screenBuffer.WriteLine(answer, _optStyles[ChartBarStyles.Answer]);
-            }
+            string answer = ResultCtrl!.Value.IsAborted
+                ? OptionsControl.EnabledAbortKeyValue ? PromptPlusResources.CanceledKey : string.Empty
+                : ResultCtrl.Value.Content?.Label ?? string.Empty;
 
-            if (!_hideChart.HasFlag(HideChart.ChartbarAtFinish))
-            {
-                WriteTitle(screenBuffer);
-                WriteChartBar(screenBuffer);
-                WriteLegends(screenBuffer);
-            }
+            screenBuffer.WriteLine(answer, _optStyles[ChartBarStyles.Answer]);
 
             return true;
         }
 
         public override void FinalizeControl()
         {
-            //none
+            // Cleanup if needed
         }
+
+        #endregion
+
+        #region Helper Methods
 
         private void ChangeOrder()
         {
-            //order items
+            // Preserve current item before reordering
+            ChartItem? currentItem = _localPaginator?.SelectedItem;
+
             _items = _order switch
             {
-                ChartBarOrder.None => [.. _items.OrderBy(x => x.Id)],
+                // Documented as "No sorting applied; items appear in insertion order" — must be a
+                // true no-op. Sorting by Id here was a real bug: auto-generated ids used to be
+                // random GUIDs (fixed alongside this, see AddItem), so "None" silently randomized
+                // item order on every run instead of preserving insertion order.
+                ChartBarOrder.None => _items,
                 ChartBarOrder.Smallest => [.. _items.OrderBy(x => x.Value)],
                 ChartBarOrder.Highest => [.. _items.OrderByDescending(x => x.Value)],
                 ChartBarOrder.LabelAsc => [.. _items.OrderBy(x => x.Label)],
-                ChartBarOrder.LabelDec => [.. _items.OrderByDescending(x => x.Label)],
-                _ => throw new NotImplementedException($"ChartOrder {_order} Not implemented"),
+                ChartBarOrder.LabelDesc => [.. _items.OrderByDescending(x => x.Label)],
+                _ => throw new NotImplementedException($"ChartBarOrder {_order} not implemented"),
             };
-            List<(string id, int page)> auxpaginginfo = [];
-            int page = 0;
-            int index = 0;
-            foreach (ChartItem item in _items)
+
+            // Reinitialize paginator with reordered items
+            if (_localPaginator != null)
             {
-                index++;
-                if (index > _pageSize)
+                Optional<ChartItem> defaultValue = currentItem != null
+                    ? Optional<ChartItem>.Set(currentItem)
+                    : Optional<ChartItem>.Empty();
+                
+                _localPaginator.UpdateCollection(_items, defaultValue);
+
+                if (_localPaginator.SelectedItem == null)
                 {
-                    index = 1;
-                    page++;
+                    _localPaginator.FirstItem();
                 }
-                auxpaginginfo.Add(new(item.Id, page));
             }
-            _paginginfo = [.. auxpaginginfo];
         }
 
-        private string GetTooltipModeInput()
+        private async Task<(bool, string?)> ValidateSelection(ChartItem item)
         {
-            if (IsWidgetControl)
+            if (_predicateValidSelectAsync != null)
             {
-                return string.Empty;
+                return await _predicateValidSelectAsync(item);
             }
+            if (_predicateValidSelect != null)
+            {
+                return _predicateValidSelect(item);
+            }
+            return (true, null);
+        }
+
+        private static string GetTooltipMain()
+        {
             StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            tooltip.Append(", ");
-            tooltip.Append(Messages.InputFinishEnter);
+            tooltip.Append(PromptPlusResources.TooltipEnterFinish);
+            tooltip.Append('.');
+            tooltip.Append(PromptPlusResources.TooltipBaseNavegate);
+            tooltip.Append('.');
             return tooltip.ToString();
+        }
+
+        /// <summary>
+        /// Validates if the console has enough width to render the stacked layout.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the console width is sufficient to render all chart items 
+        /// in stacked layout; otherwise, <see langword="false"/>.
+        /// </returns>
+        /// <remarks>
+        /// The stacked layout requires a minimum console width calculated as the maximum value 
+        /// between the chart width (<see cref="_width"/>) and the number of items (<see cref="_items"/>.Count), 
+        /// plus a margin of 2 characters. If the current console width is insufficient, 
+        /// the layout switch to stacked mode will be prevented to avoid rendering issues.
+        /// </remarks>
+        private bool CanRenderStackedLayout()
+        {
+            // Stacked layout requires enough console width to render all items
+            // The minimum required width is the chart width (_width) plus some margin
+            // Also need to ensure we have at least one character per item
+            int minimumWidth = Math.Max(_width, _items.Count);
+
+            // Add some buffer for margins and ensure we don't exceed console width
+            return ConsoleHandler.Width >= minimumWidth + 2; // +2 for minimal margins
         }
 
         private void LoadTooltipToggle()
         {
-            if (IsWidgetControl)
+            List<string> lsttooltips =
+            [
+                GetTooltipMain()
+            ];
+
+            // Navigation tooltip
+            lsttooltips.Add(PromptPlusResources.TooltipPages);
+
+            // Enter to select
+            lsttooltips.Add(PromptPlusResources.TooltipEnterSelect);
+
+            // Switch Layout (if enabled)
+            if (_enableLayoutSwitcher)
             {
-                return;
+                lsttooltips.Add(string.Format(_culture, s_tooltipChartBarSwitchLayoutFormat, ConfigPrompt.HotKeyChartBarSwitchLayout));
             }
-            _toggerTooptips.Clear();
-            _toggerTooptips.Add(Messages.TooltipPages);
-            if (GeneralOptions.EnabledAbortKeyValue)
+
+            // Switch Legend (if has legends)
+            if (_hasLegends)
             {
-                _toggerTooptips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}");
+                lsttooltips.Add(string.Format(_culture, s_tooltipChartBarSwitchLegendFormat, ConfigPrompt.HotKeyChartBarSwitchLegend));
             }
-            else
+
+            // Switch Order (if enabled)
+            if (_enableOrderingSwitcher)
             {
-                _toggerTooptips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}");
+                lsttooltips.Add(string.Format(_culture, s_tooltipChartBarSwitchOrderFormat, ConfigPrompt.HotKeyChartBarSwitchOrder));
             }
-            if (!_hideChart.HasFlag(HideChart.Ordering))
+
+            // Abort key (if enabled)
+            if (OptionsControl.EnabledAbortKeyValue)
             {
-                _toggerTooptips.Add($"{string.Format(Messages.TooltipChartSwitchOrder, ConfigPlus.HotKeyTooltipChartBarSwitchOrder)}");
+                lsttooltips.Add(string.Format(_culture, s_tooltipCancelEscFormat, ConfigPrompt.HotKeyAbortKeyPress));
             }
-            if (_showLegends)
-            {
-                _toggerTooptips.Add($"{string.Format(Messages.TooltipChartSwitchLegend, ConfigPlus.HotKeyTooltipChartBarSwitchLegend)}");
-            }
-            if (!_hideChart.HasFlag(HideChart.Layout))
-            {
-                _toggerTooptips.Add($"{string.Format(Messages.TooltipChartSwitchType, ConfigPlus.HotKeyTooltipChartBarSwitchLayout)}");
-            }
+
+            // Tooltip toggle key
+            lsttooltips.Add(string.Format(_culture, s_tooltipShowHideFormat, ConfigPrompt.HotKeyTooltipShowHide));
+
+            _toggleTooltips = lsttooltips;
         }
 
-        private void WritePrompt(BufferScreen screenBuffer)
+        private string ValueToString(double value)
         {
-            if (IsWidgetControl)
-            {
-                return;
-            }
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[ChartBarStyles.Prompt]);
-            }
-            return;
+            return Math.Round(value, _fractionalDigits).ToString($"F{_fractionalDigits}", _culture);
         }
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
-            screenBuffer.Write("  ", new Style(_currentitem!.Color!.Value, _currentitem!.Color!.Value));
-            screenBuffer.Write(" ", Style.Default());
-            if (!IsWidgetControl)
+            ChartItem? currentItem = _localPaginator?.SelectedItem;
+            if (currentItem == null)
             {
-                string str = _answerBuffer!.IsHideLeftBuffer
-                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
-                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
-                screenBuffer.Write(str, _optStyles[ChartBarStyles.Answer]);
-                screenBuffer.Write(_answerBuffer!.ToBackward(), _optStyles[ChartBarStyles.Answer]);
-                screenBuffer.SavePromptCursor();
-                screenBuffer.Write(_answerBuffer!.ToForward(), _optStyles[ChartBarStyles.Answer]);
-                str = _answerBuffer.IsHideRightBuffer
-                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
-                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
-                screenBuffer.Write(str, _optStyles[ChartBarStyles.Answer]);
+                screenBuffer.WriteLine(string.Empty, _optStyles[ChartBarStyles.Answer]);
+                return;
             }
-            else
+
+            string answer = currentItem.Label;
+
+            // Add value when applicable (not hidden)
+            if (!_hideChart.HasFlag(HideChart.Values))
             {
-                screenBuffer.Write(_answerBuffer!.ToString(), _optStyles[ChartBarStyles.Answer]);
+                answer = $"{answer}: {ValueToString(currentItem.Value)}";
             }
-            screenBuffer.WriteLine("", _optStyles[ChartBarStyles.Answer]);
+
+            // Add percentage when applicable (not hidden)
+            if (!_hideChart.HasFlag(HideChart.Percentage))
+            {
+                answer = $"{answer} ({ValueToString(currentItem.Percent)}%)";
+            }
+
+            if (_layout != ChartBarLayout.Standard && !_hasLegends)
+            {
+                var stylemarkcolor = (currentItem.StyleBar ?? ConsoleHandler.CurrentStyle).Background(ConsoleHandler.CurrentStyle.Background);
+                screenBuffer.Write(GetSymbol(SymbolType.ChartLabel), stylemarkcolor);
+                screenBuffer.Write(" ", ConsoleHandler.CurrentStyle);
+            }
+            screenBuffer.Write(answer, _optStyles[ChartBarStyles.Answer]);
+            screenBuffer.SavePromptCursor();
+            screenBuffer.WriteLine(string.Empty, _optStyles[ChartBarStyles.Answer]);
         }
 
         private void WriteDescription(BufferScreen screenBuffer)
         {
-            if (IsWidgetControl)
+            ChartItem? currentItem = _localPaginator?.SelectedItem;
+            string? desc = OptionsControl.DescriptionValue;
+            if (_changeDescriptionAsync is not null && currentItem is not null)
             {
-                return;
+                desc = _changeDescriptionAsync.Invoke(currentItem)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
             }
-            string? desc = _changeDescription?.Invoke(_currentitem!) ?? GeneralOptions.DescriptionValue;
+            else if (_changeDescription is not null && currentItem is not null)
+            {
+                desc = _changeDescription.Invoke(currentItem);
+            }
             if (!string.IsNullOrEmpty(desc))
             {
-                screenBuffer.WriteLine(desc, _optStyles[ChartBarStyles.Description]);
+                screenBuffer.WriteLine(desc, _optStyles[ChartBarStyles.Prompt]);
             }
         }
 
         private void WriteTooltip(BufferScreen screenBuffer)
         {
-            if (!IsShowTooltip || IsWidgetControl)
+            if (!IsShowTooltip)
             {
                 return;
             }
-            string tooltip = _tooltipModeInput;
-            if (_indexTooptip > 0)
+            if (_indexTooltip >= _toggleTooltips.Count)
             {
-                tooltip = GetTooltipToggle();
+                _indexTooltip = 0;
             }
-            screenBuffer.Write(tooltip!, _optStyles[ChartBarStyles.Tooltips]);
+            string? tooltip = _indexTooltip < _toggleTooltips.Count ? _toggleTooltips[_indexTooltip] : null;
+            if (!string.IsNullOrEmpty(tooltip))
+            {
+                tooltip = $"{ConfigPrompt.HotKeyTooltip}:{PromptPlusResources.TooltipBase}.{tooltip}";
+                if (!tooltip.EndsWith('.'))
+                {
+                    tooltip = $"{tooltip}.";
+                }
+                screenBuffer.WriteLine(tooltip, _optStyles[ChartBarStyles.Prompt]);
+            }
         }
 
-        private string GetTooltipToggle()
+        // Helper method to write a line with alignment.
+        private void WriteLineAlign(BufferScreen screenBuffer, string text, TextAlignment alignment, Style style)
         {
-            return _toggerTooptips[_indexTooptip - 1];
+            screenBuffer.WriteLine(DisplayWidthHelpers.AlignLine(text, _width, alignment), style);
+        }
+
+        private void WriteChart(BufferScreen screenBuffer)
+        {
+            // Write title if set
+            if (!string.IsNullOrEmpty(_title) && !_hideChart.HasFlag(HideChart.Title))
+            {
+                WriteLineAlign(screenBuffer, _title, _titleAlignment, _optStyles[ChartBarStyles.ChartTitle]);
+            }
+
+            // Get visible items for current page from Paginator
+            IEnumerable<ChartItem> visibleItems;
+            if (_localPaginator != null && !IsWidget)
+            {
+                visibleItems = _localPaginator.GetPageData();
+            }
+            else
+            {
+                visibleItems = _items;
+            }
+
+            // Render based on layout
+            if (_layout == ChartBarLayout.Standard)
+            {
+                WriteStandardChart(screenBuffer, visibleItems);
+            }
+            else
+            {
+                WriteStackedChart(screenBuffer, visibleItems);
+            }
+
+            // Write legends if enabled
+            if (_showLegends)
+            {
+                WriteLegends(screenBuffer);
+            }
+
+            // Write pagination info if applicable
+            if (_localPaginator != null && !IsWidget && _localPaginator.PageCount > 0 && _layout == ChartBarLayout.Standard)
+            {
+                string template = ConfigPrompt.PaginationTemplateValue(
+                    _localPaginator.TotalCountValid,
+                    _localPaginator.SelectedPage + 1,
+                    _localPaginator.PageCount
+                )!;
+                screenBuffer.WriteLine(template, _optStyles[ChartBarStyles.Pagination]);
+            }
+        }
+
+        private void WriteStandardChart(BufferScreen screenBuffer, IEnumerable<ChartItem> items)
+        {
+            foreach (var item in items)
+            {
+                bool isSelected = !IsWidget && item == _localPaginator?.SelectedItem;
+                Style labelStyle = isSelected ? _optStyles[ChartBarStyles.Selected] : _optStyles[ChartBarStyles.ChartLabel];
+
+                // Truncate to _maxLengthLabel runes (retention, char-count contract preserved), then
+                // pad to _maxLabelDisplayWidth columns (alignment, computed from real display width)
+                // so ASCII and CJK labels line up their bars on the same column.
+                string label = DisplayWidthHelpers.TruncateToRuneCount(item.Label, _maxLengthLabel);
+                int labelDisplayWidth = label.GetDisplayLength() is { Length: > 0 } ld ? ld[0] : 0;
+                if (labelDisplayWidth < _maxLabelDisplayWidth)
+                {
+                    label += new string(' ', _maxLabelDisplayWidth - labelDisplayWidth);
+                }
+
+                // Write label
+                if (!_showLegends)
+                {
+                    if (isSelected)
+                    {
+                        screenBuffer.Write(GetSymbol(SymbolType.Selector), labelStyle);
+                        screenBuffer.Write(" ", ConsoleHandler.CurrentStyle);
+                    }
+                    else
+                    {
+                        screenBuffer.Write("  ", ConsoleHandler.CurrentStyle);
+                    }
+                    screenBuffer.Write(label, labelStyle);
+                    screenBuffer.Write(" ", labelStyle);
+                }
+
+                // Calculate bar width
+                int barWidth = (int)(item.Value * _ticketStep);
+                if (barWidth > _width) barWidth = _width;
+
+                // Write bar
+                if (barWidth > 0)
+                {
+                    string bar = new(_barOn, barWidth);
+                    screenBuffer.Write(bar, item.StyleBar ?? ConsoleHandler.CurrentStyle);
+                }
+
+                if (!_showLegends)
+                {
+                    // Write value if not hidden
+                    if (!_hideChart.HasFlag(HideChart.Values))
+                    {
+                        screenBuffer.Write($" {ValueToString(item.Value)}", _optStyles[ChartBarStyles.ChartValue]);
+                    }
+
+                    // Write percentage if not hidden
+                    if (!_hideChart.HasFlag(HideChart.Percentage))
+                    {
+                        screenBuffer.Write($" ({ValueToString(item.Percent)}%)", _optStyles[ChartBarStyles.ChartPercent]);
+                    }
+                }
+                screenBuffer.WriteLine("", labelStyle);
+            }
+        }
+
+        private void WriteStackedChart(BufferScreen screenBuffer, IEnumerable<ChartItem> items)
+        {
+            double tkt = _width / _totalValue;
+
+            foreach (ChartItem item in _items)
+            {
+                int length = (int)(tkt * item.Value);
+                if (tkt == 0)
+                {
+                    tkt = 1;
+                }
+                screenBuffer.Write(new string(_barOn, length), item.StyleBar!.Value);
+            }
+            screenBuffer.WriteLine("", ConsoleHandler.CurrentStyle);
         }
 
         private void WriteLegends(BufferScreen screenBuffer)
         {
-            if (!_showLegends && !_hideChart.HasFlag(HideChart.ChartBar))
+            screenBuffer.WriteLine("", ConsoleHandler.CurrentStyle);
+            foreach (var item in _items)
             {
-                return;
-            }
-            int start = (_startpage) * _pageSize;
-            screenBuffer.WriteLine("", Style.Default());
-            foreach (ChartItem? item in _items.Skip(start).Take(_pageSize))
-            {
-                if (_layout == ChartBarLayout.Stacked && !IsWidgetControl)
+                bool isSelected = (_localPaginator?.SelectedItem.Id == item.Id);
+                if (isSelected)
                 {
-                    if (item.Id == _currentitem!.Id)
-                    {
-                        screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)[0]} ", _optStyles[ChartBarStyles.Answer]);
-                    }
-                    else
-                    {
-                        screenBuffer.Write("  ", Style.Default());
-                    }
-                }
-                else if (!IsWidgetControl)
-                {
-                    screenBuffer.Write("  ", Style.Default());
-                }
-                screenBuffer.Write("  ", new Style(item.Color!.Value, item.Color!.Value));
-                screenBuffer.Write(" ", Style.Default());
-                if (item.Label.Length > _maxShowlengthlabel)
-                {
-                    screenBuffer.Write(item.Label[.._maxShowlengthlabel].PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                    screenBuffer.Write(GetSymbol(SymbolType.Selector), _optStyles[ChartBarStyles.Selected]);
+                    screenBuffer.Write(" ", ConsoleHandler.CurrentStyle);
                 }
                 else
                 {
-                    screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                    screenBuffer.Write("  ", ConsoleHandler.CurrentStyle);
                 }
-                if (!_hideChart.HasFlag(HideChart.Values) || !_hideChart.HasFlag(HideChart.Percentage))
-                {
-                    screenBuffer.Write(": ", Style.Default());
-                }
-                if (!_hideChart.HasFlag(HideChart.Values))
-                {
-                    screenBuffer.Write(ValueToString(item.Value), _optStyles[ChartBarStyles.ChartValue]);
-                }
-                if (!_hideChart.HasFlag(HideChart.Percentage))
-                {
-                    screenBuffer.Write($"({ValueToString(item!.Percent)}%)", _optStyles[ChartBarStyles.ChartPercent]);
-                }
-                screenBuffer.WriteLine("", Style.Default());
+                screenBuffer.Write(GetSymbol(SymbolType.ChartLabel), item.StyleBar ?? ConsoleHandler.CurrentStyle);
+                screenBuffer.Write(" ", ConsoleHandler.CurrentStyle);
+                screenBuffer.Write($"{item.Label}: ", _optStyles[ChartBarStyles.ChartLabel]);
+                screenBuffer.Write($"{ValueToString(item.Value)} ", _optStyles[ChartBarStyles.ChartValue]);
+                screenBuffer.WriteLine($"({ValueToString(item.Percent)}%)", _optStyles[ChartBarStyles.ChartPercent]);
             }
         }
 
-        private void WriteChartBar(BufferScreen screenBuffer)
-        {
-            if (_hideChart.HasFlag(HideChart.ChartBar))
-            {
-                return;
-            }
-            switch (_layout)
-            {
-                case ChartBarLayout.Standard:
-                    {
-                        WriteStandardBar(screenBuffer);
-                    }
-                    break;
-                case ChartBarLayout.Stacked:
-                    {
-                        WriteStackedBar(screenBuffer);
-                    }
-                    break;
-                default:
-                    throw new NotImplementedException($"Show ChartType {_layout} Not implemented");
-            }
-        }
-
-        private void WriteStackedBar(BufferScreen screenBuffer)
-        {
-            double tkt = _width / _totalvalue;
-
-            foreach (ChartItem item in _items)
-            {
-                int lenght = (int)(tkt * item.Value);
-                if (tkt == 0)
-                {
-                    tkt = 1;
-                }
-                screenBuffer.Write(new string(_barOn, lenght), item.StyleBar!.Value);
-            }
-            screenBuffer.WriteLine("", Style.Default());
-        }
-
-        private void WriteStandardBar(BufferScreen screenBuffer)
-        {
-            int start = (_startpage) * _pageSize;
-            foreach (ChartItem? item in _items.Skip(start).Take(_pageSize))
-            {
-                int tkt = (int)(_ticketStep * item.Value);
-                if (tkt == 0)
-                {
-                    tkt = 1;
-                }
-                if (item.Id == _currentitem!.Id && !IsWidgetControl)
-                {
-                    screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)[0]} ", _optStyles[ChartBarStyles.Answer]);
-                }
-                else if (!IsWidgetControl)
-                {
-                    screenBuffer.Write("  ", Style.Default());
-                }
-                if (_showLegends)
-                {
-                    screenBuffer.Write(new string(_barOn, tkt), item.StyleBar!.Value);
-                }
-                else
-                {
-                    if (IsWidgetControl)
-                    {
-                        screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
-                    }
-                    else
-                    {
-                        if (item.Label.Length > _maxShowlengthlabel)
-                        {
-                            screenBuffer.Write(item.Label[.._maxShowlengthlabel].PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
-                        }
-                        else
-                        {
-                            screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
-                        }
-                    }
-                    screenBuffer.Write(": ", Style.Default());
-                    screenBuffer.Write(new string(_barOn, tkt), item.StyleBar!.Value);
-                    if (!_hideChart.HasFlag(HideChart.Values))
-                    {
-                        screenBuffer.Write(' ', Style.Default());
-                        screenBuffer.Write(ValueToString(item.Value), _optStyles[ChartBarStyles.ChartValue]);
-                    }
-                    if (!_hideChart.HasFlag(HideChart.Percentage))
-                    {
-                        screenBuffer.Write(' ', Style.Default());
-                        screenBuffer.Write($"({ValueToString(item.Percent)}%)", _optStyles[ChartBarStyles.ChartPercent]);
-
-                    }
-                }
-                screenBuffer.WriteLine("", Style.Default());
-            }
-        }
-
-        private void WriteTitle(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(_title) && !_hideChart.HasFlag(HideChart.Title))
-            {
-                switch (_titleAlignment)
-                {
-                    case TextAlignment.Left:
-                        {
-                            screenBuffer.WriteLine(_title, _optStyles[ChartBarStyles.ChartTitle]);
-                        }
-                        break;
-                    case TextAlignment.Right:
-                        {
-                            string aux = _title;
-                            if (aux.Length < _width)
-                            {
-                                aux = new string(' ', _width - aux.Length) + _title;
-                            }
-                            screenBuffer.WriteLine(aux, _optStyles[ChartBarStyles.ChartTitle]);
-                        }
-                        break;
-                    case TextAlignment.Center:
-                        {
-                            string aux = _title;
-                            if (aux.Length < _width)
-                            {
-                                aux = new string(' ', (_width - aux.Length) / 2) + _title;
-                            }
-                            screenBuffer.WriteLine(aux, _optStyles[ChartBarStyles.ChartTitle]);
-                        }
-                        break;
-                    default:
-                        throw new NotImplementedException($"Alignment {_titleAlignment} Not implemented");
-                }
-            }
-            else
-            {
-                if (!IsWidgetControl)
-                {
-                    screenBuffer.SavePromptCursor();
-                }
-            }
-        }
-
-        private string ValueToString(double value)
-        {
-            // Use "N" for number format with group separators, or "F" for fixed-point (no group separators)
-            // "F" is typically preferred for progress bar values
-            return Math.Round(value, _fractionalDigits).ToString($"F{_fractionalDigits}", _culture);
-        }
-
-        private static string TextOrder(ChartBarOrder value)
-        {
-            return value switch
-            {
-                ChartBarOrder.None => Messages.OrderStandard,
-                ChartBarOrder.Highest => Messages.OrderHighest,
-                ChartBarOrder.Smallest => Messages.OrderSmallest,
-                ChartBarOrder.LabelAsc => Messages.OrderLabelAsc,
-                ChartBarOrder.LabelDec => Messages.OrderLabelDec,
-                _ => throw new NotImplementedException($"ChartOrder {value} Not implemented"),
-            };
-        }
+        #endregion
     }
 }
