@@ -189,7 +189,7 @@ PromptPlus will discover and load it automatically at runtime via the standard .
 
 ## Controls Reference
 
-| Control | Factory method | Returns |
+|          Control              | Factory method | Returns |
 |---|---|---|
 | [Text input](docs/controls/input/index.md) | `PromptPlus.Controls.Input(prompt)` | `ResultPrompt<string>` |
 | [Secret / password](docs/controls/secret/index.md) | `PromptPlus.Controls.Secret(prompt)` | `ResultPrompt<string>` |
