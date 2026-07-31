@@ -22,6 +22,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # dorny/paths-filter needs the pre-push commit to diff against on push
+          # events; a shallow (depth-1) clone doesn't have it, so it falls back to
+          # treating everything as changed. Full history avoids that.
+          fetch-depth: 0
 
       - name: Filter changed paths
         uses: dorny/paths-filter@v3
