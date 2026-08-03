@@ -368,7 +368,7 @@ namespace PromptPlus.Tests.Controls
         public void EnableHistory_alone_autoreloads_without_needing_an_explicit_Default_call()
         {
             // Different from Select/Table/Calendar (which start _useDefaultHistory = false): File
-            // follows the Tree/MultiTree convention where the field defaults to true, so
+            // follows the TreeSelect/TreeMultiSelect convention where the field defaults to true, so
             // EnableHistory alone is already enough to restore the last confirmed path.
             const string historyFile = "file-history-tests";
             var vt = MakeTerminal();

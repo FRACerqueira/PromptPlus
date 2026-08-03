@@ -47,7 +47,7 @@ bars, hotkeys switch the layout and sort order, and pressing **Enter** returns t
 | The user compares numeric values and picks one | — |
 | You only want to display a chart, no picking | [ChartBar widget](../../widgets.md#chartbar) |
 | The choices are plain text with no magnitude | [Select](../select/index.md) |
-| The data is tabular (multiple columns) | [Table](../table/index.md) |
+| The data is tabular (multiple columns) | [TableSelect](../tableselect/index.md) |
 
 ---
 
@@ -157,4 +157,4 @@ if (!result.IsAborted && result.Content is not null)
 - [Operations](operations.md) — keyboard, ordering, legends, layouts, validation
 - [Styles](styles.md) — recolor the chart regions
 - [ChartBar widget](../../widgets.md#chartbar) — the read-only `.Show()` sibling
-- [Select](../select/index.md) · [Table](../table/index.md) — text and tabular pickers
+- [Select](../select/index.md) · [TableSelect](../tableselect/index.md) — text and tabular pickers

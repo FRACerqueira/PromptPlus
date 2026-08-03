@@ -27,7 +27,7 @@ or the token is cancelled.
 > ⏳ Don't have a measurable value? If you only need to show that *something* is happening while a
 > single operation runs, use the [**Task**](../task/index.md) control (spinner + elapsed time). For
 > several operations at once, use [**MultiTasks**](../multitasks/index.md). For a fixed-length
-> wait/countdown, use [**Time**](../time/index.md).
+> wait/countdown, use [**Timer**](../timer/index.md).
 
 ---
 
@@ -49,7 +49,7 @@ or the token is cancelled.
 | You can measure progress as a number (0→100, 0→N) | — |
 | The work is a single unmeasurable operation | [Task](../task/index.md) |
 | You run several operations (sequential / parallel) | [MultiTasks](../multitasks/index.md) |
-| You just need to wait a fixed duration | [Time](../time/index.md) |
+| You just need to wait a fixed duration | [Timer](../timer/index.md) |
 
 ---
 
@@ -170,4 +170,4 @@ PromptPlus.Console.WriteLine($"Aborted={result.IsAborted}, Value={result.Content
 - [Styles](styles.md) — recolor the slider, range, spinner, and error regions
 - [Task](../task/index.md) — single unmeasurable operation (spinner + elapsed)
 - [MultiTasks](../multitasks/index.md) — many operations, sequential or parallel
-- [Time](../time/index.md) — a fixed-duration countdown
+- [Timer](../timer/index.md) — a fixed-duration countdown

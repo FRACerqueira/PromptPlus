@@ -46,9 +46,9 @@ entries, and pre-select a path.
 |---|---|
 | The user picks one file or folder from disk | — |
 | The user may pick several files/folders | [MultiFile](../multifile/index.md) |
-| The data is an arbitrary hierarchy (not the file system) | [Tree](../tree/index.md) |
+| The data is an arbitrary hierarchy (not the file system) | [TreeSelect](../treeselect/index.md) |
 | The choice is from an in-memory list | [Select](../select/index.md) |
-| The data is tabular (multiple columns) | [Table](../table/index.md) |
+| The data is tabular (multiple columns) | [TableSelect](../tableselect/index.md) |
 
 ---
 
@@ -155,4 +155,4 @@ if (!aborted) PromptPlus.Console.WriteLine(item?.FullPath);
 - [Operations](operations.md) — keyboard, tree navigation, filtering, history
 - [Styles](styles.md) — recolor the tree regions
 - [MultiFile](../multifile/index.md) — multiple-selection sibling
-- [Tree](../tree/index.md) — the generic hierarchy picker behind this control
+- [TreeSelect](../treeselect/index.md) — the generic hierarchy picker behind this control

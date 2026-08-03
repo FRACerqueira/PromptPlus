@@ -154,4 +154,4 @@ Emoji spinners need a modern terminal with an emoji font.
 ## See also
 
 - [Spinners](spinners.md) — usage and the automatic ASCII fallback
-- [ProgressBar](controls/progressbar/index.md) · [Task](controls/task/index.md) · [MultiTasks](controls/multitasks/index.md) · [Time](controls/time/index.md)
+- [ProgressBar](controls/progressbar/index.md) · [Task](controls/task/index.md) · [MultiTasks](controls/multitasks/index.md) · [Timer](controls/timer/index.md)

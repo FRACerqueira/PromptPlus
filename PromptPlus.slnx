@@ -12,9 +12,9 @@
     <Project Path="samples/MaskEditStringControlSamples/MaskEditStringControlSamples.csproj" />
     <Project Path="samples/MultiFileControlSamples/MultiFileControlSamples.csproj" />
     <Project Path="samples/MultiSelectControlSamples/MultiSelectControlSamples.csproj" />
-    <Project Path="samples/MultiTableControlSamples/MultiTableControlSamples.csproj" />
+    <Project Path="samples/TableMultiSelectControlSamples/TableMultiSelectControlSamples.csproj" />
     <Project Path="samples/MultiTasksControlSamples/MultiTasksControlSamples.csproj" />
-    <Project Path="samples/MultiTreeControlSamples/MultiTreeControlSamples.csproj" />
+    <Project Path="samples/TreeMultiSelectControlSamples/TreeMultiSelectControlSamples.csproj" />
     <Project Path="samples/ProgressBarControlSamples/ProgressBarControlSamples.csproj" />
     <Project Path="samples/PromptPlusConsoleFeaturesSamples/PromptPlusConsoleFeaturesSamples.csproj" />
     <Project Path="samples/SelectControlSamples/SelectControlSamples.csproj" />
@@ -22,10 +22,10 @@
     <Project Path="samples/SliderWidgetSamples/SliderWidgetSamples.csproj" />
     <Project Path="samples/SwitchControlSamples/SwitchControlSamples.csproj" />
     <Project Path="samples/SwitchWidgetSamples/SwitchWidgetSamples.csproj" />
-    <Project Path="samples/TableControlSamples/TableControlSamples.csproj" />
+    <Project Path="samples/TableSelectControlSamples/TableSelectControlSamples.csproj" />
     <Project Path="samples/TaskControlSamples/TaskControlSamples.csproj" />
-    <Project Path="samples/TimeControlSamples/TimeControlSamples.csproj" />
-    <Project Path="samples/TreeControlSamples/TreeControlSamples.csproj" />
+    <Project Path="samples/TimerControlSamples/TimerControlSamples.csproj" />
+    <Project Path="samples/TreeSelectControlSamples/TreeSelectControlSamples.csproj" />
   </Folder>
   <Project Path="src/PromptPlus.csproj" />
   <Project Path="tests/PromptPlus.Tests/PromptPlus.Tests.csproj" />

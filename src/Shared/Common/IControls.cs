@@ -100,17 +100,17 @@ namespace PromptPlusLibrary
         /// <typeparam name="T">The type of the items in the table rows.</typeparam>
         /// <param name="prompt">The text prompt displayed to the user.</param>
         /// <param name="description">An optional description providing additional context for the table interaction.</param>
-        /// <returns>An <see cref="ITableControl{T}"/> instance for further configuration and execution.</returns>
-        ITableControl<T> Table<T>(string prompt = "", string? description = null);
+        /// <returns>An <see cref="ITableSelectControl{T}"/> instance for further configuration and execution.</returns>
+        ITableSelectControl<T> TableSelect<T>(string prompt = "", string? description = null);
 
         /// <summary>
-        /// Creates a multi-table control for navigating a table and selecting multiple rows.
+        /// Creates a table control for navigating a table and selecting multiple rows.
         /// </summary>
         /// <typeparam name="T">The type of the items in the table rows.</typeparam>
         /// <param name="prompt">The text prompt displayed to the user.</param>
         /// <param name="description">An optional description providing additional context for the table interaction.</param>
-        /// <returns>An <see cref="IMultiTableControl{T}"/> instance for further configuration and execution.</returns>
-        IMultiTableControl<T> MultiTable<T>(string prompt = "", string? description = null);
+        /// <returns>An <see cref="ITableMultiSelectControl{T}"/> instance for further configuration and execution.</returns>
+        ITableMultiSelectControl<T> TableMultiSelect<T>(string prompt = "", string? description = null);
 
         /// <summary>
         /// Creates a switch control for toggling a boolean value.
@@ -121,12 +121,12 @@ namespace PromptPlusLibrary
         ISwitchControl Switch(string prompt = "", string? description = null);
 
         /// <summary>
-        /// Creates a time control that suspends execution for a fixed duration while displaying a live countdown.
+        /// Creates a timer control that suspends execution for a fixed duration while displaying a live countdown or elapsed-time value.
         /// </summary>
         /// <param name="prompt">The text prompt displayed to the user.</param>
         /// <param name="description">An optional description providing additional context for the countdown.</param>
-        /// <returns>An <see cref="ITimeControl"/> instance for further configuration and execution.</returns>
-        ITimeControl Time(string prompt = "", string? description = null);
+        /// <returns>An <see cref="ITimerControl"/> instance for further configuration and execution.</returns>
+        ITimerControl Timer(string prompt = "", string? description = null);
 
         /// <summary>
         /// Creates a task control that runs a synchronous or asynchronous action/function and waits
@@ -180,18 +180,18 @@ namespace PromptPlusLibrary
         /// <typeparam name="T">The type of items in the tree.</typeparam>
         /// <param name="prompt">The text prompt displayed to the user.</param>
         /// <param name="description">An optional description providing additional context.</param>
-        /// <returns>An <see cref="ITreeControl{T}"/> instance for further configuration and execution.</returns>
-        ITreeControl<T> Tree<T>(string prompt = "", string? description = null);
+        /// <returns>An <see cref="ITreeSelectControl{T}"/> instance for further configuration and execution.</returns>
+        ITreeSelectControl<T> TreeSelect<T>(string prompt = "", string? description = null);
 
         /// <summary>
-        /// Creates a generic multi-selection tree control that browses a hierarchy of user items
+        /// Creates a tree control that browses a hierarchy of user items
         /// of type <typeparamref name="T"/> with tri-state checkboxes (unchecked / checked / indeterminate).
         /// </summary>
         /// <typeparam name="T">The type of items in the tree.</typeparam>
         /// <param name="prompt">The text prompt displayed to the user.</param>
         /// <param name="description">An optional description providing additional context.</param>
-        /// <returns>An <see cref="IMultiTreeControl{T}"/> instance for further configuration and execution.</returns>
-        IMultiTreeControl<T> MultiTree<T>(string prompt = "", string? description = null);
+        /// <returns>An <see cref="ITreeMultiSelectControl{T}"/> instance for further configuration and execution.</returns>
+        ITreeMultiSelectControl<T> TreeMultiSelect<T>(string prompt = "", string? description = null);
 
         /// <summary>
         /// Creates an MaskEdit(string) control with the specified prompt.

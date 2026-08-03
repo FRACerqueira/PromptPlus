@@ -26,7 +26,7 @@ carrying the elapsed time, any output the work produced, and any exception it th
 > 📊 If you *can* measure progress as a number, use the [**ProgressBar**](../progressbar/index.md)
 > control instead. To run **several** operations (sequentially or in parallel) with a per-task status
 > list, use [**MultiTasks**](../multitasks/index.md). For a fixed-length wait, use
-> [**Time**](../time/index.md).
+> [**Timer**](../timer/index.md).
 
 ---
 
@@ -48,7 +48,7 @@ carrying the elapsed time, any output the work produced, and any exception it th
 | You run one operation you can't measure | — |
 | You can report a numeric progress value | [ProgressBar](../progressbar/index.md) |
 | You run many operations at once | [MultiTasks](../multitasks/index.md) |
-| You just need to wait a fixed duration | [Time](../time/index.md) |
+| You just need to wait a fixed duration | [Timer](../timer/index.md) |
 
 ---
 
@@ -161,4 +161,4 @@ PromptPlus.Console.WriteLine($"HasError={result.Content.Exception is not null}, 
 - [Styles](styles.md) — recolor the prompt, spinner, elapsed-time, and error regions
 - [ProgressBar](../progressbar/index.md) — measurable progress
 - [MultiTasks](../multitasks/index.md) — many operations at once
-- [Time](../time/index.md) — a fixed-duration countdown
+- [Timer](../timer/index.md) — a fixed-duration countdown

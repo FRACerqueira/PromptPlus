@@ -12,7 +12,7 @@ namespace PromptPlus.Tests.Unit
     // label truncation, and calendar month/weekday headers were all computed from string.Length
     // (character count) instead of display width (terminal columns). A CJK character is 1 char but 2
     // columns per rune, so char-count math let content overflow its column budget and misalign
-    // everything to the right of it. Used by TableControl/MultiTableControl (Truncate/AlignCell),
+    // everything to the right of it. Used by TableSelectControl/TableMultiSelectControl (Truncate/AlignCell),
     // ChartBarControl (AlignLine/CountRunes/TruncateToRuneCount), and CalendarControl
     // (PadToDisplayWidth/FitToDisplayWidth) — previously near-identical logic duplicated per control
     // (Truncate/AlignCell were byte-identical between Table and MultiTable), now a single source.

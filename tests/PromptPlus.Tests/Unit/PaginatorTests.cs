@@ -8,7 +8,7 @@ using Xunit;
 namespace PromptPlus.Tests.Unit
 {
     // Paginator<T> (Controls/Common/Paginator.cs) — pure unit-level (no VirtualTerminal), the most
-    // reused support class in PromptPlus (Select, MultiSelect, Tree, MultiTree, MultiTasks,
+    // reused support class in PromptPlus (Select, MultiSelect, TreeSelect, TreeMultiSelect, MultiTasks,
     // MultiFile, ChartBar, Table, MultiTable, FileExec and Calendar all depend on it via
     // ComputeEffectivePageSize). Exact expected values for the tricky navigation edges were
     // confirmed with a throwaway probe and observing the real output, not by hand-tracing.
@@ -236,7 +236,7 @@ namespace PromptPlus.Tests.Unit
         // a later page left the paginator completely unselected (SelectedIndex=-1) even though the
         // new collection had valid items. UpdateFilter already reset SelectedPage correctly — this
         // brings UpdateCollection in line with it. Affects MultiSelectControl (~9 call sites) and
-        // MultiTableControl (3 call sites), typically their "show selected only" / refresh features.
+        // TableMultiSelectControl (3 call sites), typically their "show selected only" / refresh features.
         [Fact]
         public void UpdateCollection_resets_to_the_first_item_even_when_parked_on_a_now_out_of_range_page()
         {

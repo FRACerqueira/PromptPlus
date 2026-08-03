@@ -47,7 +47,7 @@ predicate.
 |---|---|
 | The user checks several files/folders from disk | — |
 | The user picks exactly one file/folder | [File](../file/index.md) |
-| The data is an arbitrary hierarchy (not the file system) | [Tree](../tree/index.md) |
+| The data is an arbitrary hierarchy (not the file system) | [TreeSelect](../treeselect/index.md) |
 | The choices are an in-memory list | [MultiSelect](../multiselect/index.md) |
 
 ---
@@ -156,4 +156,4 @@ if (!aborted)
 - [Operations](operations.md) — keyboard, checking, cascade/recursive marking, range
 - [Styles](styles.md) — recolor the tree regions
 - [File](../file/index.md) — single-selection sibling
-- [Tree](../tree/index.md) — the generic hierarchy picker behind this control
+- [TreeSelect](../treeselect/index.md) — the generic hierarchy picker behind this control

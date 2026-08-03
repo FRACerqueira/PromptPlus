@@ -43,8 +43,8 @@ match, show extra info per row, and validate the choice before returning it.
 |---|---|
 | The user picks one option from a known set | — |
 | The user may pick several | [MultiSelect](../multiselect/index.md) |
-| The data is tabular (multiple columns) | [Table](../table/index.md) |
-| The data is hierarchical | [Tree](../tree/index.md) |
+| The data is tabular (multiple columns) | [TableSelect](../tableselect/index.md) |
+| The data is hierarchical | [TreeSelect](../treeselect/index.md) |
 | It is a yes/no or single-key answer | [KeyPress / Confirm](../keypress/index.md) |
 
 ---
@@ -145,4 +145,4 @@ if (!aborted) PromptPlus.Console.WriteLine(color);
 - [Operations](operations.md) — keyboard, filtering, grouping, validation
 - [Styles](styles.md) — recolor the list regions
 - [MultiSelect](../multiselect/index.md) — multiple-choice sibling
-- [Table](../table/index.md) · [Tree](../tree/index.md) — tabular and hierarchical pickers
+- [TableSelect](../tableselect/index.md) · [TreeSelect](../treeselect/index.md) — tabular and hierarchical pickers

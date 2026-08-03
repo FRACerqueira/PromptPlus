@@ -25,7 +25,7 @@ overall success/failure flags.
 
 > 🧩 Running a **single** operation? Use [**Task**](../task/index.md). Reporting a **measurable**
 > numeric value? Use [**ProgressBar**](../progressbar/index.md). Just waiting a fixed duration? Use
-> [**Time**](../time/index.md).
+> [**Timer**](../timer/index.md).
 
 ---
 
@@ -47,7 +47,7 @@ overall success/failure flags.
 | You run several operations and want per-item status | — |
 | You run exactly one operation | [Task](../task/index.md) |
 | You can report a numeric progress value | [ProgressBar](../progressbar/index.md) |
-| You just need to wait a fixed duration | [Time](../time/index.md) |
+| You just need to wait a fixed duration | [Timer](../timer/index.md) |
 
 ---
 
@@ -170,4 +170,4 @@ PromptPlus.Console.WriteLine($"Elapsed={s.ElapsedTime}, AllSucceeded={s.AllSucce
 - [Styles](styles.md) — recolor the per-state task rows, spinner, and pagination regions
 - [Task](../task/index.md) — a single operation
 - [ProgressBar](../progressbar/index.md) — measurable progress
-- [Time](../time/index.md) — a fixed-duration countdown
+- [Timer](../timer/index.md) — a fixed-duration countdown

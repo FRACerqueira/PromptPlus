@@ -14,17 +14,17 @@ using PromptPlusLibrary.Controls.KeyPress;
 using PromptPlusLibrary.Controls.MaskEdit;
 using PromptPlusLibrary.Controls.MultiFile;
 using PromptPlusLibrary.Controls.MultiSelect;
-using PromptPlusLibrary.Controls.MultiTable;
+using PromptPlusLibrary.Controls.TableMultiSelect;
 using PromptPlusLibrary.Controls.MultiTasks;
-using PromptPlusLibrary.Controls.MultiTree;
+using PromptPlusLibrary.Controls.TreeMultiSelect;
 using PromptPlusLibrary.Controls.ProgressBar;
 using PromptPlusLibrary.Controls.Select;
 using PromptPlusLibrary.Controls.Slider;
 using PromptPlusLibrary.Controls.Switch;
-using PromptPlusLibrary.Controls.Table;
+using PromptPlusLibrary.Controls.TableSelect;
 using PromptPlusLibrary.Controls.TaskExec;
-using PromptPlusLibrary.Controls.Time;
-using PromptPlusLibrary.Controls.Tree;
+using PromptPlusLibrary.Controls.Timer;
+using PromptPlusLibrary.Controls.TreeSelect;
 using PromptPlusLibrary.Resources;
 using System;
 
@@ -188,7 +188,7 @@ namespace PromptPlusLibrary.Core
         }
 
         /// <inheritdoc/>
-        public ITableControl<T> Table<T>(string prompt = "", string? description = null)
+        public ITableSelectControl<T> TableSelect<T>(string prompt = "", string? description = null)
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -196,7 +196,7 @@ namespace PromptPlusLibrary.Core
             {
                 opt.Description(description);
             }
-            return new TableControl<T>(console, promptConfig, opt);
+            return new TableSelectControl<T>(console, promptConfig, opt);
         }
 
 
@@ -213,7 +213,7 @@ namespace PromptPlusLibrary.Core
         }
 
         /// <inheritdoc/>
-        public IMultiTableControl<T> MultiTable<T>(string prompt = "", string? description = null)
+        public ITableMultiSelectControl<T> TableMultiSelect<T>(string prompt = "", string? description = null)
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -221,7 +221,7 @@ namespace PromptPlusLibrary.Core
             {
                 opt.Description(description);
             }
-            return new MultiTableControl<T>(console, promptConfig, opt);
+            return new TableMultiSelectControl<T>(console, promptConfig, opt);
         }
 
         /// <inheritdoc/>
@@ -237,7 +237,7 @@ namespace PromptPlusLibrary.Core
         }
 
         /// <inheritdoc/>
-        public ITimeControl Time(string prompt = "", string? description = null)
+        public ITimerControl Timer(string prompt = "", string? description = null)
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -245,7 +245,7 @@ namespace PromptPlusLibrary.Core
             {
                 opt.Description(description);
             }
-            return new TimeControl(console, promptConfig, opt);
+            return new TimerControl(console, promptConfig, opt);
         }
 
         /// <inheritdoc/>
@@ -455,7 +455,7 @@ namespace PromptPlusLibrary.Core
         }
 
         /// <inheritdoc/>
-        public ITreeControl<T> Tree<T>(string prompt = "", string? description = null)
+        public ITreeSelectControl<T> TreeSelect<T>(string prompt = "", string? description = null)
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -463,11 +463,11 @@ namespace PromptPlusLibrary.Core
             {
                 opt.Description(description);
             }
-            return new TreeControl<T>(console, promptConfig, opt);
+            return new TreeSelectControl<T>(console, promptConfig, opt);
         }
 
         /// <inheritdoc/>
-        public IMultiTreeControl<T> MultiTree<T>(string prompt = "", string? description = null)
+        public ITreeMultiSelectControl<T> TreeMultiSelect<T>(string prompt = "", string? description = null)
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -475,7 +475,7 @@ namespace PromptPlusLibrary.Core
             {
                 opt.Description(description);
             }
-            return new MultiTreeControl<T>(console, promptConfig, opt);
+            return new TreeMultiSelectControl<T>(console, promptConfig, opt);
         }
 
         /// <inheritdoc/>

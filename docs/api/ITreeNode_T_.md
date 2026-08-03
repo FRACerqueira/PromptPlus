@@ -5,7 +5,7 @@
 
 ## ITreeNode\<T\> Interface
 
-Represents a node of the tree exposed by the [ITreeControl&lt;T&gt;](ITreeControl_T_.md 'PromptPlusLibrary\.ITreeControl\<T\>') when it is being
+Represents a node of the tree exposed by the [ITreeSelectControl&lt;T&gt;](ITreeSelectControl_T_.md 'PromptPlusLibrary\.ITreeSelectControl\<T\>') when it is being
 constructed\. A node carries a user value and can have any number of children added lazily
 through [AddLast\(T, bool\)](ITreeNode_T_.md#PromptPlusLibrary.ITreeNode_T_.AddLast(T,bool) 'PromptPlusLibrary\.ITreeNode\<T\>\.AddLast\(T, bool\)') and [AddFirst\(T, bool\)](ITreeNode_T_.md#PromptPlusLibrary.ITreeNode_T_.AddFirst(T,bool) 'PromptPlusLibrary\.ITreeNode\<T\>\.AddFirst\(T, bool\)')\.
 
@@ -21,7 +21,7 @@ public interface ITreeNode<T>
 The user item type held by the node\.
 
 Derived  
-↳ [IMultiTreeNode&lt;T&gt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')
+↳ [ITreeMultiSelectNode&lt;T&gt;](ITreeMultiSelectNode_T_.md 'PromptPlusLibrary\.ITreeMultiSelectNode\<T\>')
 ### Properties
 
 <a name='PromptPlusLibrary.ITreeNode_T_.Disabled'></a>

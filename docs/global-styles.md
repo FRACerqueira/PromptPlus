@@ -100,11 +100,11 @@ region names include `Prompt`, `Answer`, `Description`, `Selected`, `UnSelected`
 | ProgressBar | `ProgressBarStyles` |
 | Task | `TaskStyles` |
 | MultiTasks | `MultiTasksStyles` |
-| Time | `TimeStyles` |
-| Table | `TableStyles` |
-| MultiTable | `MultiTableStyles` |
-| Tree | `TreeStyles` |
-| MultiTree | `MultiTreeStyles` |
+| Timer | `TimerStyles` |
+| TableSelect | `TableSelectStyles` |
+| TableMultiSelect | `TableMultiSelectStyles` |
+| TreeSelect | `TreeSelectStyles` |
+| TreeMultiSelect | `TreeMultiSelectStyles` |
 | File | `FileStyles` |
 | MultiFile | `MultiFileStyles` |
 | ChartBar | `ChartBarStyles` |

@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [Table Control →](../table/index.md)
+[← Back to Home](../../../README.md) • **Next:** [TableSelect Control →](../tableselect/index.md)
 
 ---
 
