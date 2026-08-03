@@ -207,7 +207,7 @@ New on `TableSelect`/`TableMultiSelect`: `DefaultMatchBy` · `ViewOnly` · `Hori
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `EqualItems(Func<T,T,bool>)` | ✅ | ❌ | Renamed to `DefaultMatchBy` |
 | `TextSelector(Func<T,string>)` · `PageSize(byte)` | ✅ | ✅ | Unchanged |
-| `HorizontalScroll` · `ViewOnly` · `DefaultMatchBy` · async variants | ❌ | ✅ | New |
+| `HorizontalScroll` · `ViewOnly` · `DefaultMatchBy` · `EnableHistory` · `UseDefaultHistory` · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T>` | `ResultPrompt<TableSelectResult<T>>` | Return type changed |
 
 ### TableMultiSelect\<T\> — v5.x vs v6.x

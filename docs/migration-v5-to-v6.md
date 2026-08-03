@@ -90,8 +90,8 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `MultiSelect<T>` | `EqualItems(Func<T,T,bool>)` | `DefaultMatchBy(Func<T,T,bool>)` | Renamed, same signature |
 | `KeyPress` | `AddKeyValid(key, modifiers, showtext)` | `AddValidKey(key, modifiers, displayText)` | Method and parameter renamed |
 | `WaitProcess` → `MultiTasks` | `MaxDegreeProcess(byte)` | `MaxDegreeOfParallelism(int)` | Renamed and type widened `byte` → `int` |
-| `TableSelect` | `Layout(TableLayout)` | `LayoutMode(TableLayoutMode)` | Renamed; enum renamed too |
-| `TableSelect` | `HideHeaders(bool)` | `HideElements(HideTable)` | Replaced by a flags enum that hides several regions |
+| `TableSelect` / `TableMultiSelect` | `Layout(TableLayout)` | `LayoutMode(TableLayoutMode)` | Renamed; enum renamed too |
+| `TableSelect` / `TableMultiSelect` | `HideHeaders(bool)` | `HideElements(HideTable)` | Replaced by a flags enum that hides several regions |
 | `FileSelect` → `File` | `AcceptHiddenAttributes(bool)` | `ShowHidden(bool)` | Renamed (same effect: `true` makes hidden entries visible) |
 | `FileSelect` → `File` | `AcceptSystemAttributes(bool)` | `ShowSystem(bool)` | Renamed (same effect as above) |
 | `File` / `MultiFile` | `HideSizeInfo(bool)` | `HideSize(bool)` | Renamed, same semantics |

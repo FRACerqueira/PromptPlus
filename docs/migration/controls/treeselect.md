@@ -178,5 +178,5 @@ PromptPlus.Controls.TreeMultiSelect<Category>("Categories:")
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `Range(int, int?)` | ✅ | ✅ | Unchanged |
 | `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
-| `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `CheckLeafOnly` · `ShowFullPath` · `ViewOnly` · `Filter` · `DefaultMatchBy` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
+| `PathSeparator` · `Default` · `EnableHistory` · `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `CheckLeafOnly` · `ShowFullPath` · `ViewOnly` · `Filter` · `DefaultMatchBy` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T[]>` | `ResultPrompt<T[]>` | Unchanged |
