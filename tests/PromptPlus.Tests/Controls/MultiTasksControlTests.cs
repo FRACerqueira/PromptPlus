@@ -325,10 +325,10 @@ namespace PromptPlus.Tests.Controls
             var runTask = Task.Run(() => control.Run(cts.Token));
             _ = ready.Wait(TimeSpan.FromSeconds(2), TestContext.Current.CancellationToken);
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(50);
-            var navigationTooltip = vt.Find("Move Selector");
+            var navigationTooltip = vt.Find("PgUp/PgDown:Move");
 
             _ = vt.Keys.Enqueue(ConsoleKey.F1);
-            WaitForTextChange(vt, "Move Selector");
+            WaitForTextChange(vt, "PgUp/PgDown:Move");
             var abortTooltip = vt.Find("Esc:Abort");
 
             _ = vt.Keys.Enqueue(ConsoleKey.F1);

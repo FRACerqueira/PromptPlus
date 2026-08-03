@@ -127,7 +127,7 @@
     <value>Alt+B:Переместить курсор назад на одно слово</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Прописная буква под курсором и переход к концу слова</value>
+    <value>Alt+C:Слово у курсора с заглавной буквы</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:Очистить слово после курсора</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:Строчные буквы от курсора до конца слова</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Прописные буквы от курсора до конца слова.</value>
+    <value>Alt+U:Прописные буквы до конца слова</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Переместить курсор в начало строки (аналог клавиши Home)</value>
+    <value>Ctrl+A:Курсор в начало строки (Home)</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Переместить курсор на один символ назад (аналог левой стрелки)</value>
+    <value>Ctrl+B:На один символ назад (Влево)</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Удалить текущий символ (аналог клавиши Delete)</value>
+    <value>Ctrl+D:Удалить текущий символ (Delete)</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Переместить курсор в конец строки (аналог клавиши End)</value>
+    <value>Ctrl+E:Курсор в конец строки (End)</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Переместить курсор на один символ вперёд (аналог правой стрелки)</value>
+    <value>Ctrl+F:На один символ вперёд (Вправо)</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Удалить предыдущий символ (аналог клавиши Backspace)</value>
+    <value>Ctrl+H:Удалить предыдущий символ (Backspace)</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:Очистить строку после курсора</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:Очистить слово до курсора</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Insert:Переключить режим замены ввода (по умолчанию — режим вставки)</value>
+    <value>Insert:Переключить вставку/замену</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>История ввода</value>
@@ -256,7 +256,7 @@
     <value>Нажмите клавишу</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>Измените размер терминала (высота {0} и ширина {1}). Текущий размер ({2} и {3})...</value>
+    <value>Измените размер терминала минимум до {0}x{1} (текущий: {2}x{3})...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Элемент отключён</value>
@@ -319,10 +319,10 @@
     <value>Введите начальный символ для перехода к элементу</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>Влево/Вправо/Начало/Конец: Переместить курсор в строке приглашения</value>
+    <value>Влево/Вправо/Начало/Конец:Перемещение в строке</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Вверх/Вниз/PgUp/PgDn: Переместить выбор, Ctrl+Home/End:Первый/Последний элемент</value>
+    <value>Вверх/Вниз/PgUp/PgDn:Движение, Ctrl+Home/End:Первый/Последний</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>Показать/Скрыть подсказки</value>
@@ -337,7 +337,7 @@
     <value>ShiftTab:Отменить предложение</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab:Показать предложение, снова Принять (Мин. {0} симв.)</value>
+    <value>Tab:Показать предложение, ещё раз Tab для принятия (мин. {0} симв.)</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
     <value>Tab/ShiftTab:Предложения (Мин. {0} симв.)</value>

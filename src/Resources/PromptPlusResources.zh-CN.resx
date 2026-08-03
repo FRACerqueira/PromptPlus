@@ -127,7 +127,7 @@
     <value>Alt+B:向后移动一个词</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:将光标下的字符转为大写并移动到单词末尾</value>
+    <value>Alt+C:将光标处单词首字母大写</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:清除光标后的单词</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:从光标到单词末尾转为小写</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:从光标到单词末尾转为大写</value>
+    <value>Alt+U:转为大写到单词末尾</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:将光标移到行首（等同于Home键）</value>
+    <value>Ctrl+A:光标移到行首（Home）</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:将光标向后移动一个字符（等同于左箭头键）</value>
+    <value>Ctrl+B:向后移动一个字符（左）</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:删除当前字符（等同于Delete键）</value>
+    <value>Ctrl+D:删除当前字符（Delete）</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:将光标移到行尾（等同于End键）</value>
+    <value>Ctrl+E:光标移到行尾（End）</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:将光标向前移动一个字符（等同于右箭头键）</value>
+    <value>Ctrl+F:向前移动一个字符（右）</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:删除上一个字符（等同于退格键）</value>
+    <value>Ctrl+H:删除上一个字符（退格键）</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:清除光标后的行内容</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:清除光标前的单词</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Insert:切换输入替换模式（默认为插入模式）</value>
+    <value>Insert:切换插入/改写模式</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>输入历史记录</value>
@@ -256,7 +256,7 @@
     <value>按键</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>调整终端大小（{0} 高度和 {1} 宽度）。当前为（{2} 和 {3}）...</value>
+    <value>请将终端调整为至少 {0}x{1}（当前：{2}x{3}）...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>项目已禁用</value>
@@ -319,10 +319,10 @@
     <value>输入首字符跳转到项目</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>左/右/开始/结束: 在提示符内移动光标</value>
+    <value>左/右/开始/结束:在提示符内移动</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>上/下/PgUp/PgDn: 移动选择器, Ctrl+Home/End:第一/最后项目</value>
+    <value>上/下/PgUp/PgDn:移动, Ctrl+Home/End:第一/最后</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>显示/隐藏工具提示</value>
@@ -337,7 +337,7 @@
     <value>ShiftTab:取消建议</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab:显示建议，再次接受（最少 {0} 个字符）</value>
+    <value>Tab:显示建议，再次按Tab接受（最少{0}个字符）</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
     <value>Tab/ShiftTab:建议（最少 {0} 个字符）</value>

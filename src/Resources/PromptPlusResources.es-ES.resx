@@ -127,7 +127,7 @@
     <value>Alt+B:Mueve el cursor una palabra hacia atrás</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Escribe en mayúscula el carácter bajo el cursor y se mueve al final de la palabra</value>
+    <value>Alt+C:Capitaliza la palabra actual</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:Borra la palabra después del cursor</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:Minúsculas desde el cursor hasta el final de la palabra</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Mayúsculas desde el cursor hasta el final de la palabra.</value>
+    <value>Alt+U:Mayúsculas hasta el final de la palabra</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Mueve el cursor al inicio de la línea (equivalente a la tecla Inicio)</value>
+    <value>Ctrl+A:Cursor al inicio de línea (Inicio)</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Mueve el cursor un carácter hacia atrás (equivalente a la tecla de flecha izquierda)</value>
+    <value>Ctrl+B:Un carácter atrás (Izq)</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Elimina el carácter actual (equivalente a la tecla Supr)</value>
+    <value>Ctrl+D:Elimina el carácter actual (Supr)</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Mueve el cursor al final de la línea (equivalente a la tecla Fin)</value>
+    <value>Ctrl+E:Cursor al final de línea (Fin)</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Mueve el cursor un carácter hacia adelante (equivalente a la tecla de flecha derecha)</value>
+    <value>Ctrl+F:Un carácter adelante (Der)</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Elimina el carácter anterior (equivalente a la tecla Retroceso)</value>
+    <value>Ctrl+H:Elimina el carácter anterior (Retroceso)</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:Borra la línea después del cursor</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:Borra la palabra antes del cursor</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Insert:Alterna el modo de reemplazo de entrada (el modo predeterminado es inserción)</value>
+    <value>Insert:Alterna modo inserción/sobrescritura</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>Historial de entradas</value>
@@ -256,7 +256,7 @@
     <value>Pulsar tecla</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>Cambie el tamaño del terminal ({0} alto y {1} ancho). El actual es ({2} y {3})...</value>
+    <value>Cambie el tamaño del terminal a al menos {0}x{1} (actual: {2}x{3})...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Elemento desactivado</value>
@@ -319,10 +319,10 @@
     <value>Escriba el carácter inicial para saltar al elemento</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>Izq/Der/Inicio/Fin: Mueve el cursor dentro del prompt</value>
+    <value>Izq/Der/Inicio/Fin:Mover dentro del prompt</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Arriba/Abajo/RePág/AvPág: Mover selector, Ctrl+Inicio/Fin:Primer/Último elemento</value>
+    <value>Arriba/Abajo/RePág/AvPág:Mover, Ctrl+Inicio/Fin:Primero/Último</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>Mostrar/Ocultar información sobre herramientas</value>
@@ -337,7 +337,7 @@
     <value>MayúsTab:Cancelar sugerencia</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab:Mostrar sugerencia, otra vez Aceptar (Mín. {0} car.)</value>
+    <value>Tab:Muestra sugerencia, Tab de nuevo para aceptar (mín. {0} car.)</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
     <value>Tab/MayúsTab:Sugerencias (Mín. {0} car.)</value>

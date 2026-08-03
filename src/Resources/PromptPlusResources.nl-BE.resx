@@ -127,7 +127,7 @@
     <value>Alt+B:Cursor één woord terug verplaatsen</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Hoofdletter van teken onder cursor en naar het einde van het woord verplaatsen</value>
+    <value>Alt+C:Woord bij cursor met hoofdletter</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:Woord na cursor wissen</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:Kleine letters van cursor tot einde van woord</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Hoofdletters van cursor tot einde van woord.</value>
+    <value>Alt+U:Hoofdletters tot einde woord</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Cursor naar begin van regel verplaatsen (equivalent van Home-toets)</value>
+    <value>Ctrl+A:Cursor naar begin regel (Home)</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Cursor één teken terug verplaatsen (equivalent van pijl links)</value>
+    <value>Ctrl+B:Eén teken terug (Links)</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Huidig teken verwijderen (equivalent van Delete-toets)</value>
+    <value>Ctrl+D:Huidig teken verwijderen (Delete)</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Cursor naar einde van regel verplaatsen (equivalent van End-toets)</value>
+    <value>Ctrl+E:Cursor naar einde regel (End)</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Cursor één teken vooruit verplaatsen (equivalent van pijl rechts)</value>
+    <value>Ctrl+F:Eén teken vooruit (Rechts)</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Vorig teken verwijderen (equivalent van Backspace-toets)</value>
+    <value>Ctrl+H:Vorig teken verwijderen (Backspace)</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:Regel na cursor wissen</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:Woord voor cursor wissen</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Insert:Invoervervangingsmodus omschakelen (standaard is invoegmodus)</value>
+    <value>Insert:Invoeg-/overschrijfmodus wisselen</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>Invoergeschiedenissen</value>
@@ -256,7 +256,7 @@
     <value>Druk op toets</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>Verander het formaat van het terminal ({0} hoogte en {1} breedte). Het huidige is ({2} en {3})...</value>
+    <value>Wijzig de terminalgrootte naar minstens {0}x{1} (huidig: {2}x{3})...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Item uitgeschakeld</value>
@@ -319,10 +319,10 @@
     <value>Typ het beginteken om naar het item te springen</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>Links/Rechts/Begin/Einde: Cursor verplaatsen in de prompt</value>
+    <value>Links/Rechts/Begin/Einde:Verplaatsen in prompt</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Omhoog/Omlaag/PgUp/PgDn: Selectie verplaatsen, Ctrl+Home/End:Eerste/Laatste item</value>
+    <value>Omhoog/Omlaag/PgUp/PgDn:Verplaatsen, Ctrl+Home/End:Eerste/Laatste</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>Tooltips weergeven/verbergen</value>
@@ -337,7 +337,7 @@
     <value>ShiftTab:Suggestie afbreken</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab:Suggestie weergeven, opnieuw Accepteren (Min. {0} tekens)</value>
+    <value>Tab:Suggestie tonen, opnieuw Tab om te accepteren (min. {0} tekens)</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
     <value>Tab/ShiftTab:Suggesties (Min. {0} tekens)</value>

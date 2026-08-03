@@ -127,7 +127,7 @@
     <value>Alt+B:Sposta il cursore indietro di una parola</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Mette in maiuscolo il carattere sotto il cursore e sposta alla fine della parola</value>
+    <value>Alt+C:Rende maiuscola la parola corrente</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:Cancella la parola dopo il cursore</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:Minuscolo dal cursore alla fine della parola</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Maiuscolo dal cursore alla fine della parola.</value>
+    <value>Alt+U:Maiuscolo fino a fine parola</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Sposta il cursore all'inizio della riga (equivalente al tasto Home)</value>
+    <value>Ctrl+A:Cursore a inizio riga (Home)</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Sposta il cursore indietro di un carattere (equivalente al tasto freccia sinistra)</value>
+    <value>Ctrl+B:Un carattere indietro (Sinistra)</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Elimina il carattere corrente (equivalente al tasto Canc)</value>
+    <value>Ctrl+D:Elimina il carattere corrente (Canc)</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Sposta il cursore alla fine della riga (equivalente al tasto Fine)</value>
+    <value>Ctrl+E:Cursore a fine riga (Fine)</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Sposta il cursore avanti di un carattere (equivalente al tasto freccia destra)</value>
+    <value>Ctrl+F:Un carattere avanti (Destra)</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Elimina il carattere precedente (equivalente al tasto Backspace)</value>
+    <value>Ctrl+H:Elimina il carattere precedente (Backspace)</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:Cancella la riga dopo il cursore</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:Cancella la parola prima del cursore</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Ins:Attiva/disattiva la modalità di sostituzione input (la modalità predefinita è inserimento)</value>
+    <value>Ins:Attiva/disattiva modalità inserimento/sovrascrittura</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>Cronologia inserimenti</value>
@@ -256,7 +256,7 @@
     <value>Premi il tasto</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>Ridimensiona il terminale ({0} altezza e {1} larghezza). Quello corrente è ({2} e {3})...</value>
+    <value>Ridimensiona il terminale ad almeno {0}x{1} (attuale: {2}x{3})...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Elemento disabilitato</value>
@@ -319,10 +319,10 @@
     <value>Digita il carattere iniziale per passare direttamente all'elemento</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>Sinistra/Destra/Inizio/Fine: Sposta il cursore nel prompt</value>
+    <value>Sinistra/Destra/Inizio/Fine:Sposta nel prompt</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Su/Giù/PgSu/PgGiù: Sposta selezione, Ctrl+Home/Fine:Primo/Ultimo elemento</value>
+    <value>Su/Giù/PgSu/PgGiù:Sposta, Ctrl+Home/Fine:Primo/Ultimo</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>Mostra/Nascondi suggerimenti</value>
@@ -337,7 +337,7 @@
     <value>Maiusc Tab:Annulla suggerimento</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab:Mostra suggerimento, di nuovo Accetta (Min. {0} car.)</value>
+    <value>Tab:Mostra suggerimento, Tab di nuovo per accettare (min. {0} car.)</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
     <value>Tab/Maiusc Tab:Suggerimenti (Min. {0} car.)</value>

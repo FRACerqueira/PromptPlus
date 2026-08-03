@@ -127,7 +127,7 @@
     <value>Alt+B:Move o cursor uma palavra para trás</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Coloca em maiúscula o caractere sob o cursor e move para a final da palavra</value>
+    <value>Alt+C:Coloca palavra em maiúscula</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:Limpar palavra após o cursor</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:Minusculo do cursor até o final da palavra</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Maiúsculas do cursor até o final da palavra.</value>
+    <value>Alt+U:Maiúsculas até o fim da palavra</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Move o cursor para o início da linha (equivalente à tecla home)</value>
+    <value>Ctrl+A:Move para o início da linha (Home)</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Move o cursor um caractere para trás (equivalente à tecla de seta para a esquerda)</value>
+    <value>Ctrl+B:Move um caractere para trás (Left)</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Apaga o caractere atual (equivalente à tecla delete)</value>
+    <value>Ctrl+D:Apaga o caractere atual (Delete)</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Move o cursor para o final da linha (equivalente à tecla End)</value>
+    <value>Ctrl+E:Move para o final da linha (End)</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Move o cursor um caractere para frente (equivalente à tecla de seta para a direita)</value>
+    <value>Ctrl+F:Move um caractere para frente (Right)</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Limpa a linha após o cursor</value>
+    <value>Ctrl+H:Apaga o caractere anterior (Backspace)</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:Limpa a linha após o cursor</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:Limpa a palavra antes do cursor</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Insert:Alterna modo de substituição (padrão é o modo de inserção)</value>
+    <value>Insert:Alterna inserção/sobrescrita</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>Históricos para entrada</value>
@@ -256,7 +256,7 @@
     <value>Pressione a tecla</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>Redimensione o terminal ({0} de altura e {1} de largura). O atual é ({2} e {3})...</value>
+    <value>Redimensione o terminal para ao menos {0}x{1} (atual: {2}x{3})...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Item desativado</value>
@@ -319,10 +319,10 @@
     <value>Digite o caractere inicial para ir diretamente ao item</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>Esquerda/Direita/Início/Fim: Move o cursor dentro do prompt</value>
+    <value>Esquerda/Direita/Início/Fim:Move dentro do prompt</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown: Mover seletor, Ctrl+Home/End:Primeiro/Último item</value>
+    <value>Up/Down/PgUp/PgDown:Mover, Ctrl+Home/End:Primeiro/Último</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>Mostrar/Ocultar dicas</value>
@@ -337,13 +337,13 @@
     <value>ShitfTab: Cancelar sugestão</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab: Mostra sugestão,novamente aceita (Min. {0} chars)</value>
+    <value>Tab:Mostra sugestão, Tab de novo aceita (mín. {0} caract.)</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
-    <value>Tab/ShiftTab:Sugestões (Min. {0} chars)</value>
+    <value>Tab/ShiftTab:Sugestões (mín. {0} caract.)</value>
   </data>
   <data name="TooltipSwitch" xml:space="preserve">
-    <value>Left/Right (ou espaço0):Alternar</value>
+    <value>Left/Right (ou espaço):Alternar</value>
   </data>
   <data name="TooltipToggleNotes" xml:space="preserve">
     <value>Ver/Esconder Notas</value>
