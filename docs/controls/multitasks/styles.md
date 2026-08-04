@@ -40,7 +40,7 @@ list reads at a glance.
 | `RunningTask` | A task row currently running |
 | `SuccessTask` | A task row that finished successfully |
 | `FailedTask` | A task row that finished with a failure |
-| `Error` | The error line |
+| `Error` | **Dead style — never referenced by the control.** A failed task's exception message renders inline next to its row using `FailedTask`, not a separate error line |
 
 ---
 

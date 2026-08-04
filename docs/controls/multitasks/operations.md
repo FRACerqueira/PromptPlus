@@ -23,17 +23,21 @@ StopOnError, parallelism, pagination, cancellation, and reading results.
 ## Anatomy of the control
 
 ```
-Running setup steps  ⠹                     ← prompt + summary spinner (while any task runs)
-  ✔ Load configuration     00:00:01        ← Success row + elapsed time
-  ⠙ Connect to database    00:00:00        ← Running row
-  ◌ Warm up cache                          ← Waiting row
-  Page 1/1                                 ← pagination (when scrolling)
+Running setup steps                       ← prompt (spinner only if you called .Spinner(...))
+1 ok, 0 failed, 2 wait                    ← always-rendered counts summary
+  ● Load configuration     00:00:01        ← Success row (● / v ASCII) + elapsed time
+  ◐ Connect to database    00:00:00        ← Running row (◐ / > ASCII)
+  ○ Warm up cache                          ← Waiting row (○ / space ASCII); ✗ / x for Failed
+Qty:3 items. 1 of 1 pages.                ← pagination — rendered even for a single page
 Esc: cancel                               ← tooltip
 ```
 
 Each task row is painted per state (`Waiting`, `Running`, `Success`, `Failed`) and can be recolored —
 see [Styles](styles.md). The list scrolls when there are more tasks than [`PageSize`](methods.md#pagesize)
-rows.
+rows, but the page indicator itself renders for any non-empty list, single page or not.
+
+> ⚠️ **No spinner renders unless you explicitly call [`Spinner(...)`](methods.md#spinner).** It is
+> opt-in, not automatic just because a task is running.
 
 ---
 
@@ -137,8 +141,12 @@ foreach (var r in result.Content.Results)
 - `Results` — one `MultiTaskResult` per task (in the added order), each with `Title`, `State`,
   `ElapsedTime`, `Exception`, `OutputContext`, and `GetOutput<T>`.
 - `ElapsedTime` — total wall-clock time of the run.
-- `AllSucceeded` — `true` only if there is at least one task and every one is `Success`.
-- `AnyFailed` — `true` if any task is `Failed`.
+- `AllSucceeded` — `true` only if there is at least one task and every one is `Success`. In
+  practice this is never checked against zero tasks — `Run()` throws `InvalidOperationException`
+  immediately if you call it without adding at least one task via `AddTask`/`AddTaskAsync`.
+- `AnyFailed` — `true` if any task is `Failed`. A cancelled/aborted run also puts any in-flight
+  tasks into `Failed`, so `AnyFailed` can be `true` on an aborted run too — check `Aborted` first if
+  you need to distinguish "cancelled" from "a task genuinely threw."
 - `Aborted` — `true` if the run was aborted before all tasks finished.
 
 `MultiTaskState` values: `Waiting`, `Running`, `Success`, `Failed`.
@@ -148,7 +156,9 @@ foreach (var r in result.Content.Results)
 ## Errors
 
 A task that throws ends in the `Failed` state with its exception on `MultiTaskResult.Exception`; the
-control captures it rather than propagating. In parallel mode other tasks continue; in sequential mode
+control captures it rather than propagating. The exception's `.Message` is also rendered inline,
+right next to that task's row (styled with `MultiTasksStyles.FailedTask`), not just available
+programmatically after `Run()` returns. In parallel mode other tasks continue; in sequential mode
 [`StopOnError`](#stoponerror) decides whether the rest run.
 
 ```csharp
@@ -184,9 +194,11 @@ using (var sw = new CancellationTokenSource(TimeSpan.FromSeconds(2)))
 
 ## Pagination
 
-When the number of tasks exceeds [`PageSize`](methods.md#pagesize) (or the auto-fit height with
-`PageSize(0)`), the list becomes scrollable: **Up/Down** move one row, **PageUp/PageDown** move a page.
-The `Pagination` style region paints the page indicator.
+The page indicator (`Qty:{n} items. {p} of {n} pages.`) renders for **any non-empty task list**,
+even a single page that fits entirely on screen — it isn't conditional on actually needing to
+scroll. When the number of tasks exceeds [`PageSize`](methods.md#pagesize) (or the auto-fit height
+with `PageSize(0)`), the list becomes scrollable: **Up/Down** move one row, **PageUp/PageDown** move
+a page. The `Pagination` style region paints the page indicator.
 
 ---
 
