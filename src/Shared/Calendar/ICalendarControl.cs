@@ -102,9 +102,8 @@ namespace PromptPlusLibrary
         /// Overwrites styles for the calendar.
         /// </summary>
         /// <param name="styleType">The <see cref="CalendarStyles"/> to apply.</param>
-        /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> to use.</param>
         /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
         ICalendarControl Styles(CalendarStyles styleType, Style style);
 
         /// <summary>

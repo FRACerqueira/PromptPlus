@@ -451,5 +451,29 @@ namespace PromptPlus.Tests.Controls
 
             _ = act.Should().Throw<ArgumentOutOfRangeException>();
         }
+
+        [Fact]
+        public void ChangeGradient_with_an_empty_array_throws_immediately_instead_of_crashing_on_render()
+        {
+            Action act = () => new PromptPlusControls(MakeTerminal(), new PromptConfig())
+                .ProgressBar("Working").ChangeGradient([]);
+
+            _ = act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ChangeGradient_with_a_single_color_renders_without_throwing()
+        {
+            var vt = MakeTerminal();
+            var control = MakeControl(vt)
+                .ChangeGradient(new Color(255, 0, 0))
+                .UpdateHandler((e, ct) => e.Update(100));
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            var result = control.Run(cts.Token);
+
+            _ = result.IsAborted.Should().BeFalse();
+            _ = vt.Find(PromptPlusResources.Error).Should().BeNull();
+        }
     }
 }

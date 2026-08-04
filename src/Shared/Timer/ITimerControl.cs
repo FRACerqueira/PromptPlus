@@ -36,9 +36,8 @@ namespace PromptPlusLibrary
         /// Overrides the visual style applied to a specific region of the Timer control.
         /// </summary>
         /// <param name="styleType">The <see cref="TimerStyles"/> region whose style is overridden.</param>
-        /// <param name="style">The <see cref="Style"/> to apply. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> to apply.</param>
         /// <returns>The same <see cref="ITimerControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="style"/> is <c>null</c>.</exception>
         ITimerControl Styles(TimerStyles styleType, Style style);
 
         /// <summary>

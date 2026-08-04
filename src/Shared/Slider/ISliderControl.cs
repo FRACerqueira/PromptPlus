@@ -43,9 +43,8 @@ namespace PromptPlusLibrary
         /// Overrides the colors of a specific region of the slider, such as the prompt, the answer or the bar itself.
         /// </summary>
         /// <param name="styleType">The region to restyle, one of the <see cref="SliderStyles"/> values.</param>
-        /// <param name="style">The <see cref="Style"/> (colors) to apply to that region. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> (colors) to apply to that region.</param>
         /// <returns>The same <see cref="ISliderControl"/> instance, so additional settings can be chained.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="style"/> is <c>null</c>.</exception>
         ISliderControl Styles(SliderStyles styleType, Style style);
 
         /// <summary>

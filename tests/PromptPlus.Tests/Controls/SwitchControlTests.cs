@@ -153,6 +153,31 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void EnableHistory_accumulates_distinct_values_instead_of_keeping_only_the_last_one()
+        {
+            // First save: false -> true.
+            var vt1 = MakeTerminal();
+            _ = vt1.Keys.Enqueue(ConsoleKey.RightArrow).Enqueue(ConsoleKey.Enter);
+            using (var cts1 = new CancellationTokenSource(TimeSpan.FromSeconds(2)))
+            {
+                _ = MakeSwitch(vt1).EnableHistory(HistoryFile).Run(cts1.Token);
+            }
+
+            // Second save: reloads "true" as the default, forces it back to false -> distinct value.
+            var vt2 = MakeTerminal();
+            _ = vt2.Keys.Enqueue(ConsoleKey.LeftArrow).Enqueue(ConsoleKey.Enter);
+            using (var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2)))
+            {
+                _ = MakeSwitch(vt2).EnableHistory(HistoryFile).Run(cts2.Token);
+            }
+
+            // Regression: SaveHistory used to Clear() the loaded history before adding the new
+            // value, so only the most recent save ever survived regardless of MaxItems.
+            var persisted = FileHistory.LoadHistory(HistoryFile, byte.MaxValue);
+            _ = persisted.Should().HaveCount(2);
+        }
+
+        [Fact]
         public void F1_cycles_the_tooltip_to_the_next_hint()
         {
             var vt = MakeTerminal();

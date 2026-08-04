@@ -48,9 +48,8 @@ namespace PromptPlusLibrary
         /// Overrides visual styles for the select control.
         /// </summary>
         /// <param name="styleType">The <see cref="SelectStyles"/> to apply.</param>
-        /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> to use.</param>
         /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
         ISelectControl<T> Styles(SelectStyles styleType, Style style);
 
         /// <summary>

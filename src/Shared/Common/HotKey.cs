@@ -175,11 +175,6 @@ namespace PromptPlusLibrary
         public static HotKey DefaultToggleAll => new(ConsoleKey.F2);
 
         /// <summary>
-        ///  Gets the default select all childs toggle hotkey (F4).
-        /// </summary>
-        public static HotKey DefaultToggleWildcard => new(ConsoleKey.F4);
-
-        /// <summary>
         /// Gets the default chart bar layout switch hotkey (F2).
         /// </summary>
         public static HotKey DefaultChartBarSwitchLayout => new(ConsoleKey.F2);

@@ -222,11 +222,6 @@ namespace PromptPlusLibrary
         HotKey HotKeyToggleFullPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the hotkey used to select items matching a wildcard pattern (default: F4).
-        /// </summary>
-        HotKey HotKeySelectWildcard { get; set; }
-
-        /// <summary>
         /// Gets or sets the hotkey for toggling password visibility (default: F2).
         /// </summary>
         HotKey HotKeyInputPasswordView { get; set; }

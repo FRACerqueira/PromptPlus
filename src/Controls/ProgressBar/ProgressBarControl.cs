@@ -117,7 +117,12 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         /// <inheritdoc/>
         public IProgressBarControl ChangeGradient(params Color[] colors)
         {
-            _changeGradient = colors ?? throw new ArgumentNullException(nameof(colors), "The value cannot be null.");
+            ArgumentNullException.ThrowIfNull(colors);
+            if (colors.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(colors), "The value cannot be empty.");
+            }
+            _changeGradient = colors;
             _changeColor = null;
             return this;
         }

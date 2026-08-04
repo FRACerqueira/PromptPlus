@@ -39,9 +39,8 @@ namespace PromptPlusLibrary
         /// Overrides the visual style applied to a specific region of the MultiTasks control.
         /// </summary>
         /// <param name="styleType">The <see cref="MultiTasksStyles"/> region whose style is overridden.</param>
-        /// <param name="style">The <see cref="Style"/> to apply. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> to apply.</param>
         /// <returns>The same <see cref="IMultiTasksControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="style"/> is <c>null</c>.</exception>
         IMultiTasksControl Styles(MultiTasksStyles styleType, Style style);
 
         /// <summary>

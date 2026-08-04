@@ -40,9 +40,8 @@ namespace PromptPlusLibrary
         /// Overrides the visual style applied to a specific region of the Task control.
         /// </summary>
         /// <param name="styleType">The <see cref="TaskStyles"/> region whose style is overridden.</param>
-        /// <param name="style">The <see cref="Style"/> to apply. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> to apply.</param>
         /// <returns>The same <see cref="ITaskControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="style"/> is <c>null</c>.</exception>
         ITaskControl Styles(TaskStyles styleType, Style style);
 
         /// <summary>
