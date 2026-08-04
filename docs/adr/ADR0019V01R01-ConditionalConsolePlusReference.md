@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0019V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-22 |
-| Changed | 2026-07-22 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Conditional ConsolePlus reference for tests|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-22)|
+|Changed|Accepted (2026-07-22)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0019V01R01 — Conditional ConsolePlus reference for tests
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-22
 
 ## Context
 
@@ -70,7 +66,8 @@ This follows a pattern the `.csproj` **already uses** (the
 - **Positive:** `dotnet test` runs in `Debug` by default, so `PromptPlus.Tests`
   automatically pulls the local ConsolePlus build, keeping `InternalsVisibleTo`
   working — no explicit `-c` needed. Release packaging is unchanged.
-- **Negative / risk:** the `PackageReference` version must be kept current for
+- **Negative / trade-off:** the `PackageReference` version must be kept current for
   Release; a mismatch between the local Debug build and the published package
   could mask integration issues — mitigated by CI building/testing against the
   local ProjectReference.
+

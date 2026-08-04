@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0004V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-24 |
-| Changed | 2026-07-24 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Result model: `ResultPrompt<T>` readonly struct|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-24)|
+|Changed|Accepted (2026-07-24)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0004V01R01 — Result model: `ResultPrompt<T>` readonly struct
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-24
 
 ## Context
 
@@ -58,3 +54,4 @@ Abort is a normal, non-exceptional outcome; the property is named `Content`
 - **Negative / trade-off:** callers must check `IsAborted` before trusting
   `Content`; the `Content` vs `Value` naming must be documented because it is a
   common expectation mismatch.
+

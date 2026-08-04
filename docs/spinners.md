@@ -21,7 +21,7 @@ one via a `.Spinner(SpinnersType)` method:
 - [ProgressBar](controls/progressbar/index.md)
 - [Task](controls/task/index.md)
 - [MultiTasks](controls/multitasks/index.md)
-- [Time](controls/time/index.md)
+- [Timer](controls/timer/index.md)
 
 This page explains how to use spinners and how they behave on terminals without Unicode support.
 For the **full visual list of every spinner and its frames**, see the
@@ -133,6 +133,6 @@ the [Spinner catalog](spinners-catalog.md).
 ## See also
 
 - [Spinner catalog](spinners-catalog.md) — every spinner with a visual sample of its frames
-- [ProgressBar](controls/progressbar/index.md) · [Task](controls/task/index.md) · [MultiTasks](controls/multitasks/index.md) · [Time](controls/time/index.md) — the controls that accept a spinner
+- [ProgressBar](controls/progressbar/index.md) · [Task](controls/task/index.md) · [MultiTasks](controls/multitasks/index.md) · [Timer](controls/timer/index.md) — the controls that accept a spinner
 - [Visual Symbols](visual-symbols.md) — static glyphs and their ASCII fallbacks
 - [Global Behaviors](global-behaviors.md) — terminal capability detection

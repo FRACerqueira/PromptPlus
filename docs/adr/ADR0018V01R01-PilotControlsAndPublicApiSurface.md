@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0018V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-22 |
-| Changed | 2026-07-22 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Pilot controls and public API surface|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-22)|
+|Changed|Accepted (2026-07-22)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0018V01R01 — Pilot controls and public API surface
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-22
 
 ## Context
 
@@ -57,7 +53,11 @@ surface** (no `dynamic`/cast to internal concrete classes):
 
 - **Positive:** tests bind to the stable public contract, not internals;
   validates the pattern on one input-style and one selection-style control.
+- **Negative / trade-off:** the pilot only exercises `Input` and `Select`'s
+  shape; other control families (e.g. multi-select, confirm) may expose a
+  different public surface not validated until their own rollout.
 - **Operational rule:** every control test must
   (1) enqueue a terminal key (Enter to confirm, Escape to abort) as the last key,
   and (2) pass a short-timeout `CancellationToken` to `Run(token)` to avoid the
   `WaitKeypress` spin-wait hang.
+

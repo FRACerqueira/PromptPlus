@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0005V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-24 |
-| Changed | 2026-07-24 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Two configuration layers (global vs per-control)|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-24)|
+|Changed|Accepted (2026-07-24)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0005V01R01 — Two configuration layers (global vs per-control)
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-24
 
 ## Context
 
@@ -57,3 +53,4 @@ override.
   overrides are explicit and scoped.
 - **Negative / trade-off:** two places to look when reasoning about a control's
   effective settings — mitigated by the strict "local wins" rule.
+

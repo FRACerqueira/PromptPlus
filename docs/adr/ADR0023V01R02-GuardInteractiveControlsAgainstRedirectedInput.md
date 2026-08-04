@@ -1,15 +1,15 @@
-<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0023V01R02 |
-| Version | 01 |
-| Revision | 02 |
-| Status | Accepted |
-| Created | 2026-07-28 |
-| Changed | 2026-07-31 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Guard interactive controls against redirected console input in `Run()`|
+|Version|01|
+|Revision|02|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-28)|
+|Changed|Accepted (2026-07-31)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,12 +29,6 @@
 ---
 
 # ADR0023V01R02 — Guard interactive controls against redirected console input in `Run()`
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R02
-- **Created:** 2026-07-28
-- **Changed:** 2026-07-31 (R02 — carved out the [Demo Mode](../demo-mode.md) exception: the guard no
-  longer fires while a scripted key is queued and being consumed)
 
 ## Context
 
@@ -64,7 +58,7 @@ ConsolePlus (correctly, per its own contract) removed the accidental crash and e
 underneath — confirmed empirically:
 `PromptPlus.Controls.Input("Name").Run()` under redirected stdin did not return within 3 seconds.
 
-Not every control is affected equally. `ProgressBar`, `Task`, `MultiTasks`, and `Time` override
+Not every control is affected equally. `ProgressBar`, `Task`, `MultiTasks`, and `Timer` override
 `WaitKeypress` but complete on their own signal (progress reaching 100%, the wrapped task finishing,
 the countdown elapsing) — they never actually depend on a real key becoming available, and were
 confirmed empirically to complete normally under redirected input. Only controls that have **no**
@@ -92,7 +86,7 @@ if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected && !conso
   the CI-provider heuristic `Profile.Interactive`) was already exposed on `IConsole` and reachable
   right there — no new plumbing needed.
 - **Widgets excluded** (`isWidget`) — they never enter the key-reading loop; unaffected either way.
-- **`IsLiveAutoRenderControl` controls excluded** (`ProgressBar`/`Task`/`MultiTasks`/`Time`) — the
+- **`IsLiveAutoRenderControl` controls excluded** (`ProgressBar`/`Task`/`MultiTasks`/`Timer`) — the
   same flag the base class already uses to distinguish "renders automatically, doesn't need a real
   key" controls for resize handling. Guarding them too would have newly broken an already-working,
   legitimate use case: running a spinner/progress/countdown control in a script or CI pipeline with
@@ -114,7 +108,7 @@ if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected && !conso
   interactive control silently hanging under redirected input (unlikely, but possible if it supplied
   its own timeout `CancellationToken` expecting a graceful abort) now gets an immediate exception
   instead. Callers that need to run under redirected/non-interactive input must use a `Live` control
-  (`ProgressBar`/`Task`/`MultiTasks`/`Time`) instead of an interactive one, **or** drive the control
+  (`ProgressBar`/`Task`/`MultiTasks`/`Timer`) instead of an interactive one, **or** drive the control
   under [Demo Mode](../demo-mode.md) with the scripted-key queue kept non-empty for the control's
   entire run — there is no other opt-out.
 - **Dependency:** requires a ConsolePlus version that implements the ADR0015 redirected-I/O contract —
@@ -125,3 +119,4 @@ if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected && !conso
   hardcodes `IsInputRedirected => false`, so no test seam was needed. Empirical check against the real
   `ConsolePlus.net` package: `Input(...).Run()` under redirected stdin now throws immediately with the
   message above; `Task(...).Run()` under the same conditions still completes normally.
+

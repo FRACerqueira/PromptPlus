@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0017V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-22 |
-| Changed | 2026-07-22 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|ANSI style model: color only (no attributes)|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-22)|
+|Changed|Accepted (2026-07-22)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0017V01R01 — ANSI style model: color only (no attributes)
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-22
 
 ## Context
 
@@ -58,5 +54,6 @@ confirmed as **"not applicable"**, not as pending work.
 
 - **Positive:** the interpreter stays small and matches real output exactly;
   snapshots are simpler.
-- **Negative / risk:** if production later emits attributes, the interpreter and
+- **Negative / trade-off:** if production later emits attributes, the interpreter and
   this decision must be revisited (a new version of this ADR).
+

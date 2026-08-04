@@ -429,7 +429,7 @@ namespace PromptPlus.Tests.Controls
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
-            // Deliberately NOT calling Default(...) on the second run - unlike Tree/MultiTree,
+            // Deliberately NOT calling Default(...) on the second run - unlike TreeSelect/TreeMultiSelect,
             // Calendar follows the Select/Table family convention: _useDefaultHistory starts
             // false and is only flipped by Default(value, useDefaultHistory: true).
             var control2 = new PromptPlusControls(vt2, new PromptConfig()).Calendar("Choose")

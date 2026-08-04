@@ -80,10 +80,10 @@ Every hot key is settable (`get; set;`) **except** `HotKeyAbortKeyPress`, which 
 | `HotKeyChartBarSwitchLayout` | `F2` | ✅ | ChartBar — switch layout |
 | `HotKeyChartBarSwitchLegend` | `F3` | ✅ | ChartBar — toggle legend |
 | `HotKeyChartBarSwitchOrder` | `F4` | ✅ | ChartBar — cycle sort order |
-| `HotKeyToggleAll` | `F2` | ✅ | MultiSelect, MultiTree, MultiTable, MultiFile — toggle all |
-| `HotKeyFilterAllSelected` | `F3` | ✅ | MultiSelect, MultiTree, MultiTable — filter selected |
-| `HotKeySelectWildcard` | `F4` | ✅ | MultiFile, MultiTree — select entries by wildcard pattern |
-| `HotKeyToggleFullPath` | `Shift+F3` | ✅ | File, MultiFile, Tree, MultiTree — toggle full path |
+| `HotKeyToggleAll` | `F2` | ✅ | MultiSelect, TreeMultiSelect, TableMultiSelect, MultiFile — toggle all |
+| `HotKeyFilterAllSelected` | `F3` | ✅ | MultiSelect, TreeMultiSelect, TableMultiSelect — filter selected |
+| `HotKeySelectWildcard` | `F4` | ✅ | MultiFile, TreeMultiSelect — select entries by wildcard pattern |
+| `HotKeyToggleFullPath` | `Shift+F3` | ✅ | File, MultiFile, TreeSelect, TreeMultiSelect — toggle full path |
 
 ---
 
@@ -204,7 +204,7 @@ PromptPlus.Controls
 | Tooltip visibility | `ShowTooltip = true` shows keyboard hints below the prompt |
 | Abort key hint | `ShowMessageAbortKey = true` includes the abort-key name in the tooltip |
 | Auto-initialization | PromptPlus initializes on first access: detects terminal, loads `PromptPlus.config` if present, registers error log hook |
-| Redirected console input | Interactive controls throw `InvalidOperationException` immediately when console input is redirected, instead of hanging forever. `ProgressBar`, `Task`, `MultiTasks`, `Time` are exempt — they complete on their own signal and run normally under redirected input. [Demo Mode](demo-mode.md) is also exempt while active |
+| Redirected console input | Interactive controls throw `InvalidOperationException` immediately when console input is redirected, instead of hanging forever. `ProgressBar`, `Task`, `MultiTasks`, `Timer` are exempt — they complete on their own signal and run normally under redirected input. [Demo Mode](demo-mode.md) is also exempt while active |
 
 ### Running under redirected/non-interactive input
 
@@ -223,7 +223,7 @@ var state = PromptPlus.Controls.Task("Working")
 
 An interactive control fundamentally needs a real key press to produce a result, and a redirected
 console has no keyboard input buffer to read one from — a `ProgressBar`, `Task`, `MultiTasks`, or
-`Time` control is the normal way to handle automated/CI scenarios instead. The one opt-out is
+`Timer` control is the normal way to handle automated/CI scenarios instead. The one opt-out is
 [Demo Mode](demo-mode.md): while `PromptPlus.Console.DemoModeActive` is `true` (enabled and a
 scripted key is currently queued), this guard does not fire, since a scripted key is available
 regardless of redirection — see the linked guide for the caveats. See

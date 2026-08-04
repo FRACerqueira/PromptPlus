@@ -182,9 +182,9 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            // Full Emac_ctrl_b text is longer than the terminal width and gets clipped in
-            // rendering, so match on a short prefix instead of the whole resource string.
-            _ = vt.Find("Ctrl+B:Moves the cursor back").Should().BeNull();
+            // Match on a short prefix instead of the whole resource string, in case rendering
+            // clips it at narrow terminal widths.
+            _ = vt.Find("Ctrl+B:Move back").Should().BeNull();
         }
 
         [Fact]
@@ -199,7 +199,7 @@ namespace PromptPlus.Tests.Controls
             using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control.Run(cts.Token);
 
-            _ = vt.Find("Ctrl+B:Moves the cursor back").Should().NotBeNull();
+            _ = vt.Find("Ctrl+B:Move back").Should().NotBeNull();
         }
     }
 }

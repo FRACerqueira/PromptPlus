@@ -8,8 +8,8 @@ using Xunit;
 namespace PromptPlus.Tests.Unit
 {
     // BaseControlPrompt.ViewportSlice/ViewportSliceCore (Controls/Common/BaseControlPrompt.cs) —
-    // scroll+ellipsis engine shared by Input/Select/MultiSelect/Table/MultiTable/Tree/
-    // MultiTree/Calendar/File/MultiFile. Only comes into play when the text does NOT fit the
+    // scroll+ellipsis engine shared by Input/Select/MultiSelect/TableSelect/TableMultiSelect/TreeSelect/
+    // TreeMultiSelect/Calendar/File/MultiFile. Only comes into play when the text does NOT fit the
     // viewport (FitsInWidth returns false); when the text fits, the method exits via a simple
     // early-return, out of scope for these tests. Called directly through an InputControl instance
     // (any BaseControlPrompt<T> works — ViewportSlice is public on the base) to test the scroll math

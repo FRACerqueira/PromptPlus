@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [Time Control →](../time/index.md)
+[← Back to Home](../../../README.md) • **Next:** [Timer Control →](../timer/index.md)
 
 ---
 

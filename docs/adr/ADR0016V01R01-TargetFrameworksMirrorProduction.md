@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0016V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-22 |
-| Changed | 2026-07-22 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Target frameworks mirror production (net10/net9/net8)|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-22)|
+|Changed|Accepted (2026-07-22)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0016V01R01 — Target frameworks mirror production (net10/net9/net8)
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-22
 
 ## Context
 
@@ -57,3 +53,4 @@ and `PromptPlus/src/PromptPlus.csproj:3`, which both use `net10.0;net9.0;net8.0`
   released frameworks.
 - **Negative / trade-off:** multi-target test builds are slower and multiply the
   matrix; the list must be kept in sync if production TFMs change.
+

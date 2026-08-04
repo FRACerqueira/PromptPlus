@@ -1,15 +1,15 @@
-<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0024V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-30 |
-| Changed | 2026-07-30 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Live answer line follows the cursor, not a checked summary|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-30)|
+|Changed|Accepted (2026-07-30)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0024V01R01 — Live answer line follows the cursor, not a checked summary
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-30
 
 ## Context
 
@@ -103,3 +99,4 @@ shape.
 - **Resolved:** a `MultiSelect` group header under the cursor shows the group name in the live
   answer — this is not a regression of the group-header case, it is the same "follow the cursor" rule
   applied to a header row instead of an item row.
+

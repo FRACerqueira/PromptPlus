@@ -42,10 +42,10 @@ anything.
 
 | Meaning | ASCII | Unicode | Where shown |
 |---|---|---|---|
-| Focus cursor | `>` | `►` | Focused item in Select / MultiSelect / Tree |
+| Focus cursor | `>` | `►` | Focused item in Select / MultiSelect / TreeSelect |
 | Checkbox — checked | `[x]` | `[■]` | Selected item in MultiSelect |
 | Checkbox — unchecked | `[ ]` | `[ ]` | Unselected item in MultiSelect |
-| Checkbox — partial (tri-state) | `[?]` | `[▪]` | Indeterminate node in MultiTree |
+| Checkbox — partial (tri-state) | `[?]` | `[▪]` | Indeterminate node in TreeMultiSelect |
 | Checkbox — busy/loading | `[*]` | `[◔]` | Item whose children are loading |
 
 > There is **no** `●` / `○` / `›` / `✓` used for list selection — those glyphs belong to task status

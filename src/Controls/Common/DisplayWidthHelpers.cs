@@ -16,7 +16,7 @@ namespace PromptPlusLibrary.Controls.Common
     /// </summary>
     /// <remarks>
     /// Centralized here instead of duplicated per control: <see cref="Truncate"/>/<see cref="AlignCell"/>
-    /// used to be near-identical private copies in <c>TableControl</c> and <c>MultiTableControl</c>.
+    /// used to be near-identical private copies in <c>TableSelectControl</c> and <c>TableMultiSelectControl</c>.
     /// </remarks>
     internal static class DisplayWidthHelpers
     {

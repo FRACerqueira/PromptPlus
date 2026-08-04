@@ -171,7 +171,7 @@ You do not need to call any initialization method. The first access triggers it.
 | Minimum size (80×10) | If the terminal is too small, a resize prompt appears and execution waits. |
 | Culture isolation | `DefaultCulture` is applied only during `.Run()`. The original thread culture is always restored afterward — even on error. |
 | Single-line rendering | Newlines are stripped from displayed values. When the value is wider than the terminal, a sliding window with `…` is used. `result.Content` always holds the original full value. |
-| Redirected console input | `.Run()`/`.Show()` throw `InvalidOperationException` immediately instead of hanging when console input is redirected (a file, a pipe, a CI runner). `ProgressBar`, `Task`, `MultiTasks`, and `Time` are unaffected — they complete on their own signal and run normally under redirected input. [Demo Mode](demo-mode.md) is also unaffected while active. See [ADR0023](adr/ADR0023V01R02-GuardInteractiveControlsAgainstRedirectedInput.md). |
+| Redirected console input | `.Run()`/`.Show()` throw `InvalidOperationException` immediately instead of hanging when console input is redirected (a file, a pipe, a CI runner). `ProgressBar`, `Task`, `MultiTasks`, and `Timer` are unaffected — they complete on their own signal and run normally under redirected input. [Demo Mode](demo-mode.md) is also unaffected while active. See [ADR0023](adr/ADR0023V01R02-GuardInteractiveControlsAgainstRedirectedInput.md). |
 
 ---
 

@@ -56,11 +56,11 @@ an `operations` guide (keyboard, validation, history), and a `styles` page.
 | `ProgressBar` | [controls/progressbar/](controls/progressbar/index.md) |
 | `Task` | [controls/task/](controls/task/index.md) |
 | `MultiTasks` | [controls/multitasks/](controls/multitasks/index.md) |
-| `Time` | [controls/time/](controls/time/index.md) |
-| `Table<T>` | [controls/table/](controls/table/index.md) |
-| `MultiTable<T>` | [controls/multitable/](controls/multitable/index.md) |
-| `Tree<T>` | [controls/tree/](controls/tree/index.md) |
-| `MultiTree<T>` | [controls/multitree/](controls/multitree/index.md) |
+| `Timer` | [controls/timer/](controls/timer/index.md) |
+| `TableSelect<T>` | [controls/tableselect/](controls/tableselect/index.md) |
+| `TableMultiSelect<T>` | [controls/tablemultiselect/](controls/tablemultiselect/index.md) |
+| `TreeSelect<T>` | [controls/treeselect/](controls/treeselect/index.md) |
+| `TreeMultiSelect<T>` | [controls/treemultiselect/](controls/treemultiselect/index.md) |
 | `File` | [controls/file/](controls/file/index.md) |
 | `MultiFile` | [controls/multifile/](controls/multifile/index.md) |
 | `ChartBar` | [controls/chartbar/](controls/chartbar/index.md) |
@@ -83,8 +83,8 @@ an `operations` guide (keyboard, validation, history), and a `styles` page.
 | [Input / AutoComplete](migration/controls/input.md) | `AutoComplete()` (non-generic) → `Input().SuggestionHandler(...)`, async additions |
 | [Select / MultiSelect](migration/controls/select.md) | Renamed methods, `HideCountSelected` removed, async additions |
 | [KeyPress / Confirm](migration/controls/keypress.md) | `AddKeyValid` → `AddValidKey`, timeout/countdown removed |
-| [Table / MultiTable](migration/controls/table.md) | `AddColumn` reformulated, `Filter` signature, new features |
-| [Tree / MultiTree](migration/controls/tree.md) | Factory renames, tree-building API reworked (`Root`/`AddLast`), remote-control removal |
+| [TableSelect / TableMultiSelect](migration/controls/tableselect.md) | `AddColumn` reformulated, `Filter` signature, new features |
+| [TreeSelect / TreeMultiSelect](migration/controls/treeselect.md) | Factory renames, tree-building API reworked (`Root`/`AddLast`), remote-control removal |
 | [File / MultiFile](migration/controls/file.md) | Factory renames, attribute methods, new MultiFile features |
 | [MultiTasks / Time / Task](migration/controls/tasks.md) | Factory renames, `AddTask` reformulated, return types |
 | [MaskEdit (all types)](migration/controls/maskedit.md) | No breaking changes; `PredicateSelectedAsync` added (factories unchanged) |

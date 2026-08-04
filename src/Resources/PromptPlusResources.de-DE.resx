@@ -127,7 +127,7 @@
     <value>Alt+B:Cursor ein Wort zurück bewegen</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Zeichen unter dem Cursor großschreiben und zum Wortende bewegen</value>
+    <value>Alt+C:Wort am Cursor großschreiben</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:Wort nach dem Cursor löschen</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:Kleinbuchstaben vom Cursor bis zum Wortende</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Großbuchstaben vom Cursor bis zum Wortende.</value>
+    <value>Alt+U:Großbuchstaben bis Wortende</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Cursor zum Zeilenanfang bewegen (entspricht der Pos1-Taste)</value>
+    <value>Ctrl+A:Cursor zum Zeilenanfang (Pos1)</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Cursor ein Zeichen zurück bewegen (entspricht der linken Pfeiltaste)</value>
+    <value>Ctrl+B:Ein Zeichen zurück (Links)</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Aktuelles Zeichen löschen (entspricht der Entf-Taste)</value>
+    <value>Ctrl+D:Aktuelles Zeichen löschen (Entf)</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Cursor zum Zeilenende bewegen (entspricht der Ende-Taste)</value>
+    <value>Ctrl+E:Cursor zum Zeilenende (Ende)</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Cursor ein Zeichen vorwärts bewegen (entspricht der rechten Pfeiltaste)</value>
+    <value>Ctrl+F:Ein Zeichen vorwärts (Rechts)</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Vorheriges Zeichen löschen (entspricht der Rücktaste)</value>
+    <value>Ctrl+H:Vorheriges Zeichen löschen (Rücktaste)</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:Zeile nach dem Cursor löschen</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:Wort vor dem Cursor löschen</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Einfg:Eingabe-Ersetzungsmodus umschalten (Standard ist Einfügemodus)</value>
+    <value>Einfg:Einfüge-/Überschreibmodus umschalten</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>Eingabeverlauf</value>
@@ -256,7 +256,7 @@
     <value>Taste drücken</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>Terminal-Größe ändern ({0} Höhe und {1} Breite). Die aktuelle Größe ist ({2} und {3})...</value>
+    <value>Terminalgröße auf mind. {0}x{1} ändern (aktuell: {2}x{3})...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Element deaktiviert</value>
@@ -319,10 +319,10 @@
     <value>Anfangszeichen eingeben, um zum Element zu springen</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>Links/Rechts/Anfang/Ende: Cursor innerhalb der Eingabeaufforderung bewegen</value>
+    <value>Links/Rechts/Anfang/Ende:Im Prompt bewegen</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Auf/Ab/BildAuf/BildAb: Auswahl bewegen, Ctrl+Pos1/Ende:Erstes/Letztes Element</value>
+    <value>Auf/Ab/BildAuf/BildAb:Bewegen, Ctrl+Pos1/Ende:Erstes/Letztes</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>Tooltips anzeigen/ausblenden</value>
@@ -337,7 +337,7 @@
     <value>ShiftTab:Vorschlag abbrechen</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab:Vorschlag anzeigen, erneut Akzeptieren (Min. {0} Zeichen)</value>
+    <value>Tab:Vorschlag anzeigen, erneut Tab zum Akzeptieren (Min. {0} Zeichen)</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
     <value>Tab/ShiftTab:Vorschläge (Min. {0} Zeichen)</value>

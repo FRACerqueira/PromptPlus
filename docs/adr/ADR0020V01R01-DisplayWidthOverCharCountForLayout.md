@@ -1,15 +1,15 @@
-<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0020V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-24 |
-| Changed | 2026-07-24 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Display width (columns), not character count, for text layout|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-24)|
+|Changed|Accepted (2026-07-24)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0020V01R01 — Display width (columns), not character count, for text layout
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-24
 
 ## Context
 
@@ -95,9 +91,9 @@ plan (since completed and removed).
    MultiTable, ChartBar, Calendar, Select/MultiSelect, Input secret masking) is a separate, boundable
    change with its own regression test, tracked in a working rollout plan (since completed and
    removed). One of them (`ChartBar`'s
-   `MaxLengthLabel`) has a public-API semantic question (character count vs. display columns) that
-   needs an explicit answer before it's touched, precisely because it's observable API behavior, not
-   an internal-only fix.
+   `MaxLengthLabel`) had a public-API semantic question (character count vs. display columns) that
+   needed an explicit answer before it was touched, precisely because it's observable API behavior,
+   not an internal-only fix — see the **Resolved** note under Consequences for the answer.
 
 ## Consequences
 
@@ -107,7 +103,7 @@ plan (since completed and removed).
   primitives to reach for instead of re-deriving rune-width logic per control.
 - **Positive:** the fix is incremental and independently testable per control — no single large,
   risky change.
-- **Negative / risk:** `TruncateToDisplayWidth`, when applied, can produce a string whose *character*
+- **Negative / trade-off:** `TruncateToDisplayWidth`, when applied, can produce a string whose *character*
   length differs from what `.Length`-based logic previously assumed; anywhere a fix changes truncation
   behavior for content that was already CJK (rare in practice, since the prior behavior was broken),
   visual output for that content changes. Mitigated by keeping each control's fix scoped and covered
@@ -121,3 +117,4 @@ plan (since completed and removed).
   character cap itself. This keeps the public API's observable behavior identical while making
   cross-item column alignment correct regardless of script mix. The exact fields/methods touched
   are recorded in the fix's own commit and regression tests.
+

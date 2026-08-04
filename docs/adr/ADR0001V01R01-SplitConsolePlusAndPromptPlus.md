@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0001V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-24 |
-| Changed | 2026-07-24 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Split PromptPlus 5.x into two projects (ConsolePlus + PromptPlus)|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-24)|
+|Changed|Accepted (2026-07-24)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0001V01R01 — Split PromptPlus 5.x into two projects (ConsolePlus + PromptPlus)
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-24
 
 ## Context
 
@@ -80,6 +76,6 @@ dependency on PromptPlus. Both reuse the same console driver instance
 
 ## Related
 
-- PromptPlus [ADR0011](ADR0011V01R01-PerControlCultureIsolation.md) and the
-  migration-guide rules in [ADR0013](ADR0013V01R01-MigrationGuideRules.md).
+- The migration-guide rules in [ADR0013](ADR0013V01R01-MigrationGuideRules.md).
 - ConsolePlus ADR0001 records the same decision from the rendering side.
+

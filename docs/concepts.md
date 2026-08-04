@@ -113,7 +113,7 @@ Most text and list controls share the same helpers:
 
 | Aid | How | Key |
 |---|---|---|
-| Validation on confirm | `PredicateValid(...)` (Input/Secret) · `PredicateSelected(...)` (Select/Table/Tree) · `PredicateChecked(...)` (Multi* checkables) | — |
+| Validation on confirm | `PredicateValid(...)` (Input/Secret) · `PredicateSelected(...)` (Select/TableSelect/TreeSelect) · `PredicateChecked(...)` (Multi* checkables) | — |
 | Persistent history | `EnableHistory("key")` | **F3** |
 | Autocomplete suggestions | `SuggestionHandler(...)` | **Tab / Shift+Tab** |
 | Abort | enabled by default | **Esc** |

@@ -30,7 +30,7 @@ if (!result.IsAborted)
 var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 ```
 
-> ⚠️ `ResultPrompt<T>` has **no** `.Value` member — use `.Content`. (The `Table` controls wrap their payload in `TableResult<T>`, which *does* have `.Value`; see [Table / MultiTable](migration/controls/table.md).)
+> ⚠️ `ResultPrompt<T>` has **no** `.Value` member — use `.Content`. (The `TableSelect` control wraps its payload in `TableSelectResult<T>`, which *does* have `.Value`; see [TableSelect / TableMultiSelect](migration/controls/tableselect.md).)
 
 ## Per-control sub-pages
 
@@ -39,10 +39,10 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | Input / AutoComplete | [migration/controls/input.md](migration/controls/input.md) |
 | Select / MultiSelect | [migration/controls/select.md](migration/controls/select.md) |
 | KeyPress / Confirm | [migration/controls/keypress.md](migration/controls/keypress.md) |
-| Table / MultiTable | [migration/controls/table.md](migration/controls/table.md) |
-| Tree / MultiTree | [migration/controls/tree.md](migration/controls/tree.md) |
+| TableSelect / TableMultiSelect | [migration/controls/tableselect.md](migration/controls/tableselect.md) |
+| TreeSelect / TreeMultiSelect | [migration/controls/treeselect.md](migration/controls/treeselect.md) |
 | File / MultiFile | [migration/controls/file.md](migration/controls/file.md) |
-| MultiTasks / Time / Task | [migration/controls/tasks.md](migration/controls/tasks.md) |
+| MultiTasks / Timer / Task | [migration/controls/tasks.md](migration/controls/tasks.md) |
 | MaskEdit (all types) | [migration/controls/maskedit.md](migration/controls/maskedit.md) |
 | Slider / Calendar / Switch / ProgressBar / ChartBar | [migration/controls/nochanges.md](migration/controls/nochanges.md) |
 
@@ -52,12 +52,12 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 
 | v5.x | v6.x | Notes |
 |---|---|---|
-| `TableSelect<T>()` | `Table<T>()` | Renamed; `AddColumn` reworked |
-| `TableMultiSelect<T>()` | `MultiTable<T>()` | Renamed; `AddColumn` reworked |
-| `NodeTreeSelect<T>()` | `Tree<T>()` | Renamed; tree-building API reworked (`AddRootNode`/`AddChildNode` → `Root`/`AddLast`/`AddFirst`) |
-| `NodeTreeMultiSelect<T>()` | `MultiTree<T>()` | Renamed; same tree-building rework |
+| `TableSelect<T>()` | `TableSelect<T>()` | Unchanged; `AddColumn` reworked |
+| `TableMultiSelect<T>()` | `TableMultiSelect<T>()` | Unchanged; `AddColumn` reworked |
+| `NodeTreeSelect<T>()` | `TreeSelect<T>()` | Renamed; tree-building API reworked (`AddRootNode`/`AddChildNode` → `Root`/`AddLast`/`AddFirst`) |
+| `NodeTreeMultiSelect<T>()` | `TreeMultiSelect<T>()` | Renamed; same tree-building rework |
 | `WaitProcess()` | `MultiTasks()` | Renamed; `AddTask` fully reworked |
-| `WaitTimer()` | `Time()` | Renamed; API fully reworked |
+| `WaitTimer()` | `Timer()` | Renamed; API fully reworked |
 | `WaitCommand()` | `Task()` | Renamed; `CommandHandler` replaced by a cancellable `Action` |
 | `FileSelect()` | `File()` | Renamed; visibility methods renamed |
 | `FileMultiSelect()` | `MultiFile()` | Renamed; new navigation methods added |
@@ -90,12 +90,12 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `MultiSelect<T>` | `EqualItems(Func<T,T,bool>)` | `DefaultMatchBy(Func<T,T,bool>)` | Renamed, same signature |
 | `KeyPress` | `AddKeyValid(key, modifiers, showtext)` | `AddValidKey(key, modifiers, displayText)` | Method and parameter renamed |
 | `WaitProcess` → `MultiTasks` | `MaxDegreeProcess(byte)` | `MaxDegreeOfParallelism(int)` | Renamed and type widened `byte` → `int` |
-| `TableSelect` → `Table` | `Layout(TableLayout)` | `LayoutMode(TableLayoutMode)` | Renamed; enum renamed too |
-| `TableSelect` → `Table` | `HideHeaders(bool)` | `HideElements(HideTable)` | Replaced by a flags enum that hides several regions |
+| `TableSelect` / `TableMultiSelect` | `Layout(TableLayout)` | `LayoutMode(TableLayoutMode)` | Renamed; enum renamed too |
+| `TableSelect` / `TableMultiSelect` | `HideHeaders(bool)` | `HideElements(HideTable)` | Replaced by a flags enum that hides several regions |
 | `FileSelect` → `File` | `AcceptHiddenAttributes(bool)` | `ShowHidden(bool)` | Renamed (same effect: `true` makes hidden entries visible) |
 | `FileSelect` → `File` | `AcceptSystemAttributes(bool)` | `ShowSystem(bool)` | Renamed (same effect as above) |
 | `File` / `MultiFile` | `HideSizeInfo(bool)` | `HideSize(bool)` | Renamed, same semantics |
-| `WaitTimer` → `Time` | `IsCountDown(bool)` | `DisplayMode(TimeDisplayMode)` | Replaced by an enum (`Countdown`/`Elapsed`) |
+| `WaitTimer` → `Timer` | `IsCountDown(bool)` | `DisplayMode(TimerDisplayMode)` | Replaced by an enum (`Countdown`/`Elapsed`) |
 | `Slider` / `ProgressBar` | `FracionalDig(byte)` | `FractionalDigits(byte)` | Renamed (spelling fix); matches `ChartBar.FractionalDigits` |
 | `Select` / `MultiSelect` / `Input` / `Secret` / `Slider` / `Switch` / `File` / `MultiFile` | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` | Renamed (grammar fix: enable, not "enabled") |
 
@@ -119,14 +119,14 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | Control v5.x | Method v5.x | Method v6.x | Detail |
 |---|---|---|---|
 | `Select<T>` | `Filter(FilterMode, bool caseinsensitive)` | `Filter(FilterMode)` | `caseinsensitive` parameter removed |
-| `Table` / `MultiTable` | `Filter(FilterMode, bool caseinsensitive)` | `Filter(FilterMode, FilterTableMode)` | Second parameter changed from `bool` to enum `FilterTableMode` |
-| `Table` / `MultiTable` | `AddColumn(string title, int width, Func<T,string> rowvalue, TextAlignment rowAlignment, TextAlignment titleAlignment, bool titlereplaceswidth, int maxslidinglines)` | `AddColumn(string header, Func<T,object> selector, Func<object,string>? formatter, int? width, ColumnAlignment alignment, bool isFilterable)` | Full rework — `object` selector, optional formatter, `TextAlignment` → `ColumnAlignment`, new `isFilterable` |
-| `Table` / `MultiTable` | `ChangeDescription(Func<T,int,int,string>)` | `ChangeDescription(Func<T,string>)` | Row/column indices dropped |
+| `TableSelect` / `TableMultiSelect` | `Filter(FilterMode, bool caseinsensitive)` | `Filter(FilterMode, FilterTableMode)` | Second parameter changed from `bool` to enum `FilterTableMode` |
+| `TableSelect` / `TableMultiSelect` | `AddColumn(string title, int width, Func<T,string> rowvalue, TextAlignment rowAlignment, TextAlignment titleAlignment, bool titlereplaceswidth, int maxslidinglines)` | `AddColumn(string header, Func<T,object> selector, Func<object,string>? formatter, int? width, ColumnAlignment alignment, bool isFilterable)` | Full rework — `object` selector, optional formatter, `TextAlignment` → `ColumnAlignment`, new `isFilterable` |
+| `TableSelect` / `TableMultiSelect` | `ChangeDescription(Func<T,int,int,string>)` | `ChangeDescription(Func<T,string>)` | Row/column indices dropped |
 | `WaitProcess` → `MultiTasks` | `AddTask(TaskMode mode, string id, Action<object?,ExtraInfoProcess,CancellationToken> process, string? label, object? parameter)` | `AddTask(string title, Func<IReadOnlyDictionary<string,object?>, CancellationToken, IDictionary<string,object?>?> handler, IDictionary<string,object?>? context, MultiTasksMode? mode)` | Full rework — `ExtraInfoProcess` removed, context as a dictionary, `TaskMode` → `MultiTasksMode` |
 | `WaitProcess` → `MultiTasks` | `Run()` → `ResultPrompt<StateProcess[]>` | `Run()` → `ResultPrompt<StateMultiTasks>` | Return type changed |
-| `WaitTimer` → `Time` | duration passed to the factory: `WaitTimer(int ms, …)` / `WaitTimer(TimeSpan, …)` | `Time().Duration(TimeSpan)` / `Duration(int seconds)` | Duration is now a fluent method |
-| `WaitTimer` → `Time` | `ShowElapsedTime(int milliseconds, bool value)` | Removed | Time is displayed automatically; use `Format(...)` |
-| `WaitTimer` → `Time` | `Run()` → `ResultPrompt<TimeSpan?>` | `Run()` → `ResultPrompt<TimeSpan>` | No longer nullable |
+| `WaitTimer` → `Timer` | duration passed to the factory: `WaitTimer(int ms, …)` / `WaitTimer(TimeSpan, …)` | `Timer().Duration(TimeSpan)` / `Duration(int seconds)` | Duration is now a fluent method |
+| `WaitTimer` → `Timer` | `ShowElapsedTime(int milliseconds, bool value)` | Removed | Time is displayed automatically; use `Format(...)` |
+| `WaitTimer` → `Timer` | `Run()` → `ResultPrompt<TimeSpan?>` | `Run()` → `ResultPrompt<TimeSpan>` | No longer nullable |
 | `WaitCommand` → `Task` | `CommandHandler(Action commandaction)` | `Action(Action<CancellationToken> handler)` | Renamed; handler now receives a `CancellationToken` |
 | `WaitCommand` → `Task` | `ShowElapsedTime(int milliseconds, bool value)` | `ShowElapsedTime(bool value, string? format)` | Interval removed; optional display format added |
 | `WaitCommand` → `Task` | `Finish(string text)` | `Finish(string finishtext, string? errortext)` | Optional error text added |
@@ -148,7 +148,7 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `WaitProcess` → `MultiTasks` | `Finish(Func<IEnumerable<StateProcess>,string>)` | Dynamic finish text removed; see `StopOnError(bool)` |
 | `WaitProcess` → `MultiTasks` | `ChangeDescription(Func<IEnumerable<StateProcess>,string>)` | Dynamic aggregate description not available |
 | `WaitProcess` → `MultiTasks` | `IntervalUpdate(int)` | UI update interval not configurable |
-| `WaitTimer` → `Time` | `ShowElapsedTime(int, bool)` | Elapsed display managed automatically |
+| `WaitTimer` → `Timer` | `ShowElapsedTime(int, bool)` | Elapsed display managed automatically |
 | `ProgressBar` | `IntervalUpdate(int)` | UI update interval not configurable |
 | `FileSelect` → `File` | `HideZeroEntries(bool)` | Empty folders are always shown |
 | `FileSelect` → `File` | `HideFilesBySize(long, long)` | Size filter not available (use `PredicateChecked` on `MultiFile`) |
@@ -157,7 +157,7 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `NodeTree*` | `DisableRecursiveCount(bool)` | Recursive child-count toggle not available |
 | `NodeTree*` | `HideCount(bool)` / `HideCountSelected(bool)` | Node-count display toggles not available |
 | `NodeTree*` | `PredicateDisabled(Func<T,bool>)` | Per-node disable predicate not available |
-| `Table` / `MultiTable` | `SeparatorRows(bool)` | Row separators not available |
+| `TableSelect` / `TableMultiSelect` | `SeparatorRows(bool)` | Row separators not available |
 | `ChartBar` | `MaxWidth(byte)` | Width is now automatic |
 
 ---
@@ -168,10 +168,10 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 |---|---|---|
 | `RemoteSelect<T1,T2>()` | Select with remote/paged loading | ❌ Removed — no replacement |
 | `RemoteMultiSelect<T1,T2>()` | MultiSelect with remote/paged loading | ❌ Removed — no replacement |
-| `NodeTreeRemoteSelect<T1,T2>()` | Tree with remote node loading | ❌ Removed — no replacement |
-| `NodeTreeRemoteMultiSelect<T1,T2>()` | MultiTree with remote node loading | ❌ Removed — no replacement |
+| `NodeTreeRemoteSelect<T1,T2>()` | TreeSelect with remote node loading | ❌ Removed — no replacement |
+| `NodeTreeRemoteMultiSelect<T1,T2>()` | TreeMultiSelect with remote node loading | ❌ Removed — no replacement |
 
-> ⚠️ Applications that relied on remote/paged loading must load the data themselves and feed the `Select`, `MultiSelect`, `Tree` or `MultiTree` controls.
+> ⚠️ Applications that relied on remote/paged loading must load the data themselves and feed the `Select`, `MultiSelect`, `TreeSelect` or `TreeMultiSelect` controls.
 
 ---
 
@@ -183,7 +183,7 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 |---|---|
 | `History(string filename)` | **Direct** management of persisted history — read, write and remove entries without needing an input control |
 
-> `Time()` is not a *new* control — it is the renamed `WaitTimer()` with a reworked API.
+> `Timer()` is not a *new* control — it is the renamed `WaitTimer()` with a reworked API.
 
 ### New methods on existing controls
 
@@ -193,11 +193,11 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `Select<T>` | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `ChangeDescriptionAsync` · `InteractionAsync` · `TextSelectorAsync` · `ExtraInfoAsync` · `PredicateSelectedAsync` (x2) |
 | `MultiSelect<T>` | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `TextSelectorAsync` · `ExtraInfoAsync` · `ChangeDescriptionAsync` · `InteractionAsync` · `PredicateCheckedAsync` (x2) |
 | `Input` | `SuggestionHandler(..., bool autocomplete)` · `SuggestionHandlerAsync(..., bool autocomplete)` · `MinimumSuggestionLength(byte)` · `PredicateValidAsync` (x2) · `ChangeDescriptionAsync` |
-| `Table` / `MultiTable` | `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync` · `PredicateSelectedAsync` (Table) / `PredicateCheckedAsync` (MultiTable) (x2) · (`MultiTable`) `EnableHistory` · `UseDefaultHistory` |
-| `Tree` / `MultiTree` | `ViewOnly` · `Filter` · `SelectLeafOnly`/`CheckLeafOnly` · `ShowFullPath` · `CascadeCheck` (MultiTree) · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync` · `PredicateSelectedAsync` (Tree) / `PredicateCheckedAsync` (MultiTree) (x2) |
+| `TableSelect` / `TableMultiSelect` | `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync` · `PredicateSelectedAsync` (TableSelect) / `PredicateCheckedAsync` (TableMultiSelect) (x2) · (`TableMultiSelect`) `EnableHistory` · `UseDefaultHistory` |
+| `TreeSelect` / `TreeMultiSelect` | `ViewOnly` · `Filter` · `SelectLeafOnly`/`CheckLeafOnly` · `ShowFullPath` · `CascadeCheck` (TreeMultiSelect) · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync` · `PredicateSelectedAsync` (TreeSelect) / `PredicateCheckedAsync` (TreeMultiSelect) (x2) |
 | `MultiTasks` | `AddTaskAsync` · `Interaction<T>` · `StopOnError(bool)` · `Mode(MultiTasksMode)` |
 | `Task` | `ChangeDescription` · `ChangeDescriptionAsync` · `Context(IDictionary)` · `Culture(CultureInfo)` · multiple `Action`/`ActionAsync` overloads |
-| `Time` | `Duration(TimeSpan/int)` · `Format(string)` · `Culture(CultureInfo)` · `ChangeDescription` · `ChangeDescriptionAsync` · `DisplayMode(TimeDisplayMode)` |
+| `Timer` | `Duration(TimeSpan/int)` · `Format(string)` · `Culture(CultureInfo)` · `ChangeDescription` · `ChangeDescriptionAsync` · `DisplayMode(TimerDisplayMode)` |
 | `File` / `MultiFile` | `SelectFilesOnly(bool)` · `ShowFullPath(bool)` · (`MultiFile`) `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `PredicateCheckedAsync` (x2, MultiFile) |
 | `Switch` | `ChangeDescriptionAsync` · `OffValue(EmojiName, string)` · `OnValue(EmojiName, string)` |
 | `ProgressBar` | `ChangeDescriptionAsync` · `UpdateHandlerAsync` |

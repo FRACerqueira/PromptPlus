@@ -1,15 +1,15 @@
-<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0021V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-25 |
-| Changed | 2026-07-25 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|CI test scope is net10.0-only; the release workflow trusts CI and does not re-run tests|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-25)|
+|Changed|Accepted (2026-07-25)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0021V01R01 — CI test scope is net10.0-only; the release workflow trusts CI and does not re-run tests
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-25
 
 ## Context
 
@@ -76,3 +72,4 @@ adding coverage.
   bypassed `ci.yml` (e.g. pushed directly without a corresponding push/PR run, or a manually
   rewritten ref) would publish without any test verification at all. This is an accepted trade-off,
   not a gap the release workflow itself now guards against.
+

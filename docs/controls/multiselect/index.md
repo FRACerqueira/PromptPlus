@@ -46,8 +46,8 @@ info per row, and validate each check before it is accepted.
 |---|---|
 | The user checks several options from a known set | — |
 | The user picks exactly one option | [Select](../select/index.md) |
-| The data is tabular (multiple columns) | [Table](../table/index.md) |
-| The data is hierarchical | [Tree](../tree/index.md) |
+| The data is tabular (multiple columns) | [TableSelect](../tableselect/index.md) |
+| The data is hierarchical | [TreeSelect](../treeselect/index.md) |
 | It is a yes/no or single-key answer | [KeyPress / Confirm](../keypress/index.md) |
 
 ---
@@ -156,4 +156,4 @@ if (!aborted)
 - [Operations](operations.md) — keyboard, checking, filtering, grouping, range, validation
 - [Styles](styles.md) — recolor the list regions
 - [Select](../select/index.md) — single-choice sibling
-- [Table](../table/index.md) · [Tree](../tree/index.md) — tabular and hierarchical pickers
+- [TableSelect](../tableselect/index.md) · [TreeSelect](../treeselect/index.md) — tabular and hierarchical pickers

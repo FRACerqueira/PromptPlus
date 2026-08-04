@@ -39,19 +39,25 @@ ADR{seq:0000}V{version:00}R{revision:00}-DecisionTitle.md
 ```
 
 - `ADR0001V01R01-...` — created
-- `ADR0001V02R01-...` — after a version bump (new decision that supersedes the prior version)
+- `ADR0001V02R01-...` — after a version bump (a new decision that replaces the prior version)
 - `ADR0001V03R02-...` — after a revision within a version
 - `ADR0002V01R01-DecisionTitle--0001.md` — after a supersede bump
 
-Status labels: **Proposed** → **Accepted** / **Rejected**, and **Superseded**
-when a successor version replaces it.
+Status labels: **Proposed** → **Accepted** / **Rejected**. **Superseded** is set by the
+`supersede` command — a *different* decision, under a new sequence number, entirely
+replacing this one — not by a version bump. Verified against `adrplus` v1.0.0-beta4: a
+version bump (`version` command) leaves the predecessor's header at its last real status
+(Accepted/Rejected) with a blank `Superseded` field; only the successor sequence-number
+case populates it. The succession from a version bump is documented in prose only (the
+predecessor's `Status:` bullet and this index's Status column), not in its machine-readable
+header table.
 
 Numbering is **per project**. ADR0001 records the foundational decision to split
 PromptPlus 5.x into two projects (ConsolePlus + PromptPlus). The product/design
 ADRs (0002–0013, plus 0020, 0023, 0024, and 0025) follow from the PromptPlus
-architecture documentation; the test/build ADRs (0014–0019, plus 0021 and 0022)
-predate that survey and were renumbered to follow. Later ADRs are appended to
-whichever section they belong to as new decisions arise.
+architecture documentation; the test/build ADRs (0014–0019, plus 0021, 0022, and
+0026) predate that survey and were renumbered to follow. Later ADRs are appended
+to whichever section they belong to as new decisions arise.
 
 ## Index
 
@@ -86,8 +92,7 @@ whichever section they belong to as new decisions arise.
 
 | ADR | Title | Version | Status |
 | --- | --- | --- | --- |
-| [ADR0014V01R01](ADR0014V01R01-TestDriverSharingMechanism.md) | Test driver sharing mechanism | V01 | Superseded (by V02) |
-| [ADR0014V02R01](ADR0014V02R01-TestDriverSharingMechanism.md) | Test driver sharing mechanism | V02 | Accepted |
+| [ADR0014V01R01](ADR0014V01R01-TestDriverSharingMechanism.md) | Test driver sharing mechanism | V01 | Superseded (by ADR0026) |
 | [ADR0015V01R01](ADR0015V01R01-TestFrameworkXUnitVerify.md) | Test framework: xUnit + Verify | V01 | Accepted |
 | [ADR0016V01R01](ADR0016V01R01-TargetFrameworksMirrorProduction.md) | Target frameworks mirror production (net10/net9/net8) | V01 | Accepted |
 | [ADR0017V01R01](ADR0017V01R01-AnsiStyleModelColorOnly.md) | ANSI style model: color only (no attributes) | V01 | Accepted |
@@ -95,3 +100,4 @@ whichever section they belong to as new decisions arise.
 | [ADR0019V01R01](ADR0019V01R01-ConditionalConsolePlusReference.md) | Conditional ConsolePlus reference for tests | V01 | Accepted |
 | [ADR0021V01R01](ADR0021V01R01-CiTestScopeNet10OnlyPublishTrustsCi.md) | CI test scope is net10.0-only; release workflow trusts CI and does not re-run tests | V01 | Accepted |
 | [ADR0022V01R01](ADR0022V01R01-CiSkipsTestsForDocOnlyChanges.md) | CI skips the test run (build-only) for documentation-only changes | V01 | Accepted |
+| [ADR0026V01R01](ADR0026V01R01-TestDriverSharingMechanism--0014.md) | Test driver sharing mechanism (supersedes ADR0014V01R01) | V01 | Accepted |

@@ -1,15 +1,15 @@
-<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0025V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-30 |
-| Changed | 2026-07-30 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Read-only answer viewport: shared buffer, resize preserves position|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-30)|
+|Changed|Accepted (2026-07-30)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -24,15 +24,11 @@
 
 </div>
 
-[← ADR0024V01R01](ADR0024V01R01-LiveAnswerLineFollowsTheCursorNotACheckedSummary.md) • [ADR Index](README.md)
+[← ADR0024V01R01](ADR0024V01R01-LiveAnswerLineFollowsTheCursorNotACheckedSummary.md) • [ADR Index](README.md) • **Next:** [ADR0026V01R01 →](ADR0026V01R01-TestDriverSharingMechanism--0014.md)
 
 ---
 
 # ADR0025V01R01 — Read-only answer viewport: shared buffer, resize preserves position
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-30
 
 ## Context
 
@@ -105,3 +101,4 @@ unconditional.
   into filter mode — was repointed to `_filterBuffer`, since `EmacsConsoleBuffer.IsPrintable` does not
   depend on instance state (confirmed via its `CA1822`-suppressed, "ByDesign" attribute); no buffer
   was left dangling.
+

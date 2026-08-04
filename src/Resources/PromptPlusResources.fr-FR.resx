@@ -127,7 +127,7 @@
     <value>Alt+B:Déplace le curseur d'un mot en arrière</value>
   </data>
   <data name="Emac_alt_c" xml:space="preserve">
-    <value>Alt+C:Met en majuscule le caractère sous le curseur et se déplace à la fin du mot</value>
+    <value>Alt+C:Met le mot en majuscule</value>
   </data>
   <data name="Emac_alt_d" xml:space="preserve">
     <value>Alt+D:Efface le mot après le curseur</value>
@@ -139,25 +139,25 @@
     <value>Alt+L:Minuscules du curseur jusqu'à la fin du mot</value>
   </data>
   <data name="Emac_alt_u" xml:space="preserve">
-    <value>Alt+U:Majuscules du curseur jusqu'à la fin du mot.</value>
+    <value>Alt+U:Majuscules jusqu'à la fin du mot</value>
   </data>
   <data name="Emac_ctrl_a" xml:space="preserve">
-    <value>Ctrl+A:Déplace le curseur au début de la ligne (équivalent à la touche Début)</value>
+    <value>Ctrl+A:Curseur au début de ligne (Début)</value>
   </data>
   <data name="Emac_ctrl_b" xml:space="preserve">
-    <value>Ctrl+B:Déplace le curseur d'un caractère en arrière (équivalent à la touche flèche gauche)</value>
+    <value>Ctrl+B:Un caractère en arrière (Gauche)</value>
   </data>
   <data name="Emac_ctrl_d" xml:space="preserve">
-    <value>Ctrl+D:Supprime le caractère actuel (équivalent à la touche Suppr)</value>
+    <value>Ctrl+D:Supprime le caractère actuel (Suppr)</value>
   </data>
   <data name="Emac_ctrl_e" xml:space="preserve">
-    <value>Ctrl+E:Déplace le curseur à la fin de la ligne (équivalent à la touche Fin)</value>
+    <value>Ctrl+E:Curseur en fin de ligne (Fin)</value>
   </data>
   <data name="Emac_ctrl_f" xml:space="preserve">
-    <value>Ctrl+F:Déplace le curseur d'un caractère en avant (équivalent à la touche flèche droite)</value>
+    <value>Ctrl+F:Un caractère en avant (Droite)</value>
   </data>
   <data name="Emac_ctrl_h" xml:space="preserve">
-    <value>Ctrl+H:Supprime le caractère précédent (équivalent à la touche Retour arrière)</value>
+    <value>Ctrl+H:Supprime le caractère précédent (Retour arrière)</value>
   </data>
   <data name="Emac_ctrl_k" xml:space="preserve">
     <value>Ctrl+K:Efface la ligne après le curseur</value>
@@ -175,7 +175,7 @@
     <value>Ctrl+W:Efface le mot avant le curseur</value>
   </data>
   <data name="Emac_Insert" xml:space="preserve">
-    <value>Insert:Bascule le mode de remplacement de saisie (le mode par défaut est l'insertion)</value>
+    <value>Insert:Bascule mode insertion/écrasement</value>
   </data>
   <data name="EntryHistory" xml:space="preserve">
     <value>Historiques de saisie</value>
@@ -256,7 +256,7 @@
     <value>Appuyer sur une touche</value>
   </data>
   <data name="ResizeTerminalWarning" xml:space="preserve">
-    <value>Redimensionnez le terminal ({0} hauteur et {1} largeur). La taille actuelle est ({2} et {3})...</value>
+    <value>Redimensionnez le terminal à au moins {0}x{1} (actuel : {2}x{3})...</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Élément désactivé</value>
@@ -319,10 +319,10 @@
     <value>Tapez le caractère initial pour accéder directement à l'élément</value>
   </data>
   <data name="TooltipNavegateTextPrompt" xml:space="preserve">
-    <value>Gauche/Droite/Début/Fin: Déplace le curseur dans l'invite</value>
+    <value>Gauche/Droite/Début/Fin:Déplacer dans l'invite</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Haut/Bas/PgPréc/PgSuiv: Déplacer le sélecteur, Ctrl+Début/Fin:Premier/Dernier élément</value>
+    <value>Haut/Bas/PgPréc/PgSuiv:Déplacer, Ctrl+Début/Fin:Premier/Dernier</value>
   </data>
   <data name="TooltipShowHide" xml:space="preserve">
     <value>Afficher/Masquer les info-bulles</value>
@@ -337,7 +337,7 @@
     <value>MajTab:Abandonner la suggestion</value>
   </data>
   <data name="TooltipSuggestionTab" xml:space="preserve">
-    <value>Tab:Afficher suggestion, à nouveau Accepter (Min. {0} car.)</value>
+    <value>Tab:Afficher suggestion, Tab à nouveau pour accepter (min. {0} car.)</value>
   </data>
   <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
     <value>Tab/MajTab:Suggestions (Min. {0} car.)</value>

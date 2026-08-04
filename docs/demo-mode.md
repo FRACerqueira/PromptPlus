@@ -82,7 +82,7 @@ This is what lets `AutoDemoSamples` (below) drive real interactive controls — 
 
 ## Live controls need no scripted keys
 
-`ProgressBar`, `Task`, `MultiTasks`, and `Time` complete on their own signal (progress reaching 100%,
+`ProgressBar`, `Task`, `MultiTasks`, and `Timer` complete on their own signal (progress reaching 100%,
 the wrapped task finishing, the countdown elapsing) — they never wait on a real keystroke, so they run
 identically under Demo Mode, redirected input, both, or neither. Nothing needs to be scripted for
 them; just run them as usual inside a Demo Mode script.

@@ -1,4 +1,4 @@
-# Migration v5.x → v6.x: MultiTasks, Time and Task
+# Migration v5.x → v6.x: MultiTasks, Timer and Task
 
 > Back to [Migration Overview](../../migration-v5-to-v6.md)
 
@@ -137,20 +137,20 @@ PromptPlus.Controls.WaitTimer(TimeSpan.FromSeconds(30), "Waiting:")
 
 **After (v6.x):**
 ```csharp
-PromptPlus.Controls.Time("Waiting:")
+PromptPlus.Controls.Timer("Waiting:")
     .Duration(TimeSpan.FromSeconds(30))          // or Duration(30)
-    .DisplayMode(TimeDisplayMode.Countdown)      // enum: Countdown | Elapsed
+    .DisplayMode(TimerDisplayMode.Countdown)      // enum: Countdown | Elapsed
     .Run();
 ```
 
-### 2. `IsCountDown(bool)` → `DisplayMode(TimeDisplayMode)`
+### 2. `IsCountDown(bool)` → `DisplayMode(TimerDisplayMode)`
 
 ```csharp
 // v5.x
 .IsCountDown(true)
 
 // v6.x — note the enum value is "Countdown" (lower-case d)
-.DisplayMode(TimeDisplayMode.Countdown)
+.DisplayMode(TimerDisplayMode.Countdown)
 ```
 
 ### 3. `ShowElapsedTime(int, bool)` — removed
@@ -161,7 +161,7 @@ PromptPlus.Controls.Time("Waiting:")
 ```
 ```csharp
 // v6.x
-PromptPlus.Controls.Time("Waiting:")
+PromptPlus.Controls.Timer("Waiting:")
     .Duration(30)
     .Format(@"mm\:ss")
     .Run();
@@ -172,14 +172,14 @@ PromptPlus.Controls.Time("Waiting:")
 ```csharp
 // v5.x — Run() → ResultPrompt<TimeSpan?>
 // v6.x — Run() → ResultPrompt<TimeSpan>
-TimeSpan elapsed = PromptPlus.Controls.Time("...").Duration(30).Run().Content;
+TimeSpan elapsed = PromptPlus.Controls.Timer("...").Duration(30).Run().Content;
 ```
 
-### 5. New in `Time`
+### 5. New in `Timer`
 ```csharp
-PromptPlus.Controls.Time("Processing:")
+PromptPlus.Controls.Timer("Processing:")
     .Duration(TimeSpan.FromMinutes(2))
-    .DisplayMode(TimeDisplayMode.Countdown)
+    .DisplayMode(TimerDisplayMode.Countdown)
     .Format(@"mm\:ss")
     .Culture(new CultureInfo("pt-BR"))
     .Finish("Done!")
@@ -294,7 +294,7 @@ PromptPlus.Controls.Task("Processing:")
 | Method | v5.x | v6.x | Change |
 |---|---|---|---|
 | Factory | `WaitTimer(int/TimeSpan, ...)` | `Time()` | Renamed; duration moved to `Duration(...)` |
-| `IsCountDown(bool)` | ✅ | ❌ | → `DisplayMode(TimeDisplayMode)` |
+| `IsCountDown(bool)` | ✅ | ❌ | → `DisplayMode(TimerDisplayMode)` |
 | `ShowElapsedTime(int, bool)` | ✅ | ❌ | Removed |
 | `Finish(string)` · `Spinner(SpinnersType)` | ✅ | ✅ | Unchanged |
 | `Duration` · `Format` · `Culture` · `DisplayMode` · `ChangeDescription` · `ChangeDescriptionAsync` | ❌ | ✅ | New |

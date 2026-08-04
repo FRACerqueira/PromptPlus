@@ -595,40 +595,6 @@ An optional description providing additional context for the selection\.
 [PromptPlusLibrary\.IMultiSelectControl&lt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.MultiSelect_T_(string,string).T 'PromptPlusLibrary\.IControls\.MultiSelect\<T\>\(string, string\)\.T')[&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>')  
 An [IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>') instance for further configuration and execution\.
 
-<a name='PromptPlusLibrary.IControls.MultiTable_T_(string,string)'></a>
-
-## IControls\.MultiTable\<T\>\(string, string\) Method
-
-Creates a multi\-table control for navigating a table and selecting multiple rows\.
-
-```csharp
-PromptPlusLibrary.IMultiTableControl<T> MultiTable<T>(string prompt="", string? description=null);
-```
-#### Type parameters
-
-<a name='PromptPlusLibrary.IControls.MultiTable_T_(string,string).T'></a>
-
-`T`
-
-The type of the items in the table rows\.
-#### Parameters
-
-<a name='PromptPlusLibrary.IControls.MultiTable_T_(string,string).prompt'></a>
-
-`prompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
-
-The text prompt displayed to the user\.
-
-<a name='PromptPlusLibrary.IControls.MultiTable_T_(string,string).description'></a>
-
-`description` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
-
-An optional description providing additional context for the table interaction\.
-
-#### Returns
-[PromptPlusLibrary\.IMultiTableControl&lt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.MultiTable_T_(string,string).T 'PromptPlusLibrary\.IControls\.MultiTable\<T\>\(string, string\)\.T')[&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')  
-An [IMultiTableControl&lt;T&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>') instance for further configuration and execution\.
-
 <a name='PromptPlusLibrary.IControls.MultiTasks(string,string)'></a>
 
 ## IControls\.MultiTasks\(string, string\) Method
@@ -656,41 +622,6 @@ An optional description providing additional context\.
 #### Returns
 [IMultiTasksControl](IMultiTasksControl.md 'PromptPlusLibrary\.IMultiTasksControl')  
 An [IMultiTasksControl](IMultiTasksControl.md 'PromptPlusLibrary\.IMultiTasksControl') instance for further configuration and execution\.
-
-<a name='PromptPlusLibrary.IControls.MultiTree_T_(string,string)'></a>
-
-## IControls\.MultiTree\<T\>\(string, string\) Method
-
-Creates a generic multi\-selection tree control that browses a hierarchy of user items
-of type [T](IControls.md#PromptPlusLibrary.IControls.MultiTree_T_(string,string).T 'PromptPlusLibrary\.IControls\.MultiTree\<T\>\(string, string\)\.T') with tri\-state checkboxes \(unchecked / checked / indeterminate\)\.
-
-```csharp
-PromptPlusLibrary.IMultiTreeControl<T> MultiTree<T>(string prompt="", string? description=null);
-```
-#### Type parameters
-
-<a name='PromptPlusLibrary.IControls.MultiTree_T_(string,string).T'></a>
-
-`T`
-
-The type of items in the tree\.
-#### Parameters
-
-<a name='PromptPlusLibrary.IControls.MultiTree_T_(string,string).prompt'></a>
-
-`prompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
-
-The text prompt displayed to the user\.
-
-<a name='PromptPlusLibrary.IControls.MultiTree_T_(string,string).description'></a>
-
-`description` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
-
-An optional description providing additional context\.
-
-#### Returns
-[PromptPlusLibrary\.IMultiTreeControl&lt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.MultiTree_T_(string,string).T 'PromptPlusLibrary\.IControls\.MultiTree\<T\>\(string, string\)\.T')[&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')  
-An [IMultiTreeControl&lt;T&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>') instance for further configuration and execution\.
 
 <a name='PromptPlusLibrary.IControls.ProgressBar(string,string)'></a>
 
@@ -834,39 +765,73 @@ An optional description providing additional context for the switch\.
 [ISwitchControl](ISwitchControl.md 'PromptPlusLibrary\.ISwitchControl')  
 An [ISwitchControl](ISwitchControl.md 'PromptPlusLibrary\.ISwitchControl') instance for further configuration and execution\.
 
-<a name='PromptPlusLibrary.IControls.Table_T_(string,string)'></a>
+<a name='PromptPlusLibrary.IControls.TableMultiSelect_T_(string,string)'></a>
 
-## IControls\.Table\<T\>\(string, string\) Method
+## IControls\.TableMultiSelect\<T\>\(string, string\) Method
 
-Creates a table control for navigating and selecting tabular rows/cells\.
+Creates a table control for navigating a table and selecting multiple rows\.
 
 ```csharp
-PromptPlusLibrary.ITableControl<T> Table<T>(string prompt="", string? description=null);
+PromptPlusLibrary.ITableMultiSelectControl<T> TableMultiSelect<T>(string prompt="", string? description=null);
 ```
 #### Type parameters
 
-<a name='PromptPlusLibrary.IControls.Table_T_(string,string).T'></a>
+<a name='PromptPlusLibrary.IControls.TableMultiSelect_T_(string,string).T'></a>
 
 `T`
 
 The type of the items in the table rows\.
 #### Parameters
 
-<a name='PromptPlusLibrary.IControls.Table_T_(string,string).prompt'></a>
+<a name='PromptPlusLibrary.IControls.TableMultiSelect_T_(string,string).prompt'></a>
 
 `prompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The text prompt displayed to the user\.
 
-<a name='PromptPlusLibrary.IControls.Table_T_(string,string).description'></a>
+<a name='PromptPlusLibrary.IControls.TableMultiSelect_T_(string,string).description'></a>
 
 `description` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 An optional description providing additional context for the table interaction\.
 
 #### Returns
-[PromptPlusLibrary\.ITableControl&lt;](ITableControl_T_.md 'PromptPlusLibrary\.ITableControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.Table_T_(string,string).T 'PromptPlusLibrary\.IControls\.Table\<T\>\(string, string\)\.T')[&gt;](ITableControl_T_.md 'PromptPlusLibrary\.ITableControl\<T\>')  
-An [ITableControl&lt;T&gt;](ITableControl_T_.md 'PromptPlusLibrary\.ITableControl\<T\>') instance for further configuration and execution\.
+[PromptPlusLibrary\.ITableMultiSelectControl&lt;](ITableMultiSelectControl_T_.md 'PromptPlusLibrary\.ITableMultiSelectControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.TableMultiSelect_T_(string,string).T 'PromptPlusLibrary\.IControls\.TableMultiSelect\<T\>\(string, string\)\.T')[&gt;](ITableMultiSelectControl_T_.md 'PromptPlusLibrary\.ITableMultiSelectControl\<T\>')  
+An [ITableMultiSelectControl&lt;T&gt;](ITableMultiSelectControl_T_.md 'PromptPlusLibrary\.ITableMultiSelectControl\<T\>') instance for further configuration and execution\.
+
+<a name='PromptPlusLibrary.IControls.TableSelect_T_(string,string)'></a>
+
+## IControls\.TableSelect\<T\>\(string, string\) Method
+
+Creates a table control for navigating and selecting tabular rows/cells\.
+
+```csharp
+PromptPlusLibrary.ITableSelectControl<T> TableSelect<T>(string prompt="", string? description=null);
+```
+#### Type parameters
+
+<a name='PromptPlusLibrary.IControls.TableSelect_T_(string,string).T'></a>
+
+`T`
+
+The type of the items in the table rows\.
+#### Parameters
+
+<a name='PromptPlusLibrary.IControls.TableSelect_T_(string,string).prompt'></a>
+
+`prompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The text prompt displayed to the user\.
+
+<a name='PromptPlusLibrary.IControls.TableSelect_T_(string,string).description'></a>
+
+`description` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+An optional description providing additional context for the table interaction\.
+
+#### Returns
+[PromptPlusLibrary\.ITableSelectControl&lt;](ITableSelectControl_T_.md 'PromptPlusLibrary\.ITableSelectControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.TableSelect_T_(string,string).T 'PromptPlusLibrary\.IControls\.TableSelect\<T\>\(string, string\)\.T')[&gt;](ITableSelectControl_T_.md 'PromptPlusLibrary\.ITableSelectControl\<T\>')  
+An [ITableSelectControl&lt;T&gt;](ITableSelectControl_T_.md 'PromptPlusLibrary\.ITableSelectControl\<T\>') instance for further configuration and execution\.
 
 <a name='PromptPlusLibrary.IControls.Task(string,string)'></a>
 
@@ -896,64 +861,99 @@ An optional description providing additional context for the task\.
 [ITaskControl](ITaskControl.md 'PromptPlusLibrary\.ITaskControl')  
 An [ITaskControl](ITaskControl.md 'PromptPlusLibrary\.ITaskControl') instance for further configuration and execution\.
 
-<a name='PromptPlusLibrary.IControls.Time(string,string)'></a>
+<a name='PromptPlusLibrary.IControls.Timer(string,string)'></a>
 
-## IControls\.Time\(string, string\) Method
+## IControls\.Timer\(string, string\) Method
 
-Creates a time control that suspends execution for a fixed duration while displaying a live countdown\.
+Creates a timer control that suspends execution for a fixed duration while displaying a live countdown or elapsed\-time value\.
 
 ```csharp
-PromptPlusLibrary.ITimeControl Time(string prompt="", string? description=null);
+PromptPlusLibrary.ITimerControl Timer(string prompt="", string? description=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IControls.Time(string,string).prompt'></a>
+<a name='PromptPlusLibrary.IControls.Timer(string,string).prompt'></a>
 
 `prompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The text prompt displayed to the user\.
 
-<a name='PromptPlusLibrary.IControls.Time(string,string).description'></a>
+<a name='PromptPlusLibrary.IControls.Timer(string,string).description'></a>
 
 `description` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 An optional description providing additional context for the countdown\.
 
 #### Returns
-[ITimeControl](ITimeControl.md 'PromptPlusLibrary\.ITimeControl')  
-An [ITimeControl](ITimeControl.md 'PromptPlusLibrary\.ITimeControl') instance for further configuration and execution\.
+[ITimerControl](ITimerControl.md 'PromptPlusLibrary\.ITimerControl')  
+An [ITimerControl](ITimerControl.md 'PromptPlusLibrary\.ITimerControl') instance for further configuration and execution\.
 
-<a name='PromptPlusLibrary.IControls.Tree_T_(string,string)'></a>
+<a name='PromptPlusLibrary.IControls.TreeMultiSelect_T_(string,string)'></a>
 
-## IControls\.Tree\<T\>\(string, string\) Method
+## IControls\.TreeMultiSelect\<T\>\(string, string\) Method
 
-Creates a generic tree control that browses a hierarchy of user items of type
-[T](IControls.md#PromptPlusLibrary.IControls.Tree_T_(string,string).T 'PromptPlusLibrary\.IControls\.Tree\<T\>\(string, string\)\.T') as an expandable/collapsible tree, loading children lazily\.
+Creates a tree control that browses a hierarchy of user items
+of type [T](IControls.md#PromptPlusLibrary.IControls.TreeMultiSelect_T_(string,string).T 'PromptPlusLibrary\.IControls\.TreeMultiSelect\<T\>\(string, string\)\.T') with tri\-state checkboxes \(unchecked / checked / indeterminate\)\.
 
 ```csharp
-PromptPlusLibrary.ITreeControl<T> Tree<T>(string prompt="", string? description=null);
+PromptPlusLibrary.ITreeMultiSelectControl<T> TreeMultiSelect<T>(string prompt="", string? description=null);
 ```
 #### Type parameters
 
-<a name='PromptPlusLibrary.IControls.Tree_T_(string,string).T'></a>
+<a name='PromptPlusLibrary.IControls.TreeMultiSelect_T_(string,string).T'></a>
 
 `T`
 
 The type of items in the tree\.
 #### Parameters
 
-<a name='PromptPlusLibrary.IControls.Tree_T_(string,string).prompt'></a>
+<a name='PromptPlusLibrary.IControls.TreeMultiSelect_T_(string,string).prompt'></a>
 
 `prompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The text prompt displayed to the user\.
 
-<a name='PromptPlusLibrary.IControls.Tree_T_(string,string).description'></a>
+<a name='PromptPlusLibrary.IControls.TreeMultiSelect_T_(string,string).description'></a>
 
 `description` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 An optional description providing additional context\.
 
 #### Returns
-[PromptPlusLibrary\.ITreeControl&lt;](ITreeControl_T_.md 'PromptPlusLibrary\.ITreeControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.Tree_T_(string,string).T 'PromptPlusLibrary\.IControls\.Tree\<T\>\(string, string\)\.T')[&gt;](ITreeControl_T_.md 'PromptPlusLibrary\.ITreeControl\<T\>')  
-An [ITreeControl&lt;T&gt;](ITreeControl_T_.md 'PromptPlusLibrary\.ITreeControl\<T\>') instance for further configuration and execution\.
+[PromptPlusLibrary\.ITreeMultiSelectControl&lt;](ITreeMultiSelectControl_T_.md 'PromptPlusLibrary\.ITreeMultiSelectControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.TreeMultiSelect_T_(string,string).T 'PromptPlusLibrary\.IControls\.TreeMultiSelect\<T\>\(string, string\)\.T')[&gt;](ITreeMultiSelectControl_T_.md 'PromptPlusLibrary\.ITreeMultiSelectControl\<T\>')  
+An [ITreeMultiSelectControl&lt;T&gt;](ITreeMultiSelectControl_T_.md 'PromptPlusLibrary\.ITreeMultiSelectControl\<T\>') instance for further configuration and execution\.
+
+<a name='PromptPlusLibrary.IControls.TreeSelect_T_(string,string)'></a>
+
+## IControls\.TreeSelect\<T\>\(string, string\) Method
+
+Creates a generic tree control that browses a hierarchy of user items of type
+[T](IControls.md#PromptPlusLibrary.IControls.TreeSelect_T_(string,string).T 'PromptPlusLibrary\.IControls\.TreeSelect\<T\>\(string, string\)\.T') as an expandable/collapsible tree, loading children lazily\.
+
+```csharp
+PromptPlusLibrary.ITreeSelectControl<T> TreeSelect<T>(string prompt="", string? description=null);
+```
+#### Type parameters
+
+<a name='PromptPlusLibrary.IControls.TreeSelect_T_(string,string).T'></a>
+
+`T`
+
+The type of items in the tree\.
+#### Parameters
+
+<a name='PromptPlusLibrary.IControls.TreeSelect_T_(string,string).prompt'></a>
+
+`prompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The text prompt displayed to the user\.
+
+<a name='PromptPlusLibrary.IControls.TreeSelect_T_(string,string).description'></a>
+
+`description` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+An optional description providing additional context\.
+
+#### Returns
+[PromptPlusLibrary\.ITreeSelectControl&lt;](ITreeSelectControl_T_.md 'PromptPlusLibrary\.ITreeSelectControl\<T\>')[T](IControls.md#PromptPlusLibrary.IControls.TreeSelect_T_(string,string).T 'PromptPlusLibrary\.IControls\.TreeSelect\<T\>\(string, string\)\.T')[&gt;](ITreeSelectControl_T_.md 'PromptPlusLibrary\.ITreeSelectControl\<T\>')  
+An [ITreeSelectControl&lt;T&gt;](ITreeSelectControl_T_.md 'PromptPlusLibrary\.ITreeSelectControl\<T\>') instance for further configuration and execution\.

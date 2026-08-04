@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0014V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Superseded |
-| Created | 2026-07-22 |
-| Changed | 2026-07-22 |
-| Superseded | ADR0014V02R01-TestDriverSharingMechanism.md |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Test driver sharing mechanism|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-22)|
+|Changed|Accepted (2026-07-22)|
+|Superseded|Superseded (2026-07-23) : 0026|
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -24,15 +24,11 @@
 
 </div>
 
-[← ADR0013V01R01](ADR0013V01R01-MigrationGuideRules.md) • [ADR Index](README.md) • **Next:** [ADR0014V02R01 →](ADR0014V02R01-TestDriverSharingMechanism.md)
+[← ADR0013V01R01](ADR0013V01R01-MigrationGuideRules.md) • [ADR Index](README.md) • **Next:** [ADR0015V01R01 →](ADR0015V01R01-TestFrameworkXUnitVerify.md)
 
 ---
 
 # ADR0014V01R01 — Test driver sharing mechanism
-
-- **Status:** Superseded by [ADR0014V02R01](ADR0014V02R01-TestDriverSharingMechanism.md)
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-22
 
 ## Context
 
@@ -54,7 +50,7 @@ same source files without duplication.
 
 - **Positive:** one source of truth for the driver; no drift between the two
   test projects; simple to reason about.
-- **Negative / risk:** the mechanism assumes a single repository. If the
+- **Negative / trade-off:** the mechanism assumes a single repository. If the
   libraries live in **separate repositories**, a cross-repo relative
   `<Compile Include>` link becomes fragile or impossible.
 
@@ -63,4 +59,5 @@ same source files without duplication.
 This record was superseded on 2026-07-23 when it was confirmed that ConsolePlus
 and PromptPlus are **two distinct GitHub repositories**, invalidating the
 single-repo assumption. See
-[ADR0014V02R01](ADR0014V02R01-TestDriverSharingMechanism.md).
+[ADR0026V01R01](ADR0026V01R01-TestDriverSharingMechanism--0014.md).
+

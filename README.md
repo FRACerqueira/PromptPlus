@@ -197,10 +197,10 @@ PromptPlus will discover and load it automatically at runtime via the standard .
 | [Confirm&nbsp;(yes/no)](docs/controls/confirm/index.md) | `PromptPlus.Controls.Confirm(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
 | [Single&nbsp;select](docs/controls/select/index.md) | `PromptPlus.Controls.Select<T>(prompt)` | `ResultPrompt<T>` |
 | [Multi&nbsp;select](docs/controls/multiselect/index.md) | `PromptPlus.Controls.MultiSelect<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
-| [Table](docs/controls/table/index.md) | `PromptPlus.Controls.Table<T>(prompt)` | `ResultPrompt<TableResult<T>>` |
-| [Multi-table](docs/controls/multitable/index.md) | `PromptPlus.Controls.MultiTable<T>(prompt)` | `ResultPrompt<IEnumerable<TableResult<T>>>` |
-| [Tree](docs/controls/tree/index.md) | `PromptPlus.Controls.Tree<T>(prompt)` | `ResultPrompt<T>` |
-| [Multi-tree](docs/controls/multitree/index.md) | `PromptPlus.Controls.MultiTree<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
+| [Table&nbsp;select](docs/controls/tableselect/index.md) | `PromptPlus.Controls.TableSelect<T>(prompt)` | `ResultPrompt<TableSelectResult<T>>` |
+| [Table&nbsp;multi-select](docs/controls/tablemultiselect/index.md) | `PromptPlus.Controls.TableMultiSelect<T>(prompt)` | `ResultPrompt<T[]>` |
+| [Tree&nbsp;select](docs/controls/treeselect/index.md) | `PromptPlus.Controls.TreeSelect<T>(prompt)` | `ResultPrompt<T?>` |
+| [Tree&nbsp;multi-select](docs/controls/treemultiselect/index.md) | `PromptPlus.Controls.TreeMultiSelect<T>(prompt)` | `ResultPrompt<T[]>` |
 | [File&nbsp;browser](docs/controls/file/index.md) | `PromptPlus.Controls.File(prompt)` | `ResultPrompt<FileInfo>` |
 | [Multi-file](docs/controls/multifile/index.md) | `PromptPlus.Controls.MultiFile(prompt)` | `ResultPrompt<IEnumerable<FileInfo>>` |
 | [Calendar](docs/controls/calendar/index.md) | `PromptPlus.Controls.Calendar(prompt)` | `ResultPrompt<DateTime>` |
@@ -341,6 +341,7 @@ demo GIF above.
 | [Widgets](docs/widgets.md) | Output-only widgets guide |
 | [Demo Mode](docs/demo-mode.md) | Scripted keyboard input for recording GIFs/videos of console apps |
 | [Controls index](docs/index.md) | All pages in one place |
+| [Migration Guide v5.x → v6.x](docs/migration-v5-to-v6.md) | **Upgrading from v5.x** |
 | [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs |
 
 ---

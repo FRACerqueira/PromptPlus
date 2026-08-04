@@ -103,7 +103,7 @@ PromptPlus.Console.EnabledEmacs = true;
 | `Enter` | Confirm date |
 | `Esc` | Abort |
 
-### File & Tree Browser (`File`, `MultiFile`, `Tree<T>`, `MultiTree<T>`)
+### File & Tree Browser (`File`, `MultiFile`, `TreeSelect<T>`, `TreeMultiSelect<T>`)
 
 | Key | Action |
 |---|---|

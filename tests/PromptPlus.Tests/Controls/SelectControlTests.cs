@@ -477,7 +477,7 @@ namespace PromptPlus.Tests.Controls
             _ = vt2.Keys.Enqueue(ConsoleKey.F1);
             using var cts1 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control2.Run(cts1.Token);
-            _ = vt2.Find("Move Selector").Should().NotBeNull();
+            _ = vt2.Find("PgUp/PgDown:Move").Should().NotBeNull();
             _ = vt2.Find("Enter:Finish").Should().BeNull();
         }
 
