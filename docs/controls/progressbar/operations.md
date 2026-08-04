@@ -31,9 +31,10 @@ Esc: cancel                              ← tooltip
 ```
 
 Each element can be hidden ([`HideElements`](methods.md#hideelements)) and recolored
-([Styles](styles.md)). Unlike an interactive control, the ProgressBar has no editing keys — the only
-user action is **Esc** to abort (when the abort key is enabled). Everything else is driven by your
-update handler.
+([Styles](styles.md)). Unlike an interactive control, ProgressBar has no editing keys — but it does
+still respond to **F1** (cycle tooltip content) and **Ctrl+F1** (show/hide the tooltip), same as
+every other control. **Esc** aborts (when the abort key is enabled). Everything else is driven by
+your update handler.
 
 ---
 

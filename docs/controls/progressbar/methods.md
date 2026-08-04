@@ -26,7 +26,7 @@ in any order. Call [`Run`](#run) last.
 [UpdateHandlerAsync](#updatehandlerasync) ·
 [Range](#range) ·
 [Default](#default) ·
-[FractionalDigits](#fractionalDigits) ·
+[FractionalDigits](#fractionaldigits) ·
 [Width](#width) ·
 [Fill](#fill) ·
 [Spinner](#spinner) ·
@@ -128,7 +128,10 @@ PromptPlus.Controls.ProgressBar("Wait Progress: ")
     .Run();
 ```
 
-> Throws `ArgumentOutOfRangeException` when `minvalue` is greater than or equal to `maxvalue`.
+> Throws `ArgumentOutOfRangeException` when `minvalue` is strictly greater than `maxvalue`.
+> `minvalue == maxvalue` does **not** throw here — but it does throw a separate
+> `ArgumentException` ("the minimum value must be less than the maximum value") when the control
+> actually starts running, so it still fails, just later and with a different exception type.
 
 ---
 
@@ -138,7 +141,9 @@ PromptPlus.Controls.ProgressBar("Wait Progress: ")
 IProgressBarControl Default(double value)
 ```
 
-Sets the **initial** value the bar starts at. Default `0`. Must be inside the configured range.
+Sets the **initial** value the bar starts at. If never called, it falls back to whatever
+[`Range`](#range)'s `minvalue` is (`0` only because that's the default range) — not a literal `0`
+independent of the range. Must be inside the configured range.
 
 ```csharp
 PromptPlus.Controls.ProgressBar("Wait Progress: ")
@@ -148,7 +153,8 @@ PromptPlus.Controls.ProgressBar("Wait Progress: ")
     .Run();
 ```
 
-> Throws `ArgumentOutOfRangeException` when `value` is outside the configured range.
+> The setter itself validates nothing. The out-of-range check happens later, when the control
+> actually starts running, and throws `InvalidOperationException` (not `ArgumentOutOfRangeException`).
 
 ---
 
@@ -394,8 +400,8 @@ PromptPlus.Controls.ProgressBar("Wait Progress: ", "Culture: pt-BR")
     .Run();
 ```
 
-> The string overload throws `ArgumentException` for a null/empty name and `CultureNotFoundException`
-> for an unknown one.
+> The string overload throws `ArgumentNullException` for a `null` name, resolves an **empty** string
+> to the invariant culture (no throw), and throws `CultureNotFoundException` for an unrecognized name.
 
 ---
 
