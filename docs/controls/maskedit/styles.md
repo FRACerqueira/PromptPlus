@@ -65,9 +65,9 @@ PromptPlus.Controls.MaskDecimal("Balance")
 
 ## Recoloring a region
 
-A `Style` is a foreground color and a background color — **there is no bold/italic/underline
-`Decoration`**. Construct one with `new Style(foreground, background)`; a bare `Color` is accepted as a
-foreground-only shorthand.
+A `Style` is a foreground color, a background color, **and an `Overflow` strategy** — **there is no
+bold/italic/underline `Decoration`**. Construct one with `new Style(foreground, background)`; a bare
+`Color` is accepted as a foreground-only shorthand.
 
 ```csharp
 using ConsolePlusLibrary;
