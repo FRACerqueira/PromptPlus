@@ -341,6 +341,7 @@ demo GIF above.
 | [Widgets](docs/widgets.md) | Output-only widgets guide |
 | [Demo Mode](docs/demo-mode.md) | Scripted keyboard input for recording GIFs/videos of console apps |
 | [Controls index](docs/index.md) | All pages in one place |
+| [Migration Guide v5.x → v6.x](docs/migration-v5-to-v6.md) | **Upgrading from v5.x** |
 | [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs |
 
 ---
