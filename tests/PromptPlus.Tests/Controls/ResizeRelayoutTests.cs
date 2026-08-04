@@ -39,6 +39,7 @@ namespace PromptPlus.Tests.Controls
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             FileHistory.FileSystem = _originalHistoryFs;
             FileControl.FileSystem = _originalFileFs;
             MultiFileControl.FileSystem = _originalMultiFileFs;
@@ -145,21 +146,21 @@ namespace PromptPlus.Tests.Controls
 
             _ = vt.Keys.Enqueue(ConsoleKey.End);
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
-            var cursorAfterScroll = vt.GetCursorPosition();
+            var (Left, Top) = vt.GetCursorPosition();
 
             vt.RaiseResize(90, 24);
             WaitUntilRenderSettles();
 
             _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
                 "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
-                $"the end (col {cursorAfterScroll.Left} before resize)");
+                $"the end (col {Left} before resize)");
 
             _ = vt.Keys.Enqueue(ConsoleKey.Escape);
             _ = runTask.GetAwaiter().GetResult();
         }
 
         [Fact]
-        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_TreeSelect()
+        public async Task A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_TreeSelect()
         {
             // TreeSelect used to carry the same _updatePosAnswerBuffer resize-preservation dance as
             // Select (by direct analogy, per the comment above) until it was replaced with the
@@ -187,21 +188,21 @@ namespace PromptPlus.Tests.Controls
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
             _ = vt.Keys.Enqueue(ConsoleKey.End);
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
-            var cursorAfterScroll = vt.GetCursorPosition();
+            var (Left, Top) = vt.GetCursorPosition();
 
             vt.RaiseResize(90, 24);
             WaitUntilRenderSettles();
 
             _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
                 "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
-                $"the end (col {cursorAfterScroll.Left} before resize)");
+                $"the end (col {Left} before resize)");
 
             _ = vt.Keys.Enqueue(ConsoleKey.Escape);
-            _ = runTask.GetAwaiter().GetResult();
+            _ = await runTask;
         }
 
         [Fact]
-        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_TreeMultiSelect()
+        public async Task A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_TreeMultiSelect()
         {
             // TreeMultiSelect never had the _updatePosAnswerBuffer dance (it always used
             // WriteAnswerViewport), so this is new coverage rather than a regression check — added
@@ -225,21 +226,21 @@ namespace PromptPlus.Tests.Controls
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
             _ = vt.Keys.Enqueue(ConsoleKey.End);
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
-            var cursorAfterScroll = vt.GetCursorPosition();
+            var (Left, Top) = vt.GetCursorPosition();
 
             vt.RaiseResize(90, 24);
             WaitUntilRenderSettles();
 
             _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
                 "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
-                $"the end (col {cursorAfterScroll.Left} before resize)");
+                $"the end (col {Left} before resize)");
 
             _ = vt.Keys.Enqueue(ConsoleKey.Escape);
-            _ = runTask.GetAwaiter().GetResult();
+            _ = await runTask;
         }
 
         [Fact]
-        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_File()
+        public async Task A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_File()
         {
             // File/MultiFile always used WriteAnswerViewport's original re-anchor-on-resize
             // behavior — the only two controls left out of the Select/MultiSelect/Table/MultiTable/
@@ -258,21 +259,21 @@ namespace PromptPlus.Tests.Controls
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
             _ = vt.Keys.Enqueue(ConsoleKey.End);
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
-            var cursorAfterScroll = vt.GetCursorPosition();
+            var (Left, Top) = vt.GetCursorPosition();
 
             vt.RaiseResize(90, 24);
             WaitUntilRenderSettles();
 
             _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
                 "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
-                $"the end (col {cursorAfterScroll.Left} before resize)");
+                $"the end (col {Left} before resize)");
 
             _ = vt.Keys.Enqueue(ConsoleKey.Escape);
-            _ = runTask.GetAwaiter().GetResult();
+            _ = await runTask;
         }
 
         [Fact]
-        public void A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_MultiFile()
+        public async Task A_within_bounds_resize_preserves_a_scrolled_answer_preview_on_MultiFile()
         {
             var vt = MakeTerminal(100, 24);
             MultiFileControl.FileSystem = MakeFileSystemWithLongName(out string root);
@@ -286,17 +287,17 @@ namespace PromptPlus.Tests.Controls
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
             _ = vt.Keys.Enqueue(ConsoleKey.End);
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
-            var cursorAfterScroll = vt.GetCursorPosition();
+            var (Left, Top) = vt.GetCursorPosition();
 
             vt.RaiseResize(90, 24);
             WaitUntilRenderSettles();
 
             _ = vt.GetCursorPosition().Left.Should().BeGreaterThan(50,
                 "the resize must not snap the scrolled answer preview back to Home — it stayed near " +
-                $"the end (col {cursorAfterScroll.Left} before resize)");
+                $"the end (col {Left} before resize)");
 
             _ = vt.Keys.Enqueue(ConsoleKey.Escape);
-            _ = runTask.GetAwaiter().GetResult();
+            _ = await runTask;
         }
 
         private static void WaitUntilAllKeysConsumed(VirtualTerminal vt)

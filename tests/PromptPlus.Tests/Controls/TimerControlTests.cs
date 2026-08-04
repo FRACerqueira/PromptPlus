@@ -147,7 +147,7 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void Spinner_and_ChangeDescription_are_observable_while_still_counting_down()
+        public async Task Spinner_and_ChangeDescription_are_observable_while_still_counting_down()
         {
             var vt = MakeTerminal();
             var control = MakeControl(vt)
@@ -163,13 +163,13 @@ namespace PromptPlus.Tests.Controls
             _ = TestContext.Current.CancellationToken.WaitHandle.WaitOne(150);
             var descriptionFound = vt.Find("elapsed so far: True");
             cts.Cancel();
-            try { _ = runTask.GetAwaiter().GetResult(); } catch (OperationCanceledException) { }
+            try { _ = await runTask; } catch (OperationCanceledException) { }
 
             _ = descriptionFound.Should().NotBeNull();
         }
 
         [Fact]
-        public void F1_cycles_from_the_abort_tooltip_to_the_showhide_tooltip()
+        public async Task F1_cycles_from_the_abort_tooltip_to_the_showhide_tooltip()
         {
             var vt = MakeTerminal();
             _ = vt.Keys.Enqueue(ConsoleKey.F1);
@@ -186,7 +186,7 @@ namespace PromptPlus.Tests.Controls
                 if (found is not null) { tooltip = vt.TextAt(found.Value.Row, 0, 40).TrimEnd(); }
             }
             cts.Cancel();
-            try { _ = runTask.GetAwaiter().GetResult(); } catch (OperationCanceledException) { }
+            try { _ = await runTask; } catch (OperationCanceledException) { }
 
             _ = tooltip.Should().Be($"F1:{PromptPlusResources.TooltipBase}.Ctrl F1:{PromptPlusResources.TooltipShowHide}.");
         }
