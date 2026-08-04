@@ -1,15 +1,15 @@
-<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0023V01R02 |
-| Version | 01 |
-| Revision | 02 |
-| Status | Accepted |
-| Created | 2026-07-28 |
-| Changed | 2026-07-31 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Guard interactive controls against redirected console input in `Run()`|
+|Version|01|
+|Revision|02|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-28)|
+|Changed|Accepted (2026-07-31)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,12 +29,6 @@
 ---
 
 # ADR0023V01R02 — Guard interactive controls against redirected console input in `Run()`
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R02
-- **Created:** 2026-07-28
-- **Changed:** 2026-07-31 (R02 — carved out the [Demo Mode](../demo-mode.md) exception: the guard no
-  longer fires while a scripted key is queued and being consumed)
 
 ## Context
 
@@ -125,3 +119,4 @@ if (!isWidget && !IsLiveAutoRenderControl && console.IsInputRedirected && !conso
   hardcodes `IsInputRedirected => false`, so no test seam was needed. Empirical check against the real
   `ConsolePlus.net` package: `Input(...).Run()` under redirected stdin now throws immediately with the
   message above; `Task(...).Run()` under the same conditions still completes normally.
+

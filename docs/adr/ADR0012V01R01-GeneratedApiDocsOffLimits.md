@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0012V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-24 |
-| Changed | 2026-07-24 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Generated API docs are off-limits for manual edits|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-24)|
+|Changed|Accepted (2026-07-24)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -30,10 +30,6 @@
 
 # ADR0012V01R01 — Generated API docs are off-limits for manual edits
 
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-24
-
 ## Context
 
 The `docs/api/` folder is generated from XML doc comments by the documentation
@@ -52,3 +48,4 @@ the only Markdown docs that may be edited directly.
 - **Positive:** single source of truth for API docs (the code); no lost edits.
 - **Negative / trade-off:** correcting API text requires a code change and a
   regeneration step rather than a quick Markdown edit.
+

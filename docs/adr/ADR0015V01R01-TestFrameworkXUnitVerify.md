@@ -1,15 +1,15 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0015V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-22 |
-| Changed | 2026-07-22 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Test framework: xUnit + Verify|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-22)|
+|Changed|Accepted (2026-07-22)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -24,15 +24,11 @@
 
 </div>
 
-[← ADR0014V02R01](ADR0014V02R01-TestDriverSharingMechanism.md) • [ADR Index](README.md) • **Next:** [ADR0016V01R01 →](ADR0016V01R01-TargetFrameworksMirrorProduction.md)
+[← ADR0014V01R01](ADR0014V01R01-TestDriverSharingMechanism.md) • [ADR Index](README.md) • **Next:** [ADR0016V01R01 →](ADR0016V01R01-TargetFrameworksMirrorProduction.md)
 
 ---
 
 # ADR0015V01R01 — Test framework: xUnit + Verify
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-22
 
 ## Context
 
@@ -52,3 +48,4 @@ they are.
   snapshots cleanly; the existing test skeletons require no rewrite.
 - **Negative / trade-off:** TUnit's newer features are not adopted; the team
   standardizes on xUnit conventions.
+

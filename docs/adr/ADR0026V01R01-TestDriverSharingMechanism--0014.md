@@ -1,22 +1,22 @@
-﻿<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0014V02R01 |
-| Version | 02 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-23 |
-| Changed | 2026-07-23 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|Test driver sharing mechanism|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-23)|
+|Changed|Accepted (2026-07-23)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
 
-  ## **ADR0014V02R01**
+  ## **ADR0026V01R01**
 
   [![NuGet](https://img.shields.io/badge/NuGet-PromptPlus-blue)](https://www.nuget.org/packages/PromptPlus)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -24,15 +24,12 @@
 
 </div>
 
-[← ADR0014V01R01](ADR0014V01R01-TestDriverSharingMechanism.md) • [ADR Index](README.md) • **Next:** [ADR0015V01R01 →](ADR0015V01R01-TestFrameworkXUnitVerify.md)
+[← ADR0025V01R01](ADR0025V01R01-ReadOnlyAnswerViewportSharedBufferAndResizePosition.md) • [ADR Index](README.md)
 
 ---
 
-# ADR0014V02R01 — Test driver sharing mechanism
+# ADR0026V01R01 — Test driver sharing mechanism
 
-- **Status:** Accepted
-- **Version:** V02 / Revision R01
-- **Created:** 2026-07-23
 - **Supersedes:** [ADR0014V01R01](ADR0014V01R01-TestDriverSharingMechanism.md)
 
 ## Context
@@ -60,7 +57,8 @@ independent copies, each versioned in its own repository.
 
 - **Positive:** each repository is self-contained and builds without cross-repo
   path assumptions.
-- **Negative / risk:** the two copies can drift over time. Mitigation: treat the
+- **Negative / trade-off:** the two copies can drift over time. Mitigation: treat the
   driver as a synchronized artifact per the maintenance doc, and keep the ANSI
   interpreter independent of the writer so unit-level width/overflow tests do not
   depend on the driver itself.
+

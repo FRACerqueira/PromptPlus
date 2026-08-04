@@ -1,15 +1,15 @@
-<!-- Do not remove this comment, lines and table -->
-<!--
-| Fields | Values |
-| --- | --- |
-| ADR | ADR0022V01R01 |
-| Version | 01 |
-| Revision | 01 |
-| Status | Accepted |
-| Created | 2026-07-25 |
-| Changed | 2026-07-25 |
-| Superseded |  |
--->
+<!-- Do not remove this comment, lines and table (1-12) -->
+|Adr-Plus Fields|Values Migrated <!-- Migrated -->|
+|--|--|
+|ADR|CI skips the test run (build-only) for documentation-only changes|
+|Version|01|
+|Revision|01|
+|Scope||
+|Domain||
+|Created|Proposed (2026-07-25)|
+|Changed|Accepted (2026-07-25)|
+|Superseded||
+<!-- Do not remove this comment, lines and table (1-12) -->
 
 <div align="center">
   <img src="../../icon.png" alt="PromptPlus" width="120" height="120" />
@@ -29,10 +29,6 @@
 ---
 
 # ADR0022V01R01 — CI skips the test run (build-only) for documentation-only changes
-
-- **Status:** Accepted
-- **Version:** V01 / Revision R01
-- **Created:** 2026-07-25
 
 ## Context
 
@@ -72,3 +68,4 @@ base ref for fall back to `code: true` — a manual run is assumed to want full 
   accepted risk given how independent doc commits are from the codebase in practice. The `changes`
   job itself adds one small `ubuntu-latest` checkout+filter step to every run's critical path
   (typically a few seconds), which is negligible next to the multi-minute test job it can now skip.
+
