@@ -144,7 +144,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `Select<T>` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must choose |
-| `HideAfterFinish(true)` | Erases the list after confirm; only the answer remains |
+| `HideAfterFinish(true)` | Erases the list after confirm — the whole control is erased, not just the interactive part |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Prompt(...)` / `Description(...)` | Overrides the prompt / description text |
 

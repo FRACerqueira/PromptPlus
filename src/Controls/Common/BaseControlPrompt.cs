@@ -637,6 +637,25 @@ namespace PromptPlusLibrary.Controls.Common
                     if (FinishTemplate(_bufferScreen))
                     {
                         RenderBuffer(_bufferScreen);
+
+                        // HideAfterFinish/HideOnAbort: erase the just-rendered Prompt/Answer
+                        // finish summary entirely, leaving nothing behind. Checked per outcome —
+                        // a confirm honors HideAfterFinishValue, an Esc-abort honors
+                        // HideOnAbortValue — so the two can be configured independently (e.g.
+                        // Confirm/KeyPress's showresult:false sets both).
+                        bool shouldHide = ResultCtrl is { IsAborted: true }
+                            ? OptionsControl.HideOnAbortValue
+                            : OptionsControl.HideAfterFinishValue;
+
+                        if (shouldHide)
+                        {
+                            for (int row = 0; row <= _bufferScreen.OriginalLineCount; row++)
+                            {
+                                console.SetCursorPosition(0, _screenPosition.StartTop + row);
+                                console.WriteRaw("", console.CurrentStyle, true);
+                            }
+                            console.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
+                        }
                     }
                 }
                 else if (cts.Token.IsCancellationRequested && !isWidget && IsLiveAutoRenderControl)

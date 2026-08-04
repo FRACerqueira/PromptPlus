@@ -176,7 +176,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `MultiFile` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must confirm |
-| `HideAfterFinish(true)` | Erases the tree after confirm; only the summary remains |
+| `HideAfterFinish(true)` | Erases the tree after confirm — the whole control is erased, not just the interactive part |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Prompt(...)` / `Description(...)` | Overrides the prompt / description text |
 

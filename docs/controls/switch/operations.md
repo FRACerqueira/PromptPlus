@@ -90,7 +90,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `Switch` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must confirm |
-| `HideAfterFinish(true)` | Erases the toggle after confirm; only the answer line remains |
+| `HideAfterFinish(true)` | Erases the toggle after confirm — the whole control is erased, not just the interactive part |
 | `HideOnAbort(true)` | Erases the toggle after Esc |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Description(...)` | Overrides the description text |

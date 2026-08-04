@@ -62,6 +62,45 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void Showresult_false_erases_the_prompt_after_confirming()
+        {
+            var vt = MakeTerminal();
+            var control = new PromptPlusControls(vt, new PromptConfig()).KeyPress("Press", showresult: false);
+            _ = vt.Keys.Enqueue(ConsoleKey.X);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Press").Should().BeNull();
+        }
+
+        [Fact]
+        public void Showresult_false_erases_the_prompt_after_an_abort()
+        {
+            var vt = MakeTerminal();
+            var control = new PromptPlusControls(vt, new PromptConfig()).KeyPress("Press", showresult: false);
+            _ = vt.Keys.Enqueue(ConsoleKey.Escape);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Press").Should().BeNull();
+        }
+
+        [Fact]
+        public void Showresult_true_leaves_the_prompt_visible_after_confirming()
+        {
+            var vt = MakeTerminal();
+            var control = new PromptPlusControls(vt, new PromptConfig()).KeyPress("Press", showresult: true);
+            _ = vt.Keys.Enqueue(ConsoleKey.X);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            _ = control.Run(cts.Token);
+
+            _ = vt.Find("Press").Should().NotBeNull();
+        }
+
+        [Fact]
         public void AddValidKey_accepts_a_registered_key_with_its_display_text()
         {
             var vt = MakeTerminal();

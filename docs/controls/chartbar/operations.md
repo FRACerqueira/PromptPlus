@@ -169,7 +169,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `ChartBar` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must confirm a bar |
-| `HideAfterFinish(true)` | Erases the chart after confirm; only the answer remains |
+| `HideAfterFinish(true)` | Erases the chart after confirm — the whole control is erased, not just the interactive part |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Prompt(...)` / `Description(...)` | Overrides the prompt / description text |
 
