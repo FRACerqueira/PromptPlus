@@ -54,19 +54,24 @@ survives collapsing and re-expanding its branch.
 | Key | Action |
 |---|---|
 | `↑` / `↓` | Move focus up / down |
-| `→` / `+` | Expand the focused folder |
-| `←` / `-` | Collapse the focused folder |
+| `+` | Expand the focused folder (plain `→` does **not** expand) |
+| `-` | Collapse the focused folder (plain `←` does **not** collapse) |
+| `Tab` | On a folder: expand it (if needed) and move to its first child. On a file: move to the next item |
+| `Shift+Tab` | On a folder's first child: collapse the parent and move to it. Otherwise: move to the previous item |
 | `Space` | Check / uncheck (recursive on folders by default — see below) |
 | `Ctrl+Space` | Recursive folder mark, when [`RecursiveMarkWithCtrlSpace`](methods.md#recursivemarkwithctrlspace) is on |
 | `F2` | Toggle all (check / uncheck everything currently loaded) |
-| `F4` | Wildcard / recursive select under the focused folder |
+| `F3` | Filter the list to show only checked items; press again to restore the full list |
 | `Page Up` / `Page Down` | Jump one page |
-| `Home` / `End` | First / last visible item |
+| `Ctrl+Home` / `Ctrl+End` | First / last visible item (plain `Home`/`End` instead scroll the long-path answer text — see the anatomy note above) |
 | `Enter` | Confirm the checked entries (subject to the range) |
 | `Esc` | Abort → `IsAborted == true` |
 | `Shift+F3` | Toggle the summary between full path and short name |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
+
+> ⚠️ There is no `F4` wildcard-select feature — `HotKeySelectWildcard`/F4 was dead config that has
+> since been removed. Use `Space`/`Ctrl+Space` (above) for recursive folder marking instead.
 
 ---
 
