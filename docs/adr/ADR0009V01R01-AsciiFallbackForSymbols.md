@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0008V01R01](ADR0008V01R01-ConfirmKeyPressResultModel.md) • [ADR Index](README.md) • **Next:** [ADR0010V01R01 →](ADR0010V01R01-PredicateSemantics.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0021V01R01](ADR0021V01R01-CiTestScopeNet10OnlyPublishTrustsCi.md) • [ADR Index](README.md) • **Next:** [ADR0023V01R02 →](ADR0023V01R02-GuardInteractiveControlsAgainstRedirectedInput.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

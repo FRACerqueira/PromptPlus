@@ -355,7 +355,7 @@ captures the context, the decision, the alternatives considered, and the
 consequences — so the reasoning behind the library's design stays traceable over
 time.
 
-👉 See the **[ADR index](docs/adr/README.md)** for the full list of decisions.
+👉 See the **[ADR index](docs/adr/indexadrs.md)** for the full list of decisions.
 
 ---
 

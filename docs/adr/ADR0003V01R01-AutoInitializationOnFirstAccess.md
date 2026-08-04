@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0002V01R01](ADR0002V01R01-StaticFacadeFourEntryPoints.md) • [ADR Index](README.md) • **Next:** [ADR0004V01R01 →](ADR0004V01R01-ResultPromptStruct.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

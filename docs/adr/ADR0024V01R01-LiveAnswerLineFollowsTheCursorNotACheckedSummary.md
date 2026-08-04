@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0023V01R02](ADR0023V01R02-GuardInteractiveControlsAgainstRedirectedInput.md) • [ADR Index](README.md) • **Next:** [ADR0025V01R01 →](ADR0025V01R01-ReadOnlyAnswerViewportSharedBufferAndResizePosition.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

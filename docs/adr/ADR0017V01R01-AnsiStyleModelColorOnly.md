@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0016V01R01](ADR0016V01R01-TargetFrameworksMirrorProduction.md) • [ADR Index](README.md) • **Next:** [ADR0018V01R01 →](ADR0018V01R01-PilotControlsAndPublicApiSurface.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

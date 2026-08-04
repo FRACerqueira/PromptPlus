@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0025V01R01](ADR0025V01R01-ReadOnlyAnswerViewportSharedBufferAndResizePosition.md) • [ADR Index](README.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

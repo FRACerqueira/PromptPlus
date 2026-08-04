@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0012V01R01](ADR0012V01R01-GeneratedApiDocsOffLimits.md) • [ADR Index](README.md) • **Next:** [ADR0014V01R01 →](ADR0014V01R01-TestDriverSharingMechanism.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0014V01R01](ADR0014V01R01-TestDriverSharingMechanism.md) • [ADR Index](README.md) • **Next:** [ADR0016V01R01 →](ADR0016V01R01-TargetFrameworksMirrorProduction.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

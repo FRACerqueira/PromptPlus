@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0015V01R01](ADR0015V01R01-TestFrameworkXUnitVerify.md) • [ADR Index](README.md) • **Next:** [ADR0017V01R01 →](ADR0017V01R01-AnsiStyleModelColorOnly.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

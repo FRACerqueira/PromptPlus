@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0011V01R01](ADR0011V01R01-PerControlCultureIsolation.md) • [ADR Index](README.md) • **Next:** [ADR0013V01R01 →](ADR0013V01R01-MigrationGuideRules.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0022V01R01](ADR0022V01R01-CiSkipsTestsForDocOnlyChanges.md) • [ADR Index](README.md) • **Next:** [ADR0024V01R01 →](ADR0024V01R01-LiveAnswerLineFollowsTheCursorNotACheckedSummary.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

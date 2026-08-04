@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0024V01R01](ADR0024V01R01-LiveAnswerLineFollowsTheCursorNotACheckedSummary.md) • [ADR Index](README.md) • **Next:** [ADR0026V01R01 →](ADR0026V01R01-TestDriverSharingMechanism--0014.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 
