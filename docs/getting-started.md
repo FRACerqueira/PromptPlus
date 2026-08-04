@@ -136,7 +136,7 @@ PromptPlus.Config.HideAfterFinish = true;
 PromptPlus.Config.DefaultCulture = new CultureInfo("en-US");
 
 // Enable Emacs shortcuts in text fields
-PromptPlus.Console.EnabledEmacsKeyBindings(true);
+PromptPlus.Console.EnabledEmacs = true;
 
 // Now run your controls …
 var result = PromptPlus.Controls.Input("Name").Run();
@@ -159,16 +159,18 @@ PromptPlus.Config.ToFile(".");
 
 This writes `PromptPlus.config` next to your executable. On the next run, PromptPlus reads it automatically — you do not need to call `ToFile()` again.
 
-The generated file looks like:
+The generated file looks like — **every** config property is serialized, not just the ones you
+changed (a partial excerpt, since the real file lists all of `IPromptPlusConfig`'s properties):
 
 ```json
 {
   "PageSize": 8,
-  "HideAfterFinish": true,
+  "HideAfterFinish": true
 }
 ```
 
-> ⚠️ Only properties that differ from the built-in defaults are written to the file. You can hand-edit it safely.
+> ⚠️ `ToFile()` serializes the entire configuration unconditionally — it does not diff against
+> defaults. You can hand-edit the generated file safely.
 
 ---
 

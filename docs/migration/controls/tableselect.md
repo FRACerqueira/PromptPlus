@@ -166,7 +166,7 @@ PromptPlus.Controls.TableSelect<Product>("Products:")
     .AddColumn("Name", p => p.Name, width: 30)
     .AddColumn("Description", p => p.Description, width: 50)
     .AddItems(products)
-    .HorizontalScroll(HorizontalScrollMode.Auto)
+    .HorizontalScroll(HorizontalScrollMode.Column)
     .Run();
 ```
 
@@ -206,8 +206,8 @@ New on `TableSelect`/`TableMultiSelect`: `DefaultMatchBy` · `ViewOnly` · `Hori
 | `SeparatorRows(bool)` | ✅ | ❌ | Removed with no equivalent |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `EqualItems(Func<T,T,bool>)` | ✅ | ❌ | Renamed to `DefaultMatchBy` |
-| `TextSelector(Func<T,string>)` · `PageSize(byte)` | ✅ | ✅ | Unchanged |
-| `HorizontalScroll` · `ViewOnly` · `DefaultMatchBy` · `EnableHistory` · `UseDefaultHistory` · async variants | ❌ | ✅ | New |
+| `TextSelector(Func<T,string>)` · `PageSize(byte)` · `AddItem(T)` · `AddItems(IEnumerable<T>)` · `Interaction` | ✅ | ✅ | Unchanged |
+| `HorizontalScroll` · `ViewOnly` · `DefaultMatchBy` · `EnableHistory` · `UseDefaultHistory` · `TextSelectorAsync` · `InteractionAsync` · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T>` | `ResultPrompt<TableSelectResult<T>>` | Return type changed |
 
 ### TableMultiSelect\<T\> — v5.x vs v6.x
@@ -223,7 +223,8 @@ New on `TableSelect`/`TableMultiSelect`: `DefaultMatchBy` · `ViewOnly` · `Hori
 | `SeparatorRows(bool)` | ✅ | ❌ | Removed with no equivalent |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `EqualItems(Func<T,T,bool>)` | ✅ | ❌ | Renamed to `DefaultMatchBy` |
+| `TextSelector(Func<T,string>)` · `ChangeDescription(Func<T,string>)` · `Interaction` · `AddItem(T, bool, bool)` · `AddItems(IEnumerable<T>, bool, bool)` | ✅ | ✅ | Unchanged |
 | `Range(int, int?)` | ✅ | ✅ | Unchanged |
 | `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
-| `EnableHistory` · `UseDefaultHistory` · `ViewOnly` · `DefaultMatchBy` · `HorizontalScroll` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
+| `EnableHistory` · `UseDefaultHistory` · `ViewOnly` · `DefaultMatchBy` · `HorizontalScroll` · `TextSelectorAsync` · `ChangeDescriptionAsync` · `InteractionAsync` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T[]>` | `ResultPrompt<T[]>` | Unchanged |

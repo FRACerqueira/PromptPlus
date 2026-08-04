@@ -11,7 +11,7 @@ The v5.x members below were **renamed** in v6.x (same behavior, new name). Apply
 |---|---|---|
 | Input / Secret | `PredicateSelected(Func<string, bool>)` | `PredicateValid(Func<string, bool>)` |
 | Input / Secret | `PredicateSelected(Func<string, (bool, string?)>)` | `PredicateValid(Func<string, (bool, string?)>)` |
-| Input / Secret | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` |
+| Input only (`Secret` has no history support) | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` |
 
 > The async overloads follow the same name: `PredicateValidAsync` (new in v6.x).
 

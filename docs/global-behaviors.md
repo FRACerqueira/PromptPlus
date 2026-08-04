@@ -74,15 +74,14 @@ Every hot key is settable (`get; set;`) **except** `HotKeyAbortKeyPress`, which 
 | `HotKeyAbortKeyPress` | `Esc` | ❌ read-only | All controls — abort |
 | `HotKeyTooltip` | `F1` | ✅ | All controls — cycle tooltip content |
 | `HotKeyTooltipShowHide` | `Ctrl+F1` | ✅ | All controls — toggle tooltip visibility |
-| `HotKeyInputHistoryView` | `F3` | ✅ | Input, Secret, Select, MultiSelect — show history |
+| `HotKeyInputHistoryView` | `F3` | ✅ | Input, Secret — show history (Select/MultiSelect only auto-load the last value as `Default`; MaskEdit has no history support at all) |
 | `HotKeyInputPasswordView` | `F2` | ✅ | Secret — reveal / hide typed text |
 | `HotKeyCalendarSwitchNotes` | `F2` | ✅ | Calendar — toggle notes display |
 | `HotKeyChartBarSwitchLayout` | `F2` | ✅ | ChartBar — switch layout |
 | `HotKeyChartBarSwitchLegend` | `F3` | ✅ | ChartBar — toggle legend |
 | `HotKeyChartBarSwitchOrder` | `F4` | ✅ | ChartBar — cycle sort order |
 | `HotKeyToggleAll` | `F2` | ✅ | MultiSelect, TreeMultiSelect, TableMultiSelect, MultiFile — toggle all |
-| `HotKeyFilterAllSelected` | `F3` | ✅ | MultiSelect, TreeMultiSelect, TableMultiSelect — filter selected |
-| `HotKeySelectWildcard` | `F4` | ✅ | MultiFile, TreeMultiSelect — select entries by wildcard pattern |
+| `HotKeyFilterAllSelected` | `F3` | ✅ | MultiSelect, MultiFile, TableMultiSelect — filter to only checked items |
 | `HotKeyToggleFullPath` | `Shift+F3` | ✅ | File, MultiFile, TreeSelect, TreeMultiSelect — toggle full path |
 
 ---

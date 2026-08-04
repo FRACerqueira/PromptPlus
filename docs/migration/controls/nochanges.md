@@ -49,7 +49,7 @@ var result = PromptPlus.Controls.Slider("Volume:")
 double? volume = result.Content;   // ResultPrompt<double?>
 ```
 
-> ⚠️ `ChangeGradient`, `ChangeColor` and `ChangeDescription` already existed on the v5.x `Slider` — they are **not** v6.x novelties.
+> ⚠️ `ChangeGradient`, `ChangeColor` and `ChangeDescription` already existed on the v5.x `Slider` — they are **not** v6.x novelties. `ChangeDescriptionAsync` **is** new in v6.x, following the same async-counterpart pattern as the other controls in this guide.
 
 ---
 
@@ -245,7 +245,7 @@ hist.Remove();   // delete the history file
 
 | Control | Breaking changes | New in v6.x |
 |---|---|---|
-| `Slider` | ⚠️ `FracionalDig` → `FractionalDigits`; `Default` param recased | None |
+| `Slider` | ⚠️ `FracionalDig` → `FractionalDigits`; `Default` param recased; `Fill` → `BarType` | `ChangeDescriptionAsync` |
 | `Calendar` | ❌ None | `PredicateSelectedAsync`, `ChangeDescriptionAsync`, `InteractionAsync`, `AddNotes`, `EnableHistory` |
 | `Switch` | ⚠️ `SwitchStyles.SliderOn/SliderOff` → `SwitchOn/SwitchOff`; `Default` param recased; `EnabledHistory` → `EnableHistory` | `OnValue/OffValue(EmojiName, string)`, `ChangeDescriptionAsync` |
 | `ProgressBar` | ⚠️ `UpdateHandler` event type; `IntervalUpdate` removed; `FracionalDig` → `FractionalDigits` | `UpdateHandlerAsync`, `ChangeDescriptionAsync` |

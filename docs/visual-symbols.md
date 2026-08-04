@@ -42,9 +42,9 @@ anything.
 
 | Meaning | ASCII | Unicode | Where shown |
 |---|---|---|---|
-| Focus cursor | `>` | `►` | Focused item in Select / MultiSelect / TreeSelect |
-| Checkbox — checked | `[x]` | `[■]` | Selected item in MultiSelect |
-| Checkbox — unchecked | `[ ]` | `[ ]` | Unselected item in MultiSelect |
+| Focus cursor | `>` | `►` | Focused item — used far more broadly than just Select/MultiSelect/TreeSelect: also TableSelect, TableMultiSelect, MultiFile, ChartBar, Calendar, Input (suggestions), MultiTasks, and other list-like controls |
+| Checkbox — checked | `[x]` | `[■]` | Selected item in any multi-select-style control (MultiSelect, TableMultiSelect, TreeMultiSelect, MultiFile) |
+| Checkbox — unchecked | `[ ]` | `[ ]` | Unselected item, same set of controls |
 | Checkbox — partial (tri-state) | `[?]` | `[▪]` | Indeterminate node in TreeMultiSelect |
 | Checkbox — busy/loading | `[*]` | `[◔]` | Item whose children are loading |
 
@@ -62,6 +62,9 @@ anything.
 | Tree branch (crossing) | ` \|-` | ` ├─` |
 | Tree branch (corner) | ` \|_` | ` └─` |
 | Tree vertical line | ` \| ` | ` │ ` |
+| Tree indent (no line) | `   ` | `   ` |
+
+Blank 3-column indent, used where no vertical line continues at that depth.
 
 ---
 
@@ -69,16 +72,25 @@ anything.
 
 By **default**, the progress bar, slider, and chart bar render their filled portion as a **colored
 space** (the color carries the meaning). The glyphs below are used only when you pick an alternate
-bar style (e.g. `SliderBarType.Square`, `ProgressBarType.Square`).
+bar style (e.g. `SliderBarType.Square`, `ProgressBarType.Square`) — and **not every style exists on
+every control**:
 
-| Bar style | ASCII | Unicode |
-|---|---|---|
-| Square (solid block) | `#` | `█` |
-| Light | `-` | `─` |
-| Double-light | `=` | `═` |
-| Dot | `.` | `∙` |
-| Half bar | `\|` | `▌` |
-| Chart label swatch | `#` | `■` |
+| Bar style | ASCII | Unicode | ProgressBar | Slider | ChartBar |
+|---|---|---|:---:|:---:|:---:|
+| Fill (colored space, default) | ` ` | ` ` | ✅ | ✅ | ✅ |
+| Light | `-` | `─` | ✅ | ✅ | ✅ |
+| Square (solid block) | `#` | `█` | ✅ | ✅ | ✅ |
+| Double-light | `=` | `═` | ✅ | ✅ | ❌ |
+| Dot | `.` | `∙` | ✅ | ✅ | ❌ |
+| Bar (half bar) | `\|` | `▌` | ✅ | ❌ | ❌ |
+
+`ChartBarType`, `SliderBarType`, and `ProgressBarType` are three separate enums — the styles they
+have in common (`Fill`/`Light`/`Square`) render with the identical glyphs shown above, but
+`ChartBarType` doesn't have `DoubleLight`/`Dot` members at all, and `SliderBarType` doesn't have
+`Bar`. Only `ProgressBarType` has all of them.
+
+The chart's item-label swatch is a separate glyph from any of these bar styles: `#` (ASCII) /
+`■` (Unicode).
 
 > There is **no** `░` "empty" glyph — empty bar space is just an un-colored space.
 

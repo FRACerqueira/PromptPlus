@@ -53,7 +53,7 @@ PromptPlus.Widgets.Slider(65, 0, 100, 0).Show();
 ```
 
 Signature: `Slider(double value, double minvalue = 0, double maxvalue = 100, byte fractionalDigits = 2)`.
-The returned `ISliderWidget` is fluent — chain `Fill`, `Width`, `Styles`, `Culture`, `ChangeColor`,
+The returned `ISliderWidget` is fluent — chain `BarType`, `Width`, `Styles`, `Culture`, `ChangeColor`,
 `ChangeGradient`, or `HideElements` before `.Show()`:
 
 ```csharp
@@ -158,7 +158,7 @@ PromptPlus.Widgets.ChartBar()
 ```
 
 `AddItem(string label, double value, Color? colorBar = null, string? id = null)` — omit the color to
-let PromptPlus assign one automatically. Set the width with `.Width(byte)` (default 50, minimum 10),
+let PromptPlus assign one automatically. Set the width with `.Width(byte)` (default 80, minimum 10),
 the sort with `.OrderBy(...)`, and the layout with `.Layout(...)`.
 
 > The **widget** is display-only. If you need the interactive chart with F2/F3/F4 hot keys (switch

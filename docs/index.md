@@ -65,6 +65,11 @@ an `operations` guide (keyboard, validation, history), and a `styles` page.
 | `MultiFile` | [controls/multifile/](controls/multifile/index.md) |
 | `ChartBar` | [controls/chartbar/](controls/chartbar/index.md) |
 
+`PromptPlus.Controls` also exposes `History(filename): IHistory`, a lower-level factory for reading/
+writing a control's persisted history file directly (outside the usual `.EnableHistory(filename)`
+fluent call on Input/Secret/Select/MultiSelect/etc.) — it has no dedicated hand-written guide yet;
+see the generated [`IHistory`](api/IHistory.md) reference.
+
 ---
 
 ## API Reference
@@ -86,7 +91,7 @@ an `operations` guide (keyboard, validation, history), and a `styles` page.
 | [TableSelect / TableMultiSelect](migration/controls/tableselect.md) | `AddColumn` reformulated, `Filter` signature, new features |
 | [TreeSelect / TreeMultiSelect](migration/controls/treeselect.md) | Factory renames, tree-building API reworked (`Root`/`AddLast`), remote-control removal |
 | [File / MultiFile](migration/controls/file.md) | Factory renames, attribute methods, new MultiFile features |
-| [MultiTasks / Time / Task](migration/controls/tasks.md) | Factory renames, `AddTask` reformulated, return types |
+| [MultiTasks / Timer / Task](migration/controls/tasks.md) | Factory renames, `AddTask` reformulated, return types |
 | [MaskEdit (all types)](migration/controls/maskedit.md) | No breaking changes; `PredicateSelectedAsync` added (factories unchanged) |
 | [Slider / Calendar / Switch / ProgressBar / ChartBar / History](migration/controls/nochanges.md) | Mostly additions; breaking changes in `ProgressBar` and `ChartBar` |
 

@@ -215,7 +215,7 @@ PromptPlus.Controls.MultiSelect<Product>("Products:")
 | `Filter(FilterMode)` | ❌ | ✅ | New |
 | `EnabledHistory(string, Action<IHistoryOptions>?)` | ✅ | ❌ | Renamed to `EnableHistory` |
 | `EnableHistory(string, Action<IHistoryOptions>?)` | ❌ | ✅ | New name |
-| `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` · `PredicateSelected` (x2) | ✅ | ✅ | Unchanged |
+| `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` · `PredicateSelected` (x2) · `AutoSelect` · `AddItem` · `AddItems` · `AddGroupedItem` · `AddGroupedItems` · `AddSeparator` · `HideTipGroup` | ✅ | ✅ | Unchanged |
 | `ChangeDescriptionAsync` · `InteractionAsync` · `TextSelectorAsync` · `ExtraInfoAsync` · `PredicateSelectedAsync` (x2) | ❌ | ✅ | New |
 
 ### MultiSelect\<T\> — v5.x vs v6.x
@@ -232,5 +232,5 @@ PromptPlus.Controls.MultiSelect<Product>("Products:")
 | `PredicateSelected` / `PredicateSelectedAsync` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` / `PredicateCheckedAsync` |
 | `EnabledHistory(string, Action<IHistoryOptions>?)` | ✅ | ❌ | Renamed to `EnableHistory` |
 | `EnableHistory(string, Action<IHistoryOptions>?)` | ❌ | ✅ | New name |
-| `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` | ✅ | ✅ | Unchanged |
+| `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` · `AddItem` · `AddItems` · `AddGroupedItem` · `AddGroupedItems` · `AddSeparator` · `HideTipGroup` | ✅ | ✅ | Unchanged |
 | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `PredicateChecked` · async variants | ❌ | ✅ | New |

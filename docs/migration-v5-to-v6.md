@@ -97,7 +97,7 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `File` / `MultiFile` | `HideSizeInfo(bool)` | `HideSize(bool)` | Renamed, same semantics |
 | `WaitTimer` → `Timer` | `IsCountDown(bool)` | `DisplayMode(TimerDisplayMode)` | Replaced by an enum (`Countdown`/`Elapsed`) |
 | `Slider` / `ProgressBar` | `FracionalDig(byte)` | `FractionalDigits(byte)` | Renamed (spelling fix); matches `ChartBar.FractionalDigits` |
-| `Select` / `MultiSelect` / `Input` / `Secret` / `Slider` / `Switch` / `File` / `MultiFile` | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` | Renamed (grammar fix: enable, not "enabled") |
+| `Select` / `MultiSelect` / `Input` / `Slider` / `Switch` / `File` / `MultiFile` | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` | Renamed (grammar fix: enable, not "enabled"). Note: `Secret` has no history support at all, in either version |
 
 ### Renamed enum values
 
