@@ -24,7 +24,7 @@ rules, history, and the values it returns.
 
 ```
 Select a file or folder: index.md  1.2 KB ← prompt + live answer (path + size, follows the cursor)
-Right/+ expand, Left/- collapse          ← description (optional)
+Press + to expand, - to collapse         ← description (optional) — NOT ←/→, see Tree navigation
 C:\Projects                              ← root folder
 ├─ ▶ src                                 ← collapsed folder (expand symbol)
 ├─ ▼ docs                                ← expanded folder
@@ -52,10 +52,13 @@ when you collapse it. This keeps memory proportional to what is visible, so it i
 | Key | Action |
 |---|---|
 | `↑` / `↓` | Move focus up / down |
-| `→` / `+` | Expand the focused folder |
-| `←` / `-` | Collapse the focused folder |
+| `+` | Expand the focused folder (plain `→` does **not** expand) |
+| `-` | Collapse the focused folder (plain `←` does **not** collapse) |
+| `Tab` | On a folder: expand it (if needed) and move to its first child. On a file: move to the next item |
+| `Shift+Tab` | On a folder's first child: collapse the parent and move to it. Otherwise: move to the previous item |
 | `Page Up` / `Page Down` | Jump one page |
-| `Home` / `End` | First / last visible item |
+| `Ctrl+Home` / `Ctrl+End` | First / last visible item (plain `Home`/`End` instead scroll the long-path answer text — see the anatomy note above) |
+| Any printable character | Jump to the next visible entry whose name starts with that character (wraps around) |
 | `Enter` | Confirm the focused entry (subject to the selection rule) |
 | `Esc` | Abort → `IsAborted == true` |
 | `Shift+F3` | Toggle the answer between full path and short name |
@@ -70,7 +73,9 @@ when you collapse it. This keeps memory proportional to what is visible, so it i
   directories are always shown so you can navigate into them.
 - [`OnlyFolders`](methods.md#onlyfolders) hides files entirely — a folder picker.
 - [`ShowHidden`](methods.md#showhidden) and [`ShowSystem`](methods.md#showsystem) add entries that
-  carry the Hidden/System attribute; both are off by default.
+  carry the Hidden/System attribute; both are off by default. `ShowSystem` has no effect at all on
+  non-Windows platforms (the System attribute isn't checked there); `ShowHidden` on Unix uses a
+  separate check based on a leading dot in the file name, since Unix has no Hidden file attribute.
 - [`HideSize`](methods.md#hidesize) removes the size column shown next to files.
 
 ---

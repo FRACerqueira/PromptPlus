@@ -106,7 +106,9 @@ PromptPlus.Controls.Calendar("Date")
 ICalendarControl FirstDayOfWeek(DayOfWeek firstDayOfWeek)
 ```
 
-Sets which weekday appears in the first column. When not set, the culture's default is used.
+Sets which weekday appears in the first column. When not set, defaults to
+`PromptPlus.Config.FirstDayOfWeek` (`DayOfWeek.Sunday` unless you've changed it globally) —
+**not** the active culture's own first-day-of-week convention.
 
 ```csharp
 using PromptPlusLibrary;

@@ -153,7 +153,7 @@ PromptPlus.Controls.ChartBar("Select item")
 IChartBarControl Width(byte value)
 ```
 
-Sets the drawing width of the chart in characters. Default is `50`.
+Sets the drawing width of the chart in characters. Default is `80`.
 
 ```csharp
 PromptPlus.Controls.ChartBar("Select item").Width(70).AddItem("A", 45).Run();
@@ -322,7 +322,8 @@ PromptPlus.Controls.ChartBar("Select item")
 IChartBarControl PageSize(byte value)
 ```
 
-Maximum number of bars shown per page. Default `0` disables pagination (all items on one view).
+Maximum number of bars shown per page. Default `0` does **not** disable pagination — it auto-computes
+a page size that fits the terminal height instead of showing every item on one screen.
 
 ```csharp
 PromptPlus.Controls.ChartBar("Select item")

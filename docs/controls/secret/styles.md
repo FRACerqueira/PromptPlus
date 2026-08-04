@@ -39,7 +39,7 @@ appear because `Secret` has no autocomplete or history, but the enum values are 
 | `UnSelected` | Non-highlighted list entries (not used by `Secret`) |
 | `Error` | The validation error line |
 | `Pagination` | The page indicator during list navigation (not used by `Secret`) |
-| `TaggedInfo` | Extra-info text (affixed with the prefix/suffix from config) |
+| `TaggedInfo` | **Dead style — never referenced by the control** (inherited from `InputStyles`; `Input` doesn't render anything with it either) |
 | `Tooltips` | The keyboard-hint line |
 
 ---

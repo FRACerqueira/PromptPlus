@@ -47,14 +47,19 @@ Every region can be recolored — see [Styles](styles.md).
 |---|---|
 | `←` / `→` | Move one day back / forward |
 | `↑` / `↓` | Move one week back / forward |
-| `Page Up` / `Page Down` | Previous / next month |
-| `Ctrl+Page Up` / `Ctrl+Page Down` | Previous / next year |
-| `Home` | Jump to today |
-| `F2` | Toggle the date-notes display |
+| `Tab` / `Shift+Tab` | Previous / next month |
+| `Page Up` / `Page Down` | Previous / next year |
+| `Home` | Jump to today (no-ops if today is outside [`Range`](#range-limits)) |
+| `F2` | Toggle the date-notes display (opens a separate keymap — see [Notes](#notes-f2)) |
 | `Enter` | Confirm the highlighted date (runs validation) |
 | `Esc` | Abort → `IsAborted == true` |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
+
+Arrow-key navigation also accepts the Emacs equivalents **unconditionally** — `Ctrl+B`/`Ctrl+F` for
+`←`/`→`, `Ctrl+P`/`Ctrl+N` for `↑`/`↓` — regardless of the global
+[`PromptPlus.Console.EnabledEmacs`](../../keyboard-bindings.md) setting (Calendar doesn't edit free
+text, so these don't carry the same ambiguity risk that setting exists to avoid elsewhere).
 
 Disabled days and days outside the [range](#range-limits) cannot be confirmed.
 
@@ -71,6 +76,16 @@ Notes annotate individual dates and are read on demand:
   many notes appear per page (`0` auto-computes from terminal height).
 - Notes can be generated programmatically per data item with
   [`Interaction`](methods.md#interaction) / [`InteractionAsync`](methods.md#interactionasync).
+
+While the notes panel is open, it has its own keymap, separate from the day-grid keys above:
+
+| Key | Action |
+|---|---|
+| `↑` / `↓` | Move between notes |
+| `Page Up` / `Page Down` | Move between pages |
+| `Ctrl+Home` / `Ctrl+End` | Jump to the first / last note |
+| Any printable letter | Jump to the next note starting with that letter |
+| `F2` | Close the notes panel, return to the day grid |
 
 ```csharp
 using PromptPlusLibrary;

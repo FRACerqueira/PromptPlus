@@ -43,11 +43,11 @@ Every region can be recolored — see [Styles](styles.md).
 
 | Key | Action |
 |---|---|
-| `↑` / `↓` | Move the highlight between bars |
-| `Page Up` / `Page Down` | Jump one page (when [`PageSize`](methods.md#pagesize) > 0) |
-| `Home` / `End` | First / last bar |
+| `↑` / `↓` | Move the highlight between bars (in `Stacked` layout, `←`/`→` do the same) |
+| `Page Up` / `Page Down` | Jump one page |
+| `Ctrl+Home` / `Ctrl+End` | First / last bar (plain `Home`/`End` do **not** do this) |
 | `F2` | Switch layout `Standard` ⇄ `Stacked` (unless disabled) |
-| `F3` | Toggle the legend on / off |
+| `F3` | Toggle the legend on / off — only works once [`ShowLegends()`](methods.md#showlegends) has been called at least once; inert otherwise |
 | `F4` | Cycle the sort order |
 | `Enter` | Confirm the highlighted bar (runs validation) |
 | `Esc` | Abort → `IsAborted == true` |
@@ -97,7 +97,9 @@ Every region can be recolored — see [Styles](styles.md).
 
 - [`ShowLegends()`](methods.md#showlegends) adds a legend after the chart listing each item with its
   value and percentage. It is **off by default**.
-- Press **F3** at runtime to toggle the legend on or off regardless of the initial setting.
+- Press **F3** at runtime to toggle the legend on or off — but only if `ShowLegends()` was called at
+  least once before `Run()`. If you never call it, **F3 does nothing**; there's no way to turn
+  legends on for the first time from the keyboard.
 
 ---
 
@@ -105,8 +107,9 @@ Every region can be recolored — see [Styles](styles.md).
 
 - [`HideElements`](methods.md#hideelements) removes the title, values, and/or percentages from the
   chart. `HideChart` is a `[Flags]` enum, so combine with `|`.
-- [`PageSize`](methods.md#pagesize) limits how many bars are shown at once; `0` (default) shows them
-  all. When paging is active, Page Up / Page Down move between pages and the page indicator appears.
+- [`PageSize`](methods.md#pagesize) limits how many bars are shown at once; `0` (default) does **not**
+  disable paging — it auto-computes a page size that fits the terminal height. Page Up / Page Down
+  move between pages and the page indicator appears whenever there's more than one page.
 
 ---
 
