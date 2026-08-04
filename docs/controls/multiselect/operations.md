@@ -66,8 +66,9 @@ Every region can be recolored — see [Styles](styles.md).
 Disabled items and separators are skipped automatically as you move. The `F2` toggle-all and `F3`
 filter-selected hotkeys are the multi-select additions over [`Select<T>`](../select/operations.md).
 
-> `MultiSelect<T>` has **no** wildcard-selection hotkey — that F4 feature belongs to other controls,
-> not this one.
+> There is no `F4` wildcard-selection hotkey — that was dead config (`HotKeySelectWildcard`) that
+> has since been removed entirely from the codebase, not a feature that belongs to some other
+> control instead.
 >
 > The physical keys for `F2`/`F3` come from `PromptPlus.Config.HotKeyToggleAll` and
 > `HotKeyFilterAllSelected`; both are configurable. See [Keyboard Bindings](../../keyboard-bindings.md).
