@@ -25,8 +25,8 @@ are matched, the invalid-key message, the tooltip, and aborting.
 ```
 Press a valid key                        ← prompt
 A, Ctrl+B, N(Off), Y(On)                 ← description (optional)
-Invalid key 'Z'. Try A, Ctrl+B, N or Y. ← error line, only after a rejected key
-A  Ctrl+B  Off  On   Esc: cancel         ← tooltip: valid keys + hints
+Esc:Abort.Ctrl+F1:Show/hide tooltip      ← tooltip — does NOT list the valid keys, only hints
+Invalid key 'Z'. Try A, Ctrl+B, N or Y. ← error line, only after a rejected key (renders AFTER the tooltip)
 ```
 
 Every region can be recolored — see [Styles](styles.md).
@@ -67,8 +67,9 @@ PromptPlus.Controls.KeyPress("Press a valid key", "A, Ctrl+B, N(Off), Y(On)")
 - **No `AddValidKey` calls → any key is accepted.** This is the "press any key" mode.
 - With a modifier requirement, the modifier must be held: `AddValidKey(ConsoleKey.B, ConsoleModifiers.Control)`
   accepts **Ctrl+B**, not a bare **B**.
-- The optional `displayText` only changes the tooltip label — the returned `.Content.Value.Key` is
-  still the real `ConsoleKey`.
+- The optional `displayText` changes what's shown on the **Answer line** once that key is pressed
+  (not the tooltip — the tooltip never lists the valid keys at all, see [Tooltip](#tooltip) below).
+  The returned `.Content.Value.Key` is still the real `ConsoleKey` either way.
 
 > 💡 To branch on the result, compare `.Content.Value.Key` to the `ConsoleKey` you registered, e.g.
 > `if (result.Content is { } k && k.Key == ConsoleKey.Y)`.
@@ -102,8 +103,9 @@ PromptPlus.Controls.KeyPress("Press a valid key")
 
 ## Tooltip
 
-The tooltip line lists the accepted keys (using each key's `displayText` when supplied) alongside
-the standard hints such as the abort key. Toggle it per instance with
+⚠️ The tooltip line does **not** list the accepted keys — it only ever shows the abort hint and the
+show/hide-tooltip hint (e.g. `Esc:Abort.Ctrl+F1:Show/hide tooltip`), regardless of how many keys
+you registered with `AddValidKey` or what `displayText` you gave them. Toggle it per instance with
 [`Options(o => o.ShowTooltip(...))`](methods.md#options) or globally via
 [`PromptPlus.Config`](../../global-behaviors.md).
 
@@ -119,7 +121,11 @@ the standard hints such as the abort key. Toggle it per instance with
 When the abort key is enabled (the default), pressing **Esc** cancels the wait:
 
 - `.IsAborted` is `true`.
-- `.Content` has **no value** (`HasValue == false`).
+- `.Content` **does** have a value — the real Escape key's `ConsoleKeyInfo`
+  (`.Content.Value.Key == ConsoleKey.Escape`). `.Content` is only genuinely `null`/no-value when the
+  wait ends via the `CancellationToken` passed to `Run(...)`, not via Esc.
+- The Answer line switches to a localized **"Canceled"** label (instead of whatever key text would
+  normally show) when [`ShowMessageAbortKey`](../../global-behaviors.md) is `true` (the default).
 
 ```csharp
 var result = PromptPlus.Controls.KeyPress("Press a key").Run();
@@ -154,8 +160,9 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 
 ## Edge cases & gotchas
 
-- **`.Content` is nullable.** Always check `.Content.HasValue` (or pattern-match `is { } k`) before
-  reading `.Value` — an aborted result has no value.
+- **`.Content` is nullable, but an Esc-abort still populates it** with the real Escape
+  `ConsoleKeyInfo` — only a `CancellationToken` cancel leaves it `null`. Branch on `.IsAborted`, not
+  on `.Content.HasValue`, to detect an abort.
 - **Modifiers matter.** A registered `Ctrl+B` will not match a bare `B`, and vice versa.
 - **Message callbacks block the UI thread** — see the warning under
   [`ShowMessageAsync`](methods.md#showmessageasync).
