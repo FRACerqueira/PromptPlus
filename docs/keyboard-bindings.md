@@ -47,7 +47,6 @@ PromptPlus.Console.EnabledEmacs = true;
 | Delete word right | `Alt+D` | — |
 | Move one word left | `Alt+B` | — |
 | Move one word right | `Alt+F` | — |
-| Yank (paste kill buffer) | `Ctrl+Y` | — |
 | Transpose characters | `Ctrl+T` | — |
 | Toggle case, move to end of word | `Ctrl+C` | — |
 | Uppercase to end of word | `Alt+U` | — |

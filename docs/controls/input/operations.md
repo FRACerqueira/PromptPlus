@@ -42,12 +42,14 @@ Every region can be recolored — see [Styles](styles.md).
 |---|---|
 | Any printable character | Insert at the cursor (subject to [`AcceptInput`](methods.md#acceptinput) and [`MaxLength`](methods.md#maxlength)) |
 | `←` / `→` | Move one character |
-| `Ctrl+←` / `Ctrl+→` | Move one word |
 | `Home` / `End` | Start / end of line |
 | `Backspace` | Delete character before the cursor |
 | `Delete` | Delete character at the cursor |
-| `Ctrl+Backspace` | Delete the word to the left |
-| `Ctrl+Delete` | Delete the word to the right |
+| `Insert` | Toggle insert / overwrite mode |
+
+There is no plain (non-Emacs) word-motion or word-deletion binding: `Ctrl+←`/`Ctrl+→`,
+`Ctrl+Backspace`, and `Ctrl+Delete` do **not** move/delete by word. Word motion/deletion is
+Emacs-only — `Alt+F`/`Alt+B` to move, `Ctrl+W`/`Alt+D` to delete — see the warning below.
 
 ### Actions
 
@@ -55,14 +57,14 @@ Every region can be recolored — see [Styles](styles.md).
 |---|---|
 | `Enter` | Confirm — runs validation, then returns the value |
 | `Esc` | Abort (when the abort key is enabled) → `IsAborted == true` |
-| `Tab` / `Shift+Tab` | Apply / cycle autocomplete suggestions (when a [suggestion handler](methods.md#suggestionhandler) is set) |
+| `Tab` / `Shift+Tab` | Autocomplete — behavior differs by mode, see [Autocomplete](#autocomplete) below |
 | `F3` | Open history navigation (when [history](methods.md#enablehistory) is enabled) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 
-> When **Emacs key bindings** are enabled (`PromptPlus.Config.EmacsKeyBindings = true`), the text
-> also responds to `Ctrl+A/E/B/F/D/K/U/W/Y/T` and friends. See
-> [Keyboard Bindings](../../keyboard-bindings.md) for the full table.
+> When **Emacs key bindings** are enabled (`PromptPlus.Console.EnabledEmacs = true`), the text
+> also responds to `Ctrl+A/E/B/F/D/K/U/W/T` and friends (no `Ctrl+Y` — there's no yank/kill-buffer
+> support here). See [Keyboard Bindings](../../keyboard-bindings.md) for the full table.
 
 ---
 
@@ -77,16 +79,22 @@ key pressed
    │
    └─ printable character
           │
-          ├─ AcceptInput(c) == false? --→ ignored
+          ├─ InputToCase applied FIRST (upper/lower) — before AcceptInput ever sees the char
+          ├─ AcceptInput(transformedChar) == false? --→ ignored
           ├─ length already == MaxLength? --→ ignored
-          ├─ InputToCase applied (upper/lower)
           └─ inserted at cursor
 ```
 
 Consequently:
 
-- `AcceptInput` and `MaxLength` are **preventive** — they stop bad input from ever appearing.
-- `InputToCase` transforms accepted characters on the way in, so `.Content` is already cased.
+- **`InputToCase` runs BEFORE `AcceptInput`, not after.** `AcceptInput` receives the
+  *already-cased* character, never the raw one the user typed. A predicate that only accepts one
+  case (e.g. `InputToCase: CaseOptions.Uppercase` combined with `AcceptInput: char.IsLower`) will
+  silently reject every character, since it never sees a lowercase char to accept. Write
+  `AcceptInput` predicates that expect the target case (or are case-insensitive) when combining the
+  two.
+- `AcceptInput` and `MaxLength` are still **preventive** — they stop bad input from ever appearing;
+  they just see it after the case transform, not before.
 
 ---
 
@@ -94,11 +102,18 @@ Consequently:
 
 Pressing **Enter** runs this sequence:
 
-1. If the field is empty and [`DefaultIfEmpty`](methods.md#defaultifempty) was set, its value is substituted.
-2. Validation runs — [`PredicateValid`](methods.md#predicatevalid) /
-   [`PredicateValidAsync`](methods.md#predicatevalidasync), if configured.
-3. **Valid** → the control closes and returns `ResultPrompt<string>` with `IsAborted == false`.
-   **Invalid** → the control stays open, shows the error line, and waits for more input.
+1. Validation runs — [`PredicateValid`](methods.md#predicatevalid) /
+   [`PredicateValidAsync`](methods.md#predicatevalidasync), if configured — against the **raw
+   typed value**, even if it's empty.
+2. **Invalid** → the control stays open, shows the error line, and waits for more input.
+   **Valid** → only now, if the field was empty, [`DefaultIfEmpty`](methods.md#defaultifempty)'s
+   value is substituted; the control closes and returns `ResultPrompt<string>` with
+   `IsAborted == false`.
+
+> ⚠️ **`DefaultIfEmpty` runs AFTER validation, not before.** A `PredicateValid` that rejects empty
+> input will reject an empty field before `DefaultIfEmpty` ever gets a chance to substitute its
+> value — the substitution only happens once the raw (possibly empty) value has already passed
+> validation. If you want an empty field to be valid, your predicate must accept empty strings.
 
 > ⚠️ Validation only runs on confirm, never per keystroke. Use `AcceptInput` for per-keystroke rules
 > and `PredicateValid` for whole-value rules (length, format, uniqueness).
@@ -111,10 +126,16 @@ When [`EnableHistory(filename, …)`](methods.md#enablehistory) is set:
 
 - Each confirmed value is appended to the on-disk store named `filename`.
 - Pressing **F3** opens a paged list of past entries filtered by what is currently typed
-  (`FilterType`, `MinPrefixLength`, `PageSize` control this).
+  (`FilterType`, `MinPrefixLength`, `PageSize` control this). While that list is open: `↑`/`↓` move
+  between entries, `Page Up`/`Page Down` move between pages, `Ctrl+Home`/`Ctrl+End` jump to the
+  first/last entry, and `F3` again closes the list back to normal editing.
 - With `Default(string.Empty, useDefaultHistory: true)`, the most recent entry is pre-loaded as the
   starting value.
 - Entries expire per `ExpirationTime`; the store keeps at most `MaxItems`.
+
+> ⚠️ **`Ctrl+Delete`, while the history list is open, deletes the entire on-disk history file** —
+> not a single entry, the whole store. This is a real, destructive, and easy-to-trigger-by-accident
+> action (it's the same physical key combo a user might reach for expecting "delete word").
 
 You can also manage a history store directly with `PromptPlus.Controls.History(filename)` — add,
 save, or remove entries programmatically (used in the samples to seed reproducible data).
@@ -125,14 +146,20 @@ save, or remove entries programmatically (used in the samples to seed reproducib
 
 ## Autocomplete
 
-When a [suggestion handler](methods.md#suggestionhandler) is set:
+When a [suggestion handler](methods.md#suggestionhandler) is set, the provider is called once the
+typed length reaches [`MinimumSuggestionLength`](methods.md#minimumsuggestionlength). What happens
+next depends on `autocomplete`, and the two modes behave quite differently — this isn't just "same
+feature, different key":
 
-- The provider is called once the typed length reaches
-  [`MinimumSuggestionLength`](methods.md#minimumsuggestionlength).
-- **`autocomplete: true`** (default) — if the provider returns exactly one match, **Tab** applies it
-  immediately.
-- **`autocomplete: false`** — matches are presented as a list; **Tab / Shift+Tab** cycle through them
-  and the highlighted one is inserted.
+- **`autocomplete: true`** (default) — there is **no separate suggestion list**. Each **Tab** press
+  replaces the buffer directly with the next match (wrapping around at the end); **Shift+Tab has no
+  effect** in this mode. This applies regardless of how many matches the provider returned — "apply
+  immediately for a single match" is not the real rule; every match, one or many, is cycled the same
+  way.
+- **`autocomplete: false`** — pressing **Tab or Shift+Tab** switches into a separate suggestion-list
+  mode. Once there: **↑ / ↓** move the highlight, **Tab** accepts the highlighted suggestion and
+  returns to normal editing, **Shift+Tab** cancels and restores the text you had before entering the
+  list.
 
 History (F3) and suggestions (Tab) are independent features and can be used together.
 
@@ -158,7 +185,9 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 - **Single-line rendering.** The value is displayed on one line. If it is wider than the terminal, a
   sliding window with `…` is shown, but `.Content` always holds the full untruncated text.
 - **Newlines** are not accepted (Enter confirms). For multi-line data collect line by line.
-- **Aborted results** carry `.Content == ""`, not the seeded `Default`. Always branch on `IsAborted`.
+- **Aborted results do NOT reliably carry `.Content == ""`.** `.Content` holds whatever is currently
+  in the text buffer at the moment of abort — a seeded `Default` the user never typed over, or
+  partially-typed text, not necessarily empty. Always branch on `IsAborted` before using the value.
 - **Async callbacks block the UI thread** — see the warning under
   [`PredicateValidAsync`](methods.md#predicatevalidasync).
 

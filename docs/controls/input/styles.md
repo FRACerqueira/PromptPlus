@@ -31,12 +31,12 @@ region is an `InputStyles` value you can recolor per control instance.
 | `Prompt` | The prompt text |
 | `Answer` | The value the user is typing / the confirmed answer |
 | `Description` | The description line under the prompt |
-| `Suggestion` | Autocomplete suggestion text |
+| `Suggestion` | **Dead style — never referenced by the control.** The suggestion list actually renders with `Selected`/`UnSelected`, the same regions used elsewhere for highlighted/non-highlighted items |
 | `Selected` | The highlighted suggestion / history entry |
 | `UnSelected` | Non-highlighted suggestions / history entries |
 | `Error` | The validation error line |
 | `Pagination` | The page indicator during history / suggestion navigation |
-| `TaggedInfo` | Extra-info text (affixed with the prefix/suffix from config) |
+| `TaggedInfo` | **Dead style — never referenced by the control.** Setting it has no visible effect |
 | `Tooltips` | The keyboard-hint line |
 
 ---
