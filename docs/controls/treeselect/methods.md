@@ -452,8 +452,9 @@ PromptPlus.Controls.TreeSelect<Node>("Nodes")
 ITreeSelectControl<T> ViewOnly(bool value = true)
 ```
 
-Renders the tree for navigation only — nodes can be expanded/collapsed but not selected. Enter
-returns the [`Default`](#default) value (or `null` if none was set).
+Renders the tree for navigation only — nodes can be expanded/collapsed but not selected. Enter always
+returns the node the tree started on — the [`Default`](#default) target if one was set, otherwise the
+**root node** (never `null`, since a root is mandatory) — regardless of where the user navigated to.
 
 ```csharp
 PromptPlus.Controls.TreeSelect<Node>("Read-only tree")
@@ -518,7 +519,7 @@ PromptPlus.Controls.TreeSelect<Node>("Nodes")
     .Run();
 ```
 
-> Throws `ArgumentNullException` if `filename` is `null`.
+> Throws `ArgumentNullException` if `filename` is `null`, `ArgumentException` if it is empty/whitespace.
 
 ---
 

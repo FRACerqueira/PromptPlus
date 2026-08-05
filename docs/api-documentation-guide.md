@@ -28,9 +28,10 @@ DefaultDocumentation is a tool that converts the XML comments from C# code into 
 ```
 docs/
 ├── api/                          # API documentation (generated automatically)
-│   ├── PromptPlus.md           # Main assembly page
-│   ├── PromptPlusLibrary.*.md  # Type and member pages
-│   └── links.json               # External links (optional)
+│   ├── PromptPlus.md             # Main assembly page
+│   ├── PromptPlusLibrary.md      # PromptPlusLibrary namespace page
+│   ├── InputStyles.md, ...       # One page per public type, named after the bare type name
+│   └── links.json                # External links (optional — not currently present in this repo)
 ├── getting-started.md           # Manual guides
 ├── [others].md
 └── ...
@@ -46,17 +47,17 @@ The DefaultDocumentation configuration lives in the `src/PromptPlus.csproj` file
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 </PropertyGroup>
 
-<!-- DefaultDocumentation ONLY in Release, for the net10.0 target -->
-<ItemGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">
+<!-- DefaultDocumentation ONLY in ReleaseDoc, for the net10.0 target -->
+<ItemGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
 	<PackageReference Include="DefaultDocumentation" Version="1.2.5">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		<!-- <PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>. -->
 	</PackageReference>
 </ItemGroup>
 
-<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">
+<PropertyGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
 	<DefaultDocumentationFolder>..\docs\api</DefaultDocumentationFolder>
-	<DefaultDocumentationGeneratedPages>Assembly, Namespaces , Types , Members</DefaultDocumentationGeneratedPages>
+	<DefaultDocumentationGeneratedPages>Assembly, Namespaces, Classes, Interfaces, Events, Enums, Structs, Delegates</DefaultDocumentationGeneratedPages>
 	<DefaultDocumentationGeneratedAccessModifiers>Public</DefaultDocumentationGeneratedAccessModifiers>
 	<DefaultDocumentationAssemblyPageName>PromptPlus</DefaultDocumentationAssemblyPageName>
 	<DocIconUrl>https://raw.githubusercontent.com/FRACerqueira/PromptPlus/main/icon.png</DocIconUrl>
@@ -65,40 +66,44 @@ The DefaultDocumentation configuration lives in the `src/PromptPlus.csproj` file
 ```
 
 > ℹ️ After generation, an MSBuild task (`PrependDocIconHeader`) adds the icon header
-> (`DocIconUrl` / `DocIconWidth`) to the top of every `.md` file generated in `docs/api`.
+> (`DocIconUrl` / `DocIconWidth`) to the top of every `.md` file generated in `docs/api`. Note that
+> the `PrivateAssets`/`IncludeAssets` of the `PackageReference` are commented out in the actual
+> project — left as a reference in case they ever need to be re-enabled, not as active configuration.
 
 ### Configuration Options
 
 | Property | Value | Description |
 |-------------|-------|-----------|
-| `Condition` | `Release` + `net10.0` | **Documentation is generated ONLY in Release builds of the net10.0 target** |
+| `Condition` | `ReleaseDoc` + `net10.0` | **Documentation is generated ONLY on builds of the `ReleaseDoc` configuration on the net10.0 target** (not on `Release`, which packs the NuGet without regenerating docs) |
 | `DefaultDocumentationFolder` | `../docs/api` | Output folder for the Markdown files |
-| `DefaultDocumentationGeneratedPages` | `Assembly, Namespaces, Types, Members` | Pages that are generated |
+| `DefaultDocumentationGeneratedPages` | `Assembly, Namespaces, Classes, Interfaces, Events, Enums, Structs, Delegates` | Pages that are generated |
 | `DefaultDocumentationGeneratedAccessModifiers` | `Public` | Documents public members only |
 | `DefaultDocumentationAssemblyPageName` | `PromptPlus` | Name of the assembly's main page (`PromptPlus.md`) |
 | `DocIconUrl` / `DocIconWidth` | icon.png / `120` | Icon header added to each generated `.md` file |
 
 ## 🔄 Regenerating the Documentation
 
-The documentation is regenerated automatically every time you build the project in **Release**
-for the **net10.0** target:
+The documentation is regenerated automatically every time you build the project in the
+**ReleaseDoc** configuration for the **net10.0** target:
 
 ### From Visual Studio
 1. Open the solution in Visual Studio
-2. Switch to the **Release** configuration
+2. Switch to the **ReleaseDoc** configuration
 3. Build → Build Solution (Ctrl+Shift+B)
 4. The Markdown files will be updated in `docs/api/`
 
-**Note**: In **Debug** builds (or targets other than net10.0), the documentation is **not**
-generated, to keep development fast.
+**Note**: On **Debug** or **Release** builds (or on targets other than net10.0), the documentation
+is **not** generated — `Release` is used only to pack the NuGet, without paying the cost of running
+DefaultDocumentation.
 
 ### From the Command Line
 ```bash
-# From the repository root - ONLY Release generates documentation (net10.0 target)
-dotnet build src/PromptPlus.csproj -c Release -f net10.0
+# From the repository root - ONLY ReleaseDoc generates documentation (net10.0 target)
+dotnet build src/PromptPlus.csproj -c ReleaseDoc -f net10.0
 
-# Debug build does NOT generate documentation
+# Debug or Release builds do NOT generate documentation
 dotnet build src/PromptPlus.csproj -c Debug
+dotnet build src/PromptPlus.csproj -c Release
 ```
 
 ### Checking the Generated Files
@@ -172,7 +177,9 @@ Remove `;CS1591` from `NoWarn` to see warnings about missing documentation.
 
 ## 🌐 External Links (Optional)
 
-The `docs/api/links.json` file lets you configure external links for .NET Framework types:
+`docs/api/links.json` **does not currently exist in this repo** — DefaultDocumentation supports it,
+but it hasn't been added yet. If you need it, create it at that path with this shape to configure
+external links for .NET Framework types:
 
 ```json
 {
@@ -236,6 +243,9 @@ If there are broken links in the documentation:
   - **Don't commit**: If you prefer to generate on demand (add `docs/api/*.md` to `.gitignore`)
 
 The choice depends on team preference. Committing lets you see documentation changes in PRs.
+This repo commits them. See
+[ADR0012V01R01 — Generated API docs are off-limits for manual edits](adr/ADR0012V01R01-GeneratedApiDocsOffLimits.md)
+for the related (but distinct) decision that these files must never be hand-edited, only regenerated.
 
 ## 🤝 Contributing
 

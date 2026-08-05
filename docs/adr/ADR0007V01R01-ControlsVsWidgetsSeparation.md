@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0006V01R01](ADR0006V01R01-NoGlobalStyleApi.md) • [ADR Index](README.md) • **Next:** [ADR0008V01R01 →](ADR0008V01R01-ConfirmKeyPressResultModel.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

@@ -523,8 +523,6 @@ PromptPlus.Controls.MultiSelect<string>("Cities").AddItems(cities)
     .Run();
 ```
 
-> Throws `ArgumentNullException` if `style` is `null`.
-
 ---
 
 ### `Options`

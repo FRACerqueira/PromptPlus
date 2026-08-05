@@ -86,6 +86,9 @@ PromptPlus.Controls.TableMultiSelect<Product>("Select products")
     .Run();
 ```
 
+> Throws `ArgumentNullException` if `header` or `selector` is `null`, `ArgumentException` if `header`
+> is empty/whitespace, and `ArgumentOutOfRangeException` if `width` is specified and not greater than zero.
+
 ---
 
 ## Adding rows
@@ -330,8 +333,10 @@ PromptPlus.Controls.TableMultiSelect<Product>("Products")
 ITableMultiSelectControl<T> HorizontalScroll(HorizontalScrollMode mode)
 ```
 
-Controls how columns scroll when they do not all fit on screen. Default `Full`. When every column fits,
-horizontal scrolling is inactive and the column keys (Tab / Shift+Tab) are ignored.
+Controls how columns scroll once they no longer all fit on screen. Default `Full`. `Tab` / `Shift+Tab`
+always move the focused column and wrap around at the first/last column, even when every column already
+fits and nothing needs to scroll — this setting only changes the viewport behavior once scrolling
+actually kicks in.
 
 | `HorizontalScrollMode` | Behavior |
 |---|---|
@@ -371,6 +376,8 @@ PromptPlus.Controls.TableMultiSelect<Product>("Products")
     .Run();
 ```
 
+> Throws `ArgumentNullException` if `values` is `null`.
+
 ---
 
 ### `Range`
@@ -390,6 +397,9 @@ PromptPlus.Controls.TableMultiSelect<Product>("Select 2 to 4 products")
     .Range(minvalue: 2, maxvalue: 4)
     .Run();
 ```
+
+> Throws `ArgumentOutOfRangeException` if `minvalue` is negative, or if `maxvalue` is specified and
+> less than `minvalue`.
 
 ---
 
@@ -516,6 +526,8 @@ PromptPlus.Controls.TableMultiSelect<Product>("Products")
     .UseDefaultHistory()
     .Run();
 ```
+
+> Throws `ArgumentNullException` if `filename` is `null`, `ArgumentException` if it is empty/whitespace.
 
 ---
 

@@ -108,12 +108,19 @@ PromptPlus.Controls.MaskInteger("Counter")
 |---|---|
 | Digit / letter (per token) | Fill the current editable position, then advance |
 | `←` / `→` | Move between positions (skipping literals in `EditSkipToInput`) |
+| `Tab` / `Shift+Tab` | Jump to the next / previous mask **delimiter** (date/time masks only) |
 | `Home` / `End` | Jump to the first / last position |
 | `Backspace` | Clear the previous editable position |
 | `Delete` | Clear the position at the cursor |
+| `Insert` | Toggle insert / overwrite mode |
 
-For the **date/time** control, the arrow keys move between the day / month / year / hour / minute /
-second fields, and digits fill the active field.
+For the **date/time** control, `←`/`→` move **one digit position at a time** within the current
+field (day/month/year/hour/minute/second) — they only cross into the next/previous field once the
+current one is exhausted. To jump directly between whole fields, use `Tab`/`Shift+Tab` instead.
+
+> If `PromptPlus.Console.EnabledEmacs` is `true`, `MaskEdit` also accepts the position/delete subset
+> of Emacs keys — `Ctrl+A/E/B/F/D/H/L` — but not word motion, word deletion, yank, transpose, or
+> case toggling. See [Keyboard Bindings](../../keyboard-bindings.md) for the full table.
 
 ### Actions
 

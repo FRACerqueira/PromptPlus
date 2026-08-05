@@ -44,7 +44,8 @@ PromptPlus.Controls.Timer("Starting in").Duration(3).Run();                     
 PromptPlus.Controls.Timer("Cooling down").Duration(TimeSpan.FromSeconds(10)).Run();
 ```
 
-A zero or negative duration throws `ArgumentOutOfRangeException`.
+A zero or negative duration throws `ArgumentOutOfRangeException` from `Duration(...)` itself. Never
+calling `Duration(...)` at all throws `InvalidOperationException` from `Run()` instead.
 
 ---
 
@@ -55,8 +56,9 @@ A zero or negative duration throws `ArgumentOutOfRangeException`.
 - **`Countdown`** (default) — the number starts at the duration and ticks toward `00:00:00`.
 - **`Elapsed`** — the number starts at zero and ticks up to the duration.
 
-The value in the [`ChangeDescription`](methods.md#changedescription) callback is always the
-**remaining** time. In `Elapsed` mode, derive the remainder if you need it:
+The value passed to the [`ChangeDescription`](methods.md#changedescription) callback follows
+`DisplayMode`, same as the on-screen number: **remaining** time in `Countdown` mode, **elapsed** time
+in `Elapsed` mode. In `Elapsed` mode, derive the remainder yourself if you need it:
 
 ```csharp
 var totalDuration = TimeSpan.FromSeconds(5);
@@ -157,7 +159,8 @@ PromptPlus.Controls.Timer("Please wait")
 - **Not a picker.** `Timer` waits and displays a clock; it does not collect a time value. To *enter* a
   time, use a MaskEdit date/time control.
 - **Duration is mandatory.** Forgetting it (or passing `0`) throws.
-- **Description receives remaining time** even in `Elapsed` mode — compute the counterpart yourself.
+- **Description follows `DisplayMode`** — it receives elapsed time in `Elapsed` mode, not remaining
+  time; compute the counterpart yourself if you need it.
 - **Async description refresh is awaited synchronously** — keep
   [`ChangeDescriptionAsync`](methods.md#changedescriptionasync) fast.
 - **A blank prompt is fine:** `PromptPlus.Controls.Timer().Duration(5)...` renders just the countdown.

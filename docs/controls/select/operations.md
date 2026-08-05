@@ -133,6 +133,9 @@ Disabled items cannot be focused for confirmation, so validation typically guard
 - Arrow keys still scroll, but items cannot be selected.
 - Combine with `Default` to highlight one entry.
 - Useful for showing a read-only snapshot inline with other prompts.
+- `ViewOnly(true)` **silently disables `AutoSelect` and any configured history** — even if you
+  called `EnableHistory`/`AutoSelect` earlier in the chain, turning on `ViewOnly` overrides both.
+  There's no warning; if the list looks like it stopped auto-loading history, this is why.
 
 ---
 
@@ -144,7 +147,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `Select<T>` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must choose |
-| `HideAfterFinish(true)` | Erases the list after confirm; only the answer remains |
+| `HideAfterFinish(true)` | Erases the list after confirm — the whole control is erased, not just the interactive part |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Prompt(...)` / `Description(...)` | Overrides the prompt / description text |
 

@@ -333,16 +333,11 @@ The [MaskEditStyles](MaskEditStyles.md 'PromptPlusLibrary\.MaskEditStyles') regi
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [PromptPlusLibrary\.IMaskEditDateTimeControl&lt;](IMaskEditDateTimeControl_T_.md 'PromptPlusLibrary\.IMaskEditDateTimeControl\<T\>')[T](IMaskEditDateTimeControl_T_.md#PromptPlusLibrary.IMaskEditDateTimeControl_T_.T 'PromptPlusLibrary\.IMaskEditDateTimeControl\<T\>\.T')[&gt;](IMaskEditDateTimeControl_T_.md 'PromptPlusLibrary\.IMaskEditDateTimeControl\<T\>')  
 The current [IMaskEditDateTimeControl&lt;T&gt;](IMaskEditDateTimeControl_T_.md 'PromptPlusLibrary\.IMaskEditDateTimeControl\<T\>') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](IMaskEditDateTimeControl_T_.md#PromptPlusLibrary.IMaskEditDateTimeControl_T_.Styles(PromptPlusLibrary.MaskEditStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IMaskEditDateTimeControl\<T\>\.Styles\(PromptPlusLibrary\.MaskEditStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.
 
 <a name='PromptPlusLibrary.IMaskEditDateTimeControl_T_.WeekTypeMode(PromptPlusLibrary.WeekType)'></a>
 

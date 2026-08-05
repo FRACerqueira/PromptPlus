@@ -22,7 +22,8 @@ Beyond the factory renames above, `TreeMultiSelect<T>` **renamed** its confirmat
 > The async overloads follow the same name: `TreeMultiSelect` uses `PredicateCheckedAsync`; `TreeSelect` uses
 > `PredicateSelectedAsync`.
 
-The type constraint is unchanged: `where T : class, new()`.
+`T` is unconstrained in both `TreeSelect<T>` and `TreeMultiSelect<T>` — there is no `where T : class,
+new()` (or any other) constraint on the factory methods.
 
 ---
 
@@ -172,10 +173,12 @@ PromptPlus.Controls.TreeMultiSelect<Category>("Categories:")
 |---|---|---|---|
 | Factory | `NodeTreeMultiSelect<T>()` | `TreeMultiSelect<T>()` | Renamed |
 | `AddRootNode` / `AddChildNode` | ✅ | ❌ | → `Root` + `AddLast`/`AddFirst` |
+| `TextSelector(Func<T,string>)` · `ExtraInfo(Func<T,string?>)` · `PageSize(byte)` · `ChangeDescription` · `Interaction` | ✅ | ✅ | Unchanged |
 | `DisableRecursiveCount(bool)` | ✅ | ❌ | Removed |
 | `HideCount(bool)` / `HideCountSelected(bool)` | ✅ | ❌ | Removed |
 | `PredicateDisabled(Func<T,bool>)` | ✅ | ❌ | Removed |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
+| `Styles(NodeTreeStyles, Style)` | ✅ | ❌ | → `Styles(TreeMultiSelectStyles, Style)` |
 | `Range(int, int?)` | ✅ | ✅ | Unchanged |
 | `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
 | `PathSeparator` · `Default` · `EnableHistory` · `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `CheckLeafOnly` · `ShowFullPath` · `ViewOnly` · `Filter` · `DefaultMatchBy` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |

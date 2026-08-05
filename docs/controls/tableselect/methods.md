@@ -333,8 +333,10 @@ PromptPlus.Controls.TableSelect<Product>("Product")
 ITableSelectControl<T> HorizontalScroll(HorizontalScrollMode mode)
 ```
 
-Controls how columns scroll when they do not all fit on screen. Default `Full`. When every column fits
-within the console width, horizontal scrolling is inactive and the column keys (Tab / Shift+Tab) are ignored.
+Controls how columns scroll once they no longer all fit on screen. Default `Full`. `Tab` / `Shift+Tab`
+always move the focused column and wrap around at the first/last column, even when every column already
+fits and nothing needs to scroll — this setting only changes the viewport behavior once scrolling
+actually kicks in.
 
 | `HorizontalScrollMode` | Behavior |
 |---|---|

@@ -71,8 +71,12 @@ if (!result.IsAborted && result.Content.HasValue)
 - The call returns a [`ResultPrompt<ConsoleKeyInfo?>`](../../architecture.md#resultpromptt): read
   `.Content` for the key that was pressed and `.IsAborted` to detect Esc.
 
-> 💡 `.Content` is a **nullable** `ConsoleKeyInfo?`. Guard with `.Content.HasValue` before reading
-> `.Content.Value.Key` or `.Content.Value.KeyChar`. On abort, `.Content` has no value.
+> ⚠️ `.Content` is a **nullable** `ConsoleKeyInfo?`, but pressing Esc to abort does **not** leave it
+> null — `.Content` gets the real Escape key's `ConsoleKeyInfo` (so `.Content.HasValue` is still
+> `true`, and `.Content.Value.Key == ConsoleKey.Escape`). `.Content` is only genuinely `null` when
+> the wait is ended by cancelling the `CancellationToken` passed to `Run(...)`, a different case
+> from a user pressing Esc. Always check `.IsAborted` first — don't rely on `.Content.HasValue`
+> alone to detect an abort.
 
 ---
 
@@ -120,7 +124,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 
 | Member | Meaning |
 |---|---|
-| `.Content` | The pressed key as a nullable `ConsoleKeyInfo?` (no value when aborted) |
+| `.Content` | The pressed key as a nullable `ConsoleKeyInfo?`. On Esc-abort this is still the real Escape `ConsoleKeyInfo`, not null — only a `CancellationToken` cancel yields `null` |
 | `.IsAborted` | `true` when the user pressed Esc / the abort key |
 
 ```csharp

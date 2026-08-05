@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0001V01R01](ADR0001V01R01-SplitConsolePlusAndPromptPlus.md) • [ADR Index](README.md) • **Next:** [ADR0003V01R01 →](ADR0003V01R01-AutoInitializationOnFirstAccess.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

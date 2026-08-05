@@ -46,10 +46,6 @@ namespace PromptPlusLibrary
         /// </summary>
         Pagination,
         /// <summary>
-        /// TaggedInfo Region
-        /// </summary>
-        TaggedInfo,
-        /// <summary>
         /// Tooltips Region
         /// </summary>
         Tooltips

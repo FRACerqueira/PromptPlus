@@ -32,7 +32,6 @@ control instance.
 | `Description` | The description line under the prompt |
 | `Selected` | The focused / selected entry |
 | `UnSelected` | The non-focused entries |
-| `Disabled` | Entries that cannot be selected |
 | `Error` | The error line |
 | `Pagination` | The page indicator |
 | `Tooltips` | The keyboard-hint line |

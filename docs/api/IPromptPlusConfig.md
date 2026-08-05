@@ -238,19 +238,6 @@ PromptPlusLibrary.HotKey HotKeyInputPasswordView { get; set; }
 #### Property Value
 [HotKey](HotKey.md 'PromptPlusLibrary\.HotKey')
 
-<a name='PromptPlusLibrary.IPromptPlusConfig.HotKeySelectWildcard'></a>
-
-## IPromptPlusConfig\.HotKeySelectWildcard Property
-
-Gets or sets the hotkey used to select items matching a wildcard pattern \(default: F4\)\.
-
-```csharp
-PromptPlusLibrary.HotKey HotKeySelectWildcard { get; set; }
-```
-
-#### Property Value
-[HotKey](HotKey.md 'PromptPlusLibrary\.HotKey')
-
 <a name='PromptPlusLibrary.IPromptPlusConfig.HotKeyToggleAll'></a>
 
 ## IPromptPlusConfig\.HotKeyToggleAll Property

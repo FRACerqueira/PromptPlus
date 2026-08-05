@@ -1336,7 +1336,7 @@ namespace PromptPlusLibrary.Controls.TreeMultiSelect
             screenBuffer.Write(visibleLeft, found);
             screenBuffer.SavePromptCursor();
             screenBuffer.Write(visibleRight, found);
-            screenBuffer.WriteLine($" ({PromptPlusResources.Filter})", _optStyles[TreeMultiSelectStyles.ChildsCount]);
+            screenBuffer.WriteLine($" ({PromptPlusResources.Filter})", _optStyles[TreeMultiSelectStyles.TaggedInfo]);
         }
 
         private void WriteDescription(BufferScreen screenBuffer)

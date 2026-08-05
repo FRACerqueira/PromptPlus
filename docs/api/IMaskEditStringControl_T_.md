@@ -288,13 +288,8 @@ The [MaskEditStyles](MaskEditStyles.md 'PromptPlusLibrary\.MaskEditStyles') regi
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [PromptPlusLibrary\.IMaskEditStringControl&lt;](IMaskEditStringControl_T_.md 'PromptPlusLibrary\.IMaskEditStringControl\<T\>')[T](IMaskEditStringControl_T_.md#PromptPlusLibrary.IMaskEditStringControl_T_.T 'PromptPlusLibrary\.IMaskEditStringControl\<T\>\.T')[&gt;](IMaskEditStringControl_T_.md 'PromptPlusLibrary\.IMaskEditStringControl\<T\>')  
 The current [IMaskEditStringControl&lt;T&gt;](IMaskEditStringControl_T_.md 'PromptPlusLibrary\.IMaskEditStringControl\<T\>') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [style](IMaskEditStringControl_T_.md#PromptPlusLibrary.IMaskEditStringControl_T_.Styles(PromptPlusLibrary.MaskEditStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IMaskEditStringControl\<T\>\.Styles\(PromptPlusLibrary\.MaskEditStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

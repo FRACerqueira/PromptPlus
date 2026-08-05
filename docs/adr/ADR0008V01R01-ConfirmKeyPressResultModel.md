@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0007V01R01](ADR0007V01R01-ControlsVsWidgetsSeparation.md) • [ADR Index](README.md) • **Next:** [ADR0009V01R01 →](ADR0009V01R01-AsciiFallbackForSymbols.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

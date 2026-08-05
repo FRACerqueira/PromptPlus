@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0013V01R01](ADR0013V01R01-MigrationGuideRules.md) • [ADR Index](README.md) • **Next:** [ADR0015V01R01 →](ADR0015V01R01-TestFrameworkXUnitVerify.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

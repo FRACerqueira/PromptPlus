@@ -113,9 +113,8 @@ namespace PromptPlusLibrary
         /// Overrides the visual style applied to a specific region of the integer input control.
         /// </summary>
         /// <param name="styleType">The <see cref="MaskEditStyles"/> region whose style is overridden.</param>
-        /// <param name="style">The <see cref="Style"/> to apply. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> to apply.</param>
         /// <returns>The current <see cref="IMaskEditNumberControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
         IMaskEditNumberControl<T> Styles(MaskEditStyles styleType, Style style);
 
         /// <summary>

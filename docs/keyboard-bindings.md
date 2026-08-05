@@ -43,36 +43,71 @@ PromptPlus.Console.EnabledEmacs = true;
 | Delete character under cursor | `Ctrl+D` | `Delete` |
 | Delete to end of line | `Ctrl+K` | — |
 | Delete to start of line | `Ctrl+U` | — |
-| Delete word left | `Ctrl+W` / `Alt+Backspace` | `Ctrl+Backspace` |
-| Delete word right | `Alt+D` | `Ctrl+Delete` |
-| Move one word left | `Alt+B` | `Ctrl+←` |
-| Move one word right | `Alt+F` | `Ctrl+→` |
-| Yank (paste kill buffer) | `Ctrl+Y` | — |
+| Delete word left | `Ctrl+W` | — |
+| Delete word right | `Alt+D` | — |
+| Move one word left | `Alt+B` | — |
+| Move one word right | `Alt+F` | — |
 | Transpose characters | `Ctrl+T` | — |
+| Toggle case, move to end of word | `Ctrl+C` | — |
+| Uppercase to end of word | `Alt+U` | — |
+| Lowercase to end of word | `Alt+L` | — |
+
+> ⚠️ **`Ctrl+Backspace`, `Ctrl+Delete`, `Ctrl+←`, and `Ctrl+→` are NOT standard equivalents for
+> word motion/deletion** — no such bindings exist for that purpose. Word motion/deletion is
+> Emacs-only (the keys in the table above), and only when `PromptPlus.Console.EnabledEmacs` is
+> `true`. Separately, **`Ctrl+Delete` performs a real, unrelated, destructive action**: on `Input`/
+> `Secret` controls, once you've opened the history list with `F3`, `Ctrl+Delete` **clears the
+> entire on-disk history file** — it has nothing to do with editing the current line.
+
+> ⚠️ This Emacs subset applies to `Input` and `Secret`. **`MaskEdit`'s Emacs support only
+> implements the position/delete-char rows** (`Ctrl+A/E/B/F/D/H`) plus `Ctrl+L` — word motion,
+> word deletion, yank, transpose, and case toggling are **not** available on `MaskEdit`.
 
 ---
 
 ## Standard Key Reference
 
-### Text Input (`Input`, `Secret`, `MaskEdit` family)
+### Text Input — `Input`, `Secret`
 
 | Key | Action |
 |---|---|
 | `←` / `→` | Move cursor one character |
-| `Ctrl+←` / `Ctrl+→` | Move cursor one word |
 | `Home` / `End` | Jump to start / end of line |
 | `Backspace` | Delete character before cursor |
 | `Delete` | Delete character at cursor |
-| `Ctrl+Backspace` | Delete word left |
-| `Ctrl+Delete` | Delete word right |
-| `Tab` / `Shift+Tab` | Apply / cycle autocomplete suggestions (when a suggestion handler is set) |
+| `Insert` | Toggle insert / overwrite mode |
+| `Tab` | Accept the current suggestion and exit suggestion mode (when a suggestion handler is set) |
+| `Shift+Tab` | Cancel suggestion mode without accepting (only when `autocomplete: false`) |
+| `↑` / `↓` | Cycle suggestions, or navigate the open history list |
 | `F3` | Open history (when history is enabled) |
-| `↑` / `↓` | Navigate the open history / suggestion list |
+| `Ctrl+Delete` | **While the history list is open (`F3`)**: clears the entire on-disk history file |
 | `F2` | Reveal / hide the typed text (`Secret` only) |
 | `Enter` | Confirm |
 | `Esc` | Abort (if `EnabledAbortKey = true`) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Toggle tooltip visibility |
+
+Word-level motion/deletion on `Input`/`Secret` is **Emacs-only** (`Alt+F`/`Alt+B` to move, `Ctrl+W`/
+`Alt+D` to delete) — see [Emacs Shortcuts](#emacs-shortcuts) above; there is no non-Emacs equivalent.
+
+### Text Input — `MaskEdit` (string / number / date-time / currency)
+
+`MaskEdit` does **not** share Input/Secret's autocomplete or history behavior — it has neither.
+
+| Key | Action |
+|---|---|
+| `←` / `→` | Move one editable position within the current field |
+| `Tab` / `Shift+Tab` | Jump to the next / previous mask delimiter (date/time masks only) |
+| `Backspace` / `Delete` | Delete the digit/character at the cursor |
+| `Insert` | Toggle insert / overwrite mode |
+| `Enter` | Confirm |
+| `Esc` | Abort (if `EnabledAbortKey = true`) |
+| `F1` | Cycle tooltip content |
+| `Ctrl+F1` | Toggle tooltip visibility |
+
+If `PromptPlus.Console.EnabledEmacs` is `true`, `MaskEdit` additionally accepts the position/delete
+subset of Emacs keys — `Ctrl+A/E/B/F/D/H/L` — but none of the word-motion, word-deletion, yank,
+transpose, or case-toggling shortcuts.
 
 ### List & Selection (`Select<T>`, `MultiSelect<T>`)
 
@@ -88,7 +123,26 @@ PromptPlus.Console.EnabledEmacs = true;
 | Any printable char | Type to filter (when `Filter` is enabled) |
 | `Esc` | Abort |
 
-> When history is enabled on a `Select<T>`, press **F3** to open its history list.
+> `Select<T>`/`MultiSelect<T>` don't have a real history-view like `Input`/`Secret` do — enabling
+> history on them just auto-loads the last confirmed value as the `Default` on the next run. There
+> is no history list to open, and no `F3` history hotkey for these two controls.
+
+### Table Selection (`TableSelect<T>`, `TableMultiSelect<T>`)
+
+| Key | Action |
+|---|---|
+| `↑` / `↓` | Move focus up / down (rows) |
+| `Page Up` / `Page Down` | Jump one page |
+| `Home` / `End` | First / last row |
+| `Tab` / `Shift+Tab` | Move the focused **column** (only when the table scrolls horizontally) |
+| `Space` | Toggle the checkbox on the focused row (`TableMultiSelect` only) |
+| `F2` | Toggle all rows on / off (`TableMultiSelect` only) |
+| `F3` | Show only the checked rows (`TableMultiSelect` only) |
+| `Backspace` | Edit the filter text |
+| `Enter` | Confirm |
+| `Esc` | Abort |
+| `F1` | Cycle tooltip content |
+| `Ctrl+F1` | Show / hide the tooltip |
 
 ### Calendar
 
@@ -96,36 +150,51 @@ PromptPlus.Console.EnabledEmacs = true;
 |---|---|
 | `←` / `→` | Previous / next day |
 | `↑` / `↓` | Previous / next week |
-| `Page Up` / `Page Down` | Previous / next month |
-| `Ctrl+Page Up` / `Ctrl+Page Down` | Previous / next year |
-| `Home` | Go to today |
-| `F2` | Toggle notes display |
+| `Tab` / `Shift+Tab` | Previous / next month |
+| `Page Up` / `Page Down` | Previous / next year |
+| `Home` | Go to today (only if today is within the configured `Range`) |
+| `F2` | Toggle notes display (opens a separate keymap — see below) |
 | `Enter` | Confirm date |
 | `Esc` | Abort |
+
+While the notes panel is open (`F2`): `↑`/`↓` move between notes, `Page Up`/`Page Down` move
+between pages, `Ctrl+Home`/`Ctrl+End` jump to the first/last note, and typing a letter jumps to a
+matching note.
 
 ### File & Tree Browser (`File`, `MultiFile`, `TreeSelect<T>`, `TreeMultiSelect<T>`)
 
 | Key | Action |
 |---|---|
 | `↑` / `↓` | Move focus |
-| `→` / `Enter` on folder | Expand / enter folder |
-| `←` | Collapse / go up |
+| `+` / `-` | Expand / collapse the focused folder (plain `←`/`→` do **not** expand/collapse) |
+| `Tab` / `Shift+Tab` | Expand + descend into the first child / collapse the parent + move to it |
+| `Enter` | Confirm the focused entry |
 | `Space` | Toggle selection (Multi variants) |
 | `F2` | Select all / deselect all (Multi variants) |
-| `F4` | Select by wildcard pattern (Multi variants) |
+| `F3` | Filter to only checked items (`MultiFile` only — `TreeMultiSelect` doesn't have this) |
 | `Shift+F3` | Toggle full path display |
 | `Any printable char` | Filter |
 | `Esc` | Abort |
 
-### Slider & Switch
+### Slider
 
 | Key | Action |
 |---|---|
-| `←` / `↓` | Decrease value |
-| `→` / `↑` | Increase value |
-| `Home` | Minimum value |
-| `End` | Maximum value |
-| `Space` | Toggle (Switch only) |
+| `←` / `↓` | Decrease value by one step |
+| `→` / `↑` | Increase value by one step |
+| `Tab` / `Shift+Tab` | Decrease / increase by the large step |
+| `Enter` | Confirm |
+| `Esc` | Abort |
+
+There is no `Home`/`End`-to-min/max binding — no such key handling exists for Slider.
+
+### Switch
+
+| Key | Action |
+|---|---|
+| `←` | Force the value to **off** (not a decrease — always sets off, regardless of the current state) |
+| `→` | Force the value to **on** (always sets on, regardless of the current state) |
+| `Space` | Toggle the current value |
 | `Enter` | Confirm |
 | `Esc` | Abort |
 

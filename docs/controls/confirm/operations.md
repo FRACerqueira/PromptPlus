@@ -25,9 +25,9 @@ reference on [KeyPress → Operations](../keypress/operations.md).
 ## Anatomy of the control
 
 ```
-Apply changes?                           ← prompt
+Apply changes? (Y/N)                     ← prompt — Confirm always appends " (Yes/No key)" itself
 Press the culture-specific Yes/No key    ← description (optional)
-Y  N   Esc: cancel                       ← tooltip: the pre-registered Yes/No keys + hints
+Esc:Abort.Ctrl+F1:Show/hide tooltip      ← tooltip — does NOT list the valid Y/N keys, only hints
 ```
 
 Every region can be recolored — see [Styles](styles.md).
@@ -45,6 +45,9 @@ valid keys**. Consequences:
   `PromptPlus.Config.DefaultCulture` to, say, `pt-BR` switches them to that culture's letters.
 - [`PromptPlus.Config.YesChar`](../../global-behaviors.md) / `NoChar` expose the active pair, which is
   how you interpret the result (see [Index](index.md#the-yesno-pattern)).
+- `Confirm(...)` **automatically appends** `" ({yesKey}/{noKey})"` to whatever prompt text you pass —
+  e.g. `Confirm("Apply changes?")` renders as `Apply changes? (Y/N)`. You don't need to (and
+  shouldn't) add this hint yourself.
 
 You can still register **extra** keys with [`AddValidKey`](../keypress/methods.md#addvalidkey); they
 are accepted in addition to Yes/No.

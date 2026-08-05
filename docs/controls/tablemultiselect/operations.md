@@ -52,8 +52,9 @@ Every region can be recolored — see [Styles](styles.md).
 |---|---|
 | `↑` / `↓` | Move focus up / down (rows) |
 | `Page Up` / `Page Down` | Jump one page |
+| `Ctrl+Home` / `Ctrl+End` | First / last row |
 | `Space` | Toggle the checkbox on the focused row |
-| `Tab` / `Shift+Tab` | Move the focused **column** (only when the table scrolls horizontally) |
+| `Tab` / `Shift+Tab` | Move the focused **column**; wraps around at the first/last column |
 | `Enter` | Confirm the checked set (enforces [`Range`](methods.md#range)) |
 | `Esc` | Abort → `IsAborted == true` |
 | Any printable character | Type to filter (when [`Filter`](methods.md#filter) is not `Disabled`) |
@@ -115,13 +116,13 @@ Disabled rows are skipped and cannot be toggled.
 
 ## Horizontal scrolling
 
-When the columns do not all fit within the console width, the table scrolls horizontally and
-`Tab` / `Shift+Tab` move the focused column. [`HorizontalScroll`](methods.md#horizontalscroll) chooses how:
+`Tab` / `Shift+Tab` always move the focused column, wrapping around at the first/last column — this
+works even when every column already fits on screen and nothing needs to scroll.
+[`HorizontalScroll`](methods.md#horizontalscroll) only changes what happens **once scrolling is
+actually needed** (the columns don't all fit within the console width):
 
 - **`Full`** (default) — shifts the visible viewport as a full column window.
 - **`Column`** — focuses one column at a time.
-
-When all columns fit, scrolling is inactive and the column keys are ignored.
 
 ---
 
@@ -179,7 +180,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `TableMultiSelect<T>` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must confirm |
-| `HideAfterFinish(true)` | Erases the table after confirm; only the answer remains |
+| `HideAfterFinish(true)` | Erases the table after confirm — the whole control is erased, not just the interactive part |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Prompt(...)` / `Description(...)` | Overrides the prompt / description text |
 

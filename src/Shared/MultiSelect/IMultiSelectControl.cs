@@ -48,9 +48,8 @@ namespace PromptPlusLibrary
         /// Overrides styles for the MultiSelect control.
         /// </summary>
         /// <param name="styleType">The <see cref="MultiSelectStyles"/> to apply.</param>
-        /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
+        /// <param name="style">The <see cref="Style"/> to use.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
         IMultiSelectControl<T> Styles(MultiSelectStyles styleType, Style style);
 
         /// <summary>

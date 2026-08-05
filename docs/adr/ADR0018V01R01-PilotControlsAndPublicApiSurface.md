@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0017V01R01](ADR0017V01R01-AnsiStyleModelColorOnly.md) • [ADR Index](README.md) • **Next:** [ADR0019V01R01 →](ADR0019V01R01-ConditionalConsolePlusReference.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

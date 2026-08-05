@@ -117,7 +117,12 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         /// <inheritdoc/>
         public IProgressBarControl ChangeGradient(params Color[] colors)
         {
-            _changeGradient = colors ?? throw new ArgumentNullException(nameof(colors), "The value cannot be null.");
+            ArgumentNullException.ThrowIfNull(colors);
+            if (colors.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(colors), "The value cannot be empty.");
+            }
+            _changeGradient = colors;
             _changeColor = null;
             return this;
         }
@@ -145,9 +150,9 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         /// <inheritdoc/>
         public IProgressBarControl Range(double minvalue, double maxvalue)
         {
-            if (minvalue > maxvalue)
+            if (minvalue >= maxvalue)
             {
-                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) must be less than Maxvalue({maxvalue})");
             }
             _minValue = minvalue;
             _maxValue = maxvalue;

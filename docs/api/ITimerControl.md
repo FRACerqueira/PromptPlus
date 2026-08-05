@@ -302,13 +302,8 @@ The [TimerStyles](TimerStyles.md 'PromptPlusLibrary\.TimerStyles') region whose 
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [ITimerControl](ITimerControl.md 'PromptPlusLibrary\.ITimerControl')  
 The same [ITimerControl](ITimerControl.md 'PromptPlusLibrary\.ITimerControl') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](ITimerControl.md#PromptPlusLibrary.ITimerControl.Styles(PromptPlusLibrary.TimerStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.ITimerControl\.Styles\(PromptPlusLibrary\.TimerStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

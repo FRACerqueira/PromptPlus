@@ -639,6 +639,31 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void UseDefaultHistory_overrides_values_supplied_by_Default_when_history_is_enabled()
+        {
+            // Regression: UseDefaultHistory() used to reset the cursor-position default to Optional.Empty()
+            // but InitControl unconditionally re-populated it (and the checked set) from Default()'s
+            // _defaultValues right afterward, silently clobbering the override. Seed history with A/B,
+            // then combine an explicit (disabled-history) Default("C") with EnableHistory+UseDefaultHistory
+            // and confirm history wins, matching the documented "overrides any values supplied by Default" contract.
+            var vt = MakeTerminal();
+            var control = MakeMultiSelect(vt).EnableHistory(HistoryFile);
+            _ = vt.Keys.Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Enter);
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            _ = control.Run(cts.Token);
+
+            var vt2 = MakeTerminal();
+            var control2 = new PromptPlusControls(vt2, new PromptConfig()).MultiSelect<string>("Choose").AddItems(["A", "B", "C"])
+                .Default(["C"], useDefaultHistory: false)
+                .EnableHistory(HistoryFile).UseDefaultHistory();
+            _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
+            using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            var result2 = control2.Run(cts2.Token);
+
+            _ = result2.Content.Should().BeEquivalentTo(["A", "B"]);
+        }
+
+        [Fact]
         public void AddSeparator_line_spans_the_display_width_of_a_wide_cjk_item_not_its_character_count()
         {
             // Regression: _lengthSeparationline used to be computed from item.Text.Length (character

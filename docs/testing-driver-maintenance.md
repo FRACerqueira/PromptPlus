@@ -19,7 +19,10 @@ therefore keeps its **own physical copy** of the driver, committed to its own gi
 Decided 2026-07-23, after weighing three options (shared NuGet test-kit package, independent
 from-scratch drivers, duplicated source): duplicated source wins for now because the driver is
 stable and changes rarely, and it avoids adding a release/versioning cycle for something this small.
-Revisit if driver churn increases — see "Rejected alternatives" below.
+Revisit if driver churn increases — see "Rejected alternatives" below. This decision is recorded as
+[ADR0026V01R01](adr/ADR0026V01R01-TestDriverSharingMechanism--0014.md), which supersedes an earlier
+version ([ADR0014V01R01](adr/ADR0014V01R01-TestDriverSharingMechanism.md)) that assumed a single
+repository and a linked-source mechanism.
 
 ## Where the driver lives
 
@@ -78,9 +81,12 @@ Recorded so nobody re-proposes these without re-deriving the same tradeoff:
 
 - [ ] Change applied to both `ConsolePlus/tests/_driver-src` and `PromptPlus/tests/_driver-src`
 - [ ] Both test suites pass locally
-- [ ] Diff between the two `_driver-src` folders is empty
-- [ ] If the change reflects a ConsolePlus API change, confirm PromptPlus's reference to ConsolePlus
-      (`PromptPlus.csproj`, `ProjectReference` in Debug vs `PackageReference` in Release) resolves a
+- [ ] Diff between the two `_driver-src` folders is empty **after normalizing line endings** (e.g.
+      `git diff --no-index -w`, or `diff -q -B`) — PromptPlus's copies are CRLF and ConsolePlus's are
+      LF, so a byte-for-byte diff always reports every file as different even when the content is
+      identical; that's a tooling false positive, not real drift.
+- [ ] If the change reflects a ConsolePlus API change, confirm `PromptPlus.csproj`'s `PackageReference`
+      to `ConsolePlus.net` (see [ConsolePlus dependency](consoleplus-dependency.md)) is pinned to a
       version that actually has the new API
 
 ---

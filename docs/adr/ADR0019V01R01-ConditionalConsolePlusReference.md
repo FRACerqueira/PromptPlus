@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0018V01R01](ADR0018V01R01-PilotControlsAndPublicApiSurface.md) • [ADR Index](README.md) • **Next:** [ADR0020V01R01 →](ADR0020V01R01-DisplayWidthOverCharCountForLayout.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

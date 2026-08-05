@@ -340,6 +340,9 @@ Displays the list, runs the tasks, and blocks until they all finish or the run i
 [`ResultPrompt<StateMultiTasks>`](../../architecture.md#resultpromptt) — see
 [Index → Return value](index.md#return-value).
 
+> Throws `InvalidOperationException` if called without adding at least one task via
+> `AddTask`/`AddTaskAsync` first.
+
 ```csharp
 using (var sw = new CancellationTokenSource(TimeSpan.FromSeconds(2)))
 {

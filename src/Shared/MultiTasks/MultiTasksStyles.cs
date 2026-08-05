@@ -56,10 +56,6 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Task completed-with-failure state Region
         /// </summary>
-        FailedTask,
-        /// <summary>
-        /// Error Region
-        /// </summary>
-        Error
+        FailedTask
     }
 }

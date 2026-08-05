@@ -39,7 +39,6 @@ appear because `Secret` has no autocomplete or history, but the enum values are 
 | `UnSelected` | Non-highlighted list entries (not used by `Secret`) |
 | `Error` | The validation error line |
 | `Pagination` | The page indicator during list navigation (not used by `Secret`) |
-| `TaggedInfo` | Extra-info text (affixed with the prefix/suffix from config) |
 | `Tooltips` | The keyboard-hint line |
 
 ---

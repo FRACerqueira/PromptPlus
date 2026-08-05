@@ -86,7 +86,6 @@ namespace KeyPressControlSamples
                 .Styles(KeyPressStyles.Prompt, Color.Yellow)
                 .Styles(KeyPressStyles.Description, Color.Cyan)
                 .Styles(KeyPressStyles.Answer, Color.Green)
-                .Styles(KeyPressStyles.TaggedInfo, Color.Blue)
                 .Styles(KeyPressStyles.Tooltips, Color.Magenta)
                 .Styles(KeyPressStyles.Error, Color.Red)
                 .Run();

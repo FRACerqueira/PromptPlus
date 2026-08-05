@@ -149,7 +149,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `Secret` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must confirm |
-| `HideAfterFinish(true)` | Erases the field after confirm; only the answer line remains |
+| `HideAfterFinish(true)` | Erases the field after confirm — the whole control is erased, not just the interactive part |
 | `HideOnAbort(true)` | Erases the field after Esc |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Prompt(...)` / `Description(...)` | Overrides the prompt / description text |
@@ -177,7 +177,9 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 - **Single-line rendering.** The masked value is displayed on one line. If it is wider than the
   terminal, a sliding window is shown, but `.Content` always holds the full untruncated text.
 - **Newlines** are not accepted (Enter confirms). Secrets are single-line values.
-- **Aborted results** carry `.Content == ""`. Always branch on `IsAborted` before using the value.
+- **Aborted results do NOT reliably carry `.Content == ""`.** `.Content` holds whatever partial text
+  the user had typed before pressing Esc — treat it as sensitive regardless of `IsAborted`, and
+  always branch on `IsAborted` before deciding whether to use the value at all.
 - **Async callbacks block the UI thread** — see the warning under
   [`PredicateValidAsync`](methods.md#predicatevalidasync).
 

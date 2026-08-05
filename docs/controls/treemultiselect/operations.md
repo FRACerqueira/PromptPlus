@@ -83,8 +83,10 @@ tree.AddLast(sales);
 | Key | Action |
 |---|---|
 | `↑` / `↓` | Move focus up / down |
-| `→` / `+` | Expand the focused container |
-| `←` / `-` | Collapse the focused container |
+| `+` (incl. Numpad `+`) | Expand the focused container |
+| `-` (incl. Numpad `-`) | Collapse the focused container |
+| `Tab` | Expand and drill into the focused container's children; on a leaf, moves to the next item |
+| `Shift+Tab` | Climb back out to (and collapse) the parent when focused on its first child; otherwise moves to the previous item |
 | `Space` | Check / uncheck the focused node (cascades per [`CascadeCheck`](methods.md#cascadecheck)) |
 | `Ctrl+Space` | Recursive check of a container + descendants (when [`RecursiveMarkWithCtrlSpace`](methods.md#recursivemarkwithctrlspace) is on) |
 | `F2` | Toggle-all (check / uncheck every node) |
@@ -113,6 +115,10 @@ The check key (**Space**) toggles the focused node. What happens next depends on
 
 Containers show a **tri-state** checkbox: unchecked when no descendant is checked, checked when all
 are, and indeterminate (`[~]`) when only some are. `F2` toggles every node at once.
+
+> ⚠️ The arrow keys do **not** expand or collapse — only `+`/`-` (and their Numpad equivalents) do.
+> `←`/`→` are reserved for scrolling the answer line (see [Keyboard](#keyboard)). `Tab`/`Shift+Tab`
+> are a separate drill-in/climb-out shortcut that also expands/collapses as a side effect.
 
 ---
 
@@ -194,7 +200,7 @@ When both pass, the control closes and returns the checked values as `T[]`.
 
 [`ViewOnly()`](methods.md#viewonly) renders the tree for display only:
 
-- Arrow keys navigate and containers still expand/collapse, but Space is disabled — nothing can be
+- Navigation and expand/collapse (`+`/`-`) still work, but Space is disabled — nothing can be
   checked or unchecked.
 - Enter returns the pre-checked [`Default`](methods.md#default) values.
 - Useful for showing a read-only snapshot of a checked hierarchy inline with other prompts.
@@ -209,7 +215,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `TreeMultiSelect<T>` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must confirm |
-| `HideAfterFinish(true)` | Erases the tree after confirm; only the answer remains |
+| `HideAfterFinish(true)` | Erases the tree after confirm — the whole control is erased, not just the interactive part |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Prompt(...)` / `Description(...)` | Overrides the prompt / description text |
 

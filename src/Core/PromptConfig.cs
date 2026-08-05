@@ -294,9 +294,6 @@ namespace PromptPlusLibrary.Core
         public HotKey HotKeyToggleFullPath { get; set; } = HotKey.DefaultToggleFullPath;
 
         /// <inheritdoc/>
-        public HotKey HotKeySelectWildcard { get; set; } = HotKey.DefaultToggleWildcard;
-
-        /// <inheritdoc/>
         public HotKey HotKeyInputPasswordView { get; set; } = HotKey.DefaultInputPasswordView;
 
         /// <inheritdoc/>

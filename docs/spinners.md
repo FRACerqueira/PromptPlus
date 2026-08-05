@@ -44,7 +44,7 @@ var result = PromptPlus.Controls
     .Run();
 ```
 
-The same call works on ProgressBar, MultiTasks, and Time. If you never call `.Spinner(...)`, the
+The same call works on ProgressBar, MultiTasks, and Timer. If you never call `.Spinner(...)`, the
 control simply doesn't show one.
 
 ---

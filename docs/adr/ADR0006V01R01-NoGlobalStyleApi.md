@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0005V01R01](ADR0005V01R01-TwoConfigurationLayers.md) • [ADR Index](README.md) • **Next:** [ADR0007V01R01 →](ADR0007V01R01-ControlsVsWidgetsSeparation.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

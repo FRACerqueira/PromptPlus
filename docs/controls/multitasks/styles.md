@@ -40,7 +40,6 @@ list reads at a glance.
 | `RunningTask` | A task row currently running |
 | `SuccessTask` | A task row that finished successfully |
 | `FailedTask` | A task row that finished with a failure |
-| `Error` | The error line |
 
 ---
 

@@ -433,8 +433,7 @@ namespace PromptPlusLibrary.Controls.Switch
 
             string serializedValue = JsonSerializer.Serialize(_currentValue);
             IList<ItemHistory> hist = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
-            hist.Clear();
-            FileHistory.AddHistory(serializedValue, _historyOptions.ExpirationTimeValue, hist);
+            hist = FileHistory.AddHistory(serializedValue, _historyOptions.ExpirationTimeValue, hist);
             FileHistory.SaveHistory(_historyOptions.FileNameValue, hist, _historyOptions.MaxItemsValue);
             _itemHistories = hist;
         }

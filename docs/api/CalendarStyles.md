@@ -61,50 +61,44 @@ Error Region
 
 Pagination Region
 
-<a name='PromptPlusLibrary.CalendarStyles.TaggedInfo'></a>
-
-`TaggedInfo` 8
-
-Tagged Info Region
-
 <a name='PromptPlusLibrary.CalendarStyles.Tooltips'></a>
 
-`Tooltips` 9
+`Tooltips` 8
 
 Tooltips Region
 
 <a name='PromptPlusLibrary.CalendarStyles.Lines'></a>
 
-`Lines` 10
+`Lines` 9
 
 Lines Region
 
 <a name='PromptPlusLibrary.CalendarStyles.CalendarHighlight'></a>
 
-`CalendarHighlight` 11
+`CalendarHighlight` 10
 
 Calendar Highlight content
 
 <a name='PromptPlusLibrary.CalendarStyles.CalendarDay'></a>
 
-`CalendarDay` 12
+`CalendarDay` 11
 
 Calendar Day content
 
 <a name='PromptPlusLibrary.CalendarStyles.CalendarMonth'></a>
 
-`CalendarMonth` 13
+`CalendarMonth` 12
 
 Calendar Month content
 
 <a name='PromptPlusLibrary.CalendarStyles.CalendarYear'></a>
 
-`CalendarYear` 14
+`CalendarYear` 13
 
 Calendar Year content
 
 <a name='PromptPlusLibrary.CalendarStyles.CalendarWeekDay'></a>
 
-`CalendarWeekDay` 15
+`CalendarWeekDay` 14
 
 Calendar Week Day content

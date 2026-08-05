@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0010V01R01](ADR0010V01R01-PredicateSemantics.md) • [ADR Index](README.md) • **Next:** [ADR0012V01R01 →](ADR0012V01R01-GeneratedApiDocsOffLimits.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

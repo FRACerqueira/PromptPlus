@@ -7,7 +7,7 @@
 | v5.x | v6.x |
 |---|---|
 | `WaitProcess()` | `MultiTasks()` |
-| `WaitTimer()` | `Time()` |
+| `WaitTimer()` | `Timer()` |
 | `WaitCommand()` | `Task()` |
 
 ---
@@ -122,7 +122,7 @@ PromptPlus.Controls.MultiTasks("Processing:")
 
 ---
 
-## WaitTimer → Time
+## WaitTimer → Timer
 
 ### 1. Duration moved from the factory to a fluent method
 
@@ -289,11 +289,11 @@ PromptPlus.Controls.Task("Processing:")
 | `StopOnError(bool)` · `Mode(MultiTasksMode)` · `Interaction<T>` · `Culture` · `PageSize(byte)` | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<StateProcess[]>` | `ResultPrompt<StateMultiTasks>` | Return type changed |
 
-### WaitTimer → Time
+### WaitTimer → Timer
 
 | Method | v5.x | v6.x | Change |
 |---|---|---|---|
-| Factory | `WaitTimer(int/TimeSpan, ...)` | `Time()` | Renamed; duration moved to `Duration(...)` |
+| Factory | `WaitTimer(int/TimeSpan, ...)` | `Timer()` | Renamed; duration moved to `Duration(...)` |
 | `IsCountDown(bool)` | ✅ | ❌ | → `DisplayMode(TimerDisplayMode)` |
 | `ShowElapsedTime(int, bool)` | ✅ | ❌ | Removed |
 | `Finish(string)` · `Spinner(SpinnersType)` | ✅ | ✅ | Unchanged |

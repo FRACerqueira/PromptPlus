@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0003V01R01](ADR0003V01R01-AutoInitializationOnFirstAccess.md) • [ADR Index](README.md) • **Next:** [ADR0005V01R01 →](ADR0005V01R01-TwoConfigurationLayers.md)
+[↑ ADR Index](indexadrs.md)
 
 ---
 

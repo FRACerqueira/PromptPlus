@@ -214,19 +214,6 @@ public static PromptPlusLibrary.HotKey DefaultToggleFullPath { get; }
 #### Property Value
 [HotKey](HotKey.md 'PromptPlusLibrary\.HotKey')
 
-<a name='PromptPlusLibrary.HotKey.DefaultToggleWildcard'></a>
-
-## HotKey\.DefaultToggleWildcard Property
-
-Gets the default select all childs toggle hotkey \(F4\)\.
-
-```csharp
-public static PromptPlusLibrary.HotKey DefaultToggleWildcard { get; }
-```
-
-#### Property Value
-[HotKey](HotKey.md 'PromptPlusLibrary\.HotKey')
-
 <a name='PromptPlusLibrary.HotKey.DefaultTooltip'></a>
 
 ## HotKey\.DefaultTooltip Property

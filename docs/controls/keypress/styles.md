@@ -31,7 +31,6 @@ Each region is a `KeyPressStyles` value you can recolor per control instance.
 | `Prompt` | The prompt text |
 | `Answer` | The pressed-key answer line |
 | `Description` | The description line under the prompt |
-| `TaggedInfo` | Extra-info text (affixed with the prefix/suffix from config) |
 | `Tooltips` | The key-hint line |
 | `Error` | The invalid-key message line |
 
@@ -54,7 +53,6 @@ PromptPlus.Controls
     .Styles(KeyPressStyles.Prompt, Color.Yellow)                       // Color shorthand (foreground)
     .Styles(KeyPressStyles.Description, Color.Cyan)
     .Styles(KeyPressStyles.Answer, Color.Green)
-    .Styles(KeyPressStyles.TaggedInfo, Color.Blue)
     .Styles(KeyPressStyles.Tooltips, Color.Magenta)
     .Styles(KeyPressStyles.Error, new Style(Color.Red, Color.Default)) // explicit fg + bg
     .Run();

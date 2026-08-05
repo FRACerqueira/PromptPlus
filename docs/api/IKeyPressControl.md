@@ -181,13 +181,8 @@ The [KeyPressStyles](KeyPressStyles.md 'PromptPlusLibrary\.KeyPressStyles') regi
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [IKeyPressControl](IKeyPressControl.md 'PromptPlusLibrary\.IKeyPressControl')  
 The same [IKeyPressControl](IKeyPressControl.md 'PromptPlusLibrary\.IKeyPressControl') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](IKeyPressControl.md#PromptPlusLibrary.IKeyPressControl.Styles(PromptPlusLibrary.KeyPressStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IKeyPressControl\.Styles\(PromptPlusLibrary\.KeyPressStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

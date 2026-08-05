@@ -30,38 +30,32 @@ Answer region\.
 
 Description region\.
 
-<a name='PromptPlusLibrary.ProgressBarStyles.TaggedInfo'></a>
-
-`TaggedInfo` 3
-
-Tagged info region\.
-
 <a name='PromptPlusLibrary.ProgressBarStyles.Tooltips'></a>
 
-`Tooltips` 4
+`Tooltips` 3
 
 Tooltip region\.
 
 <a name='PromptPlusLibrary.ProgressBarStyles.Spinner'></a>
 
-`Spinner` 5
+`Spinner` 4
 
 Spinner region\.
 
 <a name='PromptPlusLibrary.ProgressBarStyles.Slider'></a>
 
-`Slider` 6
+`Slider` 5
 
 Slider region\.
 
 <a name='PromptPlusLibrary.ProgressBarStyles.Ranger'></a>
 
-`Ranger` 7
+`Ranger` 6
 
 Range text region\.
 
 <a name='PromptPlusLibrary.ProgressBarStyles.Error'></a>
 
-`Error` 8
+`Error` 7
 
 Error region\.

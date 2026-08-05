@@ -32,7 +32,6 @@ pointer.
 | `Prompt` | The prompt text |
 | `Answer` | The pressed-key answer line |
 | `Description` | The description line under the prompt |
-| `TaggedInfo` | Extra-info text (affixed with the prefix/suffix from config) |
 | `Tooltips` | The Yes/No key-hint line |
 | `Error` | The invalid-key message line |
 

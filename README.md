@@ -8,7 +8,7 @@
   [![NuGet](https://img.shields.io/badge/NuGet-PromptPlus-blue)](https://www.nuget.org/packages/PromptPlus)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![.NET](https://img.shields.io/badge/.NET-8%20%7C%209%20%7C%2010-512BD4)](https://dotnet.microsoft.com/)
-  [![NuGet](https://img.shields.io/nuget/vpre/PromptPlus.svg?label=beta)](https://www.nuget.org/packages/PromptPlus)
+  [![NuGet](https://img.shields.io/nuget/vpre/PromptPlus.svg?label=rc)](https://www.nuget.org/packages/PromptPlus)
   [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
 </div>
@@ -35,17 +35,17 @@
 
 ## What's new in the latest version
 
-### 📢 Release Note – PromptPlus V.6.X Beta
+### 📢 Release Note – PromptPlus V.6.X Release Candidate
 
-### 🚀 Beta Phase Launch
-- The **6.X** version officially enters the **Beta phase**.  
-- Purpose: validate **new features, adjustments, and improvements** currently under development.
+### 🚀 Release Candidate Phase
+- The **6.X** version officially enters the **Release Candidate phase**.  
+- Purpose: final validation before the stable release — no new features expected, only stabilization fixes.
 
 ### 🛠️ Source Code
 - Available in the **main** branch.  
 
 ### 📦 NuGet Package
-- Latest update: **6.0.0-Beta[seq]**.  
+- Latest update: **6.0.0-rc[seq]**.  
 - To install, you must **enable the pre-release option** in NuGet.
 
 ### 💬 Community Feedback
@@ -355,7 +355,7 @@ captures the context, the decision, the alternatives considered, and the
 consequences — so the reasoning behind the library's design stays traceable over
 time.
 
-👉 See the **[ADR index](docs/adr/README.md)** for the full list of decisions.
+👉 See the **[ADR index](docs/adr/indexadrs.md)** for the full list of decisions.
 
 ---
 

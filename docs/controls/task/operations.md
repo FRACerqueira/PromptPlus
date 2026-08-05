@@ -135,8 +135,12 @@ if (result.Content.Exception is not null)
     PromptPlus.Console.WriteLine($"{result.Content.Exception.GetType().Name}: {result.Content.Exception.Message}");
 ```
 
-There is no separate status flag — treat `Exception is null` as success. When an action that returns
-an output context throws before returning, `OutputContext` is `null`.
+There is no separate status flag, but `Exception is null` does **not** by itself mean success:
+forwarding the token to your awaits (as recommended above) means a cancelled run throws
+`OperationCanceledException` inside the handler, which is caught silently — `Exception` stays `null`
+but `IsAborted` is `true`. Always check `IsAborted` first, and only then treat `Exception is null` as
+success. When an action throws before returning an output context, `OutputContext` is an **empty**
+dictionary, not `null`.
 
 ---
 

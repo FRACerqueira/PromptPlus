@@ -40,9 +40,9 @@ recolor per control instance.
 
 ## Recoloring a region
 
-Use the fluent [`Styles`](methods.md#styles) method. A `Style` is a foreground color and a background
-color — **there is no bold/italic/underline**. A bare `Color` is accepted as shorthand for a
-foreground-only style.
+Use the fluent [`Styles`](methods.md#styles) method. A `Style` is a foreground color, a background
+color, and an `Overflow` strategy — **there is no bold/italic/underline**. A bare `Color` is accepted
+as shorthand for a foreground-only style.
 
 ```csharp
 using ConsolePlusLibrary;

@@ -71,7 +71,9 @@ if (!result.IsAborted)
 - The call returns a [`ResultPrompt<string>`](../../architecture.md#resultpromptt): read `.Content`
   for the entered text and `.IsAborted` to detect Esc.
 
-> 💡 Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
+> ⚠️ Always check `IsAborted` before using `.Content`. **On abort, `.Content` is NOT guaranteed to be
+> empty** — it holds whatever partial text was typed before Esc was pressed. Treat it as sensitive
+> and discard it; don't assume it's safe to leave lying around just because the user aborted.
 > Never echo `.Content` to the console — the example above prints a confirmation, not the value.
 
 ---
@@ -127,7 +129,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 
 | Member | Meaning |
 |---|---|
-| `.Content` | The confirmed text (empty string if aborted) |
+| `.Content` | The confirmed text — **or whatever partial text was typed before an abort**, not necessarily empty |
 | `.IsAborted` | `true` when the user pressed Esc / the abort key |
 
 ```csharp

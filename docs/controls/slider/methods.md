@@ -24,7 +24,7 @@ in any order. Call [`Run`](#run) last.
 **Quick jump:**
 [Range](#range) ·
 [Width](#width) ·
-[FractionalDigits](#fractionalDigits) ·
+[FractionalDigits](#fractionaldigits) ·
 [Culture](#culture) ·
 [Default](#default) ·
 [Step](#step) ·
@@ -83,7 +83,9 @@ PromptPlus.Controls.Slider("Value", "Bar drawn with 60 characters")
     .Run();
 ```
 
-> Throws `ArgumentOutOfRangeException` when `value` is less than `10` or greater than `100`.
+> Throws `ArgumentOutOfRangeException` when `value` is less than `10` or greater than `100`. An
+> **odd** width is silently rounded up by one to the next even number — there's no warning, the bar
+> is just one character wider than requested.
 
 ---
 
@@ -120,7 +122,7 @@ ISliderControl Culture(string cultureName)
 | Overload | Meaning |
 |---|---|
 | `Culture(CultureInfo)` | Pass a `CultureInfo` directly. Cannot be `null`. |
-| `Culture(string)` | Pass a culture name such as `"en-US"` or `"pt-BR"`. Cannot be `null` or empty. |
+| `Culture(string)` | Pass a culture name such as `"en-US"` or `"pt-BR"`. |
 
 ```csharp
 PromptPlus.Controls.Slider("Preço", "Value formatted with pt-BR culture")
@@ -130,6 +132,10 @@ PromptPlus.Controls.Slider("Preço", "Value formatted with pt-BR culture")
     .Step(0.25)
     .Run();
 ```
+
+> The string overload throws `ArgumentNullException` for a `null` name, resolves an **empty**
+> string to the invariant culture (no throw), and throws `CultureNotFoundException` for an
+> unrecognized name.
 
 ---
 
@@ -141,7 +147,9 @@ PromptPlus.Controls.Slider("Preço", "Value formatted with pt-BR culture")
 ISliderControl Default(double value, bool useDefaultHistory = true)
 ```
 
-Sets the value that is pre-selected when the slider is first shown. Default is `0`.
+Sets the value that is pre-selected when the slider is first shown. If never called, the slider
+starts at [`Range`](#range)'s **minimum**, not a literal `0` — for a range that doesn't include `0`
+(e.g. `Range(10, 50)`), the true default is `10`.
 
 | Parameter | Meaning |
 |---|---|
@@ -155,7 +163,9 @@ PromptPlus.Controls.Slider("Value")
     .Run();
 ```
 
-> Throws `ArgumentOutOfRangeException` when `value` is outside the minimum/maximum range.
+> `Default` itself does **no** range check — it just stores `value`. The out-of-range check happens
+> when the control runs: if the (possibly history-overridden) starting value ends up outside
+> `Range`, `Run()` throws `InvalidOperationException`, not `ArgumentOutOfRangeException`.
 
 ---
 
@@ -184,7 +194,7 @@ PromptPlus.Controls.Slider("Value")
 ISliderControl LargeStep(double value)
 ```
 
-Sets the amount added or removed on each **large** change (Page Up / Page Down). Default is
+Sets the amount added or removed on each **large** change (`Tab` / `Shift+Tab`). Default is
 **1/10 of the range** (so `10` for the default 0..100 range).
 
 ```csharp
@@ -233,8 +243,8 @@ Chooses how the user changes the value and how the control is drawn. Default is
 
 | `SliderLayout` | Behavior |
 |---|---|
-| `LeftRight` | Left / Right arrows change the value and the horizontal bar is shown (default) |
-| `UpDown` | Up / Down arrows change the value; the bar is hidden and the delimiter/range widgets are not shown |
+| `LeftRight` | Left / Right arrows change the value and the horizontal bar (with its delimiters) is shown (default) |
+| `UpDown` | Up / Down arrows change the value; the bar and its delimiters are hidden, but the `[min,max]` range display is still shown next to the answer unless you also hide it with [`HideElements(HideSlider.Range)`](#hideelements) |
 
 ```csharp
 PromptPlus.Controls.Slider("Value")
@@ -278,7 +288,6 @@ ISliderControl ChangeGradient(params Color[] colors)
 ```
 
 Paints the bar with a gradient that transitions across the supplied colors as the value grows.
-Pass two or more colors in order.
 
 ```csharp
 using PromptPlusLibrary;
@@ -289,7 +298,8 @@ PromptPlus.Controls.Slider("Value")
     .Run();
 ```
 
-> Throws `ArgumentNullException` if `colors` is `null` or empty. Use `ChangeColor` for threshold
+> Throws `ArgumentNullException` if `colors` is `null` or empty — but a **single** color is legal
+> (a solid, non-gradient bar); "two or more" is not a requirement. Use `ChangeColor` for threshold
 > logic and `ChangeGradient` for a smooth blend — pick one approach per control.
 
 ---
@@ -330,7 +340,7 @@ next run.
 
 | Parameter | Meaning |
 |---|---|
-| `filename` | A stable, unique key for this slider's history store. Cannot be `null`. |
+| `filename` | A stable, unique key for this slider's history store. Cannot be `null`, empty, or whitespace. |
 | `options` | Optional `IHistoryOptions` configuration (expiration, max items, and so on). |
 
 ```csharp
@@ -343,6 +353,9 @@ PromptPlus.Controls.Slider("Value")
     .Run();
 ```
 
+> Throws `ArgumentException` if `filename` is empty or whitespace (`ArgumentNullException` if
+> `null`).
+>
 > 💡 Pair `Default(value, useDefaultHistory: true)` with `EnableHistory(...)` to pre-load the last
 > value the user confirmed. See [Operations → History](operations.md#history) for runtime behavior.
 

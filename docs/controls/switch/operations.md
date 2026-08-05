@@ -42,16 +42,17 @@ Every region can be recolored — see [Styles](styles.md).
 
 | Key | Action |
 |---|---|
-| `←` / `→` | Flip between the off and on states |
-| `Space` | Toggle the current state |
-| `Tab` / `Shift+Tab` | Move between the states |
+| `←` | Force the state to **off**, regardless of the current state |
+| `→` | Force the state to **on**, regardless of the current state |
+| `Space` | **Toggle** — flips the current state to its opposite |
 | `Enter` | Confirm — returns the current state |
 | `Esc` | Abort (when the abort key is enabled) → `IsAborted == true`, `Content == null` |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 
-There are only two states, so any of the toggle keys moves between on and off; **Enter** commits the
-state that is currently highlighted.
+> ⚠️ `←`/`→` are **absolute**, not relative — `←` always lands on off and `→` always lands on on,
+> even if you're already there. Only `Space` actually flips the current value. There is also **no**
+> `Tab`/`Shift+Tab` binding on this control.
 
 ---
 
@@ -90,7 +91,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 | Option | Effect on `Switch` |
 |---|---|
 | `EnabledAbortKey(false)` | Removes Esc — the user must confirm |
-| `HideAfterFinish(true)` | Erases the toggle after confirm; only the answer line remains |
+| `HideAfterFinish(true)` | Erases the toggle after confirm — the whole control is erased, not just the interactive part |
 | `HideOnAbort(true)` | Erases the toggle after Esc |
 | `ShowTooltip(false)` | Hides the keyboard hint line |
 | `Description(...)` | Overrides the description text |

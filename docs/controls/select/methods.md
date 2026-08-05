@@ -144,6 +144,8 @@ PromptPlus.Controls.Select<string>("City")
     .Run();
 ```
 
+> Throws `ArgumentNullException` if `separatorLine` is `SeparatorLine.UserChar` and `value` is `null`.
+
 ---
 
 ## Loading from a source
@@ -213,7 +215,8 @@ ISelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
 ```
 
 Shows a secondary piece of text for each item (return `null` to show nothing for that item). It is
-wrapped with the prefix/suffix from config (default `(` `)`). The focused item's `ExtraInfo` also
+wrapped with the prefix/suffix from config (default `" ("` — with a leading space — and `")"`). The
+focused item's `ExtraInfo` also
 appears in the live answer line while navigating (not in the final answer shown after **Enter**) —
 see [Operations](operations.md#anatomy-of-the-control).
 

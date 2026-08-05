@@ -34,10 +34,6 @@ namespace PromptPlusLibrary
         /// </summary>
         UnSelected,
         /// <summary>
-        /// Disabled state
-        /// </summary>
-        Disabled,
-        /// <summary>
         /// Error Region
         /// </summary>
         Error,

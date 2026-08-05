@@ -34,9 +34,6 @@ can recolor per control instance.
 | `Tooltips` | The keyboard-hint line |
 | `Slider` | The slider bar itself |
 | `Ranger` | The min/max range display |
-| `Selected` | The highlighted entry during history navigation |
-| `UnSelected` | Non-highlighted entries during history navigation |
-| `Pagination` | The page indicator during history navigation |
 | `Error` | The error line |
 
 > The bar color is usually driven dynamically by [`ChangeColor`](methods.md#changecolor) or
@@ -46,9 +43,9 @@ can recolor per control instance.
 
 ## Recoloring a region
 
-Use the fluent [`Styles`](methods.md#styles) method. A `Style` is a foreground color and a
-background color — **there is no bold/italic/underline**. A bare `Color` is accepted as shorthand
-for a foreground-only style.
+Use the fluent [`Styles`](methods.md#styles) method. A `Style` is a foreground color, a background
+color, and an `Overflow` strategy — **there is no bold/italic/underline**. A bare `Color` is
+accepted as shorthand for a foreground-only style.
 
 ```csharp
 using ConsolePlusLibrary;

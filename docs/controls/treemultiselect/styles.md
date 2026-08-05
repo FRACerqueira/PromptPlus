@@ -35,7 +35,7 @@ recolor per control instance.
 | `Disabled` | Nodes that cannot be checked (e.g., containers under `CheckLeafOnly`, or nodes added with `disable: true`) |
 | `Error` | The validation / range error line |
 | `Pagination` | The page indicator |
-| `TaggedInfo` | The checked-item count tag |
+| `TaggedInfo` | The tagged-information region (e.g. the filter label) |
 | `Tooltips` | The keyboard-hint line |
 | `Lines` | The tree connector lines |
 | `ExpandSymbol` | The expand / collapse indicator on containers |
@@ -44,7 +44,10 @@ recolor per control instance.
 | `ChildsCount` | The extra-info column rendered next to each node ([`ExtraInfo`](methods.md#extrainfo)) |
 
 > This is the same set as [`TreeSelectStyles`](../treeselect/styles.md#the-treestyles-regions) plus `TaggedInfo`,
-> which colors the checked-count tag unique to the multi-selection control.
+> which colors the filter-label tag unique to the multi-selection control (shown while
+> [`Filter`](methods.md#filter) mode is active), matching `TaggedInfo`'s role on
+> [`MultiSelect`](../multiselect/styles.md#the-multiselectstyles-regions) and
+> [`TableMultiSelect`](../tablemultiselect/styles.md#the-tablemultiselectstyles-regions).
 
 ---
 

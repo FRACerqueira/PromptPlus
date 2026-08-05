@@ -959,8 +959,8 @@ namespace PromptPlusLibrary.Controls.Input
                 }
                 else
                 {
-                    screenBuffer.Write(" ", _optStyles[InputStyles.UnSelected]);
-                    screenBuffer.WriteLine($" {value}", _optStyles[InputStyles.UnSelected]);
+                    screenBuffer.Write(" ", _optStyles[InputStyles.Suggestion]);
+                    screenBuffer.WriteLine($" {value}", _optStyles[InputStyles.Suggestion]);
                 }
             }
 

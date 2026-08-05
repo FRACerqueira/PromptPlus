@@ -31,7 +31,6 @@ value you can recolor per control instance.
 | `Prompt` | The prompt text |
 | `Answer` | The current value shown next to the prompt |
 | `Description` | The description line (including [`ChangeDescription`](methods.md#changedescription) output) |
-| `TaggedInfo` | Extra-info text (affixed with the prefix/suffix from config) |
 | `Tooltips` | The keyboard-hint line |
 | `Spinner` | The animated spinner |
 | `Slider` | The bar track / filled portion |
@@ -46,9 +45,9 @@ value you can recolor per control instance.
 
 ## Recoloring a region
 
-Use the fluent [`Styles`](methods.md#styles) method. A `Style` is a foreground color and a background
-color — **there is no bold/italic/underline**. A bare `Color` is accepted as shorthand for a
-foreground-only style.
+Use the fluent [`Styles`](methods.md#styles) method. A `Style` is a foreground color, a background
+color, and an `Overflow` strategy — **there is no bold/italic/underline**. A bare `Color` is
+accepted as shorthand for a foreground-only style.
 
 ```csharp
 using ConsolePlusLibrary;

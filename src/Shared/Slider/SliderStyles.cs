@@ -38,18 +38,6 @@ namespace PromptPlusLibrary
         /// </summary>
         Ranger,
         /// <summary>
-        /// Selected state
-        /// </summary>
-        Selected,
-        /// <summary>
-        /// UnSelected state
-        /// </summary>
-        UnSelected,
-        /// <summary>
-        /// Pagination Region
-        /// </summary>
-        Pagination,
-        /// <summary>
         /// Error Region
         /// </summary>
         Error
