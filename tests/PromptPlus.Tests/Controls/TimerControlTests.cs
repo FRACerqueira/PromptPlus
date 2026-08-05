@@ -26,8 +26,9 @@ namespace PromptPlus.Tests.Controls
     //   — so successful completion assertions ARE exact, no tolerance needed there.
     // - DisplayMode only affects the RENDERED text (Countdown clamps to zero, Elapsed clamps to the
     //   full Duration) — the returned Content is unaffected by DisplayMode.
-    // - Duration defaults to TimeSpan.Zero, so a Timer control with no .Duration(...) call completes
-    //   immediately (no "missing config" exception, unlike ProgressBar/TaskExec/MultiTasks).
+    // - Duration defaults to TimeSpan.Zero; InitControl now throws InvalidOperationException if
+    //   Duration(...) was never called, matching the required-config pattern used by
+    //   ProgressBar/TaskExec/MultiTasks (previously this silently completed instantly instead).
     // - WaitKeypress checks KeyAvailable first, so a pre-enqueued key (Escape, F1) always wins over
     //   a tick — deterministic, no background Task needed for those paths.
     // - WriteDescription/WriteTooltip only exist in BufferTemplate (never FinishTemplate) — same
@@ -47,17 +48,14 @@ namespace PromptPlus.Tests.Controls
             new PromptPlusControls(vt, new PromptConfig()).Timer("Waiting");
 
         [Fact]
-        public void Default_duration_zero_completes_immediately_with_a_zero_countdown()
+        public void Run_without_a_configured_duration_throws()
         {
             var vt = MakeTerminal();
             var control = MakeControl(vt);
 
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            var result = control.Run(cts.Token);
+            var act = () => control.Run();
 
-            _ = result.IsAborted.Should().BeFalse();
-            _ = result.Content.Should().Be(TimeSpan.Zero);
-            _ = vt.TextAt(0, 0, 17).Should().Be("Waiting: 00:00:00");
+            _ = act.Should().Throw<InvalidOperationException>();
         }
 
         [Fact]

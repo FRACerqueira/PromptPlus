@@ -173,6 +173,11 @@ namespace PromptPlusLibrary.Controls.Timer
 
         public override void InitControl(CancellationToken cancellationToken)
         {
+            if (_duration <= TimeSpan.Zero)
+            {
+                throw new InvalidOperationException("Duration must be set with Duration(...) before Run.");
+            }
+
             _lastObservedWidth = ConsoleHandler.Width;
             _lastObservedHeight = ConsoleHandler.Height;
             _suppressRenderUntilTick = 0;

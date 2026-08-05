@@ -62,6 +62,8 @@ PromptPlus.Controls.Timer("Cooling down").Duration(TimeSpan.FromSeconds(10)).Run
 ```
 
 > Both overloads throw `ArgumentOutOfRangeException` when the value is less than or equal to zero.
+> If `Duration` is never called at all, `Run()` throws `InvalidOperationException` instead — omitting
+> the call is not silently treated as "no wait."
 
 ---
 
@@ -155,7 +157,9 @@ PromptPlus.Controls.Timer("Please wait")
 ITimerControl ChangeDescription(Func<TimeSpan, string> value)
 ```
 
-Recomputes the description line from the remaining time as the countdown runs.
+Recomputes the description line as the countdown runs. The value passed follows
+[`DisplayMode`](#displaymode) — remaining time in `Countdown` mode (the default shown below), elapsed
+time in `Elapsed` mode.
 
 ```csharp
 PromptPlus.Controls.Timer("Please wait")
@@ -164,8 +168,9 @@ PromptPlus.Controls.Timer("Please wait")
     .Run();
 ```
 
-> Throws `ArgumentNullException` if `value` is `null`. Note the callback receives the **remaining**
-> time; in `Elapsed` display mode compute the remainder yourself (`duration - elapsed`).
+> Throws `ArgumentNullException` if `value` is `null`. In `Elapsed` display mode the callback
+> receives **elapsed**, not remaining, time; compute the remainder yourself (`duration - elapsed`)
+> if you need it.
 
 ---
 

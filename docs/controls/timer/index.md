@@ -135,7 +135,7 @@ PromptPlus.Console.WriteLine($"IsAborted: {result.IsAborted}, Elapsed: {result.C
 
 - [Methods](methods.md) — the full fluent API
 - [Operations](operations.md) — duration, display mode, format, cancellation
-- [Styles](styles.md) — recolor the prompt, answer, spinner, and error regions
+- [Styles](styles.md) — recolor the prompt, answer, and spinner regions
 - [Task](../task/index.md) — run one operation while showing feedback
 - [MultiTasks](../multitasks/index.md) — run several operations at once
 - [ProgressBar](../progressbar/index.md) — measurable progress
