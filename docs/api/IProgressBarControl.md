@@ -422,16 +422,11 @@ The [ProgressBarStyles](ProgressBarStyles.md 'PromptPlusLibrary\.ProgressBarStyl
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [IProgressBarControl](IProgressBarControl.md 'PromptPlusLibrary\.IProgressBarControl')  
 The current [IProgressBarControl](IProgressBarControl.md 'PromptPlusLibrary\.IProgressBarControl') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](IProgressBarControl.md#PromptPlusLibrary.IProgressBarControl.Styles(PromptPlusLibrary.ProgressBarStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IProgressBarControl\.Styles\(PromptPlusLibrary\.ProgressBarStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.
 
 <a name='PromptPlusLibrary.IProgressBarControl.UpdateHandler(System.Action_PromptPlusLibrary.ProgressBarEvent,System.Threading.CancellationToken_,System.Collections.Generic.IDictionary_string,object_)'></a>
 

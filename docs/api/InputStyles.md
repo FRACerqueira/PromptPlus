@@ -61,14 +61,8 @@ Error Region
 
 Pagination Region
 
-<a name='PromptPlusLibrary.InputStyles.TaggedInfo'></a>
-
-`TaggedInfo` 8
-
-TaggedInfo Region
-
 <a name='PromptPlusLibrary.InputStyles.Tooltips'></a>
 
-`Tooltips` 9
+`Tooltips` 8
 
 Tooltips Region

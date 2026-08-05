@@ -54,20 +54,14 @@ Style for chart percentage values
 
 Style for chart title
 
-<a name='PromptPlusLibrary.ChartBarStyles.ChartOrder'></a>
-
-`ChartOrder` 7
-
-Style for chart ordering indicator
-
 <a name='PromptPlusLibrary.ChartBarStyles.Answer'></a>
 
-`Answer` 8
+`Answer` 7
 
 Style for the selected/current answer
 
 <a name='PromptPlusLibrary.ChartBarStyles.Pagination'></a>
 
-`Pagination` 9
+`Pagination` 8
 
 Style for pagination information

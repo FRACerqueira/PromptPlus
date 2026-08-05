@@ -309,13 +309,8 @@ The [MaskEditStyles](MaskEditStyles.md 'PromptPlusLibrary\.MaskEditStyles') regi
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [PromptPlusLibrary\.IMaskEditCurrencyControl&lt;](IMaskEditCurrencyControl_T_.md 'PromptPlusLibrary\.IMaskEditCurrencyControl\<T\>')[T](IMaskEditCurrencyControl_T_.md#PromptPlusLibrary.IMaskEditCurrencyControl_T_.T 'PromptPlusLibrary\.IMaskEditCurrencyControl\<T\>\.T')[&gt;](IMaskEditCurrencyControl_T_.md 'PromptPlusLibrary\.IMaskEditCurrencyControl\<T\>')  
 The current [IMaskEditCurrencyControl&lt;T&gt;](IMaskEditCurrencyControl_T_.md 'PromptPlusLibrary\.IMaskEditCurrencyControl\<T\>') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [style](IMaskEditCurrencyControl_T_.md#PromptPlusLibrary.IMaskEditCurrencyControl_T_.Styles(PromptPlusLibrary.MaskEditStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IMaskEditCurrencyControl\<T\>\.Styles\(PromptPlusLibrary\.MaskEditStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

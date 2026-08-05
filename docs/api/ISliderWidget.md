@@ -197,16 +197,11 @@ The region to restyle, one of the [SliderStyles](SliderStyles.md 'PromptPlusLibr
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') \(colors\) to apply to that region\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') \(colors\) to apply to that region\.
 
 #### Returns
 [ISliderWidget](ISliderWidget.md 'PromptPlusLibrary\.ISliderWidget')  
 The same [ISliderWidget](ISliderWidget.md 'PromptPlusLibrary\.ISliderWidget') instance, so additional settings can be chained\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](ISliderWidget.md#PromptPlusLibrary.ISliderWidget.Styles(PromptPlusLibrary.SliderStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.ISliderWidget\.Styles\(PromptPlusLibrary\.SliderStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.
 
 <a name='PromptPlusLibrary.ISliderWidget.Width(byte)'></a>
 

@@ -43,68 +43,62 @@ Selected state
 
 UnSelected state
 
-<a name='PromptPlusLibrary.MultiFileStyles.Disabled'></a>
-
-`Disabled` 5
-
-Disabled state
-
 <a name='PromptPlusLibrary.MultiFileStyles.Error'></a>
 
-`Error` 6
+`Error` 5
 
 Error Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.Pagination'></a>
 
-`Pagination` 7
+`Pagination` 6
 
 Pagination Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.TaggedInfo'></a>
 
-`TaggedInfo` 8
+`TaggedInfo` 7
 
 TaggedInfo Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.Tooltips'></a>
 
-`Tooltips` 9
+`Tooltips` 8
 
 Tooltips Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.Lines'></a>
 
-`Lines` 10
+`Lines` 9
 
 Tree lines Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.ExpandSymbol'></a>
 
-`ExpandSymbol` 11
+`ExpandSymbol` 10
 
 Expand/Collapse symbol Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.FileRoot'></a>
 
-`FileRoot` 12
+`FileRoot` 11
 
 Root folder Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.FileTypeFolder'></a>
 
-`FileTypeFolder` 13
+`FileTypeFolder` 12
 
 Folder entry Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.FileTypeFile'></a>
 
-`FileTypeFile` 14
+`FileTypeFile` 13
 
 File entry Region
 
 <a name='PromptPlusLibrary.MultiFileStyles.FileSize'></a>
 
-`FileSize` 15
+`FileSize` 14
 
 File size Region

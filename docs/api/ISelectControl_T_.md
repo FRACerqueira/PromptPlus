@@ -666,16 +666,11 @@ The [SelectStyles](SelectStyles.md 'PromptPlusLibrary\.SelectStyles') to apply\.
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to use\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to use\.
 
 #### Returns
 [PromptPlusLibrary\.ISelectControl&lt;](ISelectControl_T_.md 'PromptPlusLibrary\.ISelectControl\<T\>')[T](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.T 'PromptPlusLibrary\.ISelectControl\<T\>\.T')[&gt;](ISelectControl_T_.md 'PromptPlusLibrary\.ISelectControl\<T\>')  
 The current [ISelectControl&lt;T&gt;](ISelectControl_T_.md 'PromptPlusLibrary\.ISelectControl\<T\>') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [style](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.Styles(PromptPlusLibrary.SelectStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.ISelectControl\<T\>\.Styles\(PromptPlusLibrary\.SelectStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.
 
 <a name='PromptPlusLibrary.ISelectControl_T_.TextSelector(System.Func_T,string_)'></a>
 

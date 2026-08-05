@@ -435,13 +435,8 @@ The [TaskStyles](TaskStyles.md 'PromptPlusLibrary\.TaskStyles') region whose sty
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [ITaskControl](ITaskControl.md 'PromptPlusLibrary\.ITaskControl')  
 The same [ITaskControl](ITaskControl.md 'PromptPlusLibrary\.ITaskControl') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](ITaskControl.md#PromptPlusLibrary.ITaskControl.Styles(PromptPlusLibrary.TaskStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.ITaskControl\.Styles\(PromptPlusLibrary\.TaskStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

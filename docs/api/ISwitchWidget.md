@@ -146,13 +146,8 @@ The [SwitchStyles](SwitchStyles.md 'PromptPlusLibrary\.SwitchStyles') region who
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [ISwitchWidget](ISwitchWidget.md 'PromptPlusLibrary\.ISwitchWidget')  
 The current [ISwitchWidget](ISwitchWidget.md 'PromptPlusLibrary\.ISwitchWidget') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](ISwitchWidget.md#PromptPlusLibrary.ISwitchWidget.Styles(PromptPlusLibrary.SwitchStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.ISwitchWidget\.Styles\(PromptPlusLibrary\.SwitchStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

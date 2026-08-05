@@ -462,13 +462,8 @@ The [MultiTasksStyles](MultiTasksStyles.md 'PromptPlusLibrary\.MultiTasksStyles'
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [IMultiTasksControl](IMultiTasksControl.md 'PromptPlusLibrary\.IMultiTasksControl')  
 The same [IMultiTasksControl](IMultiTasksControl.md 'PromptPlusLibrary\.IMultiTasksControl') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [style](IMultiTasksControl.md#PromptPlusLibrary.IMultiTasksControl.Styles(PromptPlusLibrary.MultiTasksStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IMultiTasksControl\.Styles\(PromptPlusLibrary\.MultiTasksStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

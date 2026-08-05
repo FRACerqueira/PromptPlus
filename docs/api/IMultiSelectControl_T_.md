@@ -708,16 +708,11 @@ The [MultiSelectStyles](MultiSelectStyles.md 'PromptPlusLibrary\.MultiSelectStyl
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to use\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to use\.
 
 #### Returns
 [PromptPlusLibrary\.IMultiSelectControl&lt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>')[T](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.T 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.T')[&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>')  
 The current [IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [style](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.Styles(PromptPlusLibrary.MultiSelectStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.Styles\(PromptPlusLibrary\.MultiSelectStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.
 
 <a name='PromptPlusLibrary.IMultiSelectControl_T_.TextSelector(System.Func_T,string_)'></a>
 

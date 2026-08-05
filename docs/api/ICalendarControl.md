@@ -585,13 +585,8 @@ The [CalendarStyles](CalendarStyles.md 'PromptPlusLibrary\.CalendarStyles') to a
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to use\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to use\.
 
 #### Returns
 [ICalendarControl](ICalendarControl.md 'PromptPlusLibrary\.ICalendarControl')  
 The current [ICalendarControl](ICalendarControl.md 'PromptPlusLibrary\.ICalendarControl') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [style](ICalendarControl.md#PromptPlusLibrary.ICalendarControl.Styles(PromptPlusLibrary.CalendarStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.ICalendarControl\.Styles\(PromptPlusLibrary\.CalendarStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.

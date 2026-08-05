@@ -49,26 +49,8 @@ Slider Region
 
 Ranger Region
 
-<a name='PromptPlusLibrary.SliderStyles.Selected'></a>
-
-`Selected` 6
-
-Selected state
-
-<a name='PromptPlusLibrary.SliderStyles.UnSelected'></a>
-
-`UnSelected` 7
-
-UnSelected state
-
-<a name='PromptPlusLibrary.SliderStyles.Pagination'></a>
-
-`Pagination` 8
-
-Pagination Region
-
 <a name='PromptPlusLibrary.SliderStyles.Error'></a>
 
-`Error` 9
+`Error` 6
 
 Error Region

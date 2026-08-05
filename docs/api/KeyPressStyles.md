@@ -31,18 +31,12 @@ Answer Region
 
 Description Region
 
-<a name='PromptPlusLibrary.KeyPressStyles.TaggedInfo'></a>
-
-`TaggedInfo` 3
-
-TaggedInfo Region
-
 <a name='PromptPlusLibrary.KeyPressStyles.Tooltips'></a>
 
-`Tooltips` 4
+`Tooltips` 3
 
 Tooltips Region
 
 <a name='PromptPlusLibrary.KeyPressStyles.Error'></a>
 
-`Error` 5
+`Error` 4

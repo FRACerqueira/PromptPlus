@@ -78,9 +78,3 @@ Task completed\-with\-success state Region
 `FailedTask` 10
 
 Task completed\-with\-failure state Region
-
-<a name='PromptPlusLibrary.MultiTasksStyles.Error'></a>
-
-`Error` 11
-
-Error Region

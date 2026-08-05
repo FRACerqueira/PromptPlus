@@ -359,16 +359,11 @@ The [InputStyles](InputStyles.md 'PromptPlusLibrary\.InputStyles') to override\.
 
 `style` [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style')
 
-The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\. Cannot be `null`\.
+The [ConsolePlusLibrary\.Style](https://learn.microsoft.com/en-us/dotnet/api/consolepluslibrary.style 'ConsolePlusLibrary\.Style') to apply\.
 
 #### Returns
 [IInputControl](IInputControl.md 'PromptPlusLibrary\.IInputControl')  
 The current [IInputControl](IInputControl.md 'PromptPlusLibrary\.IInputControl') instance for chaining\.
-
-#### Exceptions
-
-[System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [style](IInputControl.md#PromptPlusLibrary.IInputControl.Styles(PromptPlusLibrary.InputStyles,ConsolePlusLibrary.Style).style 'PromptPlusLibrary\.IInputControl\.Styles\(PromptPlusLibrary\.InputStyles, ConsolePlusLibrary\.Style\)\.style') is `null`\.
 
 <a name='PromptPlusLibrary.IInputControl.SuggestionHandler(System.Func_string,string[]_,bool)'></a>
 

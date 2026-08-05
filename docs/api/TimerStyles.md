@@ -42,9 +42,3 @@ Tooltips Region
 `Spinner` 4
 
 Spinner Region
-
-<a name='PromptPlusLibrary.TimerStyles.Error'></a>
-
-`Error` 5
-
-Error Region
