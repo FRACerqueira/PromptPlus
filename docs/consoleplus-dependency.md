@@ -9,7 +9,7 @@ unconditional `PackageReference` to the published `ConsolePlus.net` NuGet packag
 reference is used for every configuration (`Debug`, `Release`, `ReleaseDoc`):
 
 ```xml
-<PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta8" />
+<PackageReference Include="ConsolePlus.net" Version="1.0.0-rc1" />
 ```
 
 There is **no** `ProjectReference` to a sibling ConsolePlus checkout, and no configuration-based
