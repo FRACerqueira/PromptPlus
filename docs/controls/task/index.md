@@ -145,7 +145,10 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | `OutputContext` | The output dictionary the work returned (`IReadOnlyDictionary<string, object?>?`) |
 | `GetOutput<T>(key, out found)` | Typed read of an `OutputContext` entry |
 
-> There is **no `.Status`** member. Success vs. failure is `Exception is null` vs. not.
+> There is **no `.Status`** member, and `Exception is null` alone is **not** enough to conclude
+> success — check `.IsAborted` first. A run cancelled via the token (forwarded to your awaits, as
+> recommended) throws `OperationCanceledException` inside the handler, which is caught silently:
+> `Exception` stays `null` but `IsAborted` is `true`. See [Operations → Errors](operations.md#errors).
 
 ```csharp
 var result = PromptPlus.Controls.Task("Save").Action(Save).Run();
