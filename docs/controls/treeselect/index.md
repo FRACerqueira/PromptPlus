@@ -161,7 +161,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 
 | Member | Meaning |
 |---|---|
-| `.Content` | The selected `T` (or `null`/`default` if aborted or nothing was confirmed) |
+| `.Content` | The selected `T` (or `null`/`default` only when aborted — `ViewOnly` with no `Default` still returns the root node) |
 | `.IsAborted` | `true` when the user pressed Esc |
 
 ```csharp

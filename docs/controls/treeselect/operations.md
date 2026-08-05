@@ -84,8 +84,10 @@ tree.AddLast(sales);
 | Key | Action |
 |---|---|
 | `↑` / `↓` | Move focus up / down |
-| `→` / `+` | Expand the focused container |
-| `←` / `-` | Collapse the focused container |
+| `+` (incl. Numpad `+`) | Expand the focused container |
+| `-` (incl. Numpad `-`) | Collapse the focused container |
+| `Tab` | Expand and drill into the focused container's children; on a leaf, moves to the next item |
+| `Shift+Tab` | Climb back out to (and collapse) the parent when focused on its first child; otherwise moves to the previous item |
 | `Page Up` / `Page Down` | Jump one page |
 | `Ctrl+Home` / `Ctrl+End` | First / last visible row |
 | `Shift+F3` | Toggle short name ↔ full path display |
@@ -105,6 +107,11 @@ tree.AddLast(sales);
   lives inside them — the tree auto-expands the branch down to that node.
 - Expanding materializes the children of that node only; collapsing releases them again.
 - Leaves have no expand indicator and ignore the expand/collapse keys.
+- `Tab` is a shortcut that expands (if needed) and drills straight into a container's children in one
+  press; `Shift+Tab` climbs back out to the parent (collapsing it) when you're on its first child.
+
+> ⚠️ The arrow keys do **not** expand or collapse — only `+`/`-` (and their Numpad equivalents) do.
+> `←`/`→` are reserved for scrolling the answer line (see [Keyboard](#keyboard)).
 
 ---
 
@@ -163,8 +170,10 @@ Use `SelectLeafOnly` for *structural* rules ("pick an actual item, not a folder"
 
 [`ViewOnly()`](methods.md#viewonly) renders the tree for display only:
 
-- Arrow keys navigate and containers still expand/collapse, but nodes cannot be confirmed as a choice.
-- Enter returns the [`Default`](methods.md#default) value (or `null` when none was set).
+- Navigation and expand/collapse (`+`/`-`) still work, but nodes cannot be confirmed as a choice.
+- Enter always returns the node the tree started on: the [`Default`](methods.md#default) target if
+  one was set, otherwise the **root node** — never `null`, since a root is mandatory. Wherever you
+  navigated to is ignored.
 - Useful for showing a read-only snapshot of a hierarchy inline with other prompts.
 
 ---
@@ -188,9 +197,9 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 
 ## Edge cases & gotchas
 
-- **The result is nullable.** `Run` returns `ResultPrompt<T?>`; `.Content` is `null`/`default` when
-  aborted or when nothing was confirmed (e.g., `ViewOnly` with no `Default`). Always branch on
-  `IsAborted`.
+- **The result is nullable.** `Run` returns `ResultPrompt<T?>`; `.Content` is `null`/`default` only
+  when aborted. `ViewOnly` with no `Default` still returns a real value — the root node — not `null`.
+  Always branch on `IsAborted`.
 - **Custom types need equality.** [`DefaultMatchBy`](methods.md#defaultmatchby) is required and drives
   both `Default` and history lookups — without correct equality the intended node may not be found.
 - **Root must come first.** Adding nodes before `Root` throws `InvalidOperationException`.
