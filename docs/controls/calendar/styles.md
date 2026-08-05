@@ -35,7 +35,6 @@ recolor per control instance.
 | `Disabled` | Days blocked by [`DisableDates`](methods.md#disabledates) / [`DisabledWeekend`](methods.md#disabledweekend) or outside [`Range`](methods.md#range) |
 | `Error` | The validation error line |
 | `Pagination` | The notes page indicator |
-| `TaggedInfo` | **Dead style — never referenced by the control.** Notes text actually renders with `Selected`/`UnSelected`, matching the day's own highlight state, not a dedicated region |
 | `Tooltips` | The keyboard-hint line |
 | `Lines` | The grid lines |
 | `CalendarHighlight` | Days marked by [`Highlights`](methods.md#highlights) |

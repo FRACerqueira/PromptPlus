@@ -48,11 +48,6 @@ namespace PromptPlusLibrary
         ChartTitle,
 
         /// <summary>
-        /// Style for chart ordering indicator
-        /// </summary>
-        ChartOrder,
-
-        /// <summary>
         /// Style for the selected/current answer
         /// </summary>
         Answer,

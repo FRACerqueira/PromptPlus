@@ -32,7 +32,6 @@ pointer.
 | `Prompt` | The prompt text |
 | `Answer` | The pressed-key answer line |
 | `Description` | The description line under the prompt |
-| `TaggedInfo` | **Dead style — never referenced by the control** (inherited from `KeyPressStyles`; KeyPress doesn't render anything with it either) |
 | `Tooltips` | The Yes/No key-hint line |
 | `Error` | The invalid-key message line |
 

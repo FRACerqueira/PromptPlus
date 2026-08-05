@@ -25,10 +25,6 @@ namespace PromptPlusLibrary
         /// </summary>
         Description,
         /// <summary>
-        /// Tagged info region.
-        /// </summary>
-        TaggedInfo,
-        /// <summary>
         /// Tooltip region.
         /// </summary>
         Tooltips,

@@ -32,7 +32,6 @@ recolor per control instance.
 | `Description` | The description line under the prompt |
 | `Selected` | The focused / selected entry |
 | `UnSelected` | The non-focused entries |
-| `Disabled` | Entries that cannot be checked |
 | `Error` | The error line |
 | `Pagination` | The page indicator |
 | `TaggedInfo` | The checked-count / tagged summary |

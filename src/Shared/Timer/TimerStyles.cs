@@ -32,10 +32,6 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Spinner Region
         /// </summary>
-        Spinner,
-        /// <summary>
-        /// Error Region
-        /// </summary>
-        Error
+        Spinner
     }
 }

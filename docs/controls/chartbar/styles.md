@@ -34,7 +34,6 @@ recolor per control instance.
 | `ChartValue` | The numeric values |
 | `ChartPercent` | The percentage values |
 | `ChartTitle` | The chart title ([`Title`](methods.md#title)) |
-| `ChartOrder` | The sort-order indicator |
 | `Answer` | The confirmed answer shown after `.Run()` |
 | `Pagination` | The page indicator |
 

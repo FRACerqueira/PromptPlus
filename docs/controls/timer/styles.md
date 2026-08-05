@@ -33,13 +33,8 @@ you can recolor per control instance.
 | `Description` | The description line (including [`ChangeDescription`](methods.md#changedescription) output) |
 | `Tooltips` | The keyboard-hint line |
 | `Spinner` | The animated spinner |
-| `Error` | Unused — see note below |
 
 ---
-
-> ⚠️ `Error` exists on the `TimerStyles` enum but is never painted — `Timer` has no work delegate that
-> can fail (unlike [`Task`](../task/index.md)), so there is nothing for it to report. Setting it has
-> no visible effect.
 
 ## Recoloring a region
 

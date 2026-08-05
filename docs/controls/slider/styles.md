@@ -34,17 +34,10 @@ can recolor per control instance.
 | `Tooltips` | The keyboard-hint line |
 | `Slider` | The slider bar itself |
 | `Ranger` | The min/max range display |
-| `Selected` | Unused — see note below |
-| `UnSelected` | Unused — see note below |
-| `Pagination` | Unused — see note below |
 | `Error` | The error line |
 
 > The bar color is usually driven dynamically by [`ChangeColor`](methods.md#changecolor) or
 > [`ChangeGradient`](methods.md#changegradient); use the `Slider` region for a static bar color.
-
-> ⚠️ `Selected`, `UnSelected`, and `Pagination` exist on the `SliderStyles` enum but are never
-> painted — unlike Input/Secret/Select, Slider has **no interactive history list** (see
-> [Operations → History](operations.md#history)), so setting these has no visible effect.
 
 ---
 

@@ -31,7 +31,6 @@ value you can recolor per control instance.
 | `Prompt` | The prompt text |
 | `Answer` | The current value shown next to the prompt |
 | `Description` | The description line (including [`ChangeDescription`](methods.md#changedescription) output) |
-| `TaggedInfo` | Extra-info text (affixed with the prefix/suffix from config) |
 | `Tooltips` | The keyboard-hint line |
 | `Spinner` | The animated spinner |
 | `Slider` | The bar track / filled portion |
