@@ -46,8 +46,8 @@ Every region can be recolored — see [Styles](styles.md).
 |---|---|
 | `↑` / `↓` | Move focus up / down (rows) |
 | `Page Up` / `Page Down` | Jump one page |
-| `Home` / `End` | First / last row |
-| `Tab` / `Shift+Tab` | Move the focused **column** (only when the table scrolls horizontally) |
+| `Ctrl+Home` / `Ctrl+End` | First / last row |
+| `Tab` / `Shift+Tab` | Move the focused **column**; wraps around at the first/last column |
 | `Enter` | Confirm the focused row (runs validation) |
 | `Esc` | Abort → `IsAborted == true` |
 | Any printable character | Type to filter (when [`Filter`](methods.md#filter) is not `Disabled`) |
@@ -81,14 +81,16 @@ Disabled rows are skipped automatically as you move.
 
 ## Horizontal scrolling
 
-When the columns do not all fit within the console width, the table scrolls horizontally and
-`Tab` / `Shift+Tab` move the focused column. [`HorizontalScroll`](methods.md#horizontalscroll) chooses how:
+`Tab` / `Shift+Tab` always move the focused column, wrapping around at the first/last column — this
+works even when every column already fits on screen and nothing needs to scroll; the focused column
+is always highlighted and reported in the pagination line as `Col X/Y`.
+[`HorizontalScroll`](methods.md#horizontalscroll) only changes what happens **once scrolling is
+actually needed** (the columns don't all fit within the console width):
 
 - **`Full`** (default) — shifts the visible viewport as a full column window.
 - **`Column`** — focuses one column at a time.
 
-When all columns fit, scrolling is inactive and the column keys are ignored. The focused column's index
-is returned as `.Content.ColumnIndex`.
+The focused column's index is returned as `.Content.ColumnIndex`.
 
 ---
 
