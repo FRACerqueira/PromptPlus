@@ -51,6 +51,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private Optional<T> _defaultValue = Optional<T>.Empty();
         private IEnumerable<T> _defaultValues = [];
         private bool _useDefaultHistory;
+        private bool _forceDefaultFromHistory;
         private HistoryOptions? _historyOptions;
         private FilterMode _filterType = FilterMode.Disabled;
         private byte _pageSize;
@@ -285,6 +286,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         {
             _defaultValue = Optional<T>.Empty();
             _useDefaultHistory = true;
+            _forceDefaultFromHistory = true;
             return this;
         }
 
@@ -448,7 +450,10 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             {
                 _historyOptions = null;
             }
-            if (_defaultValues.Any())
+            // UseDefaultHistory() overrides any values supplied by Default(), but only when history
+            // is actually enabled — otherwise it has no effect and Default()'s values stand.
+            bool overrideDefaultsFromHistory = _forceDefaultFromHistory && _historyOptions != null;
+            if (_defaultValues.Any() && !overrideDefaultsFromHistory)
             {
                 _defaultValue = Optional<T>.Set(_defaultValues.First());
             }
@@ -479,7 +484,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                 }
             }
-            if (_defaultValues.Any() && !loadedDefaultsFromHistory)
+            if (_defaultValues.Any() && !loadedDefaultsFromHistory && !overrideDefaultsFromHistory)
             {
                 foreach (var item in _defaultValues)
                 {
