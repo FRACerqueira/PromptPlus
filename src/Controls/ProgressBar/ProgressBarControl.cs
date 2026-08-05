@@ -150,9 +150,9 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         /// <inheritdoc/>
         public IProgressBarControl Range(double minvalue, double maxvalue)
         {
-            if (minvalue > maxvalue)
+            if (minvalue >= maxvalue)
             {
-                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) must be less than Maxvalue({maxvalue})");
             }
             _minValue = minvalue;
             _maxValue = maxvalue;

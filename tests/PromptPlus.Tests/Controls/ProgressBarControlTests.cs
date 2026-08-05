@@ -435,6 +435,15 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public void Range_with_minvalue_equal_to_maxvalue_throws_immediately()
+        {
+            Action act = () => new PromptPlusControls(MakeTerminal(), new PromptConfig())
+                .ProgressBar("Working").Range(50, 50);
+
+            _ = act.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
         public void Width_below_ten_throws_immediately()
         {
             Action act = () => new PromptPlusControls(MakeTerminal(), new PromptConfig())
