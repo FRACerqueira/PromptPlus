@@ -408,6 +408,9 @@ PromptPlus.Controls.TreeMultiSelect<Node>("Pick 2 to 4")
     .Run();
 ```
 
+> Throws `ArgumentOutOfRangeException` if `minvalue` is negative, or if `maxvalue` is specified and
+> less than `minvalue`.
+
 ---
 
 ## Check rules
@@ -560,6 +563,8 @@ PromptPlus.Controls.TreeMultiSelect<Node>("Nodes")
     .EnableHistory("multi-tree-history")
     .Run();
 ```
+
+> Throws `ArgumentNullException` if `filename` is `null`, `ArgumentException` if it is empty/whitespace.
 
 ---
 
