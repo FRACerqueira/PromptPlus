@@ -13,6 +13,8 @@
 
 </div>
 
+> 🤖 **New:** pick the right ConsolePlus/PromptPlus layer and control conversationally with the [**ConsolePlus + PromptPlus Claude Code Plugin**](https://github.com/FRACerqueira/ConsolePlus-PromptPlus-claude-plugin) — let Claude choose the layer, check whether an interactive control can run in your context, pick the right one of PromptPlus's 21 controls, implement it, and audit existing usage. [Learn more ↓](#using-promptplus-with-claude-code)
+
 ---
 
 ## Highlights
@@ -343,6 +345,27 @@ demo GIF above.
 | [Controls index](docs/index.md) | All pages in one place |
 | [Migration Guide v5.x → v6.x](docs/migration-v5-to-v6.md) | **Upgrading from v5.x** |
 | [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs |
+
+---
+
+## Using PromptPlus with Claude Code
+
+Prefer describing what you need in plain language instead of driving the API by hand? The official
+[**ConsolePlus + PromptPlus Claude Code Plugin**](https://github.com/FRACerqueira/ConsolePlus-PromptPlus-claude-plugin)
+lets [Claude Code](https://claude.com/claude-code) choose and implement the right control for you:
+
+- A skill (`select-promptplus-control`) that decides whether the need is ConsolePlus rendering or a
+  `PromptPlus.Controls` interactive control, checks whether that control can even run in the target
+  context (redirected input, CI, hosted services), picks the right one of PromptPlus's 21 controls,
+  and implements it against the real, version-pinned fluent API — not a guess from memory.
+- A `promptplus-auditor` agent that audits existing ConsolePlus/PromptPlus usage in a codebase (the
+  redirected-input guard gap, unchecked `IsAborted`, `IWidgets` namespace mix-ups, global `Config`
+  vs. `.Options()`) and produces a read-only report.
+- A `promptplus-precommit-check` agent that catches the two cheapest bug-risk patterns on just the
+  pending diff, before a commit/PR.
+
+Requires PromptPlus 6.0 or later; applies to console-type .NET projects only, enforced automatically
+by a companion hook.
 
 ---
 

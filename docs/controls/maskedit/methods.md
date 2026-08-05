@@ -477,4 +477,4 @@ var result = PromptPlus.Controls
 
 - [Operations](operations.md) — mask tokens, input modes, keyboard, validation, culture
 - [Styles](styles.md) — the `MaskEditStyles` regions
-- [Index](index.md) — overview and the eleven factories
+- [Index](index.md) — overview and the twelve factories
