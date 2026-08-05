@@ -18,7 +18,7 @@
 > Structured, pattern-constrained entry. The user types into a fixed template — a phone number,
 > a price, a date — and the value is parsed into the right .NET type on confirm.
 
-The **MaskEdit** family is a set of eleven factories that share one idea: the field is shaped by a
+The **MaskEdit** family is a set of twelve factories that share one idea: the field is shaped by a
 mask so the user can only produce well-formed input. Literal characters (dashes, parentheses,
 separators) are painted for you and skipped over; only the editable positions accept keystrokes.
 Each factory returns a strongly typed value — `string`, `int`, `decimal`, `DateTime`, `TimeOnly`,
@@ -33,7 +33,7 @@ and so on — through a [`ResultPrompt<T>`](../../architecture.md#resultpromptt)
 
 | Sub-page | What you will find |
 |---|---|
-| **Index** (this page) | What the family is, the eleven factories, when to use each, a first example |
+| **Index** (this page) | What the family is, the twelve factories, when to use each, a first example |
 | [Methods](methods.md) | Every fluent method, grouped by the four control interfaces, with signatures and snippets |
 | [Operations](operations.md) | Mask tokens, placeholder, input modes, keyboard, validation, and culture |
 | [Styles](styles.md) | The `MaskEditStyles` regions and positive/negative value coloring |
@@ -42,7 +42,7 @@ and so on — through a [`ResultPrompt<T>`](../../architecture.md#resultpromptt)
 
 ## The four control interfaces
 
-Although there are eleven factories, they resolve to just four fluent interfaces. Everything on the
+Although there are twelve factories, they resolve to just four fluent interfaces. Everything on the
 [Methods](methods.md) page is organized this way.
 
 | Interface | Backs | Shape of the mask |
@@ -54,7 +54,7 @@ Although there are eleven factories, they resolve to just four fluent interfaces
 
 ---
 
-## The eleven factories
+## The twelve factories
 
 All live on `PromptPlus.Controls`. Each takes `(string prompt = "", string? description = null)`.
 
