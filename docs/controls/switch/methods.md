@@ -73,8 +73,8 @@ ISwitchControl OnValue(EmojiName emojiName, string fallbacktext)
 
 | Overload | Meaning |
 |---|---|
-| `OnValue(string)` | Plain-text label for the on state. |
-| `OnValue(EmojiName, string)` | Emoji label, with `fallbacktext` used when the terminal cannot render emoji. |
+| `OnValue(string)` | Plain-text label for the on state. Cannot be `null`. |
+| `OnValue(EmojiName, string)` | Emoji label, with `fallbacktext` used when the terminal cannot render emoji. `fallbacktext` cannot be `null`. |
 
 ```csharp
 // Plain text
@@ -90,6 +90,8 @@ PromptPlus.Controls.Switch("Power")
     .Run();
 ```
 
+> Throws `ArgumentNullException` if `value` (or `fallbacktext`) is `null`.
+
 ---
 
 ### `OffValue`
@@ -103,8 +105,8 @@ ISwitchControl OffValue(EmojiName emojiName, string fallbacktext)
 
 | Overload | Meaning |
 |---|---|
-| `OffValue(string)` | Plain-text label for the off state. |
-| `OffValue(EmojiName, string)` | Emoji label, with `fallbacktext` used when the terminal cannot render emoji. |
+| `OffValue(string)` | Plain-text label for the off state. Cannot be `null`. |
+| `OffValue(EmojiName, string)` | Emoji label, with `fallbacktext` used when the terminal cannot render emoji. `fallbacktext` cannot be `null`. |
 
 ```csharp
 PromptPlus.Controls.Switch("Power")
@@ -112,6 +114,8 @@ PromptPlus.Controls.Switch("Power")
     .OffValue(EmojiName.RedCircle, "OFF")
     .Run();
 ```
+
+> Throws `ArgumentNullException` if `value` (or `fallbacktext`) is `null`.
 
 ---
 
@@ -128,7 +132,7 @@ the next run.
 
 | Parameter | Meaning |
 |---|---|
-| `filename` | A stable, unique key for this switch's history store. Cannot be `null`. |
+| `filename` | A stable, unique key for this switch's history store. Cannot be `null`, empty, or whitespace. |
 | `options` | Optional `IHistoryOptions` configuration (expiration, max items, and so on). |
 
 ```csharp
@@ -138,6 +142,9 @@ PromptPlus.Controls.Switch("Use default from history?")
     .Run();
 ```
 
+> Throws `ArgumentException` if `filename` is empty or whitespace (`ArgumentNullException` if
+> `null`).
+>
 > 💡 Pair `Default(value, useDefaultHistory: true)` with `EnableHistory(...)` to pre-load the last
 > state the user confirmed. See [Operations → History](operations.md#history) for runtime behavior.
 
@@ -227,7 +234,7 @@ prompt/description text, abort key, tooltip, hide-after-finish, and the extra-in
 PromptPlus.Controls.Switch("Verbose mode")
     .Options(opt =>
     {
-        opt.Description("Toggle using Left/Right arrows, Tab/Shift+Tab, or Space");
+        opt.Description("Toggle using Left/Right arrows or Space");
         opt.ShowTooltip(false);
         opt.EnabledAbortKey(true);
         opt.HideAfterFinish(false);
