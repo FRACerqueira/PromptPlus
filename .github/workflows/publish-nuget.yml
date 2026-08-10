@@ -15,10 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Shallow checkout: no step here needs git history — generate_release_notes
+      # is a server-side GitHub API feature, not derived from the local clone.
+      # A full fetch-depth: 0 was pulling this repo's ~800MB of since-removed
+      # docs/images/*.gif history for no reason.
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
