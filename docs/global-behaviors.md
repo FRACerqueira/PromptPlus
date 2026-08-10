@@ -55,8 +55,8 @@ Set these on `PromptPlus.Config` before running any controls. Changes take effec
 | `ShowMessageAbortKey` | `bool` | `true` | Includes the abort-key name in tooltips |
 | `ShowTooltip` | `bool` | `true` | Shows keyboard hints below prompts |
 | `HideAfterFinish` | `bool` | `false` | Erases control UI after the user confirms |
-| `HideOnAbort` | `bool` | `false` | Erases control UI when the user presses Esc |
-| `RemoveHandlerCtrlC` | `bool` | `false` | When `true`, Ctrl+C is passed to the OS instead of triggering abort |
+| `HideOnAbort` | `bool` | `false` | Erases control UI when the user presses Esc, or when the run is cancelled externally (Ctrl+C, or a caller-supplied `CancellationToken`) |
+| `RemoveHandlerCtrlC` | `bool` | `false` | Reserved for future use; currently has no effect |
 
 ### Calendar
 
@@ -198,8 +198,8 @@ PromptPlus.Controls
 | Single-line rendering | Newlines stripped from display; sliding window with `…` when value is too wide; `result.Content` always holds the original full value |
 | History persistence | Last confirmed value saved to disk; pre-loaded on next run; configurable via `IHistoryOptions` |
 | HideAfterFinish | Control UI erased after confirmation; only the final answer line remains |
-| HideOnAbort | Control UI erased when user presses Esc |
-| Ctrl+C handling | Intercepted by default → triggers abort; `RemoveHandlerCtrlC = true` passes to OS |
+| HideOnAbort | Control UI erased when the user presses Esc, or when the run is cancelled externally (Ctrl+C, or a caller-supplied `CancellationToken`) |
+| Ctrl+C handling | Always terminates the process (via ConsolePlus's `Console.CancelKeyPress` handler) — it is not an internal abort and the control's `Run()` call never returns. The current control gets a short, bounded grace period to run its own cancellation cleanup first (honoring `HideOnAbort` for interactive controls; Live controls — ProgressBar, Task, MultiTasks, Timer — always clear their frame). `RemoveHandlerCtrlC` is reserved for future use and currently has no effect |
 | Tooltip visibility | `ShowTooltip = true` shows keyboard hints below the prompt |
 | Abort key hint | `ShowMessageAbortKey = true` includes the abort-key name in the tooltip |
 | Auto-initialization | PromptPlus initializes on first access: detects terminal, loads `PromptPlus.config` if present, registers error log hook |

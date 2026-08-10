@@ -214,6 +214,12 @@ namespace PromptPlusLibrary.Controls.Common
 
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(stoptoken, console.CancelToken);
 
+            // Gives Ctrl+C a short, bounded grace period (see ConsolePlus.BeginCriticalRender)
+            // to let the abort cleanup below (the HideOnAbortValue-driven clear, cursor/color
+            // restoration) finish instead of the process exiting mid-write. Scoped to the whole
+            // method body via a using-declaration so it also covers the finally block's restore.
+            using IDisposable criticalRenderScope = ConsolePlus.BeginCriticalRender();
+
             bool oldcursor = console.CursorVisible;
             Color oldforecolor = console.ForegroundColor;
             Color oldbackcolor = console.BackgroundColor;
@@ -658,14 +664,19 @@ namespace PromptPlusLibrary.Controls.Common
                         }
                     }
                 }
-                else if (cts.Token.IsCancellationRequested && !isWidget && IsLiveAutoRenderControl)
+                else if (cts.Token.IsCancellationRequested && !isWidget
+                    && (IsLiveAutoRenderControl || OptionsControl.HideOnAbortValue))
                 {
                     // The run was cancelled externally (CancellationToken/Ctrl+C) so the finish
-                    // block above is skipped. Live controls can render a tall multi-line frame
-                    // (e.g. a paginated task list); leaving that footprint on screen produces
-                    // leftover rows and interferes with terminal auto-scroll. Clear the control's
-                    // own rendered area and park the cursor at its top so subsequent output starts
-                    // cleanly. Interactive controls keep their previous cancel behavior.
+                    // block above (which normally honors HideOnAbortValue for an internal Esc-abort)
+                    // is skipped entirely. Without this branch, HideOnAbortValue was silently
+                    // ignored on Ctrl+C for interactive controls, leaving the frame on screen no
+                    // matter how it was configured. Live controls always clear here regardless of
+                    // HideOnAbortValue: they can render a tall multi-line frame (e.g. a paginated
+                    // task list), and leaving that footprint on screen produces leftover rows and
+                    // interferes with terminal auto-scroll — clearing it is required for the
+                    // terminal to stay usable, not just a presentation preference like
+                    // HideOnAbortValue is for interactive controls.
                     for (int row = 0; row <= _bufferScreen.OriginalLineCount; row++)
                     {
                         console.SetCursorPosition(0, _screenPosition.StartTop + row);
