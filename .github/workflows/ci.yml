@@ -12,31 +12,32 @@ permissions:
   pull-requests: read
 
 jobs:
-  # Detects whether the push/PR touches anything besides docs/*.md. Doc-only changes
-  # still get a build (below) but skip the test run entirely.
+  # Detects whether the push/PR touches any .cs file. Changes that don't
+  # (docs, yml, csproj, etc.) still get a build (below) but skip the test run.
   changes:
     name: Detect changed paths
     runs-on: ubuntu-latest
     outputs:
       code: ${{ steps.filter.outputs.code }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          # dorny/paths-filter needs the pre-push commit to diff against on push
-          # events; a shallow (depth-1) clone doesn't have it, so it falls back to
-          # treating everything as changed. Full history avoids that.
-          fetch-depth: 0
-
+      # No checkout here on purpose: this repo's .git history carries ~800MB of
+      # since-removed docs/images/*.gif, so a full-history clone (fetch-depth: 0)
+      # made every run slow. dorny/paths-filter can resolve changed files via the
+      # GitHub API instead, as long as there's no local checkout to diff against.
+      # That API mode only works for pull_request events though — on push
+      # events (e.g. a merge commit landing on main) it has no local repo to
+      # diff against and fails. continue-on-error keeps that failure from
+      # failing the whole job: outputs.code just stays unset, which the
+      # Test step below already treats as "skip".
       - name: Filter changed paths
         uses: dorny/paths-filter@v3
         id: filter
+        continue-on-error: true
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           filters: |
             code:
-              - '**'
-              - '!**/*.md'
-              - '!docs/**'
+              - '**/*.cs'
 
   # Single job, OS matrix only (net10.0 tests, not the full net8/9/10 TFM axis).
   build-and-test:
@@ -71,8 +72,8 @@ jobs:
       - name: Build library (Release)
         run: dotnet build src/PromptPlus.csproj --configuration Release
 
-      # Skipped for doc-only changes (docs/** and *.md) — those only need a build to
-      # verify nothing broke, not a full test pass. See ADR0022.
+      # Skipped when the change doesn't touch any .cs file — those only need a
+      # build to verify nothing broke, not a full test pass. See ADR0022.
       - name: Test (net10.0 only)
         if: needs.changes.outputs.code == 'true'
         run: >

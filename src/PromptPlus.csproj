@@ -34,10 +34,10 @@
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/FRACerqueira/PromptPlus</PackageProjectUrl>
-		<Version>6.0.0-rc1</Version>
+		<Version>6.0.0-rc2</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2026 - Fernando Cerqueira</Copyright>
-		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>PromptPlus</Title>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -69,7 +69,7 @@
 	<ItemGroup>
 		<!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
 		<PackageReference Include="System.IO.Abstractions" Version="*" />
-		<PackageReference Include="ConsolePlus.net" Version="1.0.0-rc1" />
+		<PackageReference Include="ConsolePlus.net" Version="1.0.0-rc2" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
