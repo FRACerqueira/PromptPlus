@@ -9,7 +9,7 @@ unconditional `PackageReference` to the published `ConsolePlus.net` NuGet packag
 reference is used for every configuration (`Debug`, `Release`, `ReleaseDoc`):
 
 ```xml
-<PackageReference Include="ConsolePlus.net" Version="1.0.0-rc1" />
+<PackageReference Include="ConsolePlus.net" Version="1.0.0" />
 ```
 
 There is **no** `ProjectReference` to a sibling ConsolePlus checkout, and no configuration-based
@@ -43,3 +43,19 @@ gymnastics required.
   keeping the two repos' driver copies in sync when you do cross-repo work).
 - When ConsolePlus ships a new API that PromptPlus needs, bump the `Version` on the
   `PackageReference` above — there's no separate Debug-path version to keep in sync.
+
+## Release ordering
+
+> Audience: maintainers cutting a release. Not relevant to a regular contribution.
+
+PromptPlus's own version is derived from its release tag at build time, but the
+`ConsolePlus.net` `PackageReference` version above is a literal that isn't touched by that
+process — `dotnet pack` writes it into the published `.nuspec` exactly as committed. So:
+
+1. **Always tag and publish a ConsolePlus release first**, then bump the `PackageReference`
+   version above to match, then tag and publish the corresponding PromptPlus release.
+2. If you tag a **stable** PromptPlus release (no `-rc`/`-beta` suffix) while this pin is still
+   a prerelease version, `publish-nuget.yml`'s guard step fails the release outright rather than
+   shipping it — see that workflow for the check. That guard does not fire for two prereleases
+   pinned together (e.g. releasing a PromptPlus `-rc` build against a ConsolePlus `-rc` pin), so
+   the ordering above still matters even when both sides are prereleases.

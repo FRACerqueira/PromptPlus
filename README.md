@@ -8,7 +8,7 @@
   [![NuGet](https://img.shields.io/badge/NuGet-PromptPlus-blue)](https://www.nuget.org/packages/PromptPlus)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![.NET](https://img.shields.io/badge/.NET-8%20%7C%209%20%7C%2010-512BD4)](https://dotnet.microsoft.com/)
-  [![NuGet](https://img.shields.io/nuget/vpre/PromptPlus.svg?label=rc)](https://www.nuget.org/packages/PromptPlus)
+  [![NuGet](https://img.shields.io/nuget/v/PromptPlus.svg)](https://www.nuget.org/packages/PromptPlus)
   [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
 </div>
@@ -35,41 +35,16 @@
 
 ---
 
-## What's new in the latest version
-
-### 📢 Release Note – PromptPlus V.6.X Release Candidate
-
-### 🚀 Release Candidate Phase
-- The **6.X** version officially enters the **Release Candidate phase**.  
-- Purpose: final validation before the stable release — no new features expected, only stabilization fixes.
-
-### 🛠️ Source Code
-- Available in the **main** branch.  
-
-### 📦 NuGet Package
-- Latest update: **6.0.0-rc[seq]**.  
-- To install, you must **enable the pre-release option** in NuGet.
-
-### 💬 Community Feedback
-- This space is open for:  
-  - Sharing **feedback**  
-  - Reporting **issues**  
-  - Suggesting **enhancements**
-
----
-
 ## Installation
 
-PromptPlus 6.x is currently in **Beta** — you must enable pre-release packages to install it.
-
 ```shell
-dotnet add package PromptPlus --prerelease
+dotnet add package PromptPlus
 ```
 
 Or via the Package Manager Console:
 
 ```powershell
-Install-Package PromptPlus -IncludePrerelease
+Install-Package PromptPlus
 ```
 
 ---
@@ -145,7 +120,7 @@ On next run, PromptPlus automatically reads `PromptPlus.config` from the working
 | History persistence | Last confirmed value saved to disk; pre-loaded on next run |
 | HideAfterFinish | Control UI erased after confirmation; only the final answer line remains |
 | HideOnAbort | Control UI erased when user presses Esc |
-| Ctrl+C handling | Intercepted by default → triggers abort; set `RemoveHandlerCtrlC = true` to pass to OS |
+| Ctrl+C handling | Always terminates the process; the current control gets a short, bounded grace period to run its own cleanup first. `RemoveHandlerCtrlC` is reserved for future use and currently has no effect |
 | Tooltip visibility | `ShowTooltip = true` shows keyboard hints below the prompt |
 | Abort key hint | `ShowMessageAbortKey = true` includes the abort-key name in the tooltip |
 | Auto-initialization | PromptPlus initializes on first access: detects terminal, loads config, registers error log |
@@ -198,18 +173,21 @@ PromptPlus will discover and load it automatically at runtime via the standard .
 | [Key&nbsp;press](docs/controls/keypress/index.md) | `PromptPlus.Controls.KeyPress(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
 | [Confirm&nbsp;(yes/no)](docs/controls/confirm/index.md) | `PromptPlus.Controls.Confirm(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
 | [Single&nbsp;select](docs/controls/select/index.md) | `PromptPlus.Controls.Select<T>(prompt)` | `ResultPrompt<T>` |
-| [Multi&nbsp;select](docs/controls/multiselect/index.md) | `PromptPlus.Controls.MultiSelect<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
+| [Multi&nbsp;select](docs/controls/multiselect/index.md) | `PromptPlus.Controls.MultiSelect<T>(prompt)` | `ResultPrompt<T[]>` |
 | [Table&nbsp;select](docs/controls/tableselect/index.md) | `PromptPlus.Controls.TableSelect<T>(prompt)` | `ResultPrompt<TableSelectResult<T>>` |
 | [Table&nbsp;multi-select](docs/controls/tablemultiselect/index.md) | `PromptPlus.Controls.TableMultiSelect<T>(prompt)` | `ResultPrompt<T[]>` |
 | [Tree&nbsp;select](docs/controls/treeselect/index.md) | `PromptPlus.Controls.TreeSelect<T>(prompt)` | `ResultPrompt<T?>` |
 | [Tree&nbsp;multi-select](docs/controls/treemultiselect/index.md) | `PromptPlus.Controls.TreeMultiSelect<T>(prompt)` | `ResultPrompt<T[]>` |
-| [File&nbsp;browser](docs/controls/file/index.md) | `PromptPlus.Controls.File(prompt)` | `ResultPrompt<FileInfo>` |
-| [Multi-file](docs/controls/multifile/index.md) | `PromptPlus.Controls.MultiFile(prompt)` | `ResultPrompt<IEnumerable<FileInfo>>` |
-| [Calendar](docs/controls/calendar/index.md) | `PromptPlus.Controls.Calendar(prompt)` | `ResultPrompt<DateTime>` |
-| [Progress&nbsp;bar](docs/controls/progressbar/index.md) | `PromptPlus.Controls.ProgressBar(prompt)` | `ResultPrompt<double>` |
+| [File&nbsp;browser](docs/controls/file/index.md) | `PromptPlus.Controls.File(prompt)` | `ResultPrompt<FileItem?>` |
+| [Multi-file](docs/controls/multifile/index.md) | `PromptPlus.Controls.MultiFile(prompt)` | `ResultPrompt<FileItem[]>` |
+| [Calendar](docs/controls/calendar/index.md) | `PromptPlus.Controls.Calendar(prompt)` | `ResultPrompt<DateTime?>` |
+| [Progress&nbsp;bar](docs/controls/progressbar/index.md) | `PromptPlus.Controls.ProgressBar(prompt)` | `ResultPrompt<StateProgress>` |
 | [Task](docs/controls/task/index.md) | `PromptPlus.Controls.Task(prompt)` | `ResultPrompt<StateTask>` |
-| [Multi-tasks](docs/controls/multitasks/index.md) | `PromptPlus.Controls.MultiTasks(prompt)` | `ResultPrompt<IEnumerable<MultiTaskResult>>` |
-| [Chart&nbsp;bar](docs/controls/chartbar/index.md) | `PromptPlus.Controls.ChartBar(prompt)` | `ResultPrompt<double>` |
+| [Multi-tasks](docs/controls/multitasks/index.md) | `PromptPlus.Controls.MultiTasks(prompt)` | `ResultPrompt<StateMultiTasks>` |
+| [Chart&nbsp;bar](docs/controls/chartbar/index.md) | `PromptPlus.Controls.ChartBar(prompt)` | `ResultPrompt<ChartItem?>` |
+| [Slider](docs/controls/slider/index.md) | `PromptPlus.Controls.Slider(prompt)` | `ResultPrompt<double?>` |
+| [Switch](docs/controls/switch/index.md) | `PromptPlus.Controls.Switch(prompt)` | `ResultPrompt<bool?>` |
+| [Timer](docs/controls/timer/index.md) | `PromptPlus.Controls.Timer(prompt)` | `ResultPrompt<TimeSpan>` |
 | [Mask&nbsp;—&nbsp;string](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskEdit(prompt)` | `ResultPrompt<string>` |
 | [Mask&nbsp;—&nbsp;integer](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskInteger(prompt)` | `ResultPrompt<int>` |
 | [Mask&nbsp;—&nbsp;long](docs/controls/maskedit/index.md) | `PromptPlus.Controls.MaskLong(prompt)` | `ResultPrompt<long>` |
@@ -232,7 +210,7 @@ the fluent widgets (`Slider`, `Calendar`, `Switch`, `ChartBar`) render when you 
 
 | Widget | Factory method | Output |
 |---|---|---|
-| [Slider (display)](docs/widgets.md) | `PromptPlus.Widgets.Slider(value, min, max, fracionaldig)` | `ISliderWidget` |
+| [Slider (display)](docs/widgets.md) | `PromptPlus.Widgets.Slider(value, minvalue, maxvalue, fractionalDigits)` | `ISliderWidget` |
 | [Calendar (display)](docs/widgets.md) | `PromptPlus.Widgets.Calendar(dateref)` | `ICalendarWidget` |
 | [Switch (display)](docs/widgets.md) | `PromptPlus.Widgets.Switch(value)` | `ISwitchWidget` |
 | [Banner](docs/widgets.md) | `PromptPlus.Widgets.Banner(text)` | immediate render |
@@ -254,7 +232,7 @@ by hand.
 
 **[ConsolePlus](https://github.com/FRACerqueira/ConsolePlus)** deliberately stays focused on **rendering primitives**. It ships the input building
 blocks you need for simple scenarios — `ReadLine`, `ReadKey`, and even
-[Emacs-style line editing](reading-input.md#the-emacs-style-line-editor) — but it intentionally stops
+[Emacs-style line editing](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/reading-input.md#the-emacs-style-line-editor) — but it intentionally stops
 short of full interactive UI.
 
 **PromptPlus** picks up exactly where those primitives end, adding **stateful, keyboard-driven controls**
@@ -281,7 +259,9 @@ engine, so colors, markup, and capability fallbacks behave identically.
 
 PromptPlus references ConsolePlus and reuses its console driver directly. In fact,
 `PromptPlus.Console` **is** the ConsolePlus driver — so anything you learned in the
-[Writing Output](writing-output.md), [Markup](markup.md), and [Colors](colors.md) guides applies
+[Writing Output](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/writing-output.md),
+[Markup](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/markup.md), and
+[Colors](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/colors.md) guides applies
 unchanged inside PromptPlus.
 
 ### The `PromptPlus` entry point
@@ -344,7 +324,7 @@ demo GIF above.
 | [Demo Mode](docs/demo-mode.md) | Scripted keyboard input for recording GIFs/videos of console apps |
 | [Controls index](docs/index.md) | All pages in one place |
 | [Migration Guide v5.x → v6.x](docs/migration-v5-to-v6.md) | **Upgrading from v5.x** |
-| [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs |
+| [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs. Known limitations of the generator ([DefaultDocumentation](https://github.com/Doraku/DefaultDocumentation) 1.2.5, the latest available): (1) `Func<T, (bool, string?)>` predicate overloads are silently omitted from a member's page — check the XML doc comments in source for those signatures; (2) types from the ConsolePlus dependency resolve to dead `learn.microsoft.com` links instead of ConsolePlus's own docs, since its assembly isn't wired in as a cross-reference source. |
 
 ---
 
