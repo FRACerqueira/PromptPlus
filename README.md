@@ -232,7 +232,7 @@ by hand.
 
 **[ConsolePlus](https://github.com/FRACerqueira/ConsolePlus)** deliberately stays focused on **rendering primitives**. It ships the input building
 blocks you need for simple scenarios — `ReadLine`, `ReadKey`, and even
-[Emacs-style line editing](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/reading-input.md#the-emacs-style-line-editor) — but it intentionally stops
+[Emacs-style line editing](https://github.com/FRACerqueira/ConsolePlus/blob/main/docs/reading-input.md#the-emacs-style-line-editor) — but it intentionally stops
 short of full interactive UI.
 
 **PromptPlus** picks up exactly where those primitives end, adding **stateful, keyboard-driven controls**
@@ -259,9 +259,9 @@ engine, so colors, markup, and capability fallbacks behave identically.
 
 PromptPlus references ConsolePlus and reuses its console driver directly. In fact,
 `PromptPlus.Console` **is** the ConsolePlus driver — so anything you learned in the
-[Writing Output](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/writing-output.md),
-[Markup](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/markup.md), and
-[Colors](https://github.com/FRACerqueira/ConsolePlus/blob/develop/docs/colors.md) guides applies
+[Writing Output](https://github.com/FRACerqueira/ConsolePlus/blob/main/docs/writing-output.md),
+[Markup](https://github.com/FRACerqueira/ConsolePlus/blob/main/docs/markup.md), and
+[Colors](https://github.com/FRACerqueira/ConsolePlus/blob/main/docs/colors.md) guides applies
 unchanged inside PromptPlus.
 
 ### The `PromptPlus` entry point
