@@ -493,7 +493,7 @@ namespace PromptPlusLibrary.Controls.Slider
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
         }
 

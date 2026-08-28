@@ -215,6 +215,34 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
+        public async Task External_cancellation_does_not_block_on_a_handler_that_ignores_the_token()
+        {
+            // Regression test: FinalizeControl(aborted: true) must skip the blocking join on
+            // the handler's background task, because that wait has no real guarantee once
+            // ConsolePlus's exit grace period is racing it (see BaseControlPrompt.Run's
+            // FinalizeControl call and ProgressBarControl.FinalizeControl). Simulates a handler
+            // that is unresponsive to cancellation (ignores its token entirely) to prove Run()
+            // still returns promptly instead of blocking for the handler's full duration.
+            var vt = MakeTerminal();
+            var handlerCanProceed = new ManualResetEventSlim(false);
+            var control = MakeControl(vt).UpdateHandler((e, ct) =>
+            {
+                _ = handlerCanProceed.Wait(TimeSpan.FromSeconds(5));
+            });
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(200));
+            var runTask = Task.Run(() => control.Run(cts.Token));
+
+            var winner = await Task.WhenAny(runTask, Task.Delay(TimeSpan.FromSeconds(2), TestContext.Current.CancellationToken));
+            handlerCanProceed.Set();
+
+            _ = (winner == runTask).Should().BeTrue(
+                "Run() must return promptly on external cancellation even when the handler ignores its token, not block for the handler's full duration");
+            var result = await runTask;
+            _ = result.IsAborted.Should().BeTrue();
+        }
+
+        [Fact]
         public void Re_pressing_escape_cancels_a_running_operation_before_completion()
         {
             var vt = MakeTerminal();

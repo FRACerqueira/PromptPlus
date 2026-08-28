@@ -316,7 +316,7 @@ namespace PromptPlusLibrary.Controls.Switch
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
         }
 

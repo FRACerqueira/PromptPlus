@@ -80,7 +80,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         {
             if (!_disposed)
             {
-                FinalizeControl();
+                FinalizeControl(aborted: false);
             }
         }
 
@@ -538,7 +538,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         }
 
         /// <inheritdoc/>
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             if (!_disposed)
             {
@@ -548,16 +548,23 @@ namespace PromptPlusLibrary.Controls.ProgressBar
                     _cancellationTokenSource.Cancel();
                 }
 
-                try
+                // On an external abort (Ctrl+C), don't block waiting for the user's task: that
+                // wait has no real guarantee once we're racing ConsolePlus's exit grace period,
+                // and blocking here would starve the terminal-restoration cleanup that runs
+                // right after this of the time budget it actually needs.
+                if (!aborted)
                 {
-                    _actionProgressBarTask?.GetAwaiter().GetResult();
-                }
-                catch (OperationCanceledException)
-                {
-                }
-                catch (Exception ex)
-                {
-                    _progressbarEvent?.ErrorAndAbort(ex);
+                    try
+                    {
+                        _actionProgressBarTask?.GetAwaiter().GetResult();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                    catch (Exception ex)
+                    {
+                        _progressbarEvent?.ErrorAndAbort(ex);
+                    }
                 }
 
                 _cancellationTokenSource?.Dispose();

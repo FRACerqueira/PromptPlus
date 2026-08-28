@@ -34,8 +34,26 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
+      # PromptPlus's own version comes from this tag (-p:Version below), but the
+      # ConsolePlus.net PackageReference version is a literal in the csproj that
+      # -p:Version does NOT touch — dotnet pack writes it into the .nuspec exactly
+      # as written. A stable tag (no "-") packed with a prerelease pin would ship
+      # permanently (published packages can't be edited) with a bad dependency.
+      - name: Guard against a stable release pinning a prerelease ConsolePlus.net
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          CONSOLEPLUS_VERSION=$(sed -n 's/.*<PackageReference Include="ConsolePlus.net" Version="\([^"]*\)".*/\1/p' src/PromptPlus.csproj)
+          echo "Releasing PromptPlus $VERSION, pinned to ConsolePlus.net $CONSOLEPLUS_VERSION"
+          if [[ "$VERSION" != *-* && "$CONSOLEPLUS_VERSION" == *-* ]]; then
+            echo "::error::Releasing a stable PromptPlus version ($VERSION) but ConsolePlus.net is pinned to a prerelease ($CONSOLEPLUS_VERSION) in src/PromptPlus.csproj. Bump the pin to a stable ConsolePlus.net version before tagging a stable release."
+            exit 1
+          fi
+
       - name: Build (Release)
         run: dotnet build src/PromptPlus.csproj --configuration Release -p:Version=${{ steps.version.outputs.VERSION }}
+
+      - name: Test
+        run: dotnet test tests/PromptPlus.Tests/PromptPlus.Tests.csproj --configuration Debug --verbosity normal
 
       - name: Pack tool
         run: >

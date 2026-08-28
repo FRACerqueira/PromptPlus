@@ -34,10 +34,14 @@
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/FRACerqueira/PromptPlus</PackageProjectUrl>
-		<Version>6.0.0-rc2</Version>
+		<Version>6.0.0</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2026 - Fernando Cerqueira</Copyright>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<!-- Debug-only: PromptPlus has no local-feed consumer of its own package
+		     (unlike ConsolePlus), so this just avoids packing on every CI Release
+		     build. The real release package always comes from publish-nuget.yml's
+		     explicit `dotnet pack`, which doesn't depend on this flag. -->
+		<GeneratePackageOnBuild Condition="'$(Configuration)'=='Debug'">True</GeneratePackageOnBuild>
 		<Title>PromptPlus</Title>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -69,7 +73,7 @@
 	<ItemGroup>
 		<!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
 		<PackageReference Include="System.IO.Abstractions" Version="*" />
-		<PackageReference Include="ConsolePlus.net" Version="1.0.0-rc2" />
+		<PackageReference Include="ConsolePlus.net" Version="1.0.0" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">

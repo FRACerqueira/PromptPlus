@@ -769,7 +769,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             //none
         }

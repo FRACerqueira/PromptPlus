@@ -30,6 +30,7 @@ namespace ConsolePlusLibrary.Testing
         private bool _cursorVisible = true;
         private bool _writeToError;
         private TargetScreen _buffer = TargetScreen.Primary;
+        private readonly CancellationToken _cancelToken;
 
         public InputQueue Keys => _input;
         public VirtualScreen Screen => _screen;
@@ -38,6 +39,7 @@ namespace ConsolePlusLibrary.Testing
         {
             _fg = o.DefaultForeground;
             _bg = o.DefaultBackground;
+            _cancelToken = o.CancelToken;
             _profile = new ProfileConsole
             {
                 ProfileName = "VirtualTerminal",
@@ -86,7 +88,7 @@ namespace ConsolePlusLibrary.Testing
         public ColorSystem ColorDepth => _profile.ColorDepth;
         public int Width => _screen.Width;
         public int Height => _screen.Height;
-        public CancellationToken CancelToken => CancellationToken.None;
+        public CancellationToken CancelToken => _cancelToken;
         public bool EnabledEmacs { get; set; }
         public event EventHandler<ConsoleSizeChangedEventArgs>? SizeChanged;
 

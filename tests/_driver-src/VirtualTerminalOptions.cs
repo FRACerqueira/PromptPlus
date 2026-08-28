@@ -3,6 +3,8 @@
 // Headless test driver shared by ConsolePlus.Tests and PromptPlus.Tests (linked source)
 // ***************************************************************************************
 
+using System.Threading;
+
 namespace ConsolePlusLibrary.Testing
 {
     /// <summary>
@@ -24,5 +26,15 @@ namespace ConsolePlusLibrary.Testing
         public bool Interactive { get; set; } = true;
         public Color DefaultForeground { get; set; } = new(192, 192, 192);
         public Color DefaultBackground { get; set; } = new(0, 0, 0);
+
+        /// <summary>
+        /// Token exposed via <see cref="VirtualTerminal.CancelToken"/>, standing in for the real
+        /// terminal's OS-level Ctrl+C token (<c>AnsiConsoleAdapter</c>/<c>NoAnsiConsoleAdapter</c>'s
+        /// <c>_mainToken</c>) — as opposed to a caller-supplied <c>stoptoken</c> passed straight to
+        /// <c>Run</c>, which every existing abort test already exercises. Defaults to
+        /// <see cref="CancellationToken.None"/>, matching every existing test's behavior unchanged;
+        /// set this to simulate an external Ctrl+C arriving through that specific path.
+        /// </summary>
+        public CancellationToken CancelToken { get; set; } = CancellationToken.None;
     }
 }

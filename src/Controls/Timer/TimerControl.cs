@@ -348,7 +348,7 @@ namespace PromptPlusLibrary.Controls.Timer
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
         }
 

@@ -953,7 +953,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         }
 
         /// <inheritdoc/>
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             //none
         }

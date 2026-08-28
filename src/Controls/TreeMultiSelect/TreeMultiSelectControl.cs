@@ -722,7 +722,7 @@ namespace PromptPlusLibrary.Controls.TreeMultiSelect
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             _nodes.Clear();
             _checkedSourceIds.Clear();

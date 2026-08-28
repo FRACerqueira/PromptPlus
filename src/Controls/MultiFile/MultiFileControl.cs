@@ -943,7 +943,7 @@ namespace PromptPlusLibrary.Controls.MultiFile
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             CancelAllBackgroundWildcards();
             _nodes.Clear();
