@@ -888,7 +888,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
         }
 

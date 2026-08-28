@@ -633,7 +633,7 @@ namespace PromptPlusLibrary.Controls.FileExec
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             // Release all materialized nodes so nothing lingers after the control closes.
             _nodes.Clear();

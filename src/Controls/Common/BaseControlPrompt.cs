@@ -684,7 +684,12 @@ namespace PromptPlusLibrary.Controls.Common
                     }
                     console.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
                 }
-                FinalizeControl();
+                // Live controls' FinalizeControl override skips waiting for the user's
+                // background task when aborted: that wait already has no real guarantee once
+                // Ctrl+C is racing the ConsolePlus grace period, and letting it try anyway
+                // starves the (fast, certain) terminal-restoration cleanup in the finally
+                // block below of the time budget it actually needs.
+                FinalizeControl(aborted: cts.Token.IsCancellationRequested);
             }
             finally
             {
@@ -757,10 +762,16 @@ namespace PromptPlusLibrary.Controls.Common
         public abstract bool FinishTemplate(BufferScreen screenBuffer);
 
         /// <summary>
-        /// Finalizes the control prompt. 
+        /// Finalizes the control prompt.
         /// Derived controls must implement this method to perform any necessary cleanup after the prompt has completed.
         /// </summary>
-        public abstract void FinalizeControl();
+        /// <param name="aborted">
+        /// <c>true</c> when the run was cancelled externally (Ctrl+C or a caller-supplied
+        /// cancellation token) and is racing ConsolePlus's bounded exit grace period; a control
+        /// that awaits a background task here should skip that wait in this case instead of
+        /// risking the process being killed mid-wait.
+        /// </param>
+        public abstract void FinalizeControl(bool aborted);
 
         /// <summary>
         /// Reads the next key via <see cref="WaitKeypress"/> and packages the result together

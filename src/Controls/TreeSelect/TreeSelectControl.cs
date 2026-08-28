@@ -885,7 +885,7 @@ namespace PromptPlusLibrary.Controls.TreeSelect
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             _nodes.Clear();
         }

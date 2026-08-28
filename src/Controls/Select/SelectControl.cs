@@ -801,7 +801,7 @@ namespace PromptPlusLibrary.Controls.Select
         }
 
         /// <inheritdoc/>
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
         }
 

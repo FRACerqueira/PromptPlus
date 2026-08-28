@@ -696,7 +696,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             // Cleanup if needed
         }

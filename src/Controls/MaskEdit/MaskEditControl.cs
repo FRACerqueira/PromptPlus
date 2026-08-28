@@ -535,7 +535,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             //none
         }

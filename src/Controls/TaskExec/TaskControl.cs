@@ -74,7 +74,7 @@ namespace PromptPlusLibrary.Controls.TaskExec
         {
             if (!_disposed)
             {
-                FinalizeControl();
+                FinalizeControl(aborted: false);
             }
         }
 
@@ -426,7 +426,7 @@ namespace PromptPlusLibrary.Controls.TaskExec
             return true;
         }
 
-        public override void FinalizeControl()
+        public override void FinalizeControl(bool aborted)
         {
             if (_disposed)
             {
@@ -439,16 +439,23 @@ namespace PromptPlusLibrary.Controls.TaskExec
                 _cancellationTokenSource.Cancel();
             }
 
-            try
+            // On an external abort (Ctrl+C), don't block waiting for the user's task: that wait
+            // has no real guarantee once we're racing ConsolePlus's exit grace period, and
+            // blocking here would starve the terminal-restoration cleanup that runs right after
+            // this of the time budget it actually needs.
+            if (!aborted)
             {
-                _executionTask?.GetAwaiter().GetResult();
-            }
-            catch (OperationCanceledException)
-            {
-            }
-            catch (Exception ex)
-            {
-                _error ??= ex;
+                try
+                {
+                    _executionTask?.GetAwaiter().GetResult();
+                }
+                catch (OperationCanceledException)
+                {
+                }
+                catch (Exception ex)
+                {
+                    _error ??= ex;
+                }
             }
 
             _cancellationTokenSource?.Dispose();

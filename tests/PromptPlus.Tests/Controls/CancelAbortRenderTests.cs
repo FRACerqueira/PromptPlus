@@ -53,5 +53,35 @@ namespace PromptPlus.Tests.Controls
             _ = result.IsAborted.Should().BeTrue();
             _ = vt.TextAt(0, 0, 9).Should().Be("Name: Joe");
         }
+
+        [Fact]
+        public void Cancelling_the_terminals_own_token_triggers_the_same_external_abort_cleanup()
+        {
+            // The two tests above simulate external cancellation via a caller-supplied
+            // stoptoken passed straight to Run(cts.Token). That is NOT the real Ctrl+C path: in
+            // production, Console.CancelKeyPress cancels the console adapter's own token
+            // (AnsiConsoleAdapter/NoAnsiConsoleAdapter's _mainToken, exposed as IConsole.
+            // CancelToken), which Run() links together with stoptoken (BaseControlPrompt.cs:215,
+            // CancellationTokenSource.CreateLinkedTokenSource(stoptoken, console.CancelToken)).
+            // VirtualTerminal.CancelToken used to be hardcoded to CancellationToken.None, so that
+            // second, real path was never exercised by any test — flagged as a gap in a
+            // pre-release audit. VirtualTerminalOptions.CancelToken (added alongside this test)
+            // closes it: Run() is called with NO stoptoken at all here, so only vt.CancelToken
+            // firing can cancel it, proving the console.CancelToken half of the linked source
+            // actually reaches this same cleanup path.
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(200));
+            var vt = VirtualTerminal.Create(o => { o.SupportsUnicode = false; o.CancelToken = cts.Token; });
+            var control = new PromptPlusControls(vt, new PromptConfig()).Input("Name")
+                .Options(o => o.HideOnAbort());
+            _ = vt.Keys.Type("Joe");
+
+#pragma warning disable xUnit1051 // deliberately NOT TestContext's token: only vt.CancelToken must be able to cancel this Run(), to isolate that specific path
+            var result = control.Run();
+#pragma warning restore xUnit1051
+
+            _ = result.IsAborted.Should().BeTrue();
+            _ = vt.Find("Joe").Should().BeNull();
+            _ = vt.Find("Name").Should().BeNull();
+        }
     }
 }
